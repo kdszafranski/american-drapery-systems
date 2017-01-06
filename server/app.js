@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var jobs = require('./routes/jobs');
+var surveys = require('./routes/surveys');
 var measurements = require('./routes/measurements');
 
 
@@ -12,7 +12,7 @@ var measurements = require('./routes/measurements');
 app.use(express.static('public'));
 app.use(bodyParser.json()); // needed for angular requests
 
-app.use('/jobs', jobs);
+app.use('/surveys', surveys);
 app.use('/measurements', measurements);
 
 app.get('/dashboard', function(req, res) {});

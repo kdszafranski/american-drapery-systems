@@ -18,7 +18,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controllerAs: 'survey'
   })
   .otherwise({
-    redirectTo: 'dash'
+    redirectTo: 'dashboard'
   });
 
 }]);
