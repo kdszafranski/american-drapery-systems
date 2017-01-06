@@ -12,10 +12,10 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'MeasurementController',
     controllerAs: 'measure'
   })
-  .when('/job' ,{
-    templateUrl: '/views/templates/job.html',
-    controller: 'JobController',
-    controllerAs: 'job'
+  .when('/survey' ,{
+    templateUrl: '/views/templates/survey.html',
+    controller: 'SurveyController',
+    controllerAs: 'survey'
   })
   .otherwise({
     redirectTo: 'dash'
