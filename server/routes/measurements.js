@@ -30,4 +30,31 @@ router.post('/:survey_id', function(req,res) {
   });
 });
 
+router.put('/:measure_id', function(req,res) {
+  console.log(req.params.measure_id);
+  let newMeasurement = req.body;
+  let measure_id = req.params.measure_id);
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+    client.query('UPDATE measurements ' +
+    'SET area = $1, floor = $2, room = $3, quantity = $4, width = $5, length = $6, inside = $7, outside = $8, fascia_size = $9, controls = $10, mount = $11, fabric = $12, notes = $13)' +
+    'WHERE id = $14',
+    [newMeasurement.area, newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.inside, newMeasurement.outside, newMeasurement.fascia_size, newMeasurement.controls, newMeasurement.mount, newMeasurement.fabric, newMeasurement.notes, measure_id],
+    function(err, result) {
+      done(); // close the connection.
+
+      if(err) {
+        console.log('select query error: ', err);
+        res.sendStatus(500);
+      }
+      console.log("put complete");
+      res.sendStatus(201);
+    });
+  });
+});
+
+
 module.exports = router;
