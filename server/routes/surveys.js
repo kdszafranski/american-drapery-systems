@@ -15,6 +15,7 @@ router.get('/all', function(req, res) {
 
     client.query('SELECT * FROM survey ' +
     'JOIN client on survey.client_id = client.id ' +
+    'WHERE status = "in progress" ' +
     'ORDER BY last_modified',
     function(err, result) {
       done(); // close the connection.
