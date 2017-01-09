@@ -22,7 +22,7 @@ function($firebaseAuth, $http, $q) {
         //GET request to /dashboard route, send idToken in header
         $http({
           method: 'GET',
-          url: '/dashboard',
+          url: '/users',
           headers: {
             id_token: idToken
           }
