@@ -1,5 +1,5 @@
 var admin = require("firebase-admin");
-//for heroku mLab
+// //for heroku mLab
 // admin.initializeApp({
 //   credential: admin.credential.cert({
 //     "type": process.env.FIREBASE_TYPE,
@@ -16,10 +16,10 @@ var admin = require("firebase-admin");
 //   databaseURL: "https://gtr-tool.firebaseio.com"
 // });
 
-// //for local use
+//Configure Firebase Admin... Insert credentials from local JSON file (.gitignore-d, of course)
 admin.initializeApp({
   credential: admin.credential.cert("./server/firebase-service-account.json"),
-  databaseURL: "https://gtr-tool.firebaseio.com" // replace this line with your URL
+  databaseURL: "https://american-drapery-systems.firebaseio.com" //URL for out firbase user database
 });
 
 var tokenDecoder = function(req, res, next){
