@@ -10,7 +10,6 @@ function($firebaseAuth, $http, $q) {
   var currentUser = {};
   //logIn fxn, called when logIn button clicked
   function logIn() {
-    // const deffered = $q.defer();
     console.log("Running logIn fxn in user-factory");
     //Sign in with popup message using google credentials
      return auth.$signInWithPopup("google").then((firebaseUser) => {
@@ -29,31 +28,40 @@ function($firebaseAuth, $http, $q) {
           }
         }).then((response) => { //when $http promise resolved:
           console.log("I'm back form the GET request! res: ", response);
-
-          // deffered.resolve(response);
         });
       });
-      // return deffered.promise;
     });
-  }
-
+  }//End login fxn
+  /**********************************************
+  //Lougout fxn, runs when logout btn is clicked
+  ***********************************************/
   function logOut() {
     console.log("Running logOut fxn in user-factory");
+    //Firebase sign out method
     auth.$signOut().then(() => {
       console.log("User succesfully logged out");
     });
-  }
-
+  }//End logout fxn
+  /************************************
+  Function to be called in controllers
+  that need access to currentUser
+  *************************************/
   function getUser() {
     return currentUser;
   }
-
+  /*********************
+  Put all functions
+  into publicApi object
+  ***********************/
   var publicApi = {
     logIn: () => logIn(),
-    logOut: () => logOut(),    
+    logOut: () => logOut(),
     getUser: () => getUser()
   };
-
+  /*************************
+  Return publicApi object
+  so controllers can access
+  **************************/
   return publicApi;
 
 }]);

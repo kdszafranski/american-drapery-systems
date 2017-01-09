@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var decoder = require('./modules/decoder');
 var surveys = require('./routes/surveys');
 var measurements = require('./routes/measurements');
+var dashboard = require('./routes/dashboard');
 
 
 // serve static files
@@ -28,13 +29,7 @@ app.listen(portDecision, function() {
 //TO DO: Get firebase-server-account-json
 
 app.use(decoder.token);
-app.use('/dashboard', decoder.token);
 
-app.get('/dashboard', function(req, res) {
-  console.log("/dashboard route hit");
-  console.log("req.headers: ", req.headers);
-  console.log("Decoded token: ", req.decodedToken);
-  res.send("Hello World");
-});
+app.use('/dashboard', dashboard); 
 app.use('/surveys', surveys);
 app.use('/measurements', measurements);

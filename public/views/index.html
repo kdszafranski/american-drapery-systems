@@ -25,7 +25,7 @@
 </head>
 <body ng-app="app" >
 
-  <div ng-include="'/views/templates/nav.html'"></div>
+  <div ng-controller="NavController as nav" ng-include="'/views/templates/nav.html'" ng-show="nav.currentUser"></div>
 
   <main class="container" ng-view></main>
 
