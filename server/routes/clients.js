@@ -76,7 +76,7 @@ router.post('/:client_id', function(req,res) {
       }
       console.log("client info put complete");
       //Get the id of the most recently added client
-      res.send(result.rows);
+      res.sendStatus(201);
     });
   });
 });
