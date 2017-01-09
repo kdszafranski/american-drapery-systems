@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['UserFactory', '$http', function(UserFactory, $) {
+app.controller('DashboardController', ['UserFactory', '$http', function(UserFactory, $http) {
   const self = this;
   //var auth = $firebaseAuth();
   var currentUser = {};
