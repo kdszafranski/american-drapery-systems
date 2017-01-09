@@ -3,6 +3,7 @@ app.controller('ProfileController', ["$http", function($http) {
   self.currentProfile = {};
   self.checkbox = true;
 
+
   self.submitButton = function(){
     console.log("submit button clicked. Object:", self.currentProfile);
     if (self.checkbox == true) {
