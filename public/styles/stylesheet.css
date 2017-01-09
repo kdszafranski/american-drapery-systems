@@ -1,0 +1,7 @@
+nav {
+  border-bottom: solid black 3px;
+}
+nav>ul>li {
+  display: inline-block;
+  list-style-type: none;
+}
