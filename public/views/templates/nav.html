@@ -1,4 +1,16 @@
-<ul>
-  <li><a href="#dashboard">Dashboard</a></li>
-  <li><a href=""></a>Log Out</li>
-</ul>
+
+<md-toolbar ng-controller="NavController as nav" layout="row" >
+    <div class="md-toolbar-tools" id="md-toolbar-tools" layout="column" layout-align="center"  >
+        <div >
+          <h1><a href="#dashboard">ADS</a></h1>
+        </div>
+    </div>
+    <div layout="row" layout-align="end center" layout-sm="column" layout-align-sm="space-between end"  layout-xs="column" layout-align-xs="space-between end" >
+      <md-button id="toolbarButton" class="md-raised" ng-click="" >
+        Dashboard
+      </md-button>
+      <md-button id="toolbarButton" class="md-raised" ng-click="" >
+        Log Out
+      </md-button>
+    </div>
+</md-toolbar>
