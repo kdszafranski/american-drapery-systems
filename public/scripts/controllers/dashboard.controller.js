@@ -2,8 +2,10 @@ app.controller('DashboardController', ["$firebaseAuth", "$http", function($fireb
   var self = this;
   //var auth = $firebaseAuth();
   var currentUser = {};
-  self.showDeclined = true;
-  self.testItems = [
+  self.showDeclined = false;
+  self.showCompleted = false;
+
+  self.surveyList = [
     {
       survey_number: 2134,
       job_number: 54634,
@@ -29,9 +31,38 @@ app.controller('DashboardController', ["$firebaseAuth", "$http", function($fireb
       last_modified: "03/29/2014"
     }
   ];
+
+  // auth.$onAuthStateChanged(function(firebaseUser){
+  //   console.log('authentication state changed');
+  //   // firebaseUser will be null if not logged in
+  //   if(firebaseUser) {
+  //     currentUser = firebaseUser;
+  //     // This is where we make our call to our server
+  //     firebaseUser.getToken().then(function(idToken){
+  //       $http({
+  //         method: 'GET',
+  //         url: '/privateData',
+  //         headers: {
+  //           id_token: idToken
+  //         }
+  //       }).then(function(response){
+  //         self.secretData = response.data;
+  //       });
+  //     });
+  //   } else {
+  //     console.log('Not logged in or not authorized.');
+  //     self.secretData = [];
+  //   }
+  //
+  // });
+
+
+
   self.filter = function() {
-    self.filteredItems = self.testItems;
+    self.filteredItems = self.surveyList;
+    self.numResults = self.filteredItems.length;
   }
+  self.filter();
 
   self.logIn = function(){
     auth.$signInWithPopup("google").then(function(firebaseUser) {
