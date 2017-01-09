@@ -1,8 +1,9 @@
 app.controller('DashboardController', ["$firebaseAuth", "$http", function($firebaseAuth, $http) {
   var self = this;
-  var auth = $firebaseAuth();
+  //var auth = $firebaseAuth();
   var currentUser = {};
-  self.testData = [
+  self.showDeclined = true;
+  self.testItems = [
     {
       survey_number: 2134,
       job_number: 54634,
@@ -27,7 +28,10 @@ app.controller('DashboardController', ["$firebaseAuth", "$http", function($fireb
       client_name: "CatCo",
       last_modified: "03/29/2014"
     }
-  ]
+  ];
+  self.filter = function() {
+    self.filteredItems = self.testItems;
+  }
 
   self.logIn = function(){
     auth.$signInWithPopup("google").then(function(firebaseUser) {
@@ -36,11 +40,11 @@ app.controller('DashboardController', ["$firebaseAuth", "$http", function($fireb
       console.log("Authentication failed: ", error);
     });
   };
-  self.logOut = function(){
-    auth.$signOut().then(function(){
-      console.log('Logging the user out!');
-    });
-  }
+  // self.logOut = function(){
+  //   auth.$signOut().then(function(){
+  //     console.log('Logging the user out!');
+  //   });
+  // }
 
 
 }]);

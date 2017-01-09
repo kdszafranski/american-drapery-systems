@@ -7,7 +7,8 @@
 
 </section>
 <section layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
-
+<input type="checkbox" ng-model="dash.showDeclined">
+<span>Show Declined Jobs</span>
   <table>
     <thead>
       <tr>
@@ -22,8 +23,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        
+      <tr ng-repeat="item in dash.testItems" ng-if="(dash.showDeclined || item.status != 'Declined')">
+        <td>{{item.survey_number}}</td>
+        <td>{{item.job_number}}</td>
+        <td>{{item.client_name}}</td>
+        <td>{{item.status}}</td>
+        <td>{{item.last_modified}}</td>
+        <td>{{item.survey_date}}</td>
+        <td>View</td>
+        <td>Edit</td>
       </tr>
     </tbody>
   </table>
