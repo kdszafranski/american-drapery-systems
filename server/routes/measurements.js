@@ -4,7 +4,7 @@ var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/american-drapery-systems';
 
 
-//Post request to add measurement information to job
+//Post request to add new measurement information to survey
 router.post('/:survey_id', function(req,res) {
   console.log(req.body);
   let newMeasurement = req.body;
@@ -30,6 +30,8 @@ router.post('/:survey_id', function(req,res) {
   });
 });
 
+
+//Route to edit already existing measurement. measure_id refers to the row in the measurement table.
 router.put('/:measure_id', function(req,res) {
   console.log(req.params.measure_id);
   let newMeasurement = req.body;
