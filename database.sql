@@ -24,6 +24,7 @@ CREATE TABLE survey (
   survey_date DATE,
   installed_by VARCHAR(100),
   status VARCHAR(80),
+  last_modified DATE,
   client_id INTEGER references client
 );
 
