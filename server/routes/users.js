@@ -4,7 +4,7 @@ var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/american-drapery-systems';
 
 
-//Get request to populate Company Name Dropdown
+//Checking current_users access rights
 router.get('/:user_email', function(req, res) {
   console.log('reached get users route')
   let user_email = req.params.user_email
@@ -52,3 +52,6 @@ router.post('/', function(req,res) {
     });
   });
 });
+
+
+module.exports = router;
