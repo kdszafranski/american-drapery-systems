@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var connectionString = 'postgres://localhost:5432/american-drapery-systems';
+var connectionString = 'postgres://localhost:5432/americandraperysystems';
 
 
 //Get request to display ALL jobs on dashboard
@@ -13,10 +13,11 @@ router.get('/all', function(req, res) {
       res.sendStatus(500);
     }
 
-    client.query('SELECT * FROM survey ' +
-    'JOIN client on survey.client_id = client.id ' +
-    'WHERE status = "in progress" ' +
-    'ORDER BY last_modified',
+    client.query("SELECT * FROM survey " +
+    "JOIN client on survey.client_id = client.id " +
+    "WHERE status = 'in progress' " +
+    "OR status = 'pending' " +
+    "ORDER BY last_modified",
     function(err, result) {
       done(); // close the connection.
 
