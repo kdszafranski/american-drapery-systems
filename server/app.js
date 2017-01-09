@@ -4,7 +4,8 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var jobs = require('./routes/jobs');
+// var decoder = require('./modules/decoder');
+var surveys = require('./routes/surveys');
 var measurements = require('./routes/measurements');
 var clients = require('./routes/clients');
 var users = require('./routes/users');
@@ -14,10 +15,12 @@ var users = require('./routes/users');
 app.use(express.static('public'));
 app.use(bodyParser.json()); // needed for angular requests
 
+
 // app.use('/jobs', jobs);
 // app.use('/measurements', measurements);
 // app.use('/clients', clients);
 // app.use('/users', users);
+
 
 app.get('/dashboard', function(req, res) {});
 
@@ -31,3 +34,10 @@ var portDecision = process.env.PORT || 3000;
 app.listen(portDecision, function() {
   console.log("listening on port", portDecision);
 });
+
+//everything below decoder requires authentication
+//TO DO: Get firebase-server-account-json
+
+// app.use(decoder.token);
+app.use('/surveys', surveys);
+app.use('/measurements', measurements);
