@@ -32,29 +32,45 @@ app.controller('DashboardController', ["$firebaseAuth", "$http", function($fireb
     }
   ];
 
-  // auth.$onAuthStateChanged(function(firebaseUser){
-  //   console.log('authentication state changed');
-  //   // firebaseUser will be null if not logged in
-  //   if(firebaseUser) {
-  //     currentUser = firebaseUser;
-  //     // This is where we make our call to our server
-  //     firebaseUser.getToken().then(function(idToken){
-  //       $http({
-  //         method: 'GET',
-  //         url: '/privateData',
-  //         headers: {
-  //           id_token: idToken
-  //         }
-  //       }).then(function(response){
-  //         self.secretData = response.data;
-  //       });
-  //     });
-  //   } else {
-  //     console.log('Not logged in or not authorized.');
-  //     self.secretData = [];
-  //   }
-  //
-  // });
+  self.getJobs = function() {
+    console.log('add person');
+    $http.post('/person', self.newPerson)
+      .then(function(response) {
+        // getData();
+        self.people.push(response.data);
+        console.log(response);
+      },
+      function(response) {
+        console.log('post error:', response);
+      }
+    );
+  };
+
+
+
+  auth.$onAuthStateChanged(function(firebaseUser){
+    console.log('authentication state changed');
+    // firebaseUser will be null if not logged in
+    if(firebaseUser) {
+      currentUser = firebaseUser;
+      // This is where we make our call to our server
+      firebaseUser.getToken().then(function(idToken){
+        $http({
+          method: 'GET',
+          url: '/privateData',
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          self.secretData = response.data;
+        });
+      });
+    } else {
+      console.log('Not logged in or not authorized.');
+      self.secretData = [];
+    }
+
+  });
 
 
 
