@@ -1,7 +1,23 @@
-app.controller('DashboardController', ["$firebaseAuth", "$http", function($firebaseAuth, $http) {
-  var self = this;
+app.controller('DashboardController', ['UserFactory', '$http', function(UserFactory, $http) {
+  const self = this;
   //var auth = $firebaseAuth();
   var currentUser = {};
+  var showStuff = false;
+
+  self.logIn = () => {
+    console.log("Login clicked, running logIn fxn in dashboard controller");
+    UserFactory.logIn().then(() => {
+      self.currentUser = UserFactory.getUser();
+      showNav = true;
+    });
+  };
+
+  self.logOut = () => {
+    console.log("Logout clicked, running logOut fxn in dashboard controller");
+    UserFactory.logOut();
+    self.currentUser = false;
+  };
+
   self.showDeclined = false;
   self.showCompleted = false;
 
@@ -56,62 +72,9 @@ app.controller('DashboardController', ["$firebaseAuth", "$http", function($fireb
   }
 
 
-  // auth.$onAuthStateChanged(function(firebaseUser){
-  //   console.log('authentication state changed');
-  //   // firebaseUser will be null if not logged in
-  //   if(firebaseUser) {
-  //     currentUser = firebaseUser;
-  //     // This is where we make our call to our server
-  //     firebaseUser.getToken().then(function(idToken){
-  //       $http({
-  //         method: 'GET',
-  //         url: '/privateData',
-  //         headers: {
-  //           id_token: idToken
-  //         }
-  //       }).then(function(response){
-  //         self.secretData = response.data;
-  //       });
-  //     });
-  //   } else {
-  //     console.log('Not logged in or not authorized.');
-  //     self.secretData = [];
-  //   }
-  //
-  // });
-
-
-
   self.filter = function() {
     self.filteredItems = self.surveyList;
     self.numResults = self.filteredItems.length;
   }
-
-  self.logIn = function(){
-    auth.$signInWithPopup("google").then(function(firebaseUser) {
-      console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
-    }).catch(function(error) {
-      console.log("Authentication failed: ", error);
-    });
-  };
-  // self.logOut = function(){
-  //   auth.$signOut().then(function(){
-  //     console.log('Logging the user out!');
-  //   });
-  // }
-
-
-  // self.logIn = function(){
-  //   auth.$signInWithPopup("google").then(function(firebaseUser) {
-  //     console.log("Firebase Authenticated as: ", firebaseUser.user.displayName);
-  //   }).catch(function(error) {
-  //     console.log("Authentication failed: ", error);
-  //   });
-  // };
-  // self.logOut = function(){
-  //   auth.$signOut().then(function(){
-  //     console.log('Logging the user out!');
-  //   });
-  // }
 
 }]);
