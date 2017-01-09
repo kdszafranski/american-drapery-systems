@@ -3,3 +3,4 @@
 *.sql
 .DS_Store
 node_modules/
+firebase-service-accounts.json

@@ -7,7 +7,7 @@ var connectionString = 'postgres://localhost:5432/american-drapery-systems';
 //Checking current_users access rights
 router.get('/:user_email', function(req, res) {
   console.log('reached get users route')
-  let user_email = req.params.user_email
+  var user_email = req.params.user_email
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);
