@@ -1,4 +1,3 @@
-
 // require('dotenv').config();
 var express = require('express');
 var app = express();
@@ -8,12 +7,17 @@ var decoder = require('./modules/decoder');
 var surveys = require('./routes/surveys');
 var measurements = require('./routes/measurements');
 var dashboard = require('./routes/dashboard');
+var clients = require('./routes/clients');
+var users = require('./routes/users');
 
 
 // serve static files
 app.use(express.static('public'));
 app.use(bodyParser.json()); // needed for angular requests
 
+
+
+app.get('/dashboard', function(req, res) {});
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../public/views/index.html'));
@@ -30,6 +34,6 @@ app.listen(portDecision, function() {
 
 app.use(decoder.token);
 
-app.use('/dashboard', dashboard); 
+app.use('/dashboard', dashboard);
 app.use('/surveys', surveys);
 app.use('/measurements', measurements);

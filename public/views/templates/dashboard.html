@@ -1,3 +1,64 @@
 <h3>dashboard</h3>
 <button type="button" name="button" ng-click="dash.logIn()" ng-hide="dash.currentUser">Login</button>
 <button type="button" name="button" ng-click="dash.logOut()" ng-show="dash.currentUser">Logout</button>
+<md-card>
+  <md-card-content>
+  <div layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
+    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="dash.logIn()">
+      <span class="ng-scope">Log In</span>
+      <div class="md-ripple-container"></div>
+    </button>
+  </div>
+
+  <div layout="row" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
+    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="">
+      <span class="ng-scope">New Job</span>
+      <div class="md-ripple-container"></div>
+    </button>
+    <div layout="column">
+      <md-checkbox ng-model="dash.showCompleted">
+        Show Completed Jobs
+      </md-checkbox>
+      <md-checkbox ng-model="dash.showDeclined">
+        Show Declined Jobs
+      </md-checkbox>
+    </div>
+    <span>Results: {{dash.numResults}} </span>
+    <md-input-container class="md-block">
+      <label for="input_23">Search</label>
+      <input ng-model="dash.searchString" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" style="">
+      <div class="md-errors-spacer"></div>
+    </md-input-container>
+  </div>
+
+  <div layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
+    <table>
+      <thead>
+        <tr>
+          <th>Survey #</th>
+          <th>Job #</th>
+          <th>Client</th>
+          <th>Status</th>
+          <th>Last Modified</th>
+          <th>Survey Date</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in dash.surveyList" ng-if="(dash.showDeclined || item.status != 'Declined') && (dash.showCompleted || item.status != 'Completed')">
+          <td>{{item.survey_number}}</td>
+          <td>{{item.job_number}}</td>
+          <td>{{item.client_name}}</td>
+          <td>{{item.status}}</td>
+          <td>{{item.last_modified}}</td>
+          <td>{{item.survey_date}}</td>
+          <td>View</td>
+          <td>Edit</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  </md-card-content>
+</md-card>
