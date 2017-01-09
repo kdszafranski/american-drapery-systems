@@ -29,8 +29,8 @@ router.get('/', function(req, res) {
 //Post request to add client information
 router.post('/', function(req,res) {
   console.log(req.body);
-  let newClient = req.body;
-  let date = new Date();
+  var newClient = req.body;
+  var date = new Date();
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);
@@ -57,9 +57,9 @@ router.post('/', function(req,res) {
 //EDIT already exisiting client
 router.post('/:client_id', function(req,res) {
   console.log(req.body);
-  let id = req.params.client_id;
-  let updatedClient = req.body;
-  let date = new Date();
+  var id = req.params.client_id;
+  var updatedClient = req.body;
+  var date = new Date();
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);

@@ -7,8 +7,8 @@ var connectionString = 'postgres://localhost:5432/american-drapery-systems';
 //Post request to add new measurement information to survey
 router.post('/:survey_id', function(req,res) {
   console.log(req.body);
-  let newMeasurement = req.body;
-  let survey_id = req.params.survey_id;
+  var newMeasurement = req.body;
+  var survey_id = req.params.survey_id;
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);
@@ -34,8 +34,8 @@ router.post('/:survey_id', function(req,res) {
 //Route to edit already existing measurement. measure_id refers to the row in the measurement table.
 router.put('/:measure_id', function(req,res) {
   console.log(req.params.measure_id);
-  let newMeasurement = req.body;
-  let measure_id = req.params.measure_id);
+  var newMeasurement = req.body;
+  var measure_id = req.params.measure_id);
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);
