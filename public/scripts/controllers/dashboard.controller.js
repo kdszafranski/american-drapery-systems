@@ -2,11 +2,13 @@ app.controller('DashboardController', ['UserFactory', function(UserFactory) {
   const self = this;
   //var auth = $firebaseAuth();
   var currentUser = {};
+  var showStuff = false;
 
   self.logIn = () => {
     console.log("Login clicked, running logIn fxn in dashboard controller");
     UserFactory.logIn().then(() => {
       self.currentUser = UserFactory.getUser();
+      showNav = true;
     });
   };
 
