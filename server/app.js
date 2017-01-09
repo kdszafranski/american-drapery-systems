@@ -7,11 +7,19 @@ var bodyParser = require('body-parser');
 // var decoder = require('./modules/decoder');
 var surveys = require('./routes/surveys');
 var measurements = require('./routes/measurements');
+var clients = require('./routes/clients');
+var users = require('./routes/users');
 
 
 // serve static files
 app.use(express.static('public'));
 app.use(bodyParser.json()); // needed for angular requests
+
+
+// app.use('/jobs', jobs);
+// app.use('/measurements', measurements);
+// app.use('/clients', clients);
+// app.use('/users', users);
 
 
 app.get('/dashboard', function(req, res) {});
