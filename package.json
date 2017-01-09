@@ -1,7 +1,7 @@
 {
   "name": "american-drapery-systems",
   "version": "1.0.0",
-  "description": "",
+  "description": "American Drapery Systems Job/Measurement App",
   "main": "index.js",
   "scripts": {
     "test": "nodemon server/app.js",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/ahermundson/american-drapery-systems.git"
   },
-  "author": "",
+  "author": "Alex Hermundson, Casey Hyde, Jake Iwen, & Jeff Kealy",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ahermundson/american-drapery-systems/issues"
