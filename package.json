@@ -4,7 +4,8 @@
   "description": "American Drapery Systems Job/Measurement App",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon server/app.js"
+    "test": "nodemon server/app.js",
+    "start": "node server/app.js"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,4 @@
-app.controller('DashboardController', ["UserFactory",
-function(UserFactory) {
+app.controller('DashboardController', ["UserFactory", function(UserFactory) {
   console.log("DashboardController is running");
   const self = this;
   self.currentUser = false;
