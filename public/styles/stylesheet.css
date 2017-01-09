@@ -5,3 +5,13 @@ nav>ul>li {
   display: inline-block;
   list-style-type: none;
 }
+md-input-container{
+  margin: 1px;
+  height: 25.8990px;
+}
+#profileCheckbox{
+  margin: 2px;
+  margin-left: 3px;
+  margin-top: 5px;
+  padding: 0;
+}
