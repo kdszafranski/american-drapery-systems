@@ -1,3 +1,4 @@
+<h3>dashboard</h3>
 <md-card>
   <md-card-content>
   <div layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
@@ -13,14 +14,14 @@
       <div class="md-ripple-container"></div>
     </button>
     <div layout="column">
-      <md-checkbox ng-model="dash.showCompleted">
+      <md-checkbox ng-model="dash.show.completed" ng-change="dash.filter(dash.show)">
         Show Completed Jobs
       </md-checkbox>
-      <md-checkbox ng-model="dash.showDeclined">
+      <md-checkbox ng-model="dash.show.declined" ng-change="dash.filter(dash.show)">
         Show Declined Jobs
       </md-checkbox>
     </div>
-    <span>Results: {{dash.numResults}} </span>
+    <span>Results: {{dash.filtered.length}} </span>
     <md-input-container class="md-block">
       <label for="input_23">Search</label>
       <input ng-model="dash.searchString" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" style="">
@@ -43,7 +44,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in dash.surveyList" ng-if="(dash.showDeclined || item.status != 'Declined') && (dash.showCompleted || item.status != 'Completed')">
+        <tr ng-repeat="item in dash.filtered">
           <td>{{item.survey_number}}</td>
           <td>{{item.job_number}}</td>
           <td>{{item.client_name}}</td>

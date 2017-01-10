@@ -12,22 +12,22 @@ function($firebaseAuth, $http, $q) {
   function logIn() {
     console.log("Running logIn fxn in user-factory");
     //Sign in with popup message using google credentials
-     return auth.$signInWithPopup("google").then((firebaseUser) => {
+      return auth.$signInWithPopup("google").then(function(firebaseUser) {
       //Assign result of signin to current user object
       currentUser = firebaseUser;
       //Log user's email
       console.log("Firebase User: ", firebaseUser, firebaseUser.user.email);
       //Get idToken
-      currentUser.user.getToken().then((idToken) => {
+      currentUser.user.getToken().then(function(idToken) {
         //GET request to /dashboard route, send idToken in header
-        $http({
+         $http({
           method: 'GET',
-          url: '/dashboard',
+          url: '/users',
           headers: {
             id_token: idToken
           }
-        }).then((response) => { //when $http promise resolved:
-          console.log("I'm back form the GET request! res: ", response);
+        }).then(function(response) { //when $http promise resolved:
+          console.log("Retrieved this data from server at login: ", response);
         });
       });
     });
@@ -38,7 +38,7 @@ function($firebaseAuth, $http, $q) {
   function logOut() {
     console.log("Running logOut fxn in user-factory");
     //Firebase sign out method
-    auth.$signOut().then(() => {
+    auth.$signOut().then(function() {
       console.log("User succesfully logged out");
     });
   }//End logout fxn
@@ -54,9 +54,15 @@ function($firebaseAuth, $http, $q) {
   into publicApi object
   ***********************/
   var publicApi = {
-    logIn: () => logIn(),
-    logOut: () => logOut(),
-    getUser: () => getUser()
+    logIn: function() {
+      return logIn()
+    },
+    logOut: function() {
+      return logOut()
+    },
+    getUser: function() {
+      return getUser()
+    }
   };
   /*************************
   Return publicApi object
