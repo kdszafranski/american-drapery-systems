@@ -34,35 +34,35 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
 
   //GET client_name and id for Dropdown
   function getClients() {
-    //currentUser = UserFactory.getUser();
-    //console.log("current user: ", currentUser);
-    //currentUser.user.getToken().then(function(idToken) {
+    currentUser = UserFactory.getUser();
+    console.log("current user: ", currentUser);
+    currentUser.user.getToken().then(function(idToken) {
       $http({
         method: 'GET',
         url: '/clients'
-        // headers: {
-        //   id_token: idToken
-        // }
+        headers: {
+          id_token: idToken
+        }
       }).then(function(response){
         console.log('success. Response', response.data);
         self.clients = response.data
       });
-    // });
+    });
   }
 
   getClients();
 
   //GET client information from client selected from dropdown
   function getClient() {
-    //currentUser = UserFactory.getUser();
-    //console.log("current user: ", currentUser);
-    //currentUser.user.getToken().then(function(idToken) {
+    currentUser = UserFactory.getUser();
+    console.log("current user: ", currentUser);
+    currentUser.user.getToken().then(function(idToken) {
       $http({
         method: 'GET',
         url: '/clients/' + self.selected.id
-        // headers: {
-        //   id_token: idToken
-        // }
+        headers: {
+          id_token: idToken
+        }
       }).then(function(response){
         console.log('success. Response', response.data);
         self.currentProfile = response.data[0]
@@ -72,43 +72,43 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
           self.showCompany = false;
         }
       });
-    // });
+    });
   }
 
   //POST client information to database
   function postClients() {
-    // currentUser = UserFactory.getUser();
-    // console.log("current user: ", currentUser);
-    // currentUser.user.getToken().then(function(idToken) {
+    currentUser = UserFactory.getUser();
+    console.log("current user: ", currentUser);
+    currentUser.user.getToken().then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients',
         data: self.currentProfile
-        // headers: {
-        //   id_token: idToken
-        // }
+        headers: {
+          id_token: idToken
+        }
       }).then(function(response){
         console.log('success');
       });
-    // });
+    });
   }
 
   //Update client information in database
   function updateClient() {
-    // currentUser = UserFactory.getUser();
-    // console.log("current user: ", currentUser);
-    // currentUser.user.getToken().then(function(idToken) {
+    currentUser = UserFactory.getUser();
+    console.log("current user: ", currentUser);
+    currentUser.user.getToken().then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients/' + self.selected.id,
         data: self.currentProfile
-        // headers: {
-        //   id_token: idToken
-        // }
+        headers: {
+          id_token: idToken
+        }
       }).then(function(response){
         console.log('success');
       });
-    // });
+    });
   }
 
   //course of action from drop down selection
