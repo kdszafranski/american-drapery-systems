@@ -17,8 +17,8 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
   function getSurveys() {
     currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
-    // currentUser.user.getToken().then(function(idToken) {
-    var idToken = true;
+    currentUser.user.getToken().then(function(idToken) {
+    // var idToken = true;
       $http({
         method: 'GET',
         url: '/surveys/all',
@@ -30,7 +30,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
         surveyList = formatData(response.data);
         self.filter(self.show);
       });
-    // });
+    });
   }
 
   function formatData(surveys){
