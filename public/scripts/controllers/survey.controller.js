@@ -11,11 +11,11 @@ app.controller('SurveyController', ["$http", function($http) {
       console.log("Response From Server: ", self.surveyDetails.data);
       var separateAreas = groupBy(self.surveyDetails.data, 'area');
       console.log(separateAreas);
-      var areaArray = [];
+      self.areaArray = [];
       for (x in separateAreas) {
-        areaArray.push(separateAreas[x]);
+        self.areaArray.push(separateAreas[x]);
       }
-      console.log(areaArray);
+      console.log(self.areaArray[2][0].area);
     },
     function(err) {
       console.log("error getting survey details: ", err);

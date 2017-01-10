@@ -21,8 +21,8 @@
     </ul>
   </div>
 </div>
-<table style="width:100%">
-  <h4>Area: {{survey.surveyDetails.data[0].area}}</h4>
+<table style="width:100%" ng-repeat="areas in survey.areaArray">
+  <h4>Area: {{areas.area}}</h4>
   <tr>
     <th>Floor</th>
     <th>Room</th>
