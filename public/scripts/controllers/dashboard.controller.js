@@ -1,10 +1,10 @@
-app.controller('DashboardController', ['UserFactory', '$http', function(UserFactory, $http) {
+app.controller('DashboardController', ['UserFactory', '$http', '$location', function(UserFactory, $http, $location) {
   const self = this;
   var currentUser = {};
   var surveyList = [];
 
   self.show = {
-    completed: true,
+    completed: false,
     declined: false,
     compare: function (status) {
       var compBool = (!this.completed && (status == "Completed"));
@@ -14,7 +14,7 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
   }
   getSurveys();
 
-  function getSurveys(){
+  function getSurveys() {
     currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
     currentUser.user.getToken().then(function(idToken) {
@@ -48,6 +48,10 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
         self.filtered.push(surveyList[i]);
       }
     }
+  }
+
+  self.newJob = function() {
+    $location.path('/survey');
   }
 
 }]);
