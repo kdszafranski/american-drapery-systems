@@ -6,9 +6,7 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
     console.log("Login clicked, running logIn fxn in dashboard controller");
     UserFactory.logIn().then(function() {
       console.log('test');
-      if(currentUser) {
-        getSurveys();
-      }
+      getSurveys();
     });
   };
 
@@ -20,6 +18,10 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
 
   self.showDeclined = false;
   self.showCompleted = false;
+  self.surveyList = [];
+  var standardList = [];
+  var completedList = [];
+  var declinedList = [];
 
   function getSurveys(){
     currentUser = UserFactory.getUser();
@@ -27,13 +29,51 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
     currentUser.user.getToken().then(function(idToken) {
       $http({
         method: 'GET',
-        url: '/surveys/all',
+        url: '/surveys/all/',
         headers: {
           id_token: idToken
         }
       }).then(function(response){
         console.log('success');
-        formatData(response.data);
+        standardList = formatData(response.data);
+        self.surveyList = standardList;
+      });
+    });
+  }
+
+  self.completed = function(toShow) {
+    if(toShow == true) {
+      completedList = getMore('Completed');
+    } else {
+      completedList = [];
+      buildSurveyList();
+    }
+  }
+
+  self.declined = function(toShow) {
+    if(toShow == true) {
+      declinedList = getMore('Declined');
+    } else {
+      declinedList = [];
+      buildSurveyList();
+    }
+  }
+
+  function getMore(jobStatus) {
+    currentUser = UserFactory.getUser();
+    console.log('getting surveys - status type', jobStatus);
+    currentUser.user.getToken().then(function(idToken) {
+      $http({
+        method: 'GET',
+        url: '/surveys/all/' + jobStatus,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log('success');
+        console.log('more response', response.data);
+        self.surveyList.concat(formatData(response.data));
+        console.log('surveylist', self.surveyList);
       });
     });
   }
@@ -44,13 +84,13 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
       surveys[i].last_modified = moment(surveys[i].last_modified).format("YYYY/MM/DD");
       surveys[i].survey_date = moment(surveys[i].survey_date).format("YYYY/MM/DD");
     }
-    self.surveyList = surveys;
+    return surveys;
   }
 
-
-  self.filter = function() {
-    self.filteredItems = self.surveyList;
-    self.numResults = self.filteredItems.length;
+  function buildSurveyList() {
+    console.log('lists', standardList, completedList, declinedList);
+    self.surveyList.concat(standardList, completedList, declinedList);
   }
+
 
 }]);

@@ -5,6 +5,33 @@ var connectionString = 'postgres://localhost:5432/americandraperysystems';
 
 
 //Get request to display ALL jobs on dashboard
+
+router.get('/all/:status', function(req, res) {
+  console.log('reached get job status route');
+  var status = req.params.status;
+  console.log('ststus type:', status);
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+    client.query("SELECT * FROM survey " +
+    "JOIN client on survey.client_id = client.id " +
+    "WHERE status = '" + status +
+    "' ORDER BY last_modified",
+    function(err, result) {
+      done(); // close the connection.
+
+      if(err) {
+        console.log('select query error: ', err);
+        res.sendStatus(500);
+      }
+      console.log(result.rows);
+      res.send(result.rows);
+    });
+  });
+});
+
 router.get('/all', function(req, res) {
   console.log('reached get jobs route');
   pg.connect(connectionString, function(err, client, done) {
@@ -15,8 +42,8 @@ router.get('/all', function(req, res) {
 
     client.query("SELECT * FROM survey " +
     "JOIN client on survey.client_id = client.id " +
-    "WHERE status = 'in progress' " +
-    "OR status = 'pending' " +
+    "WHERE status = 'In Progress' " +
+    "OR status = 'Pending' " +
     "ORDER BY last_modified",
     function(err, result) {
       done(); // close the connection.
