@@ -7,8 +7,8 @@
   </div>
   <div class="client-contact">
     <ul>
-      <li>Contact Name / 555-5555 / Site Contact</li>
-      <li>Contact Name / 555-5555 / Site Contact</li>
+      <li>Primary Contact: {{survey.primary_contact_name}} / {{survey.primary_contact_phone_number}} / {{survey.primary_contact_email}}</li>
+      <li ng-show="survey.showAltContact">Alternate Contact: {{survey.alt_contact_name}} / {{survey.alt_phone_number}} / {{survey.alt_contact_email}}</li>
     </ul>
   </div>
   <div class="client-address">

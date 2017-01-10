@@ -9,6 +9,7 @@ nav>ul>li {
 .survey-header {
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 .survey-header li {
   list-style-type: none;
