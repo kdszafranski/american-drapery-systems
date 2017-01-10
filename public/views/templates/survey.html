@@ -21,30 +21,37 @@
     </ul>
   </div>
 </div>
-<table style="width:100%" ng-repeat="areas in survey.areaArray">
-  <h4>Area: {{areas.area}}</h4>
-  <tr>
-    <th>Floor</th>
-    <th>Room</th>
-    <th>Quantity</th>
-    <th>Width</th>
-    <th>Length</th>
-    <th>IB/OB</th>
-    <th>Controls</th>
-    <th>Fascia Size</th>
-    <th>Fabric</th>
-    <th>Mount</th>
-  </tr>
-  <tr ng-repeat="measurements in survey.surveyDetails.data">
-    <td>{{measurements.floor}}</td>
-    <td>{{measurements.room}}</td>
-    <td>{{measurements.quantity}}</td>
-    <td>{{measurements.width}}</td>
-    <td>{{measurements.length}}</td>
-    <td>{{measurements.inside}}</td>
-    <td>{{measurements.controls}}</td>
-    <td>{{measurements.fasica_size}}</td>
-    <td>{{measurements.fabric}}</td>
-    <td>{{measurements.mount}}</td>
-  </tr>
-</table>
+<section ng-repeat="area in survey.areaArray track by $index">
+  <h4>Area: {{area[0].area}}</h4>
+  <table style="width:100%" >
+    <thead>
+    <tr>
+      <th>Floor</th>
+      <th>Room</th>
+      <th>Quantity</th>
+      <th>Width</th>
+      <th>Length</th>
+      <th>IB/OB</th>
+      <th>Controls</th>
+      <th>Fascia Size</th>
+      <th>Fabric</th>
+      <th>Mount</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr ng-repeat="measurements in area">
+      <td>{{measurements.floor}}</td>
+      <td>{{measurements.room}}</td>
+      <td>{{measurements.quantity}}</td>
+      <td>{{measurements.width}}</td>
+      <td>{{measurements.length}}</td>
+      <td>{{measurements.inside}}</td>
+      <td>{{measurements.controls}}</td>
+      <td>{{measurements.fasica_size}}</td>
+      <td>{{measurements.fabric}}</td>
+      <td>{{measurements.mount}}</td>
+    </tr>
+  </tbody>
+  </table>
+</section>

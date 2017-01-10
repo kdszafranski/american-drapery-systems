@@ -15,7 +15,7 @@ app.controller('SurveyController', ["$http", function($http) {
       for (x in separateAreas) {
         self.areaArray.push(separateAreas[x]);
       }
-      console.log(self.areaArray[2][0].area);
+      console.log(self.areaArray[2][0].area]);
     },
     function(err) {
       console.log("error getting survey details: ", err);
