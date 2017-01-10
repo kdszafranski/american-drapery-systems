@@ -5,3 +5,28 @@ nav>ul>li {
   display: inline-block;
   list-style-type: none;
 }
+
+md-input-container{
+  margin: 1px;
+  height: 25.8990px;
+}
+#profileCheckbox{
+  margin: 2px;
+  margin-left: 3px;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.survey-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.survey-header li {
+  list-style-type: none;
+}
+
+td {
+  text-align: center;
+
+}
