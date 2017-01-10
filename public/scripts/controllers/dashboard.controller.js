@@ -51,7 +51,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
   }
 
   self.newJob = function() {
-    $location.path('/survey');
+    $location.path('/profile');
   }
 
 }]);
