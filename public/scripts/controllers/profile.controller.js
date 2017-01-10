@@ -1,4 +1,4 @@
-app.controller('ProfileController', ["$http", function($http) {
+app.controller('ProfileController', ["$http", "UserFactory", function($http, UserFactory) {
   var self = this;
   self.currentProfile = {};
   self.checkbox = true;
@@ -12,25 +12,62 @@ app.controller('ProfileController', ["$http", function($http) {
       self.currentProfile.billing_address_zip = self.currentProfile.survey_address_zip
     }
     console.log("submit button clicked. Object:", self.currentProfile);
-    $http.post('/clients', self.currentProfile)
-      .then(function(response){
-        console.log("POST finished");
-      });
+    postClients();
   }
   self.copyAddress = function(){
     console.log("checkbox");
 
   }
   function getClients() {
-    $http.get('/clients')
-    .then(function(response) {
-      console.log("Clients", response);
-    },
-    function(response) {
-      console.log('get error:', response);
+    currentUser = UserFactory.getUser();
+    console.log('getting surveys', currentUser.credential.idToken);
+    $http({
+      method: 'GET',
+      url: '/clients',
+      headers: {
+        id_token: currentUser.credential.idToken
+      }
+    }).then(function(response){
+      console.log('success');
+      formatData(response.data);
     });
   }
 
+  function getSurveys(){
+    currentUser = UserFactory.getUser();
+    console.log('getting surveys - currentUser:', currentUser);
+    currentUser.user.getToken().then(function(idToken) {
+      $http({
+        method: 'GET',
+        url: '/surveys/all/',
+        headers: {
+          id_token: currentUser.credential.idToken
+        }
+      }).then(function(response){
+        console.log('success');
+        formatData(response.data);
+      });
+    });
+  }
+
+  function postClients() {
+    currentUser = UserFactory.getUser();
+    console.log("current user: ", currentUser);
+    console.log('getting surveys', currentUser.credential.idToken);
+
+    currentUser.user.getToken().then(function(idToken) {
+      $http({
+        method: 'POST',
+        url: '/clients',
+        data: self.currentProfile,
+        headers: {
+          id_token: currentUser.credential.idToken
+        }
+      }).then(function(response){
+        console.log('success');
+      });
+    });
+  }
 
 
 }]);
