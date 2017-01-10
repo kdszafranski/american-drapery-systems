@@ -1,4 +1,8 @@
+node_modules
+*.log
+firebase-service-account.json
 .env
 *.sql
 .DS_Store
 node_modules/
+firebase-service-accounts.json

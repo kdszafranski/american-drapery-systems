@@ -1,5 +1,6 @@
 var app = angular.module('app', ['ngRoute', 'firebase', 'ngMaterial']);
 
+
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/dashboard',{
