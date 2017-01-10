@@ -23,16 +23,18 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
 
   function getSurveys(){
     currentUser = UserFactory.getUser();
-    console.log('getting surveys', currentUser.credential.idToken);
-    $http({
-      method: 'GET',
-      url: '/surveys/all',
-      headers: {
-        id_token: currentUser.credential.idToken
-      }
-    }).then(function(response){
-      console.log('success');
-      formatData(response.data);
+    console.log('getting surveys - currentUser:', currentUser);
+    currentUser.user.getToken().then(function(idToken) {
+      $http({
+        method: 'GET',
+        url: '/surveys/all',
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log('success');
+        formatData(response.data);
+      });
     });
   }
 
