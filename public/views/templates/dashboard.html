@@ -37,7 +37,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="result in results = (dash.filtered  | filter: {'client_name': query})">
+        <tr data-ng-repeat="result in results = (dash.filtered  | filter: {$: query})">
           <td>{{result.survey_number}}</td>
           <td>{{result.job_number}}</td>
           <td>{{result.client_name}}</td>
