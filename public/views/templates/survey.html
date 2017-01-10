@@ -1,1 +1,57 @@
-<h3>job view</h3>
+<h3>Survey View</h3>
+<div class="survey-header">
+  <div class="job-info">
+    <p>Job Number: 1111111</p>
+    <p>Completion Date: MM/DD/YYYY</p>
+    <p>Survey Date: 01/01/2017</p>
+  </div>
+  <div class="client-contact">
+    <ul>
+      <li>Primary Contact: {{survey.primary_contact_name}} / {{survey.primary_contact_phone_number}} / {{survey.primary_contact_email}}</li>
+      <li ng-show="survey.showAltContact">Alternate Contact: {{survey.alt_contact_name}} / {{survey.alt_phone_number}} / {{survey.alt_contact_email}}</li>
+    </ul>
+  </div>
+  <div class="client-address">
+    <h3>{{survey.surveyDetails.data[0].client_name}}</h3>
+    <ul>
+      <li>{{survey.surveyDetails.data[0].address_street}}</li>
+      <li>{{survey.surveyDetails.data[0].address_city}}</li>
+      <li>{{survey.surveyDetails.data[0].address_state}}</li>
+      <li>{{survey.surveyDetails.data[0].address_zip}}</li>
+    </ul>
+  </div>
+</div>
+<section ng-repeat="area in survey.areaArray track by $index">
+  <h4>Area: {{area[0].area}}</h4>
+  <table style="width:100%" >
+    <thead>
+    <tr>
+      <th>Floor</th>
+      <th>Room</th>
+      <th>Quantity</th>
+      <th>Width</th>
+      <th>Length</th>
+      <th>IB/OB</th>
+      <th>Controls</th>
+      <th>Fascia Size</th>
+      <th>Fabric</th>
+      <th>Mount</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr ng-repeat="measurements in area">
+      <td>{{measurements.floor}}</td>
+      <td>{{measurements.room}}</td>
+      <td>{{measurements.quantity}}</td>
+      <td>{{measurements.width}}</td>
+      <td>{{measurements.length}}</td>
+      <td>{{measurements.inside}}</td>
+      <td>{{measurements.controls}}</td>
+      <td>{{measurements.fasica_size}}</td>
+      <td>{{measurements.fabric}}</td>
+      <td>{{measurements.mount}}</td>
+    </tr>
+  </tbody>
+  </table>
+</section>
