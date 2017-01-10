@@ -9,6 +9,4 @@ app.controller('LoginController', ['UserFactory', '$location', function(UserFact
     });
   };
 
-
-
 }]);
