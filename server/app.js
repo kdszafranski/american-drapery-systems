@@ -32,7 +32,7 @@ app.listen(portDecision, function() {
 //everything below decoder requires authentication
 //TO DO: Get firebase-server-account-json
 
-app.use(decoder.token);
+// app.use(decoder.token);
 
 app.use('/dashboard', dashboard);
 app.use('/surveys', surveys);

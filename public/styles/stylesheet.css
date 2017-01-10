@@ -5,3 +5,15 @@ nav>ul>li {
   display: inline-block;
   list-style-type: none;
 }
+
+.survey-header {
+  display: flex;
+  justify-content: space-around;
+}
+.survey-header li {
+  list-style-type: none;
+}
+
+td {
+  text-align: center;
+}

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var connectionString = 'postgres://localhost:5432/american-drapery-systems';
+var connectionString = 'postgres://localhost:5432/americandraperysystems';
 
 
 //Get request to display ALL jobs on dashboard
