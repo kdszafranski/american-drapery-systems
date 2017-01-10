@@ -12,7 +12,7 @@ function($firebaseAuth, $http, $q) {
   function logIn() {
     console.log("Running logIn fxn in user-factory");
     //Sign in with popup message using google credentials
-     return auth.$signInWithPopup("google").then(function(firebaseUser) {
+      return auth.$signInWithPopup("google").then(function(firebaseUser) {
       //Assign result of signin to current user object
       currentUser = firebaseUser;
       //Log user's email
@@ -20,14 +20,14 @@ function($firebaseAuth, $http, $q) {
       //Get idToken
       currentUser.user.getToken().then(function(idToken) {
         //GET request to /dashboard route, send idToken in header
-        $http({
+         $http({
           method: 'GET',
           url: '/users',
           headers: {
             id_token: idToken
           }
         }).then(function(response) { //when $http promise resolved:
-          console.log("I'm back form the GET request! res: ", response);
+          console.log("Retrieved this data from server at login: ", response);
         });
       });
     });
