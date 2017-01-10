@@ -2,22 +2,22 @@
 <md-card>
   <md-card-content>
   <div layout="row" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
-    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="">
+    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="dash.newJob()">
       <span class="ng-scope">New Job</span>
       <div class="md-ripple-container"></div>
     </button>
     <div layout="column">
-      <md-checkbox ng-model="dash.showCompleted">
+      <md-checkbox ng-model="dash.show.completed" ng-change="dash.filter(dash.show)">
         Show Completed Jobs
       </md-checkbox>
-      <md-checkbox ng-model="dash.showDeclined">
+      <md-checkbox ng-model="dash.show.declined" ng-change="dash.filter(dash.show)">
         Show Declined Jobs
       </md-checkbox>
     </div>
-    <span>Results: {{dash.numResults}} </span>
+    <span>Results: {{results.length}} </span>
     <md-input-container class="md-block">
       <label for="input_23">Search</label>
-      <input ng-model="dash.searchString" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" style="">
+      <input ng-model="query" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
       <div class="md-errors-spacer"></div>
     </md-input-container>
   </div>
@@ -37,13 +37,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="item in dash.surveyList" ng-if="(dash.showDeclined || item.status != 'Declined') && (dash.showCompleted || item.status != 'Completed')">
-          <td>{{item.survey_number}}</td>
-          <td>{{item.job_number}}</td>
-          <td>{{item.client_name}}</td>
-          <td>{{item.status}}</td>
-          <td>{{item.last_modified}}</td>
-          <td>{{item.survey_date}}</td>
+        <tr data-ng-repeat="result in results = (dash.filtered  | filter: {$: query})">
+          <td>{{result.survey_number}}</td>
+          <td>{{result.job_number}}</td>
+          <td>{{result.client_name}}</td>
+          <td>{{result.status}}</td>
+          <td>{{result.last_modified}}</td>
+          <td>{{result.survey_date}}</td>
           <td>View</td>
           <td>Edit</td>
         </tr>
