@@ -7,6 +7,7 @@ var connectionString = 'postgres://localhost:5432/americandraperysystems';
 //Checking current_users access rights
 router.get('/', function(req, res) {
   console.log('reached get users route')
+  console.log("req.decodedToken: ", req.decodedToken);
   var user_email = req.decodedToken.email;
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
