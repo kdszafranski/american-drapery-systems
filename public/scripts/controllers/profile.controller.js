@@ -39,7 +39,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
     currentUser.user.getToken().then(function(idToken) {
       $http({
         method: 'GET',
-        url: '/clients'
+        url: '/clients',
         headers: {
           id_token: idToken
         }
@@ -59,7 +59,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
     currentUser.user.getToken().then(function(idToken) {
       $http({
         method: 'GET',
-        url: '/clients/' + self.selected.id
+        url: '/clients/' + self.selected.id,
         headers: {
           id_token: idToken
         }
@@ -83,7 +83,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
       $http({
         method: 'POST',
         url: '/clients',
-        data: self.currentProfile
+        data: self.currentProfile,
         headers: {
           id_token: idToken
         }
@@ -101,7 +101,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
       $http({
         method: 'POST',
         url: '/clients/' + self.selected.id,
-        data: self.currentProfile
+        data: self.currentProfile,
         headers: {
           id_token: idToken
         }
