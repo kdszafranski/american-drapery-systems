@@ -1,28 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var connectionString = 'postgres://localhost:5432/american-drapery-systems';
+var connectionString = 'postgres://localhost:5432/americandraperysystems';
 
 
 //Checking current_users access rights
-router.get('/:user_email', function(req, res) {
+router.get('/', function(req, res) {
   console.log('reached get users route')
-  var user_email = req.params.user_email
+  var user_email = req.decodedToken.email;
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);
       res.sendStatus(500);
     }
 
-    client.query('SELECT * FROM users WHERE email = ' + user_email, function(err, result) {
+    client.query('SELECT * FROM users WHERE email = $1', [user_email], function(err, result) {
       done(); // close the connection.
 
       if(err) {
         console.log('select query error: ', err);
         res.sendStatus(500);
+      } else {
+        console.log(result.rows);
+        res.send(result.rows);
       }
-      console.log(result.rows);
-      res.send(result.rows);
     });
   });
 });

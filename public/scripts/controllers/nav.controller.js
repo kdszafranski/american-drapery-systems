@@ -1,18 +1,17 @@
-app.controller('NavController', ["UserFactory", "$scope",
-function(UserFactory, $scope) {
+app.controller('NavController', ["UserFactory",
+function(UserFactory) {
   console.log("Nav controller is running!");
-  const self = this;
+  // 
+  // const self = this;
+  // self.showStuff = true;
+  //
+  // var currentUser = UserFactory.getUser();
+  //
+  // if(currentUser != {}) {
+  //   self.showStuff = true;
+  // }
 
-  self.showNav = false;
 
-  self.currentUser = UserFactory.getUser();
-
-
-
-
-
-
-  // self.currentUser = UserFactory.getUser();
 
 
 }]);

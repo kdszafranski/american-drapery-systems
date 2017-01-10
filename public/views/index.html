@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <title>American Drapery Systems</title>
   <link rel="stylesheet" href="/styles/angular-material.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/md-data-table/1.8.0/md-data-table-style.css">
   <link rel="stylesheet" href="/styles/stylesheet.css" />
   <!-- VENDORS -->
   <script src="/vendor/angular.js" type="text/javascript"></script>
@@ -15,20 +14,24 @@
   <script src="/vendor/angular-animate.min.js" type="text/javascript"></script>
   <script src="/vendor/angular-aria.min.js" type="text/javascript"></script>
   <script src="/vendor/angular-material.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/md-data-table/1.8.0/md-data-table-templates.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/md-data-table/1.8.0/md-data-table.min.js" type="text/javascript"></script>
+
+  <script src="/vendor/moment-with-locales.min.js" type="text/javascript"></script>
+  <script src="/vendor/jquery.min.js" type="text/javascript"></script>
+
   <!-- CONTROLLERS -->
   <script src="/scripts/client.js" type="text/javascript"></script>
+  <script src="/scripts/controllers/login.controller.js" type="text/javascript"></script>
   <script src="/scripts/controllers/dashboard.controller.js" type="text/javascript"></script>
   <script src="/scripts/controllers/measurement.controller.js" type="text/javascript"></script>
   <script src="/scripts/controllers/survey.controller.js" type="text/javascript"></script>
   <script src="/scripts/controllers/nav.controller.js" type="text/javascript"></script>
+
   <!-- SERVICES -->
   <script src="/scripts/services/user-factory.js" type="text/javascript"></script>
 </head>
 <body ng-app="app" >
 
-  <div ng-controller="NavController as nav" ng-include="'/views/templates/nav.html'" ng-show="nav.currentUser"></div>
+  <div ng-controller="NavController as nav" ng-include="'/views/templates/nav.html'"></div>
 
   <main class="container" ng-view></main>
 

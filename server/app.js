@@ -17,7 +17,7 @@ app.use(bodyParser.json()); // needed for angular requests
 
 
 
-app.get('/dashboard', function(req, res) {});
+// app.get('/dashboard', function(req, res) {});
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../public/views/index.html'));
@@ -34,6 +34,7 @@ app.listen(portDecision, function() {
 
 // app.use(decoder.token);
 
-app.use('/dashboard', dashboard);
+app.use('/users', users);
+// app.use('/dashboard', dashboard);
 app.use('/surveys', surveys);
 app.use('/measurements', measurements);

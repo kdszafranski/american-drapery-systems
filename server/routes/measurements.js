@@ -36,7 +36,6 @@ router.put('/:measure_id', function(req,res) {
   console.log(req.params.measure_id);
   var newMeasurement = req.body;
   var measure_id = req.params.measure_id;
-  var measure_id = req.params.measure_id;
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);
