@@ -1,23 +1,6 @@
 app.controller('DashboardController', ['UserFactory', '$http', function(UserFactory, $http) {
   const self = this;
   var currentUser = {};
-
-  self.logIn = function() {
-    console.log("Login clicked, running logIn fxn in dashboard controller");
-    UserFactory.logIn().then(function() {
-      console.log('test');
-      if(currentUser) {
-        getSurveys();
-      }
-    });
-  };
-
-  self.logOut = function() {
-    console.log("Logout clicked, running logOut fxn in dashboard controller");
-    UserFactory.logOut();
-    currentUser = {};
-  };
-  self.filtered = [];
   var surveyList = [];
 
   self.show = {
@@ -29,6 +12,7 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
       return compBool || decBool;
     }
   }
+  getSurveys();
 
   function getSurveys(){
     currentUser = UserFactory.getUser();
