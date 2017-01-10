@@ -23,6 +23,11 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'SurveyController',
     controllerAs: 'survey'
   })
+  .when('/profile' ,{
+    templateUrl: '/views/templates/profile.html',
+    controller: 'ProfileController',
+    controllerAs: 'profile'
+  })
   .otherwise({
     redirectTo: 'login'
   });

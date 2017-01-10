@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
-var connectionString = 'postgres://localhost:5432/american-drapery-systems';
+var connectionString = 'postgres://localhost:5432/americandraperysystems';
 
 
-//Get request to populate Company Name Dropdown
+//Get request to populate Company Dropdown
 router.get('/', function(req, res) {
   console.log('reached get clients route')
   pg.connect(connectionString, function(err, client, done) {
@@ -14,6 +14,28 @@ router.get('/', function(req, res) {
     }
 
     client.query('SELECT client_name, id FROM client', function(err, result) {
+      done(); // close the connection.
+
+      if(err) {
+        console.log('select query error: ', err);
+        res.sendStatus(500);
+      }
+      console.log(result.rows);
+      res.send(result.rows);
+    });
+  });
+});
+
+//Get request to populate client profile fields
+router.get('/:clientId', function(req, res) {
+  console.log('reached get clients route', req.params.clientId)
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+
+    client.query('SELECT * FROM client WHERE id = ' + req.params.clientId, function(err, result) {
       done(); // close the connection.
 
       if(err) {
@@ -66,7 +88,8 @@ router.post('/:client_id', function(req,res) {
       res.sendStatus(500);
     }
     client.query("UPDATE client " +
-    "SET client_name = $1, primary_contact_name = $2, primary_contact_phone_number = $3, primary_contact_email = $4, alt_contact_name = $5, alt_contact_email = $6, alt_phone_number = $7, billing_address_street = $8, billing_address_city = $9, billing_address_state = $10, billing_address_zip = $11, survey_address_street = $12, survey_address_city = $13, survey_address_state = $14, survey_address_zip = $15",
+    "SET client_name = $1, primary_contact_name = $2, primary_contact_phone_number = $3, primary_contact_email = $4, alt_contact_name = $5, alt_contact_email = $6, alt_phone_number = $7, billing_address_street = $8, billing_address_city = $9, billing_address_state = $10, billing_address_zip = $11, survey_address_street = $12, survey_address_city = $13, survey_address_state = $14, survey_address_zip = $15 " +
+    "WHERE id = " + id,
     [updatedClient.client_name, updatedClient.primary_contact_name, updatedClient.primary_contact_phone_number, updatedClient.primary_contact_email, updatedClient.alt_contact_name, updatedClient.alt_contact_email, updatedClient.alt_phone_number, updatedClient.billing_address_street, updatedClient.billing_address_city, updatedClient.billing_address_state, updatedClient.billing_address_zip, updatedClient.survey_address_street, updatedClient.survey_address_city, updatedClient.survey_address_state, updatedClient.survey_address_zip],
     function(err, result) {
       done(); //close the connection
