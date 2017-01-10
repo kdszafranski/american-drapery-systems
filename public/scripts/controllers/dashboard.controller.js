@@ -1,25 +1,18 @@
 app.controller('DashboardController', ['UserFactory', '$http', function(UserFactory, $http) {
   const self = this;
   var currentUser = {};
+  var surveyList = [];
 
-  self.logIn = function() {
-    console.log("Login clicked, running logIn fxn in dashboard controller");
-    UserFactory.logIn().then(function() {
-      console.log('test');
-      if(currentUser) {
-        getSurveys();
-      }
-    });
-  };
-
-  self.logOut = function() {
-    console.log("Logout clicked, running logOut fxn in dashboard controller");
-    UserFactory.logOut();
-    currentUser = {};
-  };
-
-  self.showDeclined = false;
-  self.showCompleted = false;
+  self.show = {
+    completed: true,
+    declined: false,
+    compare: function (status) {
+      var compBool = (!this.completed && (status == "Completed"));
+      var decBool = (!this.declined && (status == "Declined"));
+      return compBool || decBool;
+    }
+  }
+  getSurveys();
 
   function getSurveys(){
     currentUser = UserFactory.getUser();
@@ -33,7 +26,8 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
         }
       }).then(function(response){
         console.log('success');
-        formatData(response.data);
+        surveyList = formatData(response.data);
+        self.filter(self.show);
       });
     });
   }
@@ -44,13 +38,16 @@ app.controller('DashboardController', ['UserFactory', '$http', function(UserFact
       surveys[i].last_modified = moment(surveys[i].last_modified).format("YYYY/MM/DD");
       surveys[i].survey_date = moment(surveys[i].survey_date).format("YYYY/MM/DD");
     }
-    self.surveyList = surveys;
+    return surveys;
   }
 
-
-  self.filter = function() {
-    self.filteredItems = self.surveyList;
-    self.numResults = self.filteredItems.length;
+  self.filter = function(show) {
+    self.filtered = [];
+    for (var i = 0; i < surveyList.length; i++) {
+      if(!show.compare(surveyList[i].status)) {
+        self.filtered.push(surveyList[i]);
+      }
+    }
   }
 
 }]);
