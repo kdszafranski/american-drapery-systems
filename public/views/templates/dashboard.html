@@ -16,7 +16,7 @@
     <span>Results: {{results.length}} </span>
     <md-input-container class="md-block">
       <label for="input_23">Search</label>
-      <input ng-model="query" update-on-enter class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
+      <input ng-model="query"  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
       <div class="md-errors-spacer"></div>
     </md-input-container>
   </div>
@@ -48,13 +48,7 @@
         </tr>
       </tbody>
     </table>
-    <button ng-disabled="dash.currentPage == 0" ng-click="dash.currentPage=dash.currentPage-1">
-        Previous
-    </button>
-    {{dash.currentPage+1}}/{{numberOfPages()}}
-    <button ng-disabled="dash.currentPage >= getData().length/dash.pageSize - 1" ng-click="dash.currentPage=dash.currentPage+1">
-        Next
-    </button>
+
 
   </div>
   </md-card-content>
