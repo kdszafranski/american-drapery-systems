@@ -1,3 +1,4 @@
+
 app.controller('NavController', ["UserFactory", "$location", "$rootScope",
 function(UserFactory, $location, $rootScope) {
   console.log("Nav controller is running!");
@@ -26,7 +27,5 @@ function(UserFactory, $location, $rootScope) {
     self.isUser = UserFactory.userChecker();
     console.log("nav controllers get user: ", self.currentUser, self.isUser);
   }
-
-
 
 }]);

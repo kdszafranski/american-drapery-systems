@@ -20,9 +20,9 @@ function($firebaseAuth, $http, $q) {
       //Log user's email
       console.log("Firebase User: ", firebaseUser.user.email);
       //Get idToken
-      currentUser.user.getToken().then(function(idToken) {
+      return currentUser.user.getToken().then(function(idToken) {
         //GET request to /dashboard route, send idToken in header
-         $http({
+         return $http({
           method: 'GET',
           url: '/users',
           headers: {
@@ -30,6 +30,7 @@ function($firebaseAuth, $http, $q) {
           }
         }).then(function(response) { //when $http promise resolved:
           console.log("Retrieved this data from server at login: ", response);
+          isUser = true;
         });
       });
     });

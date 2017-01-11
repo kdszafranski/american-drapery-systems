@@ -4,6 +4,7 @@ app.controller('LoginController', ['UserFactory', '$location', function(UserFact
   const self = this;
 
   self.logIn = function() {
+
     UserFactory.logIn().then(function() {
       $location.path('/dashboard');
     });
