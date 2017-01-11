@@ -2,6 +2,8 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
   const self = this;
   var currentUser = {};
   var surveyList = [];
+  self.currentPage = 0;
+  self.pageSize = 20;
 
   self.show = {
     completed: false,

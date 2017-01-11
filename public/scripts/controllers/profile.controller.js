@@ -125,9 +125,4 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
       getClient();
     }
   }
-
-  var obj = {first_name: faker.name.findName()}
-  console.log('obj', obj);
-
-
 }]);
