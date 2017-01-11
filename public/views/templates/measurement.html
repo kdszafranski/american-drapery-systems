@@ -44,7 +44,91 @@
           </md-card-title-text>
       </md-card-title>
       <md-card-content>
+        <table>
+          <thead>
+            <tr>
+              <th>Floor</th>
+              <th>Room</th>
+              <th>Quantity</th>
+              <th>Width</th>
+              <th>Length</th>
+              <th>IB/OB</th>
+              <th>Controls</th>
+              <th>Fascia Size</th>
+              <th>Fabric</th>
+              <th>Mount</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>21</td>
+              <td>1</td>
+              <td>24</td>
+              <td>28 1/8</td>
+              <td>28</td>
+              <td>ob</td>
+              <td>6</td>
+              <td>soft white</td>
+              <td>4</td>
+              <td>
+                <md-button class="md-icon-button" aria-label="edit">
+                  <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
+              <td>
+                <md-button class="md-icon-button" aria-label="delete">
+                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
 
+              <!-- <td>{{measurements.floor}}</td>
+              <td>{{measurements.room}}</td>
+              <td>{{measurements.quantity}}</td>
+              <td>{{measurements.width}}</td>
+              <td>{{measurements.length}}</td>
+              <td>{{measurements.inside}}</td>
+              <td>{{measurements.controls}}</td>
+              <td>{{measurements.fascia_size}}</td>
+              <td>{{measurements.fabric}}</td>
+              <td>{{measurements.mount}}</td> -->
+            </tr>
+            <tr layout-wrap>
+              <td><md-input-container><input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`"></md-input-container></td>
+              <td>
+                <md-input-container>
+                  <md-select ng-model="measure.measurement.insde" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+                    <md-option ng-value="IB" aria-label="IB">IB</md-option>
+                    <md-option ng-value="OB" aria-label="OB">OB</md-option>
+                  </md-select>
+                </md-input-container>
+              </td>
+              <td><md-input-container><input ng-model="measure.measurement.controls" size="6" ng-model="measure.controls"  aria-label="controls"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.fascia_size" size="6" ng-model="measure.fascia_size" aria-label="fascia_size"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.fabric" size="10" ng-model="measure.fabric" aria-label="fabric"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.mount" size="6" ng-model="measure.mount" aria-label="mount"></md-input-container></td>
+              <td>
+                <md-button class="md-icon-button" aria-label="edit">
+                  <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
+              <td>
+                <md-button class="md-icon-button" aria-label="delete">
+                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+        <md-button ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
+          <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+        </md-button>
       </md-card-content>
     </md-card>
   </div>
