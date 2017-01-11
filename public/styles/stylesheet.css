@@ -16,7 +16,15 @@ md-input-container{
   margin-top: 5px;
   padding: 0;
 }
-
+#measurementTitle{
+  padding: 4px;
+}
+#cardTitle{
+  padding: 0;
+}
+#cardTitle a{
+  color: rgba(0,0,0,0.87);
+}
 .survey-header {
   display: flex;
   justify-content: space-around;
