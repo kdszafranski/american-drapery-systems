@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -9,7 +9,29 @@ var measurements = require('./routes/measurements');
 var dashboard = require('./routes/dashboard');
 var clients = require('./routes/clients');
 var users = require('./routes/users');
+var testdata = require('./routes/testdata');
+var faker = require('faker');
 
+
+// testdata.user();
+// var areaSize = testdata.randInt(3,30);
+// var area = faker.name.jobArea();
+// var floor = testdata.randInt(1,100);
+
+// for(var i=0; i<1000; i++) {
+//   testdata.client();
+// }
+// for(var i=0; i<1000; i++) {
+//   testdata.survey(i + 1);
+// }
+// for(var i=0; i<1000; i++) {
+//   testdata.measurement(i + 1, area, floor);
+//   if (i == areaSize) {
+//     areaSize += testdata.randInt(3,30);
+//     area = faker.name.jobArea();
+//     floor = testdata.randInt(1,100)
+//   }
+// }
 
 // serve static files
 app.use(express.static('public'));

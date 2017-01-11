@@ -14,7 +14,7 @@ function(UserFactory, $location, $rootScope) {
   }
 
   self.goToDashboard = function() {
-
+    $location.path('/dashboard');
   }
 
   $rootScope.$on('$routeChangeSuccess', function (next, last) {
