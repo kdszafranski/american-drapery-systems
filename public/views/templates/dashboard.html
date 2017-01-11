@@ -6,10 +6,10 @@
       <div class="md-ripple-container"></div>
     </button>
     <div layout="column">
-      <md-checkbox ng-model="dash.show.completed" ng-change="dash.filter(dash.show)">
+      <md-checkbox ng-model="dash.show.completed" ng-change="dash.statusFilter(dash.show)">
         Show Completed Jobs
       </md-checkbox>
-      <md-checkbox ng-model="dash.show.declined" ng-change="dash.filter(dash.show)">
+      <md-checkbox ng-model="dash.show.declined" ng-change="dash.statusFilter(dash.show)">
         Show Declined Jobs
       </md-checkbox>
     </div>
