@@ -51,6 +51,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
         self.filtered.push(surveyList[i]);
       }
     }
+    console.log('filtered 0', self.filtered[0]);
   }
 
   self.newJob = function() {
