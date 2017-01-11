@@ -8,6 +8,7 @@ var pool = new pg.Pool(config);
 //Checking current_users access rights
 router.get('/', function(req, res) {
   console.log('reached get users route')
+  console.log("req.decodedToken: ", req.decodedToken);
   var user_email = req.decodedToken.email;
   pool.connect()
     .then(function(client) {

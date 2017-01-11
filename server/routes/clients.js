@@ -5,7 +5,7 @@ var pg = require('pg');
 
 var pool = new pg.Pool(config);
 
-//Get request to populate Company Name Dropdown
+//Get request to populate Company Dropdown
 router.get('/', function(req, res) {
   console.log('reached get clients route')
   pool.connect()
@@ -20,6 +20,28 @@ router.get('/', function(req, res) {
           res.sendStatus(500);
         });
     });
+});
+
+//Get request to populate client profile fields
+router.get('/:clientId', function(req, res) {
+  console.log('reached get clients route', req.params.clientId)
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+
+    client.query('SELECT * FROM client WHERE id = ' + req.params.clientId, function(err, result) {
+      done(); // close the connection.
+
+      if(err) {
+        console.log('select query error: ', err);
+        res.sendStatus(500);
+      }
+      console.log(result.rows);
+      res.send(result.rows);
+    });
+  });
 });
 
 //Post request to add client information
@@ -55,6 +77,7 @@ router.post('/:client_id', function(req,res) {
   pool.connect()
     .then(function(client) {
     client.query("UPDATE client " +
+<<<<<<< HEAD
     "SET client_name = $1, primary_contact_name = $2, primary_contact_phone_number = $3, primary_contact_email = $4, alt_contact_name = $5, alt_contact_email = $6, alt_phone_number = $7, billing_address_street = $8, billing_address_city = $9, billing_address_state = $10, billing_address_zip = $11, survey_address_street = $12, survey_address_city = $13, survey_address_state = $14, survey_address_zip = $15",
     [updatedClient.client_name, updatedClient.primary_contact_name, updatedClient.primary_contact_phone_number, updatedClient.primary_contact_email, updatedClient.alt_contact_name, updatedClient.alt_contact_email, updatedClient.alt_phone_number, updatedClient.billing_address_street, updatedClient.billing_address_city, updatedClient.billing_address_state, updatedClient.billing_address_zip, updatedClient.survey_address_street, updatedClient.survey_address_city, updatedClient.survey_address_state, updatedClient.survey_address_zip])
       .then(function(result) {
@@ -62,6 +85,14 @@ router.post('/:client_id', function(req,res) {
         res.sendStatus(201);
       })
       .catch(function(err) {
+=======
+    "SET client_name = $1, primary_contact_name = $2, primary_contact_phone_number = $3, primary_contact_email = $4, alt_contact_name = $5, alt_contact_email = $6, alt_phone_number = $7, billing_address_street = $8, billing_address_city = $9, billing_address_state = $10, billing_address_zip = $11, survey_address_street = $12, survey_address_city = $13, survey_address_state = $14, survey_address_zip = $15 " +
+    "WHERE id = " + id,
+    [updatedClient.client_name, updatedClient.primary_contact_name, updatedClient.primary_contact_phone_number, updatedClient.primary_contact_email, updatedClient.alt_contact_name, updatedClient.alt_contact_email, updatedClient.alt_phone_number, updatedClient.billing_address_street, updatedClient.billing_address_city, updatedClient.billing_address_state, updatedClient.billing_address_zip, updatedClient.survey_address_street, updatedClient.survey_address_city, updatedClient.survey_address_state, updatedClient.survey_address_zip],
+    function(err, result) {
+      done(); //close the connection
+      if(err) {
+>>>>>>> dev
         console.log('select query error: ', err);
         res.sendStatus(500);
       });

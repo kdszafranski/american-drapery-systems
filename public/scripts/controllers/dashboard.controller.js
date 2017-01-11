@@ -18,6 +18,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
     currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
     currentUser.user.getToken().then(function(idToken) {
+    // var idToken = true;
       $http({
         method: 'GET',
         url: '/surveys/all',
@@ -33,7 +34,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
   }
 
   function formatData(surveys){
-    console.log(surveys);
+    //convert the ISO Dates to readable format
     for (var i = 0; i < surveys.length; i++) {
       surveys[i].last_modified = moment(surveys[i].last_modified).format("YYYY/MM/DD");
       surveys[i].survey_date = moment(surveys[i].survey_date).format("YYYY/MM/DD");

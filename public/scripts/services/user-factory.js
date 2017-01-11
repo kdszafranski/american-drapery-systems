@@ -1,13 +1,14 @@
 /******************
 Create UserFactory
 *******************/
-app.factory('UserFactory', ['$firebaseAuth', "$http", "$q",
+app.factory('UserFactory', ['$firebaseAuth', "$http",
 function($firebaseAuth, $http, $q) {
   console.log("User Factory is running!");
   //Auth is constant (won't change), assign to $firebaseAuth()
   const auth = $firebaseAuth();
   //Instantiate currentUser object
   var currentUser = {};
+  var isUser = false;
   //logIn fxn, called when logIn button clicked
   function logIn() {
     console.log("Running logIn fxn in user-factory");
@@ -15,12 +16,13 @@ function($firebaseAuth, $http, $q) {
       return auth.$signInWithPopup("google").then(function(firebaseUser) {
       //Assign result of signin to current user object
       currentUser = firebaseUser;
+      isUser = true;
       //Log user's email
-      console.log("Firebase User: ", firebaseUser, firebaseUser.user.email);
+      console.log("Firebase User: ", firebaseUser.user.email);
       //Get idToken
-      currentUser.user.getToken().then(function(idToken) {
+      return currentUser.user.getToken().then(function(idToken) {
         //GET request to /dashboard route, send idToken in header
-         $http({
+         return $http({
           method: 'GET',
           url: '/users',
           headers: {
@@ -28,6 +30,7 @@ function($firebaseAuth, $http, $q) {
           }
         }).then(function(response) { //when $http promise resolved:
           console.log("Retrieved this data from server at login: ", response);
+          isUser = true;
         });
       });
     });
@@ -38,8 +41,9 @@ function($firebaseAuth, $http, $q) {
   function logOut() {
     console.log("Running logOut fxn in user-factory");
     //Firebase sign out method
-    auth.$signOut().then(function() {
+     return auth.$signOut().then(function() {
       console.log("User succesfully logged out");
+      isUser = false;
     });
   }//End logout fxn
   /************************************
@@ -49,19 +53,29 @@ function($firebaseAuth, $http, $q) {
   function getUser() {
     return currentUser;
   }
+  /************************************
+  function to be called in controllers
+  that need to ngShow/Hide buttons
+  *************************************/
+  function userChecker() {
+    return isUser;
+  }
   /*********************
   Put all functions
   into publicApi object
   ***********************/
   var publicApi = {
     logIn: function() {
-      return logIn()
+      return logIn();
     },
     logOut: function() {
-      return logOut()
+      return logOut();
     },
     getUser: function() {
-      return getUser()
+      return getUser();
+    },
+    userChecker: function() {
+      return userChecker();
     }
   };
   /*************************
