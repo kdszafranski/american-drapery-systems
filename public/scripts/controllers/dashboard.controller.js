@@ -2,6 +2,8 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
   const self = this;
   var currentUser = {};
   var surveyList = [];
+  self.currentPage = 0;
+  self.pageSize = 20;
 
   self.show = {
     completed: false,
@@ -28,7 +30,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
       }).then(function(response){
         console.log('success');
         surveyList = formatData(response.data);
-        self.filter(self.show);
+        self.statusFilter(self.show);
       });
     });
   }
@@ -42,7 +44,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
     return surveys;
   }
 
-  self.filter = function(show) {
+  self.statusFilter = function(show) {
     self.filtered = [];
     for (var i = 0; i < surveyList.length; i++) {
       if(!show.compare(surveyList[i].status)) {
