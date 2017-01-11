@@ -7,7 +7,6 @@ app.controller('LoginController', ['UserFactory', '$location', function(UserFact
 
     UserFactory.logIn().then(function() {
       $location.path('/dashboard');
-      console.log("Test asynchrounosdiufwdaifu");
     });
   };
 

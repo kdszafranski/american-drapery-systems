@@ -30,6 +30,7 @@ function($firebaseAuth, $http, $q) {
           }
         }).then(function(response) { //when $http promise resolved:
           console.log("Retrieved this data from server at login: ", response);
+          isUser = true;
         });
       });
     });
