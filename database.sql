@@ -1,24 +1,24 @@
 CREATE TABLE client (
   id SERIAL PRIMARY KEY,
+  client_name VARCHAR(100),
   primary_contact_name VARCHAR(100),
-  primary_contact_phone_number VARCHAR(20),
+  primary_contact_phone_number VARCHAR(30),
   primary_contact_email VARCHAR(50),
   alt_contact_name VARCHAR(100),
-  alt_phone_number VARCHAR(20),
+  alt_phone_number VARCHAR(30),
   alt_contact_email VARCHAR(50),
   billing_address_street VARCHAR(50),
   billing_address_city VARCHAR(50),
-  billing_address_state VARCHAR(20),
-  billing_address_zip INTEGER,
+  billing_address_state VARCHAR(30),
+  billing_address_zip VARCHAR(10),
   survey_address_street VARCHAR(50),
   survey_address_city VARCHAR(50),
-  survey_address_state VARCHAR(20),
-  survey_address_zip INTEGER
+  survey_address_state VARCHAR(30),
+  survey_address_zip VARCHAR(10)
 );
 
 CREATE TABLE survey (
   id SERIAL PRIMARY KEY,
-  survey_number INTEGER,
   job_number INTEGER,
   completion_date DATE,
   survey_date DATE,
@@ -45,7 +45,7 @@ CREATE TABLE measurements (
   width VARCHAR(25),
   length VARCHAR(25),
   mount_location VARCHAR(10),
-  fasica_size INTEGER,
+  fascia_size INTEGER,
   controls VARCHAR(10),
   mount VARCHAR(40),
   fabric VARCHAR(100),
