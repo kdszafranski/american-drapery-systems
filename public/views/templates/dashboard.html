@@ -36,30 +36,30 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize">
+          <tr class="survey-items" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize">
             <td>{{result.id}}</td>
             <td>{{result.job_number}}</td>
             <td>{{result.client_name}}</td>
             <td>{{result.status}}</td>
             <td>{{result.last_modified}}</td>
             <td>{{result.survey_date}}</td>
-            <td><md-button class="md-icon-button" aria-label="edit">
-              <md-icon ng-click="dash.survey()" md-svg-icon="./img/pdf.svg"></md-icon>
-            </md-button></td>
-            <td><md-button class="md-icon-button" aria-label="edit">
+            <td><div class="md-icon-button md-ink-ripple itemBtn" aria-label="view">
+              <md-icon ng-click="dash.survey(result.id)" md-svg-icon="./img/pdf.svg"></md-icon>
+            </div></td>
+            <td><div class="md-icon-button md-ink-ripple itemBtn" aria-label="edit">
               <md-icon ng-click="dash.area()" md-svg-icon="./img/edit.svg"></md-icon>
-            </md-button></td>
+            </div></td>
 
           </tr>
         </tbody>
       </table>
       </div>
       <div layout="row" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
-        <md-button ng-class="md-mini md-raised md-ink-ripple" ng-disabled="dash.currentPage == 0" ng-click="dash.currentPage=dash.currentPage-1">
+        <md-button ng-class="md-mini" ng-disabled="dash.currentPage == 0" ng-click="dash.currentPage=dash.currentPage-1">
           Previous
         </md-button>
           {{dash.currentPage+1}}/{{(dash.filtered  | filter: query).length % dash.pageSize}}
-        <md-button ng-class="md-mini md-raised md-ink-ripple" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query).length % dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
+        <md-button ng-class="md-mini" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query).length % dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
           Next
         </md-button>
       </div>
