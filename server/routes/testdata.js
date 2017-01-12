@@ -1,3 +1,24 @@
+
+//var faker = require('faker');
+// testdata.user();
+// var areaSize = testdata.randInt(3,30);
+// var area = faker.name.jobArea();
+// var floor = testdata.randInt(1,100);
+
+// for(var i=0; i<1000; i++) {
+//   testdata.client();
+// }
+// for(var i=0; i<1000; i++) {
+//   testdata.survey(i + 1);
+// }
+// for(var i=0; i<1000; i++) {
+//   testdata.measurement(i + 1, area, floor);
+//   if (i == areaSize) {
+//     areaSize += testdata.randInt(3,30);
+//     area = faker.name.jobArea();
+//     floor = testdata.randInt(1,100)
+//   }
+// }
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
@@ -21,7 +42,7 @@ function testUser() {
     });
   });
 }
-function testMeasurement(survey_id) {
+function testMeasurement(survey_id, area, floor) {
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);
@@ -29,7 +50,7 @@ function testMeasurement(survey_id) {
     var inOut = randBool();
     client.query("INSERT INTO measurements (area, floor, room, quantity, width, length, inside, outside, fascia_size, controls, mount, fabric, notes, survey_id) " +
     "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)",
-    [faker.name.jobArea(), randInt(1,100), randInt(1,9000), randInt(1,8), rand(1,200), rand(1,200), inOut, !inOut, randInt(1,200), rightLeft(), faker.lorem.word() + ' Fascia', faker.lorem.word() + faker.lorem.word(), faker.lorem.sentence(), survey_id],
+    [area, floor, randInt(1,9000), randInt(1,8), rand(1,200), rand(1,200), inOut, !inOut, randInt(1,200), rightLeft(), faker.lorem.word() + ' Fascia', faker.lorem.word() + faker.lorem.word(), faker.lorem.sentence(), survey_id],
     function(err, result) {
       done(); // close the connection.
 
@@ -83,7 +104,7 @@ function rand(min, max) {
 }
 
 function status() {
-  switch (randInt(1,4)) {
+  switch (randInt(1,5)) {
     case 1:
       return "Declined";
       break;
@@ -120,3 +141,4 @@ module.exports.survey = testSurvey;
 
 module.exports.measurement = testMeasurement;
 module.exports.client = testClient;
+module.exports.randInt = randInt;
