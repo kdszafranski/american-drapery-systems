@@ -48,6 +48,11 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'ProfileController',
     controllerAs: 'profile'
   })
+  .when('/files', {
+    templateUrl: '/views/templates/files.html',
+    controller: 'FileController',
+    controllerAs: 'files'
+  })
   .otherwise({
     redirectTo: 'login'
   });
