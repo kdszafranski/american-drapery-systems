@@ -6,10 +6,10 @@
       <div class="md-ripple-container"></div>
     </button>
     <div layout="column">
-      <md-checkbox ng-model="dash.show.completed" ng-change="dash.filter(dash.show)">
+      <md-checkbox ng-model="dash.show.completed" ng-change="dash.statusFilter(dash.show)">
         Show Completed Jobs
       </md-checkbox>
-      <md-checkbox ng-model="dash.show.declined" ng-change="dash.filter(dash.show)">
+      <md-checkbox ng-model="dash.show.declined" ng-change="dash.statusFilter(dash.show)">
         Show Declined Jobs
       </md-checkbox>
     </div>
@@ -37,7 +37,7 @@
       </thead>
       <tbody>
         <tr data-ng-repeat="result in results = (dash.filtered  | filter: {$: query} )">
-          <td>{{result.survey_number}}</td>
+          <td>{{result.id}}</td>
           <td>{{result.job_number}}</td>
           <td>{{result.client_name}}</td>
           <td>{{result.status}}</td>
