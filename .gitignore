@@ -5,4 +5,3 @@ server/firebase-service-account.json
 *.sql
 .DS_Store
 node_modules/
-server/firebase-service-accounts.json
