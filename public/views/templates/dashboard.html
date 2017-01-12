@@ -36,19 +36,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize">
+          <tr class="survey-items" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize">
             <td>{{result.id}}</td>
             <td>{{result.job_number}}</td>
             <td>{{result.client_name}}</td>
             <td>{{result.status}}</td>
             <td>{{result.last_modified}}</td>
             <td>{{result.survey_date}}</td>
-            <td><md-button class="md-icon-button" aria-label="edit">
+            <td><div class="md-icon-button md-ink-ripple itemBtn" aria-label="view">
               <md-icon ng-click="dash.survey()" md-svg-icon="./img/pdf.svg"></md-icon>
-            </md-button></td>
-            <td><md-button class="md-icon-button" aria-label="edit">
+            </div></td>
+            <td><div class="md-icon-button md-ink-ripple itemBtn" aria-label="edit">
               <md-icon ng-click="dash.area()" md-svg-icon="./img/edit.svg"></md-icon>
-            </md-button></td>
+            </div></td>
 
           </tr>
         </tbody>
