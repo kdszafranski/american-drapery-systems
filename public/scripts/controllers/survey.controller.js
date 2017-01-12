@@ -1,15 +1,19 @@
 app.controller('SurveyController', ["$http", 'UserFactory', function($http, UserFactory) {
+  console.log("In Survey Controller");
   var self = this;
   var survey_id = 2;
 
   function getSurveyDetails() {
     currentUser = UserFactory.getUser();
-    console.log(currentUser);
+    console.log("Current User", currentUser);
     currentUser.user.getToken()
-      .then(function(idToken) {
+    .then(function(idToken) {
         $http({
           method: 'GET',
-          url: '/surveys/one/' + survey_id
+          url: '/surveys/one/' + survey_id,
+          headers: {
+            id_token: idToken
+          }
         }).then(function(response){
           self.surveyDetails = response;
           console.log("Response From Server: ", self.surveyDetails.data);
