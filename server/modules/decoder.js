@@ -18,11 +18,7 @@ var admin = require("firebase-admin");
 
 //Configure Firebase Admin... Insert credentials from local JSON file (.gitignore-d, of course)
 admin.initializeApp({
-<<<<<<< HEAD
-  credential: admin.credential.cert("./server/firebase-service-accounts.json"),
-=======
   credential: admin.credential.cert("./server/fb-service-account.json"),
->>>>>>> be46d3dfb1f192232d5f5d2b072416be0c4a337f
   databaseURL: "https://american-drapery-systems.firebaseio.com" //URL for out firbase user database
 });
 
