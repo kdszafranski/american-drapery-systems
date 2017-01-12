@@ -4,3 +4,4 @@ node_modules
 *.sql
 .DS_Store
 node_modules/
+server/fb-service-account.json
