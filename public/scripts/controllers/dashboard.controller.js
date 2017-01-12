@@ -4,6 +4,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
   var surveyList = [];
   self.currentPage = 0;
   self.pageSize = 20;
+  self.filtered = [];
 
   self.show = {
     completed: false,
@@ -43,7 +44,6 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
     }
     return surveys;
   }
-  self.filtered = [];
 
   self.statusFilter = function(show) {
     self.filtered = [];
@@ -57,6 +57,12 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
 
   self.newJob = function() {
     $location.path('/profile');
+  }
+  self.survey = function() {
+    $location.path('/survey');
+  }
+  self.area = function() {
+    $location.path('/area');
   }
 
 }]);
