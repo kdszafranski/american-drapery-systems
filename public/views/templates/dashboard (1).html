@@ -13,7 +13,7 @@
         Show Declined Jobs
       </md-checkbox>
     </div>
-    <span>Results: {{(dash.filtered  | filter: query).length}} </span>
+    <span>Results: {{results.length}} </span>
     <md-input-container class="md-block">
       <label for="input_23">Search</label>
       <input ng-model="query"  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
@@ -36,25 +36,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize">
+        <tr data-ng-repeat="result in results = (dash.filtered  | filter: {$: query} )">
           <td>{{result.id}}</td>
           <td>{{result.job_number}}</td>
           <td>{{result.client_name}}</td>
           <td>{{result.status}}</td>
           <td>{{result.last_modified}}</td>
           <td>{{result.survey_date}}</td>
-          <td><md-icon md-svg-icon="./img/pdf."></md-icon></td>
+          <td>View</td>
           <td>Edit</td>
         </tr>
       </tbody>
     </table>
-    <button ng-disabled="dash.currentPage == 0" ng-click="dash.currentPage=dash.currentPage-1">
-    Previous
-</button>
-{{dash.currentPage+1}}/{{numberOfPages()}}
-<button ng-disabled="dash.currentPage >= getData().length/dash.pageSize - 1" ng-click="dash.currentPage=dash.currentPage+1">
-    Next
-</button>
 
 
   </div>

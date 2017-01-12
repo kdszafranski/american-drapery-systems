@@ -43,6 +43,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
     }
     return surveys;
   }
+  self.filtered = [];
 
   self.statusFilter = function(show) {
     self.filtered = [];
