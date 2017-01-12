@@ -1,4 +1,3 @@
-
 //var faker = require('faker');
 // testdata.user();
 // var areaSize = testdata.randInt(3,30);

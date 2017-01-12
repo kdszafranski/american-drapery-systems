@@ -51,6 +51,12 @@ tr:nth-child(odd) {
 td {
   text-align: center;
 }
+
 table{
   border: 1px;
+}
+
+.itemBtn:hover {
+  cursor: pointer;
+
 }
