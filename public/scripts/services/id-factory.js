@@ -1,4 +1,4 @@
-app.factory("idFactory", function($interval)
+app.factory("IdFactory", function($interval)
 {
   var id={
     survey: 0,
@@ -8,8 +8,9 @@ app.factory("idFactory", function($interval)
   };
   return {
     id: id,
-    changeData: function() {
-      id.value++;
+    changeSurvey: function(data) {
+      console.log('changing survey to ', data);
+      id.survey = data;
     }
   }
 });
