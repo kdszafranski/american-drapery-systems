@@ -59,7 +59,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     $location.path('/profile');
   }
   self.survey = function(surveyId) {
-    IdFactory.changeSurvey(surveyId);
+    IdFactory.setSurvey(surveyId);
     $location.path('/survey');
   }
   self.area = function() {

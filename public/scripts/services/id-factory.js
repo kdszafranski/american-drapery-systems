@@ -8,9 +8,21 @@ app.factory("IdFactory", function($interval)
   };
   return {
     id: id,
-    changeSurvey: function(data) {
-      console.log('changing survey to ', data);
-      id.survey = data;
+    setSurvey: function(newId) {
+      console.log('changing survey to ', newId);
+      id.survey = newId;
+    },
+    setArea: function(newId) {
+      console.log('changing survey to ', newId);
+      id.area = newId;
+    },
+    setMeasurement: function(newId) {
+      console.log('changing survey to ', newId);
+      id.measurement = newId;
+    },
+    setClient: function(newId) {
+      console.log('changing survey to ', newId);
+      id.client = newId;
     }
   }
 });
