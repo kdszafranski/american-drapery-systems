@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //
 // //var faker = require('faker');
 // // testdata.user();
@@ -42,7 +41,6 @@
 //       }
 //     });
 //   });
-=======
 //var faker = require('faker');
 // testdata.user();
 // var areaSize = testdata.randInt(3,30);
@@ -51,7 +49,6 @@
 
 // for(var i=0; i<1000; i++) {
 //   testdata.client();
->>>>>>> 5aad318a8c4e5ca21f6bb4085c42ff371335edde
 // }
 // function testMeasurement(survey_id, area, floor) {
 //   pg.connect(connectionString, function(err, client, done) {
