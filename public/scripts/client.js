@@ -21,6 +21,7 @@ angular.module('app').directive('updateOnEnter', function() {
       }
   }
 });
+
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/login', {

@@ -28,5 +28,8 @@ md-input-container{
 
 td {
   text-align: center;
+}
 
+.itemBtn:hover {
+  cursor: pointer;
 }

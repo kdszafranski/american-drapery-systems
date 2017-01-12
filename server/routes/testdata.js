@@ -41,6 +41,14 @@
 //       }
 //     });
 //   });
+//var faker = require('faker');
+// testdata.user();
+// var areaSize = testdata.randInt(3,30);
+// var area = faker.name.jobArea();
+// var floor = testdata.randInt(1,100);
+
+// for(var i=0; i<1000; i++) {
+//   testdata.client();
 // }
 // function testMeasurement(survey_id, area, floor) {
 //   pg.connect(connectionString, function(err, client, done) {
