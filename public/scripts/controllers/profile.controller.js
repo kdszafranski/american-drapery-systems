@@ -125,6 +125,4 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
       getClient();
     }
   }
-
-
 }]);

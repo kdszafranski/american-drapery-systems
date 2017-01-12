@@ -9,7 +9,7 @@ var measurements = require('./routes/measurements');
 var dashboard = require('./routes/dashboard');
 var clients = require('./routes/clients');
 var users = require('./routes/users');
-
+var testdata = require('./routes/testdata');
 
 // serve static files
 app.use(express.static('public'));
