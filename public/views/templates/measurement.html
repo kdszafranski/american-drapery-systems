@@ -36,7 +36,7 @@
       </md-card-content>
     </md-card>
   </div>
-  <div class="">
+  <div>
     <md-card>
       <md-card-title id="measurementTitle">
           <md-card-title-text >
@@ -44,7 +44,7 @@
           </md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <table>
+        <table id="measurementsTable">
           <thead>
             <tr>
               <th>Floor</th>
@@ -62,17 +62,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>21</td>
-              <td>1</td>
-              <td>24</td>
-              <td>28 1/8</td>
-              <td>28</td>
-              <td>ob</td>
-              <td>6</td>
-              <td>soft white</td>
-              <td>4</td>
+            <tr ng-repeat="measure in measure.measurements track by $index">
+              <td>{{measure.floor}}</td>
+              <td>{{measure.room}}</td>
+              <td>{{measure.quantity}}</td>
+              <td>{{measure.width}}</td>
+              <td>{{measure.length}}</td>
+              <td>{{measure.ib_ob}}</td>
+              <td>{{measure.controls}}</td>
+              <td>{{measure.fascia_size}}</td>
+              <td>{{measure.fabric}}</td>
+              <td>{{measure.mount}}</td>
               <td>
                 <md-button class="md-icon-button" aria-label="edit">
                   <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
@@ -83,17 +83,6 @@
                   <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
                 </md-button>
               </td>
-
-              <!-- <td>{{measurements.floor}}</td>
-              <td>{{measurements.room}}</td>
-              <td>{{measurements.quantity}}</td>
-              <td>{{measurements.width}}</td>
-              <td>{{measurements.length}}</td>
-              <td>{{measurements.inside}}</td>
-              <td>{{measurements.controls}}</td>
-              <td>{{measurements.fascia_size}}</td>
-              <td>{{measurements.fabric}}</td>
-              <td>{{measurements.mount}}</td> -->
             </tr>
             <tr layout-wrap>
               <td><md-input-container><input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></md-input-container></td>
@@ -103,9 +92,9 @@
               <td><md-input-container><input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`"></md-input-container></td>
               <td>
                 <md-input-container>
-                  <md-select ng-model="measure.measurement.insde" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
-                    <md-option ng-value="IB" aria-label="IB">IB</md-option>
-                    <md-option ng-value="OB" aria-label="OB">OB</md-option>
+                  <md-select ng-model="measure.measurement.ib_ob" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+                    <md-option value="IB" aria-label="IB">IB</md-option>
+                    <md-option value="OB" aria-label="OB">OB</md-option>
                   </md-select>
                 </md-input-container>
               </td>

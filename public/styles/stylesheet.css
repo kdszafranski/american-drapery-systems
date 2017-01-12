@@ -25,6 +25,9 @@ md-input-container{
 #cardTitle a{
   color: rgba(0,0,0,0.87);
 }
+#measurementsTable td{
+  padding: 1px;
+}
 .survey-header {
   display: flex;
   justify-content: space-around;
