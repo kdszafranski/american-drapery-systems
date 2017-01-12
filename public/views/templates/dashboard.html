@@ -1,4 +1,3 @@
-<h3>dashboard</h3>
 <md-card>
   <md-card-content>
   <div layout="row" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
@@ -17,7 +16,7 @@
     <span>Results: {{results.length}} </span>
     <md-input-container class="md-block">
       <label for="input_23">Search</label>
-      <input ng-model="query" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
+      <input ng-model="query"  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
       <div class="md-errors-spacer"></div>
     </md-input-container>
   </div>
@@ -37,7 +36,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="result in results = (dash.filtered  | filter: {'client_name': query})">
+        <tr data-ng-repeat="result in results = (dash.filtered  | filter: {$: query} )">
           <td>{{result.survey_number}}</td>
           <td>{{result.job_number}}</td>
           <td>{{result.client_name}}</td>
@@ -49,6 +48,7 @@
         </tr>
       </tbody>
     </table>
+
 
   </div>
   </md-card-content>
