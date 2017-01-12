@@ -16,6 +16,28 @@ md-input-container{
   margin-top: 5px;
   padding: 0;
 }
+#measurementTitle{
+  padding: 4px;
+}
+#cardTitle{
+  padding: 0;
+}
+#cardTitle a{
+  color: rgba(0,0,0,0.87);
+}
+#measurementsTable td{
+  padding: 1px;
+}
+#editRow{
+  background-color: white;
+}
+#headerRow{
+  background-color: rgb(63,81,181);
+  color: rgba(255,255,255,0.87);
+}
+tr:nth-child(odd) {
+    background-color: rgb(234, 231, 235);
+}
 
 .survey-header {
   display: flex;
@@ -30,6 +52,11 @@ td {
   text-align: center;
 }
 
+table{
+  border: 1px;
+}
+
 .itemBtn:hover {
   cursor: pointer;
+
 }
