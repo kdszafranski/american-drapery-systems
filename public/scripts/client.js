@@ -28,6 +28,11 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'ProfileController',
     controllerAs: 'profile'
   })
+  .when('/measurementarea' ,{
+    templateUrl: '/views/templates/measurement-area.html',
+    controller: 'MeasurementAreaController',
+    controllerAs: 'ma'
+  })
   .otherwise({
     redirectTo: 'login'
   });

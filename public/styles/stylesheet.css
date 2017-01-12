@@ -28,5 +28,13 @@ md-input-container{
 
 td {
   text-align: center;
+}
 
+.company-info-header {
+  display: flex;
+  justify-content: space-around;
+}
+
+.client-contact {
+  display: flex;
 }
