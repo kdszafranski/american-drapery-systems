@@ -51,9 +51,12 @@ router.put('/:measure_id', function(req,res) {
 
 router.get('/:area_id', function(req, res) {
   var area_id = req.params.area_id;
+  console.log("In measurements - area_id: ", area_id);
   pool.connect()
-    .then(function(measurements) {
-      client.query('SELECT * FROM measurements JOIN areas on areas.id = measurements.area_id WHERE areas.id = $1', +
+    .then(function(client) {
+      client.query('SELECT * FROM measurements ' +
+      'JOIN areas on areas.id = measurements.area_id ' +
+      'WHERE areas.id = $1',
       [area_id])
       .then(function(results) {
         console.log("Received these results from the measurements table: ", results);
