@@ -49,5 +49,25 @@ router.put('/:measure_id', function(req,res) {
     });
 });
 
+router.get('/:area_id', function(req, res) {
+  var area_id = req.params.area_id;
+  console.log("In measurements - area_id: ", area_id);
+  pool.connect()
+    .then(function(client) {
+      client.query('SELECT * FROM areas ' +
+      'JOIN measurements on measurements.area_id = areas.id ' +
+      'WHERE areas.id = $1',
+      [area_id])
+      .then(function(results) {
+        console.log("Received these results from the measurements table: ", results);
+        res.send(results.rows);
+      })
+      .catch(function(err) {
+        console.log("select query error: ", err);
+        res.sendStatus(500);
+      })
+    })
+});
+
 
 module.exports = router;

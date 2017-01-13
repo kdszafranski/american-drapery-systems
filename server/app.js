@@ -10,6 +10,7 @@ var dashboard = require('./routes/dashboard');
 var clients = require('./routes/clients');
 var users = require('./routes/users');
 var testdata = require('./routes/testdata');
+var files = require('./routes/files');
 
 //create ~10,000 test data
 // for (var i = 0; i < 33; i++) {
@@ -42,5 +43,6 @@ app.use(decoder.token);
 app.use('/users', users);
 app.use('/dashboard', dashboard);
 app.use('/surveys', surveys);
+// app.use('/files', files);
 app.use('/measurements', measurements);
 app.use('/clients', clients);
