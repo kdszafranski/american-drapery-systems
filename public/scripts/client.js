@@ -49,7 +49,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'ProfileController',
     controllerAs: 'profile'
   })
-  .when('/measurementarea' ,{
+  .when('/area' ,{
     templateUrl: '/views/templates/measurement-area.html',
     controller: 'MeasurementAreaController',
     controllerAs: 'ma'

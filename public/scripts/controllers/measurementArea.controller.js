@@ -1,7 +1,7 @@
-app.controller('MeasurementAreaController', ["$http", function($http) {
+app.controller('MeasurementAreaController', ["$http", 'IdFactory',  function($http, IdFactory) {
   var self = this;
-<<<<<<< HEAD
-  var survey_id = 2;
+  var survey_id = IdFactory.getSurveyId();
+  console.log(survey_id);
   //function to send area to measurent controller
 
   //function to add a new area
