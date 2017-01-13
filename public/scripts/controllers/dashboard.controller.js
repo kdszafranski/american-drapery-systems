@@ -66,5 +66,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     IdFactory.setSurvey(surveyId)
     $location.path('/area');
   }
-
+  self.totalPages = function (num) {
+    return parseInt(num / self.pageSize) + 1;
+  }
 }]);

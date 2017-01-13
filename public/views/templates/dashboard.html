@@ -1,10 +1,12 @@
-<md-card>
+<div layout="row" layout-align="center center">
+<md-card flex="50">
   <md-card-content>
     <div layout="row" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
-      <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="dash.newJob()">
-        <span class="ng-scope">New Job</span>
-        <div class="md-ripple-container"></div>
-      </button>
+      <div layout="column">
+        <md-button id="newJob" layout-align="center center" class="md-raised md-primary md-ink-ripple" ng-click="dash.newJob()">
+          New Job
+        </md-button>
+      </div>
       <div layout="column">
         <md-checkbox ng-model="dash.show.completed" ng-change="dash.statusFilter(dash.show)">
           Show Completed Jobs
@@ -22,9 +24,9 @@
     </div>
 
     <div layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
-      <table>
+      <table id="dashTable">
         <thead>
-          <tr>
+          <tr id="headerRow">
             <th>Survey #</th>
             <th>Job #</th>
             <th>Client</th>
@@ -36,7 +38,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="survey-items" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize">
+          <tr class="survey-items" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" id="tableBodyRow">
             <td>{{result.id}}</td>
             <td>{{result.job_number}}</td>
             <td>{{result.client_name}}</td>
@@ -49,7 +51,6 @@
             <td><div class="md-icon-button md-ink-ripple itemBtn" aria-label="edit">
               <md-icon ng-click="dash.area(result.id)" md-svg-icon="./img/edit.svg"></md-icon>
             </div></td>
-
           </tr>
         </tbody>
       </table>
@@ -58,12 +59,11 @@
         <md-button ng-class="md-mini" ng-disabled="dash.currentPage == 0" ng-click="dash.currentPage=dash.currentPage-1">
           Previous
         </md-button>
-          {{dash.currentPage+1}}/{{(dash.filtered  | filter: query).length % dash.pageSize}}
+          {{dash.currentPage+1}}/{{dash.totalPages((dash.filtered  | filter: query).length)}}
         <md-button ng-class="md-mini" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query).length % dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
           Next
         </md-button>
       </div>
-
-
     </md-card-content>
   </md-card>
+</div>
