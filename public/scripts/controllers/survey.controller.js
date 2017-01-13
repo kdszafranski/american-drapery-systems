@@ -1,7 +1,10 @@
-app.controller('SurveyController', ["$http", 'UserFactory', function($http, UserFactory) {
+app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  function($http, UserFactory, IdFactory) {
   console.log("In Survey Controller");
   var self = this;
-  var survey_id = 2;
+  var survey_id = IdFactory.getSurveyId();
+
+  console.log("Id Factory: ", IdFactory.survey);
+  console.log("Survey_id: ", survey_id);
 
   function getSurveyDetails() {
     currentUser = UserFactory.getUser();

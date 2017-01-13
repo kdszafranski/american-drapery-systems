@@ -1,0 +1,42 @@
+<div class="company-info-header">
+  <div class="client-name">
+    <h3>{{ma.companyInfo.client_name}}</h3>
+    <ul>
+      <li>{{ma.companyInfo.billing_address_street}}</li>
+      <li>{{ma.companyInfo.billing_address_city}}, {{ma.companyInfo.billing_address_state}}</li>
+      <li>{{ma.companyInfo.billing_address_zip}}</li>
+    </ul>
+  </div>
+  <div class="client-contact">
+    <h3>Company Contacts</h3>
+    <div class="primary-contact">
+      <ul>
+        <li>{{ma.companyInfo.primary_contact_name}}</li>
+        <li>{{ma.companyInfo.primary_contact_phone_number}}</li>
+        <li>{{ma.companyInfo.primary_contact_email}}</li>
+      </ul>
+    </div>
+    <div class="alt-contact">
+      <ul>
+        <li>{{ma.companyInfo.alt_contact_name}}</li>
+        <li>{{ma.companyInfo.alt_phone_number}}</li>
+        <li>{{ma.companyInfo.alt_contact_email}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="survey-info">
+    <p>Survey#: {{ma.companyInfo.id}}</p>
+    <a href="#">Edit Client Info</a>
+  </div>
+</div>
+
+<section class="areas">
+  <!-- ng-repeat divs for every area we have added plus one div for add new area-->
+  <div class="add-new-area">
+    <p>+</p>
+  </div>
+  <div ng-repeat="area in ma.areaArray" class="measurement-areas">
+
+    <p>{{area}}</p>
+  </div>
+</section>
