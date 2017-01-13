@@ -1,7 +1,10 @@
-app.controller('DashboardController', ['UserFactory', '$http', '$location', function(UserFactory, $http, $location) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', function(UserFactory, IdFactory, $http, $location) {
   const self = this;
   var currentUser = {};
   var surveyList = [];
+  self.currentPage = 0;
+  self.pageSize = 20;
+  self.filtered = [];
 
   self.show = {
     completed: false,
@@ -12,12 +15,17 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
       return compBool || decBool;
     }
   }
-  getSurveys();
 
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
+    // firebaseUser will be null if not logged in
+    currentUser = firebaseUser;
+    getSurveys();
+    console.log("onAuthStateChanged", currentUser);
+  });
   function getSurveys() {
     currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
     // var idToken = true;
       $http({
         method: 'GET',
@@ -28,7 +36,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
       }).then(function(response){
         console.log('success');
         surveyList = formatData(response.data);
-        self.filter(self.show);
+        self.statusFilter(self.show);
       });
     });
   }
@@ -42,17 +50,28 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
     return surveys;
   }
 
-  self.filter = function(show) {
+  self.statusFilter = function(show) {
     self.filtered = [];
     for (var i = 0; i < surveyList.length; i++) {
       if(!show.compare(surveyList[i].status)) {
         self.filtered.push(surveyList[i]);
       }
     }
+    console.log('filtered 0', self.filtered[0]);
   }
 
   self.newJob = function() {
     $location.path('/profile');
   }
-
+  self.survey = function(surveyId) {
+    IdFactory.setSurvey(surveyId);
+    $location.path('/survey');
+  }
+  self.area = function(surveyId) {
+    IdFactory.setSurvey(surveyId)
+    $location.path('/area');
+  }
+  self.totalPages = function (num) {
+    return parseInt(num / self.pageSize) + 1;
+  }
 }]);

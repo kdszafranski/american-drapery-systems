@@ -1,24 +1,24 @@
 CREATE TABLE client (
   id SERIAL PRIMARY KEY,
+  client_name VARCHAR(100),
   primary_contact_name VARCHAR(100),
-  primary_contact_phone_number VARCHAR(20),
+  primary_contact_phone_number VARCHAR(30),
   primary_contact_email VARCHAR(50),
   alt_contact_name VARCHAR(100),
-  alt_phone_number VARCHAR(20),
+  alt_phone_number VARCHAR(30),
   alt_contact_email VARCHAR(50),
   billing_address_street VARCHAR(50),
   billing_address_city VARCHAR(50),
-  billing_address_state VARCHAR(20),
-  billing_address_zip INTEGER,
+  billing_address_state VARCHAR(30),
+  billing_address_zip VARCHAR(10),
   survey_address_street VARCHAR(50),
   survey_address_city VARCHAR(50),
-  survey_address_state VARCHAR(20),
-  survey_address_zip INTEGER
+  survey_address_state VARCHAR(30),
+  survey_address_zip VARCHAR(10)
 );
 
 CREATE TABLE survey (
   id SERIAL PRIMARY KEY,
-  survey_number INTEGER,
   job_number INTEGER,
   completion_date DATE,
   survey_date DATE,
@@ -26,6 +26,13 @@ CREATE TABLE survey (
   status VARCHAR(80),
   last_modified DATE,
   client_id INTEGER references client
+);
+
+CREATE TABLE areas (
+  id SERIAL PRIMARY KEY,
+  area_name VARCHAR(80),
+  notes VARCHAR,
+  survey_id INTEGER references survey
 );
 
 CREATE TABLE images (
@@ -38,20 +45,17 @@ CREATE TABLE images (
 
 CREATE TABLE measurements (
   id SERIAL PRIMARY KEY,
-  area VARCHAR(100),
   floor INTEGER,
   room VARCHAR(50),
   quantity INTEGER,
   width VARCHAR(25),
   length VARCHAR(25),
-  inside BOOLEAN,
-  outside BOOLEAN,
-  fasica_size INTEGER,
+  ib_ob VARCHAR(20),
+  fascia_size INTEGER,
   controls VARCHAR(10),
   mount VARCHAR(40),
   fabric VARCHAR(100),
-  notes VARCHAR(200),
-  survey_id INTEGER references survey
+  area_id INTEGER references areas
 );
 
 CREATE TABLE users (
