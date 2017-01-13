@@ -11,6 +11,11 @@ var clients = require('./routes/clients');
 var users = require('./routes/users');
 var testdata = require('./routes/testdata');
 
+//create ~10,000 test data
+// for (var i = 0; i < 33; i++) {
+//   testdata.client();
+// }
+
 // serve static files
 app.use(express.static('public'));
 app.use(bodyParser.json()); // needed for angular requests
