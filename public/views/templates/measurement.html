@@ -43,7 +43,7 @@
           </md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <table id="measurementsTable">
+        <table id="measurementsTable"  cellspacing="0">
           <thead>
             <tr id="headerRow">
               <th>Floor</th>
@@ -61,7 +61,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="dimension in measure.measurements track by $index" >
+            <tr ng-repeat="dimension in measure.measurements track by $index" id="tableBodyRow">
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></td>
@@ -81,7 +81,7 @@
               <td ng-show="measure.measurements[$index].edit">{{dimension.ib_ob}}</td>
               <td ng-hide="measure.measurements[$index].edit">
                 <md-input-container>
-                  <md-select ng-model="measure.measurement.ib_ob" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+                  <md-select ng-model="measure.measurements[$index].ib_ob" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
                     <md-option value="IB" aria-label="IB">IB</md-option>
                     <md-option value="OB" aria-label="OB">OB</md-option>
                   </md-select>
@@ -100,23 +100,23 @@
               <td ng-show="measure.measurements[$index].edit">{{dimension.mount}}</td>
               <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].mount" size="6" ng-model="measure.mount" aria-label="mount"></md-input-container></td>
 
-              <td ng-show="measure.measurements[$index].edit">
+              <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.editRowButton($index)" class="md-icon-button" aria-label="edit">
                   <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
                 </md-button>
               </td>
-              <td ng-hide="measure.measurements[$index].edit">
+              <td ng-hide="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.updateRowButton($index)" class="md-icon-button" aria-label="edit">
                   <md-icon md-svg-icon="../../img/ic_check_black_48px.svg"></md-icon>
                 </md-button>
               </td>
-              <td>
+              <td id="removeIconPadding">
                 <md-button ng-click="measure.deleteRowButton($index)" class="md-icon-button" aria-label="delete">
                   <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
                 </md-button>
               </td>
             </tr>
-            <tr layout-wrap id="editRow">
+            <tr layout-wrap id="inputRow">
               <td><md-input-container><input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></md-input-container></td>
               <td><md-input-container><input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
               <td><md-input-container><input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity"></md-input-container></td>

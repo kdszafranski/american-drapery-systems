@@ -28,17 +28,34 @@ md-input-container{
 #measurementsTable td{
   padding: 1px;
 }
-#editRow{
+#inputRow td{
   background-color: white;
+  border-color: white;
 }
 #headerRow{
   background-color: rgb(63,81,181);
   color: rgba(255,255,255,0.87);
+  padding-top: 5px;
+}
+#tableBodyRow td{
+  border: 1px solid;
+  border-color: rgba(251, 247, 247, 0.91);
+  padding-left: 5px;
+}
+#tableBodyRow #removeIconPadding{
+  padding-left: 0;
+}
+#tableBodyRow md-input-container, input{
+  padding: 0;
+  margin: 0;
 }
 tr:nth-child(odd) {
     background-color: rgb(234, 231, 235);
-}
 
+}
+tr:nth-child(even) {
+    background-color: rgb(211, 210, 212);
+}
 .survey-header {
   display: flex;
   justify-content: space-around;
@@ -47,7 +64,6 @@ tr:nth-child(odd) {
 .survey-header li {
   list-style-type: none;
 }
-
 
 table{
   border: 1px;
