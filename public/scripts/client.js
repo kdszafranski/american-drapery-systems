@@ -68,7 +68,8 @@ function formatDates(aryOfObjs){
     }
     console.log('valid', moment(aryOfObjs[i].completion_date).isValid(), aryOfObjs[i].completion_date);
     if(moment(aryOfObjs[i].completion_date).isValid()) {
-      moment(aryOfObjs[i].completion_date).format("YYYY/MM/DD")
+      console.log('moment');
+      aryOfObjs[i].completion_date = moment(aryOfObjs[i].completion_date).format("YYYY/MM/DD");
     }
   }
   return aryOfObjs;

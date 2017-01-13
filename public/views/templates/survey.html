@@ -1,44 +1,46 @@
 <div layout="row" layout-align="center center">
-<md-card flex="80">
-  <md-card-content>
-    <div class="survey-header">
-      <div class="job-info">
-        <p>Job Number: {{survey.areaArray[0][0].job_number}}</p>
-        <p>Completion Date: {{survey.areaArray[0][0].completion_date}}</p>
-        <p>Survey Date: {{survey.areaArray[0][0].survey_date}}</p>
+  <md-card flex="80">
+    <md-card-content>
+      <div class="survey-header" layout="row" layout-align="left center">
+        <div class="client-address" layout="column">
+          <h1><i>{{survey.surveyDetails[0].client_name}}</i></h1>
+            <ul>
+              <li>{{survey.surveyDetails[0].billing_address_street}}</li>
+              <li>{{survey.surveyDetails[0].billing_address_city}}</li>
+              <li>{{survey.surveyDetails[0].billing_address_state}}</li>
+              <li>{{survey.surveyDetails[0].billing_address_zip}}</li>
+            </ul>
+        </div>
+        <div class="client-contact" layout="column">
+          <ul>
+            <li><b>Primary Contact</b></li>
+            <li>{{survey.surveyDetails[0].primary_contact_name}}</li>
+            <li>{{survey.surveyDetails[0].primary_contact_phone_number}}</li>
+            <li>{{survey.surveyDetails[0].primary_contact_email}}</li>
+          </ul>
+          <ul ng-show="survey.surveyDetails[0].alt_contact_name.length">
+            <li>
+            <b>Alternate Contact</b></li>
+            <li>{{survey.surveyDetails[0].alt_contact_name}}</li>
+            <li>{{survey.surveyDetails[0].alt_phone_number}}</li>
+            <li>{{survey.surveyDetails[0].alt_contact_email}}</li>
+          </ul>
+        </div>
+        <div class="job-info" layout="column">
+          <h1><i>Job# {{survey.surveyDetails[0].job_number}}</i></h1>
+          <p>Completion Date: {{survey.surveyDetails[0].completion_date}}</p>
+          <p>Survey Date: {{survey.surveyDetails[0].survey_date}}</p>
+        </div>
+
+        </div>
       </div>
-      <div class="client-contact">
-        <ul>
-          <li>Primary Contact<br />
-            {{survey.primary_contact_name}}<br />
-            {{survey.primary_contact_phone_number}}<br />
-            {{survey.primary_contact_email}}
-          </li>
-          <li ng-show="survey.showAltContact">
-            Alternate Contact<br />
-            {{survey.alt_contact_name}}<br />
-            {{survey.alt_phone_number}}<br />
-            {{survey.alt_contact_email}}
-          </li>
-        </ul>
-      </div>
-      <div class="client-address">
-        <h3>{{survey.surveyDetails.data[0].client_name}}</h3>
-        <ul>
-          <li>{{survey.surveyDetails.data[0].billing_address_street}}</li>
-          <li>{{survey.surveyDetails.data[0].billing_address_city}}</li>
-          <li>{{survey.surveyDetails.data[0].billing_address_state}}</li>
-          <li>{{survey.surveyDetails.data[0].billing_address_zip}}</li>
-        </ul>
-      </div>
-    </div>
-</md-card-content>
-</md-card>
+    </md-card-content>
+  </md-card>
 </div>
 <div layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
   <md-card flex="80">
     <md-card-content>
-      <h4>Area: {{area[0].area_name}}</h4>
+      <h4 class="areaName">Area: {{area[0].area_name}}</h4>
       <table style="width:100%" >
         <thead>
           <tr>

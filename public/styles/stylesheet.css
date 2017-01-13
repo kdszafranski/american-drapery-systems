@@ -90,6 +90,10 @@ table{
   display: flex;
 }
 
+#companyName {
+  text-align: right;
+}
+
 .areas {
   display: flex;
   flex-wrap: wrap;
@@ -123,4 +127,7 @@ table{
 
 .itemBtn:hover {
   cursor: pointer;
+}
+.areaName {
+  margin: 8px;
 }
