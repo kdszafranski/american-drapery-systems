@@ -49,6 +49,11 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'ProfileController',
     controllerAs: 'profile'
   })
+  .when('/files', {
+    templateUrl: '/views/templates/files.html',
+    controller: 'FileController',
+    controllerAs: 'files'
+  })
   .when('/area' ,{
     templateUrl: '/views/templates/measurement-area.html',
     controller: 'MeasurementAreaController',

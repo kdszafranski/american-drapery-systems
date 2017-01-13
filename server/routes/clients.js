@@ -25,21 +25,17 @@ router.get('/', function(req, res) {
 //Get request to populate client profile fields
 router.get('/:clientId', function(req, res) {
   console.log('reached get clients route', req.params.clientId)
-  pg.connect(connectionString, function(err, client, done) {
-    if(err) {
-      console.log('connection error: ', err);
+  pool.connect()
+  .then(function(client) {
+    client.query('SELECT * FROM client WHERE id = ' + req.params.clientId)
+     .then(function(result) {
+       console.log(result.rows);
+       res.send(result.rows);
+
+    })
+    .catch(function(err) {
+      console.log('select query error: ', err);
       res.sendStatus(500);
-    }
-
-    client.query('SELECT * FROM client WHERE id = ' + req.params.clientId, function(err, result) {
-      done(); // close the connection.
-
-      if(err) {
-        console.log('select query error: ', err);
-        res.sendStatus(500);
-      }
-      console.log(result.rows);
-      res.send(result.rows);
     });
   });
 });
