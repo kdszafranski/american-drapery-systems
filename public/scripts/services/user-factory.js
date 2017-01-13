@@ -15,10 +15,10 @@ function($firebaseAuth, $http, $q) {
     //Sign in with popup message using google credentials
       return auth.$signInWithPopup("google").then(function(firebaseUser) {
       //Assign result of signin to current user object
-      currentUser = firebaseUser;
+      currentUser = firebaseUser.user;
       isUser = true;
       //Log user's email
-      console.log("Firebase User: ", firebaseUser.user.email);
+      console.log("Firebase User: ", firebaseUser.user);
       //Get idToken
       return currentUser.getToken().then(function(idToken) {
         //GET request to /dashboard route, send idToken in header
