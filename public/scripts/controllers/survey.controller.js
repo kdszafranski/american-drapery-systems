@@ -9,7 +9,7 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
   function getSurveyDetails() {
     currentUser = UserFactory.getUser();
     console.log("Current User", currentUser);
-    currentUser.user.getToken()
+    currentUser.getToken()
     .then(function(idToken) {
         $http({
           method: 'GET',

@@ -20,7 +20,7 @@ function($firebaseAuth, $http, $q) {
       //Log user's email
       console.log("Firebase User: ", firebaseUser.user.email);
       //Get idToken
-      return currentUser.user.getToken().then(function(idToken) {
+      return currentUser.getToken().then(function(idToken) {
         //GET request to /dashboard route, send idToken in header
          return $http({
           method: 'GET',
