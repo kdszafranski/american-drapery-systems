@@ -10,13 +10,13 @@ function($http, MultipartForm) {
 
     filesObject: {
       files: FileList,
-      filesInfo: "",
+      filesInfo: [],
     },
 
     updateFiles: function(newFiles) {
       fileFactory.filesObject.files = newFiles.files;
       fileFactory.filesObject.filesInfo = newFiles.filesInfo;
-      console.log("Files now in FileFactory: ", fileFactory.files, fileFactory.filesInfo);
+      console.log("Files now in FileFactory: ", fileFactory.filesObject.files, fileFactory.filesObject.filesInfo);
     },
 
     submitFiles: function() {

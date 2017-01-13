@@ -15,7 +15,7 @@ router.get('/all', function(req, res) {
       "ORDER BY last_modified")
         .then(function (result) {
           client.release();
-          console.log(result.rows);
+          // console.log(result.rows);
           res.send(result.rows);
         })
         .catch(function(err) {
