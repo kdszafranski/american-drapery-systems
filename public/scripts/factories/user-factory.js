@@ -34,7 +34,19 @@ function($firebaseAuth, $http, $q) {
         });
       });
     });
+
   }//End login fxn
+
+  //Check authorization satus
+  auth.$onAuthStateChanged(function(firebaseUser){
+    // firebaseUser will be null if not logged in
+    currentUser = firebaseUser;
+    console.log("onAuthStateChanged", currentUser);
+    if(firebaseUser) {
+      isUser = true;
+    }
+  });
+
   /**********************************************
   //Lougout fxn, runs when logout btn is clicked
   ***********************************************/
@@ -76,7 +88,9 @@ function($firebaseAuth, $http, $q) {
     },
     userChecker: function() {
       return userChecker();
-    }
+    },
+    auth: auth,
+    isUser: isUser
   };
   /*************************
   Return publicApi object
