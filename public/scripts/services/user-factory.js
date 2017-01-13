@@ -20,7 +20,7 @@ function($firebaseAuth, $http, $q) {
       //Log user's email
       console.log("Firebase User: ", firebaseUser.user.email);
       //Get idToken
-      return currentUser.user.getToken().then(function(idToken) {
+      return currentUser.getToken().then(function(idToken) {
         //GET request to /dashboard route, send idToken in header
          return $http({
           method: 'GET',
@@ -34,7 +34,19 @@ function($firebaseAuth, $http, $q) {
         });
       });
     });
+
   }//End login fxn
+
+  //Check authorization satus
+  auth.$onAuthStateChanged(function(firebaseUser){
+    // firebaseUser will be null if not logged in
+    currentUser = firebaseUser;
+    console.log("onAuthStateChanged", currentUser);
+    if(firebaseUser) {
+      isUser = true;
+    }
+  });
+
   /**********************************************
   //Lougout fxn, runs when logout btn is clicked
   ***********************************************/
@@ -76,7 +88,8 @@ function($firebaseAuth, $http, $q) {
     },
     userChecker: function() {
       return userChecker();
-    }
+    },
+    auth: auth
   };
   /*************************
   Return publicApi object

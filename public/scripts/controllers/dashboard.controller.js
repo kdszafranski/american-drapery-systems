@@ -15,12 +15,17 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       return compBool || decBool;
     }
   }
-  getSurveys();
 
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
+    // firebaseUser will be null if not logged in
+    currentUser = firebaseUser;
+    getSurveys();
+    console.log("onAuthStateChanged", currentUser);
+  });
   function getSurveys() {
     currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
     // var idToken = true;
       $http({
         method: 'GET',
