@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['UserFactory', '$http', '$location', function(UserFactory, $http, $location) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', function(UserFactory, IdFactory, $http, $location) {
   const self = this;
   var currentUser = {};
   var surveyList = [];
@@ -58,7 +58,8 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
   self.newJob = function() {
     $location.path('/profile');
   }
-  self.survey = function() {
+  self.survey = function(surveyId) {
+    IdFactory.setSurvey(surveyId);
     $location.path('/survey');
   }
   self.area = function() {

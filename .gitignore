@@ -1,8 +1,7 @@
 node_modules
 *.log
-*/firebase-service-account.json
+server/fb-service-account.json
 .env
 *.sql
 .DS_Store
 node_modules/
-server/firebase-service-account.json
