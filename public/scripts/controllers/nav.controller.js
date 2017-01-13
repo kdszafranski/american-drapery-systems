@@ -4,7 +4,7 @@ function(UserFactory, $location, $rootScope) {
   console.log("Nav controller is running!");
 
   const self = this;
-  self.isUser = false;
+  self.isUser = UserFactory.isUser;
   self.currentUser = {};
 
   self.logOut = function() {

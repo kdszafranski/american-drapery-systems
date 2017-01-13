@@ -36,7 +36,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
   function getClients() {
     currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
       $http({
         method: 'GET',
         url: '/clients',
@@ -56,7 +56,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
   function getClient() {
     currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
       $http({
         method: 'GET',
         url: '/clients/' + self.selected.id,
@@ -79,7 +79,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
   function postClients() {
     currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients',

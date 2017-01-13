@@ -16,7 +16,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   //function to get all areas associated with survey
   function getSurveyDetails() {
     var currentUser = UserFactory.getUser();
-    currentUser.user.getToken()
+    currentUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
