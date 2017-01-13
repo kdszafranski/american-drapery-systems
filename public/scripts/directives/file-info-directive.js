@@ -1,19 +1,18 @@
-app.directive('fileInfo', ['$compile', function ($compile) { // inject $compile service as dependency
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            // click on the button to add new input field
-            element.bind('change', function () {
-                var input = angular.element('<div><input type="text" ng-model="telephone[' + scope.inputCounter + ']"></div>');
-                // Compile the HTML and assign to scope
-                var compile = $compile(input)(scope);
-
-                // Append input to div
-               element.append(input);
-
-                // Increment the counter for the next input to be added
-                scope.inputCounter++;
-            });
-        }
+/*********************
+Create file directive
+**********************/
+app.directive('fileModel', ['$parse', function($parse) {
+  return {
+    restrict: 'A',//restrict to attribute
+    link: function(scope, element, attrs) {
+      var model = $parse(attrs.fileModel);
+      var modelSetter = model.assign;
+      element.bind('change', function() { //when element changes, execute this function
+        scope.$apply(function() {
+          console.log("Images selected: ", element[0].files);
+          modelSetter(scope, element[0].files);
+        });
+      });
     }
-}]);
+  };
+}]);//end directive
