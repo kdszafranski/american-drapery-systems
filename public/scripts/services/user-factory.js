@@ -89,7 +89,8 @@ function($firebaseAuth, $http, $q) {
     userChecker: function() {
       return userChecker();
     },
-    auth: auth
+    auth: auth,
+    isUser: isUser
   };
   /*************************
   Return publicApi object
