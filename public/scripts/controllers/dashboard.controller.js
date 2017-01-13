@@ -1,9 +1,10 @@
-app.controller('DashboardController', ['UserFactory', '$http', '$location', function(UserFactory, $http, $location) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', function(UserFactory, IdFactory, $http, $location) {
   const self = this;
   var currentUser = {};
   var surveyList = [];
   self.currentPage = 0;
   self.pageSize = 20;
+  self.filtered = [];
 
   self.show = {
     completed: false,
@@ -30,7 +31,7 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
       }).then(function(response){
         console.log('success');
         surveyList = formatData(response.data);
-        self.filter(self.show);
+        self.statusFilter(self.show);
       });
     });
   }
@@ -44,17 +45,25 @@ app.controller('DashboardController', ['UserFactory', '$http', '$location', func
     return surveys;
   }
 
-  self.filter = function(show) {
+  self.statusFilter = function(show) {
     self.filtered = [];
     for (var i = 0; i < surveyList.length; i++) {
       if(!show.compare(surveyList[i].status)) {
         self.filtered.push(surveyList[i]);
       }
     }
+    console.log('filtered 0', self.filtered[0]);
   }
 
   self.newJob = function() {
     $location.path('/profile');
+  }
+  self.survey = function(surveyId) {
+    IdFactory.setSurvey(surveyId);
+    $location.path('/survey');
+  }
+  self.area = function() {
+    $location.path('/area');
   }
 
 }]);

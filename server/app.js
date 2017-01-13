@@ -11,14 +11,6 @@ var clients = require('./routes/clients');
 var users = require('./routes/users');
 var testdata = require('./routes/testdata');
 
-
-// testdata.user();
-// for(var i=1; i<1000; i++) {
-  // testdata.client();
-  // testdata.survey(i + 1);
-  // testdata.measurement(i + 1);
-// }
-
 // serve static files
 app.use(express.static('public'));
 app.use(bodyParser.json()); // needed for angular requests

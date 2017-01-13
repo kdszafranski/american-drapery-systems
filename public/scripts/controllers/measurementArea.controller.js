@@ -1,5 +1,6 @@
 app.controller('MeasurementAreaController', ["$http", function($http) {
   var self = this;
+<<<<<<< HEAD
   var survey_id = 2;
   //function to send area to measurent controller
 
