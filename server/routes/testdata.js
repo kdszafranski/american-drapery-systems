@@ -1,23 +1,4 @@
-//var faker = require('faker');
-// testdata.user();
-// var areaSize = testdata.randInt(3,30);
-// var area = faker.name.jobArea();
-// var floor = testdata.randInt(1,100);
 
-// for(var i=0; i<1000; i++) {
-//   testdata.client();
-// }
-// for(var i=0; i<1000; i++) {
-//   testdata.survey(i + 1);
-// }
-// for(var i=0; i<1000; i++) {
-//   testdata.measurement(i + 1, area, floor);
-//   if (i == areaSize) {
-//     areaSize += testdata.randInt(3,30);
-//     area = faker.name.jobArea();
-//     floor = testdata.randInt(1,100)
-//   }
-// }
 var express = require('express');
 var router = express.Router();
 var pg = require('pg');
