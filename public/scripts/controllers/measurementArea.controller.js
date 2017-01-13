@@ -1,8 +1,13 @@
-app.controller('MeasurementAreaController', ["$http", 'IdFactory',  function($http, IdFactory) {
+app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location',  function($http, IdFactory, $location) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   console.log(survey_id);
   //function to send area to measurent controller
+  self.setArea = function(index) {
+    console.log("index: ", index);
+    IdFactory.setArea(self.areaArrayId[index]);
+    $location.path('/measurement');
+  }
 
   //function to add a new area
 
@@ -18,6 +23,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory',  function($ht
       console.log("Response From Server: ", self.surveyDetails);
       self.companyInfo = self.surveyDetails[0];
       self.areaArray = self.surveyDetails.map(survey => survey.area);
+      self.areaArrayId = self.surveyDetails.map(survey => survey.area.id);
       for (var i = 0; i < 5; i++) {
         self.areaArray.push(i);
       }
