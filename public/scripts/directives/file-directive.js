@@ -11,7 +11,6 @@ app.directive('fileModel', ['$parse', function($parse) {
         scope.$apply(function() {
           console.log("Images selected: ", element[0].files);
           modelSetter(scope, element[0].files);
-          console.log("Element in file directive: ", element);
         });
       });
     }

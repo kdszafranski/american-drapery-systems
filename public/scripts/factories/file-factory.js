@@ -10,7 +10,7 @@ function($http, MultipartForm) {
 
     filesObject: {
       files: FileList,
-      filesInfo: [],
+      filesInfo: {}
     },
 
     updateFiles: function(newFiles) {
