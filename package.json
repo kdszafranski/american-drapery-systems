@@ -24,6 +24,7 @@
     "angular-material": "1.1.1",
     "angular-route": "^1.6.1",
     "angularfire": "^2.2.0",
+    "aws-sdk": "^2.7.21",
     "body-parser": "^1.15.2",
     "dot-env": "0.0.1",
     "dotenv": "^2.0.0",
@@ -34,6 +35,8 @@
     "jquery": "^3.1.1",
     "md-data-table": "^2.2.0",
     "moment": "^2.17.1",
+    "multer": "^1.2.1",
+    "multer-s3": "^2.5.0",
     "pg": "^6.1.2",
     "request": "^2.79.0",
     "url": "^0.11.0"
