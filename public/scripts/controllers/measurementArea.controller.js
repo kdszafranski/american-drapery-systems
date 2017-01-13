@@ -1,14 +1,40 @@
-app.controller('MeasurementAreaController', ["$http", function($http) {
+app.controller('MeasurementAreaController', ["$http", 'IdFactory',  function($http, IdFactory) {
   var self = this;
-  //Gets the survey_id from click on dashboard
+  var survey_id = IdFactory.getSurveyId();
+  console.log(survey_id);
+  //function to send area to measurent controller
 
+  //function to add a new area
 
+  //function to handle clicking of an already existing area
 
+  //function to get all areas associated with survey
+  function getSurveyDetails() {
+    $http({
+      method: 'GET',
+      url: '/surveys/one/' + survey_id
+    }).then(function(response){
+      self.surveyDetails = response.data;
+      console.log("Response From Server: ", self.surveyDetails);
+      self.companyInfo = self.surveyDetails[0];
+      self.areaArray = self.surveyDetails.map(survey => survey.area);
+      for (var i = 0; i < 5; i++) {
+        self.areaArray.push(i);
+      }
+    },
+    function(err) {
+      console.log("error getting survey details: ", err);
+    });
+  }
 
-  //Click function to go to measurement page and adds on area to pass to measurement page
-
-
-
-  //Get request to get areas for survey
-
+  getSurveyDetails();
 }]);
+
+//Function to group measurements by area
+function groupBy(arr, property) {
+  return arr.reduce(function(memo, x) {
+    if (!memo[x[property]]) { memo[x[property]] = []; }
+    memo[x[property]].push(x);
+    return memo;
+  }, {});
+}

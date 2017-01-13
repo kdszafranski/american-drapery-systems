@@ -23,6 +23,9 @@ app.factory("IdFactory", function($interval)
     setClient: function(newId) {
       console.log('changing survey to ', newId);
       id.client = newId;
+    },
+    getSurveyId: function() {
+      return id.survey;
     }
   }
 });
