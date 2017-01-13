@@ -33,10 +33,10 @@ router.get('/one/:survey_id', function(req, res) {
   pool.connect()
     .then(function(client) {
       client.query('SELECT * FROM measurements ' +
-      'JOIN survey on measurements.survey_id = survey.id ' +
+      'JOIN areas on areas.id = measurements.area_id ' +
+      'JOIN survey on survey.id = areas.survey_id ' +
       'JOIN client on survey.client_id = client.id ' +
-      'WHERE survey_id = ' + survey_id +
-      ' ORDER BY area')
+      'WHERE survey.id = ' + survey_id)
         .then(function(result) {
           client.release();
           console.log(result.rows);
