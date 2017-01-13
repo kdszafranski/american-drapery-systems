@@ -73,3 +73,47 @@ table{
   cursor: pointer;
 
 }
+
+.company-info-header {
+  display: flex;
+  justify-content: space-around;
+}
+
+.company-info-header li {
+  list-style-type: none;
+}
+
+.client-contact {
+  display: flex;
+}
+
+.areas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.measurement-areas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 200px;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.add-new-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 200px;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.itemBtn:hover {
+  cursor: pointer;
+}
