@@ -7,7 +7,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
 
   self.getMeasurements = function() {
     var currentUser = UserFactory.getUser();
-    currentUser.user.getToken()
+    currentUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
