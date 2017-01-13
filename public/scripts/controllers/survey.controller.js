@@ -37,12 +37,13 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
           }
 
           //Seperate measurements into areas
-          var separateAreas = groupBy(self.surveyDetails.data, 'area');
+          var separateAreas = groupBy(self.surveyDetails.data, 'area_name');
           console.log(separateAreas);
           self.areaArray = [];
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
+          console.log('areaArray', self.areaArray);
         },
         function(err) {
           console.log("error getting survey details: ", err);
