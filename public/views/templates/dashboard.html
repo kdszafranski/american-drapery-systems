@@ -60,7 +60,7 @@
           Previous
         </md-button>
           {{dash.currentPage+1}}/{{dash.totalPages((dash.filtered  | filter: query).length)}}
-        <md-button ng-class="md-mini" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query).length % dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
+        <md-button ng-class="md-mini" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query).length / dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
           Next
         </md-button>
       </div>
