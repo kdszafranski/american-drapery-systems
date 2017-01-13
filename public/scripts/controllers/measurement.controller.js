@@ -3,8 +3,8 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
   self.measurement = {};
   self.measurements =[];
   self.measurement.edit = true;
+  self.areaId = IdFactory.getAreaId();
 
-  self.areaId = 1;
   self.getMeasurements = function() {
     var currentUser = UserFactory.getUser();
     currentUser.user.getToken()
@@ -17,8 +17,11 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
           }
         }).then(function(response) {
           console.log("response in measurement controller: ", response);
-          self.measurementsFromGet = response.data;
-          console.log(self.measurementsFromGet);
+          self.measurements = response.data;
+          for (var i = 0; i < self.measurements.length; i++) {
+            self.measurements[i].edit = true;
+          }
+          console.log(self.measurements);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
         });
