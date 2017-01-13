@@ -1,8 +1,5 @@
 <h3>measure</h3>
 <!-- File input and view -->
-<div ng-controller="FileController as fc">
-  <input type="file" name="files" file-model="fc.files" multiple/>
-  <ul>
-    <li ng-repeat="file in fc.files"><input type="text" ng-model="file.name"></li>
-  </ul>
+<div ng-include="'/views/templates/files.html'">
+<!-- comment -->
 </div>
