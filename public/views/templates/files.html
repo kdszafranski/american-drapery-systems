@@ -5,7 +5,7 @@
     <li ng-repeat="file in files.filesObject.files"><p>{{file.name}}</p>
       <md-input-container class="md-block">
       <label for="input_23">File Info {{$index}}</label>
-      <input ng-model="files.filesObject.filesInfo[$index]"  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
+      <input file-info  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
     </md-input-container></li>
   </ul>
 </div>

@@ -1,14 +1,16 @@
 /**********************
 Create file controller
 ***********************/
-app.controller('FileController', ['FileFactory',
-function(FileFactory) {
+app.controller('FileController', ['FileFactory', '$compile',
+function(FileFactory, $compile) {
   const self = this;
 
   self.filesObject = { //store files and info here
     files: FileList,
     filesInfo: []
   };
+
+  self.infoCounter = 0;
 
   self.submitFiles = function() {
     console.log('submit files clicked');
