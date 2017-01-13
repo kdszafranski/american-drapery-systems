@@ -72,10 +72,10 @@
               <td ng-show="measure.measurements[$index].edit">{{dimension.quantity}}</td>
               <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].quantity" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
 
-              <td ng-show="measure.measurements[$index].edit">{{dimension.width}}</td>
+              <td ng-show="measure.measurements[$index].edit">{{dimension.width | number:2}}</td>
               <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].width" size="6" ng-model="measure.width" aria-label="width"></md-input-container></td>
 
-              <td ng-show="measure.measurements[$index].edit">{{dimension.length}}</td>
+              <td ng-show="measure.measurements[$index].edit">{{dimension.length | number:2}}</td>
               <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].length" size="6" ng-model="measure.length" aria-label="length"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.ib_ob}}</td>
