@@ -1,1 +1,156 @@
-<h3>measure</h3>
+<md-content>
+  <div layout="row">
+    <md-card >
+      <md-card-title id="measurementTitle">
+          <md-card-title-text >
+            <span id="cardTitle" class="md-subhead"> <u>info</u></span>
+          </md-card-title-text>
+      </md-card-title>
+      <md-card-content layout="row" layout-wrap>
+        <div layout="column">
+          <span class="md-headline">Company Name</span>
+          <span id="cardTitle" class="md-subhead">survey_address_street</span>
+          <span id="cardTitle" class="md-subhead">city, state zip </span>
+          <span id="cardTitle" class="md-subhead">Contact Phone number</span>
+          <span id="cardTitle" class="md-subhead">alt Contact phone number </span>
+        </div>
+        <div layout="column">
+          <span class="md-headline">&nbsp</span>
+          <span id="cardTitle" class="md-subhead">Job Number: 1111111</span>
+          <span id="cardTitle" class="md-subhead">Survey Date</span>
+        </div>
+      </md-card-content>
+      <md-card-footer>
+        <span id="cardTitle" class="md-subhead"><a href="#profile">Edit Client Info</a></span>
+      </md-card-footer>
+    </md-card flex>
+    <md-card>
+      <md-card-title id="measurementTitle">
+          <md-card-title-text>
+            <span id="cardTitle" class="md-subhead">Files</span>
+          </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+
+      </md-card-content>
+    </md-card>
+  </div>
+  <div>
+    <md-card>
+      <md-card-title id="measurementTitle">
+          <md-card-title-text >
+            <span id="cardTitle" class="md-subhead"><u>Measurements</u></span>
+          </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <table id="measurementsTable"  cellspacing="0">
+          <thead>
+            <tr id="headerRow">
+              <th>Floor</th>
+              <th>Room</th>
+              <th>Quantity</th>
+              <th>Width</th>
+              <th>Length</th>
+              <th>IB/OB</th>
+              <th>Controls</th>
+              <th>Fascia Size</th>
+              <th>Fabric</th>
+              <th>Mount</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="dimension in measure.measurements track by $index" id="tableBodyRow">
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.room}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].room" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.quantity}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].quantity" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.width}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].width" size="6" ng-model="measure.width" aria-label="width"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.length}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].length" size="6" ng-model="measure.length" aria-label="length"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.ib_ob}}</td>
+              <td ng-hide="measure.measurements[$index].edit">
+                <md-input-container>
+                  <md-select ng-model="measure.measurements[$index].ib_ob" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+                    <md-option value="IB" aria-label="IB">IB</md-option>
+                    <md-option value="OB" aria-label="OB">OB</md-option>
+                  </md-select>
+                </md-input-container>
+              </td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.controls}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].controls" size="6" ng-model="measure.controls" aria-label="controls"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.fascia_size}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].fascia_size" size="6" ng-model="measure.fascia_size" aria-label="fascia_size"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.fabric}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].fabric" size="10" ng-model="measure.fabric" aria-label="fabric"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.mount}}</td>
+              <td ng-hide="measure.measurements[$index].edit"><md-input-container><input ng-model="measure.measurements[$index].mount" size="6" ng-model="measure.mount" aria-label="mount"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
+                <md-button ng-click="measure.editRowButton($index)" class="md-icon-button" aria-label="edit">
+                  <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
+              <td ng-hide="measure.measurements[$index].edit" id="removeIconPadding">
+                <md-button ng-click="measure.updateRowButton($index)" class="md-icon-button" aria-label="edit">
+                  <md-icon md-svg-icon="../../img/ic_check_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
+              <td id="removeIconPadding">
+                <md-button ng-click="measure.deleteRowButton($index)" class="md-icon-button" aria-label="delete">
+                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
+            </tr>
+            <tr layout-wrap id="inputRow">
+              <td><md-input-container><input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`"></md-input-container></td>
+              <td>
+                <md-input-container>
+                  <md-select ng-model="measure.measurement.ib_ob" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
+                    <md-option value="IB" aria-label="IB">IB</md-option>
+                    <md-option value="OB" aria-label="OB">OB</md-option>
+                  </md-select>
+                </md-input-container>
+              </td>
+              <td><md-input-container><input ng-model="measure.measurement.controls" size="6" ng-model="measure.controls"  aria-label="controls"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.fascia_size" size="6" ng-model="measure.fascia_size" aria-label="fascia_size"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.fabric" size="10" ng-model="measure.fabric" aria-label="fabric"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.mount" size="6" ng-model="measure.mount" aria-label="mount"></md-input-container></td>
+              <td>
+                <md-button class="md-icon-button" aria-label="edit">
+                  <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
+              <td>
+                <md-button ng-click="measure.activeRowClear()" class="md-icon-button md-primary" aria-label="delete">
+                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                </md-button>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+        <md-button ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
+          <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+        </md-button>
+      </md-card-content>
+    </md-card>
+  </div>
+</md-content>
