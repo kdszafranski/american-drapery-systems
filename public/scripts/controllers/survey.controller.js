@@ -18,31 +18,32 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
             id_token: idToken
           }
         }).then(function(response){
-          self.surveyDetails = response;
-          console.log("Response From Server: ", self.surveyDetails.data);
+          self.surveyDetails = formatDates(response.data);
+          console.log("Response From Server: ", self.surveyDetails);
 
           //Assigning Contact Information to variables in controller
-          self.primary_contact_name = self.surveyDetails.data[0].primary_contact_name;
-          self.primary_contact_phone_number = self.surveyDetails.data[0].primary_contact_phone_number;
-          self.primary_contact_email = self.surveyDetails.data[0].primary_contact_email;
+          self.primary_contact_name = self.surveyDetails[0].primary_contact_name;
+          self.primary_contact_phone_number = self.surveyDetails[0].primary_contact_phone_number;
+          self.primary_contact_email = self.surveyDetails[0].primary_contact_email;
 
           //Only show alt contact if one exists
-          if (self.surveyDetails.data[0].alt_contact_name !== null) {
+          if (self.surveyDetails[0].alt_contact_name !== null) {
             self.showAltContact = true;
-            self.alt_contact_name = self.surveyDetails.data[0].alt_contact_name;
-            self.alt_phone_number = self.surveyDetails.data[0].alt_phone_number;
-            self.alt_contact_email = self.surveyDetails.data[0].alt_contact_email;
+            self.alt_contact_name = self.surveyDetails[0].alt_contact_name;
+            self.alt_phone_number = self.surveyDetails[0].alt_phone_number;
+            self.alt_contact_email = self.surveyDetails[0].alt_contact_email;
           } else {
             self.showAltContact = false;
           }
 
           //Seperate measurements into areas
-          var separateAreas = groupBy(self.surveyDetails.data, 'area_name');
+          var separateAreas = groupBy(self.surveyDetails, 'area_name');
           console.log(separateAreas);
           self.areaArray = [];
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
+          self.areaArray
           console.log('areaArray', self.areaArray);
         },
         function(err) {

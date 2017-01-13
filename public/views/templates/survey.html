@@ -1,57 +1,78 @@
-<h3>Survey View</h3>
-<div class="survey-header">
-  <div class="job-info">
-    <p>Job Number: 1111111</p>
-    <p>Completion Date: MM/DD/YYYY</p>
-    <p>Survey Date: 01/01/2017</p>
-  </div>
-  <div class="client-contact">
-    <ul>
-      <li>Primary Contact: {{survey.primary_contact_name}} / {{survey.primary_contact_phone_number}} / {{survey.primary_contact_email}}</li>
-      <li ng-show="survey.showAltContact">Alternate Contact: {{survey.alt_contact_name}} / {{survey.alt_phone_number}} / {{survey.alt_contact_email}}</li>
-    </ul>
-  </div>
-  <div class="client-address">
-    <h3>{{survey.surveyDetails.data[0].client_name}}</h3>
-    <ul>
-      <li>{{survey.surveyDetails.data[0].billing_address_street}}</li>
-      <li>{{survey.surveyDetails.data[0].billing_address_city}}</li>
-      <li>{{survey.surveyDetails.data[0].billing_address_state}}</li>
-      <li>{{survey.surveyDetails.data[0].billing_address_zip}}</li>
-    </ul>
-  </div>
+<div layout="row" layout-align="center center">
+<md-card flex="80">
+  <md-card-content>
+    <div class="survey-header">
+      <div class="job-info">
+        <p>Job Number: {{survey.areaArray[0][0].job_number}}</p>
+        <p>Completion Date: {{survey.areaArray[0][0].completion_date}}</p>
+        <p>Survey Date: {{survey.areaArray[0][0].survey_date}}</p>
+      </div>
+      <div class="client-contact">
+        <ul>
+          <li>Primary Contact<br />
+            {{survey.primary_contact_name}}<br />
+            {{survey.primary_contact_phone_number}}<br />
+            {{survey.primary_contact_email}}
+          </li>
+          <li ng-show="survey.showAltContact">
+            Alternate Contact<br />
+            {{survey.alt_contact_name}}<br />
+            {{survey.alt_phone_number}}<br />
+            {{survey.alt_contact_email}}
+          </li>
+        </ul>
+      </div>
+      <div class="client-address">
+        <h3>{{survey.surveyDetails.data[0].client_name}}</h3>
+        <ul>
+          <li>{{survey.surveyDetails.data[0].billing_address_street}}</li>
+          <li>{{survey.surveyDetails.data[0].billing_address_city}}</li>
+          <li>{{survey.surveyDetails.data[0].billing_address_state}}</li>
+          <li>{{survey.surveyDetails.data[0].billing_address_zip}}</li>
+        </ul>
+      </div>
+    </div>
+</md-card-content>
+</md-card>
 </div>
-<section ng-repeat="area in survey.areaArray track by $index">
-  <h4>Area: {{area[0].area_name}}</h4>
-  <table style="width:100%" >
-    <thead>
-    <tr>
-      <th>Floor</th>
-      <th>Room</th>
-      <th>Quantity</th>
-      <th>Width</th>
-      <th>Length</th>
-      <th>IB/OB</th>
-      <th>Controls</th>
-      <th>Fascia Size</th>
-      <th>Fabric</th>
-      <th>Mount</th>
-    </tr>
-  </thead>
-  <tbody>
-
-    <tr ng-repeat="measurements in area">
-      <td>{{measurements.floor}}</td>
-      <td>{{measurements.room}}</td>
-      <td>{{measurements.quantity}}</td>
-      <td>{{measurements.width | number : 2}}</td>
-      <td>{{measurements.length | number : 2}}</td>
-      <td>{{measurements.ib_ob}}</td>
-      <td>{{measurements.controls}}</td>
-      <td>{{measurements.fascia_size}}</td>
-      <td>{{measurements.fabric}}</td>
-      <td>{{measurements.mount}}</td>
-    </tr>
-  </tbody>
-  </table>
-</section>
+<div layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
+  <md-card flex="80">
+    <md-card-content>
+      <h4>Area: {{area[0].area_name}}</h4>
+      <table style="width:100%" >
+        <thead>
+          <tr>
+            <th>Floor</th>
+            <th>Room</th>
+            <th>Quantity</th>
+            <th>Width</th>
+            <th>Length</th>
+            <th>IB/OB</th>
+            <th>Controls</th>
+            <th>Fascia Size</th>
+            <th>Fabric</th>
+            <th>Mount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="tableBodyRow" ng-repeat="measurements in area">
+            <td>{{measurements.floor}}</td>
+            <td>{{measurements.room}}</td>
+            <td>{{measurements.quantity}}</td>
+            <td>{{measurements.width | number : 2}}</td>
+            <td>{{measurements.length | number : 2}}</td>
+            <td>{{measurements.ib_ob}}</td>
+            <td>{{measurements.controls}}</td>
+            <td>{{measurements.fascia_size}}</td>
+            <td>{{measurements.fabric}}</td>
+            <td>{{measurements.mount}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <b>Notes:</b>
+        {{area[$index].notes}}
+      </p>
+    </md-card-content>
+  </md-card>
+</div>

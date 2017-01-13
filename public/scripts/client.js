@@ -1,26 +1,6 @@
 var app = angular.module('app', ['ngRoute', 'firebase', 'ngMaterial']);
 
-app.filter('startFrom', function() {
-  return function(input, start) {
-    start = +start; //parse to int
-    return input.slice(start);
-  }
-});
 
-angular.module('app').directive('updateOnEnter', function() {
-  return {
-      restrict: 'A',
-      require: 'ngModel',
-      link: function(scope, element, attrs, ctrl) {
-          element.on("keyup", function(ev) {
-              if (ev.keyCode == 13) {
-                  ctrl.$commitViewValue();
-                  scope.$apply(ctrl.$setTouched);
-              }
-          });
-      }
-  }
-});
 
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
@@ -64,3 +44,32 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 
 }]);
+
+app.filter('startFrom', function() {
+  return function(input, start) {
+    start = +start; //parse to int
+    return input.slice(start);
+  }
+});
+
+function formatDates(aryOfObjs){
+  //convert the ISO Dates to readable format
+  // aryOfObjs.map(function(obj){
+  //   if(moment(obj).isValid){
+  //     return moment(obj).format("YYYY/MM/DD");
+  //   }
+  // });
+  for (var i = 0; i < aryOfObjs.length; i++) {
+    if(moment(aryOfObjs[i].last_modified).isValid()) {
+      aryOfObjs[i].last_modified = moment(aryOfObjs[i].last_modified).format("YYYY/MM/DD");
+    }
+    if(moment(aryOfObjs[i].survey_date).isValid()) {
+      aryOfObjs[i].survey_date = moment(aryOfObjs[i].survey_date).format("YYYY/MM/DD");
+    }
+    console.log('valid', moment(aryOfObjs[i].completion_date).isValid(), aryOfObjs[i].completion_date);
+    if(moment(aryOfObjs[i].completion_date).isValid()) {
+      moment(aryOfObjs[i].completion_date).format("YYYY/MM/DD")
+    }
+  }
+  return aryOfObjs;
+}
