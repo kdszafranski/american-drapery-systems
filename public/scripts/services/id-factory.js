@@ -26,6 +26,9 @@ app.factory("IdFactory", function($interval)
     },
     getSurveyId: function() {
       return id.survey;
+    },
+    getAreaId: function() {
+      return id.area;
     }
   }
 });
