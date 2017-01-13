@@ -32,6 +32,10 @@ md-input-container{
   background-color: white;
   border-color: white;
 }
+
+#headerRow th {
+  padding: 5px;
+}
 #headerRow{
   background-color: rgb(63,81,181);
   color: rgba(255,255,255,0.87);
@@ -111,6 +115,10 @@ table{
   height: 200px;
   width: 200px;
   border: 1px solid black;
+  margin: 10px;
+}
+
+#newJob {
   margin: 10px;
 }
 
