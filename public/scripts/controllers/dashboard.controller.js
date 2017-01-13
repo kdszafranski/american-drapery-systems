@@ -62,7 +62,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     IdFactory.setSurvey(surveyId);
     $location.path('/survey');
   }
-  self.area = function() {
+  self.area = function(surveyId) {
+    IdFactory.setSurvey(surveyId)
     $location.path('/area');
   }
 
