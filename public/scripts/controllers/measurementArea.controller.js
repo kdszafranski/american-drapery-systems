@@ -1,7 +1,9 @@
 app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory',  function($http, IdFactory, $location, UserFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
+  self.newArea = '';
   console.log(survey_id);
+  self.inputAreaName = false;
   //function to send area to measurent controller
   self.setArea = function(index) {
     console.log("index: ", index);
@@ -10,7 +12,17 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     $location.path('/measurement');
   }
 
+
   //function to add a new area
+
+  self.showInput = function() {
+    self.inputAreaName = true;
+  }
+
+  self.addNewArea = function() {
+    console.log("Clicked Add New Area: ", self.newArea);
+    self.inputAreaName = false;
+  }
 
   //function to handle clicking of an already existing area
 
