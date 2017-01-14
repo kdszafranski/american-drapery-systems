@@ -5,7 +5,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.currentPage = 0;
   self.pageSize = 20;
   self.filtered = [];
-
+  self.loading = false;
+  
   self.show = {
     completed: false,
     declined: false,
@@ -37,6 +38,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         console.log('success');
         surveyList = formatData(response.data);
         self.statusFilter(self.show);
+        self.loading = true;
       });
     });
   }
@@ -49,6 +51,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     }
     return surveys;
   }
+
+
 
   self.statusFilter = function(show) {
     self.filtered = [];
