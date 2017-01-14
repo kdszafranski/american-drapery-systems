@@ -7,21 +7,6 @@ app.filter('startFrom', function() {
   }
 });
 
-angular.module('app').directive('updateOnEnter', function() {
-  return {
-      restrict: 'A',
-      require: 'ngModel',
-      link: function(scope, element, attrs, ctrl) {
-          element.on("keyup", function(ev) {
-              if (ev.keyCode == 13) {
-                  ctrl.$commitViewValue();
-                  scope.$apply(ctrl.$setTouched);
-              }
-          });
-      }
-  }
-});
-
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/login', {
