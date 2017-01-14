@@ -1,10 +1,11 @@
 /**********************
 Create file controller
 ***********************/
-app.controller('FileController', ['FileFactory', '$compile',
-function(FileFactory, $compile) {
+app.controller('FileController', ['FileFactory', 'UserFactory',
+function(FileFactory, UserFactory) {
   console.log("File controller running");
   const self = this;
+  var currentUser = UserFactory.getUser();
 
   self.filesObject = { //store files and info here
     files: FileList,
@@ -23,7 +24,7 @@ function(FileFactory, $compile) {
     console.log('sending these files to FileFactory: ', self.filesObject.files);
     console.log('sending this file info to FileFactory: ', self.filesObject.filesInfo);
     FileFactory.updateFiles(self.filesObject); //send filesObject to FileFactory
-    FileFactory.submitFiles(); //send files and info to server
+    FileFactory.submitFiles(currentUser); //send files and info to server
   }
 
 }]);//End controller

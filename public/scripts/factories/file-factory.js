@@ -19,10 +19,14 @@ function($http, MultipartForm) {
       console.log("Files now in FileFactory: ", fileFactory.filesObject.files, fileFactory.filesObject.filesInfo);
     },
 
-    submitFiles: function() {
+    submitFiles: function(currentUser) {
       console.log("submitFiles() running in FileFactory, sending files to server");
-      return MultipartForm.post(uploadUrl, fileFactory.filesObject).then(function(response) {
-        console.log("Response from server: ", response);
+
+      return currentUser.user.getToken().then(function() {
+        return MultipartForm.post(uploadUrl, fileFactory.filesObject)
+        .then(function(response) {
+          return console.log("Response from server: ", response);
+        });
       });
     }
 

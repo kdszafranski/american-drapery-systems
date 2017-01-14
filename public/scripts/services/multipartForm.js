@@ -1,5 +1,5 @@
 app.service('MultipartForm', ['$http', function($http) {
-  this.post = function(uploadUrl, data) {
+  this.post = function(uploadUrl, data, idToken) {
     var fd = new FormData(); //We will store form data here to be sent to server
     console.log("MultipartForm data: ", data);
 
