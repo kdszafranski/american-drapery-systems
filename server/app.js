@@ -9,6 +9,7 @@ var measurements = require('./routes/measurements');
 var dashboard = require('./routes/dashboard');
 var clients = require('./routes/clients');
 var users = require('./routes/users');
+var areas = require('./routes/areas');
 var testdata = require('./routes/testdata');
 var files = require('./routes/files');
 
@@ -46,3 +47,4 @@ app.use('/surveys', surveys);
 // app.use('/files', files);
 app.use('/measurements', measurements);
 app.use('/clients', clients);
+app.use('/areas', areas);
