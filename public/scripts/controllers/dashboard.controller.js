@@ -35,19 +35,10 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         }
       }).then(function(response){
         console.log('success');
-        surveyList = formatData(response.data);
+        surveyList = formatDates(response.data);
         self.statusFilter(self.show);
       });
     });
-  }
-
-  function formatData(surveys){
-    //convert the ISO Dates to readable format
-    for (var i = 0; i < surveys.length; i++) {
-      surveys[i].last_modified = moment(surveys[i].last_modified).format("YYYY/MM/DD");
-      surveys[i].survey_date = moment(surveys[i].survey_date).format("YYYY/MM/DD");
-    }
-    return surveys;
   }
 
   self.statusFilter = function(show) {
