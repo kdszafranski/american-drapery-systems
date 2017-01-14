@@ -35,7 +35,7 @@ router.get('/one/:survey_id', function(req, res) {
       client.query('SELECT * FROM client ' +
       'JOIN survey on survey.client_id = client.id ' +
       'JOIN areas on areas.survey_id = survey.id ' +
-      'JOIN measurements on measurements.area_id = areas.id ' +
+//    'JOIN measurements on measurements.area_id = areas.id ' +
       'WHERE survey_id = $1', [survey_id])
         .then(function(result) {
           client.release();
