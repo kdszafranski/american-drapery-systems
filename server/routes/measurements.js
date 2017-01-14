@@ -7,38 +7,38 @@ var pool = new pg.Pool(config);
 
 //Post request to add new measurement information to survey
 router.put('/:area_id', function(req,res) {
+  console.log("We Should not be here");
   console.log("Req.body in Post: ", req.body);
-  var newMeasurement = req.body;
-  var area_id = req.params.area_id;
-  console.log(area_id);
-  pool.connect()
-    .then(function(client) {
-      client.query("INSERT INTO measurements (floor, room, quantity, width, length, ib_ob, fascia_size, controls, mount, fabric, area_id) " +
-      "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
-      [newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.ib_ob, newMeasurement.fascia_size, newMeasurement.controls, newMeasurement.mount, newMeasurement.fabric, area_id])
-      .then(function(result) {
-        console.log("put complete");
-        res.sendStatus(201);
-      })
-      .catch(function(err) {
-        console.log('select query error: ', err);
-        res.sendStatus(500);
-      });
-    });
+  // var newMeasurement = req.body;
+  // var area_id = req.params.area_id;
+  // console.log(area_id);
+  // pool.connect()
+  //   .then(function(client) {
+  //     client.query("INSERT INTO measurements (floor, room, quantity, width, length, ib_ob, fascia_size, controls, mount, fabric, area_id) " +
+  //     "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+  //     [newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.ib_ob, newMeasurement.fascia_size, newMeasurement.controls, newMeasurement.mount, newMeasurement.fabric, area_id])
+  //     .then(function(result) {
+  //       console.log("put complete");
+  //       res.sendStatus(201);
+  //     })
+  //     .catch(function(err) {
+  //       console.log('select query error: ', err);
+  //       res.sendStatus(500);
+  //     });
+  //   });
 });
 
 
 //Route to edit already existing measurement. measure_id refers to the row in the measurement table.
-router.put('/:measure_id', function(req,res) {
-  console.log(req.params.measure_id);
+router.put('/', function(req,res) {
+  console.log("Req.body from measurement update: ", req.body);
   var newMeasurement = req.body;
-  var measure_id = req.params.measure_id;
   pool.connect()
     .then(function(client) {
       client.query('UPDATE measurements ' +
-      'SET area = $1, floor = $2, room = $3, quantity = $4, width = $5, length = $6, inside = $7, outside = $8, fascia_size = $9, controls = $10, mount = $11, fabric = $12, notes = $13)' +
-      'WHERE id = $14',
-      [newMeasurement.area, newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.inside, newMeasurement.outside, newMeasurement.fascia_size, newMeasurement.controls, newMeasurement.mount, newMeasurement.fabric, newMeasurement.notes, measure_id])
+      'SET floor = $1, room = $2, quantity = $3, width = $4, length = $5, ib_ob = $6, controls = $7, fascia_size = $8, fabric = $9, mount = $10 ' +
+      'WHERE id = $11',
+      [newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.ib_ob, newMeasurement.controls, newMeasurement.fascia_size, newMeasurement.fabric, newMeasurement.mount, newMeasurement.id])
       .then(function(result) {
         console.log("put complete");
         res.sendStatus(201);
