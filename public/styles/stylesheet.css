@@ -1,3 +1,6 @@
+table {
+  font-family: 'Roboto', sans-serif;
+}
 nav {
   border-bottom: solid black 3px;
 }
@@ -55,7 +58,6 @@ md-input-container{
 }
 tr:nth-child(odd) {
     background-color: rgb(234, 231, 235);
-
 }
 tr:nth-child(even) {
     background-color: rgb(211, 210, 212);
@@ -91,6 +93,10 @@ table{
   display: flex;
 }
 
+#companyName {
+  text-align: right;
+}
+
 .areas {
   display: flex;
   flex-wrap: wrap;
@@ -124,4 +130,7 @@ table{
 
 .itemBtn:hover {
   cursor: pointer;
+}
+.areaName {
+  margin: 8px;
 }
