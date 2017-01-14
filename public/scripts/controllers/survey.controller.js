@@ -18,16 +18,17 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
             id_token: idToken
           }
         }).then(function(response){
-          self.surveyDetails = response;
-          console.log("Response From Server: ", self.surveyDetails.data);
-          
+          self.surveyDetails = formatDates(response.data);
+          console.log("Response From Server: ", self.surveyDetails);
           //Seperate measurements into areas
-          var separateAreas = groupBy(self.surveyDetails.data, 'area');
+          var separateAreas = groupBy(self.surveyDetails, 'area_name');
           console.log(separateAreas);
           self.areaArray = [];
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
+          self.areaArray
+          console.log('areaArray', self.areaArray);
         },
         function(err) {
           console.log("error getting survey details: ", err);
