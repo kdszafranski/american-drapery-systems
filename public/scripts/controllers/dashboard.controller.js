@@ -15,12 +15,17 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       return compBool || decBool;
     }
   }
-  getSurveys();
 
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
+    // firebaseUser will be null if not logged in
+    currentUser = firebaseUser;
+    getSurveys();
+    console.log("onAuthStateChanged", currentUser);
+  });
   function getSurveys() {
     currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
     // var idToken = true;
       $http({
         method: 'GET',
@@ -30,19 +35,10 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         }
       }).then(function(response){
         console.log('success');
-        surveyList = formatData(response.data);
+        surveyList = formatDates(response.data);
         self.statusFilter(self.show);
       });
     });
-  }
-
-  function formatData(surveys){
-    //convert the ISO Dates to readable format
-    for (var i = 0; i < surveys.length; i++) {
-      surveys[i].last_modified = moment(surveys[i].last_modified).format("YYYY/MM/DD");
-      surveys[i].survey_date = moment(surveys[i].survey_date).format("YYYY/MM/DD");
-    }
-    return surveys;
   }
 
   self.statusFilter = function(show) {
@@ -66,5 +62,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     IdFactory.setSurvey(surveyId)
     $location.path('/area');
   }
-
+  self.totalPages = function (num) {
+    return parseInt(num / self.pageSize) + 1;
+  }
 }]);

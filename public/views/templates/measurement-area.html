@@ -35,8 +35,7 @@
   <div class="add-new-area">
     <p>+</p>
   </div>
-  <div ng-repeat="area in ma.areaArray" class="measurement-areas">
-
+  <div ng-repeat="area in ma.areaArray track by $index" class="measurement-areas" ng-click="ma.setArea($index)">
     <p>{{area}}</p>
   </div>
 </section>

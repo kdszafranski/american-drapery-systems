@@ -1,3 +1,6 @@
+table {
+  font-family: 'Roboto', sans-serif;
+}
 nav {
   border-bottom: solid black 3px;
 }
@@ -16,7 +19,49 @@ md-input-container{
   margin-top: 5px;
   padding: 0;
 }
+#measurementTitle{
+  padding: 4px;
+}
+#cardTitle{
+  padding: 0;
+}
+#cardTitle a{
+  color: rgba(0,0,0,0.87);
+}
+#measurementsTable td{
+  padding: 1px;
+}
+#inputRow td{
+  background-color: white;
+  border-color: white;
+}
 
+#headerRow th {
+  padding: 5px;
+}
+#headerRow{
+  background-color: rgb(63,81,181);
+  color: rgba(255,255,255,0.87);
+  padding-top: 5px;
+}
+#tableBodyRow td{
+  border: 1px solid;
+  border-color: rgba(251, 247, 247, 0.91);
+  padding-left: 5px;
+}
+#tableBodyRow #removeIconPadding{
+  padding-left: 0;
+}
+#tableBodyRow md-input-container, input{
+  padding: 0;
+  margin: 0;
+}
+tr:nth-child(odd) {
+    background-color: rgb(234, 231, 235);
+}
+tr:nth-child(even) {
+    background-color: rgb(211, 210, 212);
+}
 .survey-header {
   display: flex;
   justify-content: space-around;
@@ -26,8 +71,13 @@ md-input-container{
   list-style-type: none;
 }
 
-td {
-  text-align: center;
+table{
+  border: 1px;
+}
+
+.itemBtn:hover {
+  cursor: pointer;
+
 }
 
 .company-info-header {
@@ -41,6 +91,10 @@ td {
 
 .client-contact {
   display: flex;
+}
+
+#companyName {
+  text-align: right;
 }
 
 .areas {
@@ -68,7 +122,15 @@ td {
   width: 200px;
   border: 1px solid black;
   margin: 10px;
+}
 
+#newJob {
+  margin: 10px;
+}
 
 .itemBtn:hover {
   cursor: pointer;
+}
+.areaName {
+  margin: 8px;
+}

@@ -15,10 +15,10 @@ function($firebaseAuth, $http, $q) {
     //Sign in with popup message using google credentials
       return auth.$signInWithPopup("google").then(function(firebaseUser) {
       //Assign result of signin to current user object
-      currentUser = firebaseUser.user;
+      currentUser = firebaseUser;
       isUser = true;
       //Log user's email
-      console.log("Firebase User: ", firebaseUser.user);
+      console.log("Firebase User: ", firebaseUser.user.email);
       //Get idToken
       return currentUser.getToken().then(function(idToken) {
         //GET request to /dashboard route, send idToken in header
@@ -34,19 +34,7 @@ function($firebaseAuth, $http, $q) {
         });
       });
     });
-
   }//End login fxn
-
-  //Check authorization satus
-  auth.$onAuthStateChanged(function(firebaseUser){
-    // firebaseUser will be null if not logged in
-    currentUser = firebaseUser;
-    console.log("onAuthStateChanged", currentUser);
-    if(firebaseUser) {
-      isUser = true;
-    }
-  });
-
   /**********************************************
   //Lougout fxn, runs when logout btn is clicked
   ***********************************************/
@@ -88,9 +76,7 @@ function($firebaseAuth, $http, $q) {
     },
     userChecker: function() {
       return userChecker();
-    },
-    auth: auth,
-    isUser: isUser
+    }
   };
   /*************************
   Return publicApi object
