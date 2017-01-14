@@ -32,8 +32,26 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
 
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
+    console.log("survey ID: ", self.areaId);
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+        $http({
+          method: 'PUT',
+          url: '/measurements/' + self.areaId,
+          data: self.measurement,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          console.log("Response from measurement route: ", response);
+        }).catch(function(err) {
+          console.log("Error in measurement post");
+        });
+      })
     self.measurements.push(angular.copy(self.measurement));
     console.log("mesurement array", self.measurements);
+    self.getMeasurements();
   }
   //Trashcan icon to clear current input row
   self.activeRowClear = function(){

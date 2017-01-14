@@ -6,6 +6,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   self.setArea = function(index) {
     console.log("index: ", index);
     IdFactory.setArea(self.areaArrayId[index]);
+
     $location.path('/measurement');
   }
 
