@@ -1,7 +1,7 @@
 app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory',  function($http, IdFactory, $location, UserFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
-  self.newArea = '';
+  self.newAreaName = '';
   console.log(survey_id);
   self.inputAreaName = false;
   //function to send area to measurent controller
@@ -14,7 +14,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
 
 
   //function to add a new area
-
   self.showInput = function() {
     self.inputAreaName = true;
   }
@@ -22,7 +21,34 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   self.addNewArea = function() {
     console.log("Clicked Add New Area: ", self.newArea);
     self.inputAreaName = false;
+    self.newArea = {
+      area: self.newAreaName,
+      survey_id: survey_id
+    }
+    console.log("New Area Object: ", self.newArea);
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+      .then(function(idToken) {
+        $http({
+          method: 'POST',
+          url: '/areas/',
+          data: self.newArea,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          console.log("Response from new area post: ", response.data[0].id);
+          self.newAreaId = response.data[0].id;
+          IdFactory.setArea(self.newAreaId);
+          $location.path('/measurement');
+        },
+        function(err) {
+          console.log("error getting survey details: ", err);
+        });
+    })
   }
+
+
 
   //function to handle clicking of an already existing area
 
