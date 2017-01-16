@@ -52,6 +52,7 @@ router.post('/', function(req,res) {
       "RETURNING id",
       [newClient.client_name, newClient.primary_contact_name, newClient.primary_contact_phone_number, newClient.primary_contact_email, newClient.alt_contact_name, newClient.alt_contact_email, newClient.alt_phone_number, newClient.billing_address_street, newClient.billing_address_city, newClient.billing_address_street, newClient.billing_address_zip, newClient.survey_address_state, newClient.survey_address_city, newClient.survey_address_state, newClient.survey_address_zip])
       .then(function(result) {
+        client.release();
         console.log("client info put complete");
         //Get the id of the most recently added client
         res.send(result.rows);

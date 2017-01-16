@@ -17,6 +17,7 @@ router.post('/', function(req,res) {
       "RETURNING id",
       [newArea.area, newArea.survey_id])
       .then(function(result) {
+        client.release();
         console.log("client info put complete");
         //Get the id of the most recently added area
         res.send(result.rows);
