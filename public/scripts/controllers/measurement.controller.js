@@ -67,7 +67,23 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
   self.updateRowButton = function(index){
     console.log("check clicked", index);
     self.measurements[index].edit = !self.measurements[index].edit;
-    console.log("measurements", self.measurements);
+    console.log("measurements", self.measurements[index]);
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+        $http({
+          method: 'PUT',
+          url: '/measurements/',
+          data: self.measurements[index],
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          console.log("Response from measurement route: ", response);
+        }).catch(function(err) {
+          console.log("Error in measurement post");
+        });
+      });
   }
   self.deleteRowButton = function(index){
     console.log("remove row number: ", index);
