@@ -59,13 +59,18 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
         client.query("INSERT INTO files (file_info, bucket, key, area_id) " +
         "VALUES ($1, $2, $3, $4)", [fileInfo[key], bucket, keys[key], areaId])
       }
-    }).then(function(result) {
-      console.log("Successfully added files/info to file db");
+    }).then(function(result, err) {
+      if(err) {
+      console.log("Error in query: ", err);
+    } else {
+      console.log("Success!: ", result);
       res.sendStatus(201);
-    }).catch(function(err) {
-      console.log("Insert query error: ", err);
-      res.sendStatus(500);
+    }
     })
+    // .catch(function(err) {
+    //   console.log("Insert query error: ", err);
+    //   res.sendStatus(500);
+    // })
 });//end route
 
 
