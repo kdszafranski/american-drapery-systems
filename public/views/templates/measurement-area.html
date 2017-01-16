@@ -21,6 +21,7 @@
             <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_city}}, {{ma.companyInfo.billing_address_state}}</li>
             <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_zip}}</li>
           </ul>
+
           <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
             <input ng-model="ma.currentProfile.survey_address_street" placeholder="Street Address">
           </md-input-container>
@@ -44,12 +45,23 @@
             <li>{{ma.companyInfo.primary_contact_phone_number}}</li>
             <li>{{ma.companyInfo.primary_contact_email}}</li>
           </ul>
+
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="profile.currentProfile.primary_contact_name" placeholder="Company Contact Name">
+          </md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="profile.currentProfile.primary_contact_phone_number" placeholder="Phone Number">
+          </md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="profile.currentProfile.primary_contact_email" placeholder="Email">
+          </md-input-container>
+
         </div>
         <div class="alt-contact">
           <ul>
-            <li>{{ma.companyInfo.alt_contact_name}}</li>
-            <li>{{ma.companyInfo.alt_phone_number}}</li>
-            <li>{{ma.companyInfo.alt_contact_email}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_name}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.alt_phone_number}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_email}}</li>
           </ul>
         </div>
       </div>
