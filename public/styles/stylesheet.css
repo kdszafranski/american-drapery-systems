@@ -132,6 +132,9 @@ table {
   width: 200px;
   border: 1px solid black;
   margin: 10px;
+  /*background-color: rgb(16,108,200);
+  color: rgba(255,255,255,0.87);
+  border-radius: 3px;*/
 }
 
 .add-new-area {

@@ -1,5 +1,5 @@
 @media print {
-  /**,
+  *,
   *:before,
   *:after,
   *:first-letter,
@@ -20,7 +20,7 @@
 
   abbr[title]:after {
       content: " (" attr(title) ")";
-  }*/
+  }
 
   /*
    * Don't show links that are fragment identifiers,
