@@ -9,9 +9,11 @@ app.directive('fileModel', ['$parse', function($parse) {
       var modelSetter = model.assign;
       element.bind('change', function() { //when element changes, execute this function
         scope.$apply(function() {
+          console.log("File directive scope: ", scope);
+          console.log("File directive element: ", element);
+          console.log("File directive attrs: ", attrs);
           console.log("Images selected: ", element[0].files);
           modelSetter(scope, element[0].files);
-          console.log("Element in file directive: ", element);
         });
       });
     }
