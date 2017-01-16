@@ -17,7 +17,10 @@ app.service('MultipartForm', ['$http', function($http) {
 
     return $http.post(uploadUrl, fd, { //this is a configuration for the POST
       transformRequest: angular.indentity, //stops angular from serializing our data
-      headers: { 'Content-Type': undefined } //lets browser handle what type of data is being sent...
+      headers: {
+        'Content-Type': undefined, //lets browser handle what type of data is being sent...
+        id_Token: idToken
+      }
     });
   };//end this.post
 }]);

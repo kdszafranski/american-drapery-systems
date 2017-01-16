@@ -43,6 +43,6 @@ app.use(decoder.token);
 app.use('/users', users);
 app.use('/dashboard', dashboard);
 app.use('/surveys', surveys);
-// app.use('/files', files);
+app.use('/files', files);
 app.use('/measurements', measurements);
 app.use('/clients', clients);
