@@ -7,7 +7,6 @@ var pool = new pg.Pool(config);
 
 //Post request to add new measurement information to survey
 router.put('/:area_id', function(req,res) {
-  console.log("We Should not be here");
   console.log("Req.body in Post: ", req.body);
   var newMeasurement = req.body;
   var area_id = req.params.area_id;
