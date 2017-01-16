@@ -46,7 +46,8 @@ var upload = multer({
       awsLocation = 'survey_' + surveyId + '/' + 'area_' + areaId + '/' + currentKey;
       cb(null, awsLocation);
       console.log("Done with image upload to: ", awsLocation);
-    }
+    },
+    contentType: multerS3.AUTO_CONTENT_TYPE
   })
 });
 
