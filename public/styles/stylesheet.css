@@ -124,6 +124,12 @@ table{
   margin: 10px;
 }
 
+#plus {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 40%;
+}
+
 #newJob {
   margin: 10px;
 }
