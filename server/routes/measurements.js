@@ -17,6 +17,7 @@ router.put('/:area_id', function(req,res) {
       "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
       [newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.ib_ob, newMeasurement.fascia_size, newMeasurement.controls, newMeasurement.mount, newMeasurement.fabric, area_id])
       .then(function(result) {
+        client.release();
         console.log("put complete");
         res.sendStatus(201);
       })
@@ -39,6 +40,7 @@ router.put('/', function(req,res) {
       'WHERE id = $11',
       [newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.ib_ob, newMeasurement.controls, newMeasurement.fascia_size, newMeasurement.fabric, newMeasurement.mount, newMeasurement.id])
       .then(function(result) {
+        client.release();
         console.log("put complete");
         res.sendStatus(201);
       })
@@ -59,6 +61,7 @@ router.get('/:area_id', function(req, res) {
       'WHERE areas.id = $1',
       [area_id])
       .then(function(results) {
+        client.release();
         console.log("Received these results from the measurements table: ", results);
         res.send(results.rows);
       })
@@ -78,6 +81,7 @@ router.delete('/:idToDelete', function(req, res) {
       'WHERE id = $1',
       [idToDelete])
       .then(function(results) {
+        client.release();
         console.log("Delete complete");
         res.sendStatus(201);
       })

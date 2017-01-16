@@ -10,8 +10,8 @@ router.get('/all', function(req, res) {
   console.log('reached get jobs route');
   pool.connect()
     .then(function(client) {
-      client.query("SELECT * FROM survey " +
-      "JOIN client on survey.client_id = client.id " +
+      client.query("SELECT * FROM client " +
+      "JOIN survey on survey.client_id = client.id " +
       "ORDER BY last_modified")
         .then(function (result) {
           client.release();
