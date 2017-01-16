@@ -86,8 +86,24 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
       });
   }
   self.deleteRowButton = function(index){
-    console.log("remove row number: ", index);
-    self.measurements.splice(index, 1)
+    console.log("remove row number: ", self.measurements[index].id);
+    var idToDelete = self.measurements[index].id;
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+        $http({
+          method: 'DELETE',
+          url: '/measurements/' + idToDelete,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          console.log("Response from measurement route: ", response);
+          self.getMeasurements();
+        }).catch(function(err) {
+          console.log("Error in measurement post");
+        });
+      });
   }
 
 }]);
