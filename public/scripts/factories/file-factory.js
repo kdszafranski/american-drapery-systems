@@ -17,13 +17,13 @@ function($http, MultipartForm) {
       console.log("Files now in FileFactory: ", fileFactory.filesObject.files, fileFactory.filesObject.filesInfo);
     },
 
-    submitFiles: function(currentUser, areaId) {
+    submitFiles: function(currentUser, surveyId, areaId) {
       var uploadUrl = '/files/' + areaId;
       console.log("submitFiles() running in FileFactory, sending files to server " +
       "Using route: ", uploadUrl);
 
       return currentUser.getToken().then(function(idToken) {
-        return MultipartForm.post(uploadUrl, fileFactory.filesObject, idToken)
+        return MultipartForm.post(uploadUrl, surveyId, fileFactory.filesObject, idToken)
         .then(function(response) {
           return console.log("Response from server: ", response);
         });

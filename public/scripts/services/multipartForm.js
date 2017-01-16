@@ -1,5 +1,5 @@
 app.service('MultipartForm', ['$http', function($http) {
-  this.post = function(uploadUrl, data, idToken) {
+  this.post = function(uploadUrl, surveyId, data, idToken) {
     var fd = new FormData(); //We will store form data here to be sent to server
     console.log("MultipartForm data: ", data);
 
@@ -19,7 +19,8 @@ app.service('MultipartForm', ['$http', function($http) {
       transformRequest: angular.indentity, //stops angular from serializing our data
       headers: {
         'Content-Type': undefined, //lets browser handle what type of data is being sent...
-        id_Token: idToken
+        id_Token: idToken,
+        survey_id: surveyId
       }
     });
   };//end this.post
