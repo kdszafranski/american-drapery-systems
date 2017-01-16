@@ -1,4 +1,4 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  function($http, IdFactory, UserFactory) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog",   function($http, IdFactory, UserFactory, $mdDialog) {
   var self = this;
   self.measurement = {};
   self.measurements =[];
@@ -85,6 +85,22 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
         });
       });
   }
+
+  //Confirming user wants to delete measurement. Index is the measurement to delete
+  self.showConfirm = function(ev, index) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you wish to delete this measurement?')
+          .targetEvent(ev)
+          .ok('Yes. Delete measurement.')
+          .cancel('No. Go back to measurements');
+
+    $mdDialog.show(confirm).then(function() {
+      self.deleteRowButton(index);
+    }, function() {
+    });
+  };
+  //Deleting measurement after confirmation
   self.deleteRowButton = function(index){
     console.log("remove row number: ", self.measurements[index].id);
     var idToDelete = self.measurements[index].id;
