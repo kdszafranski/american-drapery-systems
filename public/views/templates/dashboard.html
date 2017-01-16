@@ -5,6 +5,38 @@
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
     <div ng-show="dash.loading">
+    <div layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
+      <table id="dashTable">
+        <thead>
+          <tr id="headerRow">
+            <th>Survey #</th>
+            <th>Job #</th>
+            <th>Client</th>
+            <th>Status</th>
+            <th>Last Modified</th>
+            <th>Survey Date</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
+            <td>{{result.id}}</td>
+            <td>{{result.job_number}}</td>
+            <td>{{result.client_name}}</td>
+            <td>{{result.status}}</td>
+            <td>{{result.last_modified}}</td>
+            <td>{{result.survey_date}}</td>
+            <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="view">
+              <md-icon ng-click="dash.survey(result.id)" md-svg-icon="./img/pdf.svg"></md-icon>
+            </div></td>
+            <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="edit">
+              <md-icon ng-click="dash.area(result.id)" md-svg-icon="./img/edit.svg"></md-icon>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
       <div layout="row" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
         <div layout="column">
           <md-button id="newJob" layout-align="center center" class="md-raised md-primary md-ink-ripple" ng-click="dash.newJob()">
