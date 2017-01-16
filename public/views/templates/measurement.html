@@ -27,7 +27,7 @@
     <md-card>
       <md-card-title id="measurementTitle">
           <md-card-title-text>
-            <span id="cardTitle" class="md-subhead">Files</span>
+            <span id="cardTitle" class="md-subhead" ng-include="'/views/templates/files.html'">Files</span>
           </md-card-title-text>
       </md-card-title>
       <md-card-content>
@@ -111,7 +111,7 @@
                 </md-button>
               </td>
               <td id="removeIconPadding">
-                <md-button ng-click="measure.deleteRowButton($index)" class="md-icon-button" aria-label="delete">
+                <md-button ng-click="measure.showConfirm($event, $index)" class="md-icon-button" aria-label="delete">
                   <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
                 </md-button>
               </td>

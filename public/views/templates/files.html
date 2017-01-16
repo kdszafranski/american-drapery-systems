@@ -1,17 +1,19 @@
 <!-- File input and view -->
-<div>
-  <input type="file" name="files" file-model="files.filesObject.files" multiple/>
-  <ul>
-    <li ng-repeat="file in files.filesObject.files"><p>{{file.name}}</p>
-      <md-input-container class="md-block">
-      <label for="input_23">File Info {{$index}}</label>
-      <input file-info  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  style="">
-    </md-input-container></li>
-  </ul>
-</div>
-<div layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
-  <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="files.submitFiles()">
-    <span class="ng-scope">Submit Files</span>
-    <div class="md-ripple-container"></div>
-  </button>
+<div ng-controller="FileController as files">
+  <div>
+    <input type="file" name="files" file-model="files.filesObject.files" multiple/>
+    <ul>
+      <li ng-repeat="file in files.filesObject.files"><p>{{file.name}}</p>
+        <md-input-container class="md-block">
+        <label for="input_23">File Info</label>
+        <input  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  ng-model="files.filesObject.filesInfo['file_' + ($index + 1)]">
+      </md-input-container></li>
+    </ul>
+  </div>
+  <div layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
+    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="files.submitFiles()">
+      <span class="ng-scope">Submit</span>
+      <div class="md-ripple-container"></div>
+    </button>
+  </div>
 </div>

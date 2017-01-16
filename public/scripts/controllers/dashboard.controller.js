@@ -5,6 +5,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.currentPage = 0;
   self.pageSize = 20;
   self.filtered = [];
+  self.loading = false;
 
   self.show = {
     completed: false,
@@ -15,12 +16,17 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       return compBool || decBool;
     }
   }
-  getSurveys();
 
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
+    // firebaseUser will be null if not logged in
+    currentUser = firebaseUser;
+    getSurveys();
+    console.log("onAuthStateChanged", currentUser);
+  });
   function getSurveys() {
     currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
     // var idToken = true;
       $http({
         method: 'GET',
@@ -30,8 +36,9 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         }
       }).then(function(response){
         console.log('success');
-        surveyList = formatData(response.data);
+        surveyList = formatDates(response.data);
         self.statusFilter(self.show);
+        self.loading = true;
       });
     });
   }
@@ -44,6 +51,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     }
     return surveys;
   }
+
+
 
   self.statusFilter = function(show) {
     self.filtered = [];
@@ -66,5 +75,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     IdFactory.setSurvey(surveyId)
     $location.path('/area');
   }
-
+  self.totalPages = function (num) {
+    return parseInt(num / self.pageSize) + 1;
+  }
 }]);

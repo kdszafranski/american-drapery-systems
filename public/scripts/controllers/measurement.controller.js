@@ -1,4 +1,4 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  function($http, IdFactory, UserFactory) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog",   function($http, IdFactory, UserFactory, $mdDialog) {
   var self = this;
   self.measurement = {};
   self.measurements =[];
@@ -7,7 +7,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
 
   self.getMeasurements = function() {
     var currentUser = UserFactory.getUser();
-    currentUser.user.getToken()
+    currentUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
@@ -32,8 +32,26 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
 
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
+    console.log("survey ID: ", self.areaId);
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+        $http({
+          method: 'PUT',
+          url: '/measurements/' + self.areaId,
+          data: self.measurement,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          console.log("Response from measurement route: ", response);
+        }).catch(function(err) {
+          console.log("Error in measurement post");
+        });
+      })
     self.measurements.push(angular.copy(self.measurement));
     console.log("mesurement array", self.measurements);
+    self.getMeasurements();
   }
   //Trashcan icon to clear current input row
   self.activeRowClear = function(){
@@ -49,11 +67,59 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",  f
   self.updateRowButton = function(index){
     console.log("check clicked", index);
     self.measurements[index].edit = !self.measurements[index].edit;
-    console.log("measurements", self.measurements);
+    console.log("measurements", self.measurements[index]);
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+        $http({
+          method: 'PUT',
+          url: '/measurements/',
+          data: self.measurements[index],
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          console.log("Response from measurement route: ", response);
+        }).catch(function(err) {
+          console.log("Error in measurement post");
+        });
+      });
   }
+
+  //Confirming user wants to delete measurement. Index is the measurement to delete
+  self.showConfirm = function(ev, index) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you wish to delete this measurement?')
+          .targetEvent(ev)
+          .ok('Yes. Delete measurement.')
+          .cancel('No. Go back to measurements');
+
+    $mdDialog.show(confirm).then(function() {
+      self.deleteRowButton(index);
+    }, function() {
+    });
+  };
+  //Deleting measurement after confirmation
   self.deleteRowButton = function(index){
-    console.log("remove row number: ", index);
-    self.measurements.splice(index, 1)
+    console.log("remove row number: ", self.measurements[index].id);
+    var idToDelete = self.measurements[index].id;
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+        $http({
+          method: 'DELETE',
+          url: '/measurements/' + idToDelete,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          console.log("Response from measurement route: ", response);
+          self.getMeasurements();
+        }).catch(function(err) {
+          console.log("Error in measurement post");
+        });
+      });
   }
 
 }]);

@@ -28,6 +28,13 @@ CREATE TABLE survey (
   client_id INTEGER references client
 );
 
+CREATE TABLE areas (
+  id SERIAL PRIMARY KEY,
+  area_name VARCHAR(80),
+  notes VARCHAR,
+  survey_id INTEGER references survey
+);
+
 CREATE TABLE images (
  id SERIAL PRIMARY KEY,
  file_name VARCHAR(100),
@@ -38,20 +45,17 @@ CREATE TABLE images (
 
 CREATE TABLE measurements (
   id SERIAL PRIMARY KEY,
-  area VARCHAR(100),
   floor INTEGER,
   room VARCHAR(50),
   quantity INTEGER,
   width VARCHAR(25),
   length VARCHAR(25),
-  inside BOOLEAN,
-  outside BOOLEAN,
+  ib_ob VARCHAR(20),
   fascia_size INTEGER,
   controls VARCHAR(10),
   mount VARCHAR(40),
   fabric VARCHAR(100),
-  notes VARCHAR(200),
-  survey_id INTEGER references survey
+  area_id INTEGER references areas
 );
 
 CREATE TABLE users (

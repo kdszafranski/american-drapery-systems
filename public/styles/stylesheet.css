@@ -1,3 +1,6 @@
+table {
+  font-family: 'Roboto', sans-serif;
+}
 nav {
   border-bottom: solid black 3px;
 }
@@ -32,6 +35,10 @@ md-input-container{
   background-color: white;
   border-color: white;
 }
+
+#headerRow th {
+  padding: 5px;
+}
 #headerRow{
   background-color: rgb(63,81,181);
   color: rgba(255,255,255,0.87);
@@ -51,7 +58,6 @@ md-input-container{
 }
 tr:nth-child(odd) {
     background-color: rgb(234, 231, 235);
-
 }
 tr:nth-child(even) {
     background-color: rgb(211, 210, 212);
@@ -87,6 +93,10 @@ table{
   display: flex;
 }
 
+#companyName {
+  text-align: right;
+}
+
 .areas {
   display: flex;
   flex-wrap: wrap;
@@ -102,6 +112,9 @@ table{
   width: 200px;
   border: 1px solid black;
   margin: 10px;
+  /*background-color: rgb(16,108,200);
+  color: rgba(255,255,255,0.87);
+  border-radius: 3px;*/
 }
 
 .add-new-area {
@@ -114,6 +127,19 @@ table{
   margin: 10px;
 }
 
+#plus {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 40%;
+}
+
+#newJob {
+  margin: 10px;
+}
+
 .itemBtn:hover {
   cursor: pointer;
+}
+.areaName {
+  margin: 8px;
 }
