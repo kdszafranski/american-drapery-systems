@@ -80,12 +80,30 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     console.log("clicked");
     self.showInput = !self.showInput;
 
+
+
   }
   //save edits to client profile button
   self.updateClient = function(){
-    self.showInput = !self.showInput;
-    console.log(self.currentProfile);
-
+    var clientId = self.currentProfile.client_id;
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+      $http({
+        method: 'POST',
+        url: '/clients/'+ clientId,
+        data: self.currentProfile,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log("Response from new area post: ", response.data);
+        self.showInput = !self.showInput;
+      },
+      function(err) {
+        console.log("error getting survey details: ", err);
+      });
+    });
   }
   //function to handle clicking of an already existing area
 
