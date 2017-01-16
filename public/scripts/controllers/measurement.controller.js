@@ -5,7 +5,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
   self.measurement.edit = true;
   self.areaId = IdFactory.getAreaId();
   self.loading = false;
-  self.companyInfo = InfoFactory.companyInfo
+  self.companyInfo = formatDates([InfoFactory.companyInfo])[0];
 
 
   self.getMeasurements = function() {
