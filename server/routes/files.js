@@ -17,12 +17,14 @@ aws.config.update({
                 GLOBAL STORAGE
 ***********************************************/
 var currentFileNumber,
+    fileInfo,
     currentKey,
     areaId,
     surveyId,
     awsLocation;
 var bucket = 'american-drapery-systems';
 var keys = {}; //storing AWS.S3 file keys here
+var fileInfo = {};
 var s3 = new aws.S3();
 var pool = new pg.Pool(config);
 /**********************************************
@@ -38,7 +40,7 @@ var upload = multer({
     key: function(req, file, cb) {
       currentFileNumber = req.files.length;//files.length increments by one each iteration and corresponds with file number
       currentKey = uuid();//each file needs a uuid for a key
-      keys["image_" + currentFileNumber] = currentKey; //saves each key to the keys object
+      keys["file_" + currentFileNumber] = currentKey; //saves each key to the keys object
       areaId = req.params.areaId;
       surveyId = req.headers.survey_id;
       awsLocation = 'survey_' + surveyId + '/' + 'area_' + areaId + '/' + currentKey;
@@ -49,8 +51,21 @@ var upload = multer({
 });
 
 router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//max of 10 files
-  console.log("Does this happen next?");
   res.send("Files uploaded successfully");
+  fileInfo = req.body;
+  pool.connect()
+    .then(function(client) {
+      for (var key in keys) {
+        client.query("INSERT INTO files (file_info, bucket, key, area_id) " +
+        "VALUES ($1, $2, $3, $4)", [fileInfo[key], bucket, keys[key], areaId])
+      }
+    }).then(function(result) {
+      console.log("Successfully added files/info to file db");
+      res.sendStatus(201);
+    }).catch(function(err) {
+      console.log("Insert query error: ", err);
+      res.sendStatus(500);
+    })
 });//end route
 
 
