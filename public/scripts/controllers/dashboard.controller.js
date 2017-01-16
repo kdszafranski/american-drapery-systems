@@ -5,6 +5,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.currentPage = 0;
   self.pageSize = 20;
   self.filtered = [];
+  self.loading = false;
 
   self.show = {
     completed: false,
@@ -37,9 +38,21 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         console.log('success');
         surveyList = formatDates(response.data);
         self.statusFilter(self.show);
+        self.loading = true;
       });
     });
   }
+
+  function formatData(surveys){
+    //convert the ISO Dates to readable format
+    for (var i = 0; i < surveys.length; i++) {
+      surveys[i].last_modified = moment(surveys[i].last_modified).format("YYYY/MM/DD");
+      surveys[i].survey_date = moment(surveys[i].survey_date).format("YYYY/MM/DD");
+    }
+    return surveys;
+  }
+
+
 
   self.statusFilter = function(show) {
     self.filtered = [];
