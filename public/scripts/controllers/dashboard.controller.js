@@ -6,6 +6,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.pageSize = 20;
   self.filtered = [];
   self.loading = false;
+  
 
   self.show = {
     completed: false,

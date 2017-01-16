@@ -1,9 +1,12 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog",   function($http, IdFactory, UserFactory, $mdDialog) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory) {
   var self = this;
   self.measurement = {};
   self.measurements =[];
   self.measurement.edit = true;
   self.areaId = IdFactory.getAreaId();
+  self.loading = false;
+  self.companyInfo = InfoFactory.companyInfo
+
 
   self.getMeasurements = function() {
     var currentUser = UserFactory.getUser();
@@ -21,7 +24,9 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           for (var i = 0; i < self.measurements.length; i++) {
             self.measurements[i].edit = true;
           }
+          self.loading = true;
           console.log(self.measurements);
+          console.log("InfoFactory", self.companyInfo);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
         });

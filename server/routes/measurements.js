@@ -58,7 +58,8 @@ router.get('/:area_id', function(req, res) {
     .then(function(client) {
       client.query('SELECT * FROM areas ' +
       'JOIN measurements on measurements.area_id = areas.id ' +
-      'WHERE areas.id = $1',
+      'WHERE areas.id = $1 '+
+      'ORDER BY measurements.id',
       [area_id])
       .then(function(results) {
         client.release();
