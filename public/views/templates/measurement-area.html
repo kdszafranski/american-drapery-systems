@@ -3,14 +3,38 @@
     <div ng-hide="ma.loading" layout="row" layout-sm="column" layout-align="space-around">
       <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
-    <div ng-hide="ma.show" class="company-info-header">
-      <div class="client-name">
-        <h3>{{ma.companyInfo.client_name}}</h3>
-        <ul>
-          <li>{{ma.companyInfo.billing_address_street}}</li>
-          <li>{{ma.companyInfo.billing_address_city}}, {{ma.companyInfo.billing_address_state}}</li>
-          <li>{{ma.companyInfo.billing_address_zip}}</li>
-        </ul>
+    <div ng-hide="ma.show" class="survey-header" >
+      <div div class="client-info" layout="column" layout-align="center start">
+        <div class="">
+          <div ng-show="ma.showInput" class="client-name" layout="row" layout-align="center start">
+            <h1> <i>{{ma.companyInfo.client_name}}</i> </h1>
+          </div>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" flex-gt-xs>
+            <input ng-model="ma.currentProfile.client_name" placeholder="Company Name">
+          </md-input-container>
+        </div>
+
+
+        <div layout="column" layout-align="center start">
+          <ul layout="column" class="client-address">
+            <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_street}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_city}}, {{ma.companyInfo.billing_address_state}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_zip}}</li>
+          </ul>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="ma.currentProfile.survey_address_street" placeholder="Street Address">
+          </md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="ma.currentProfile.survey_address_city" placeholder="City">
+          </md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="ma.currentProfile.survey_address_state" placeholder="State">
+          </md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="ma.currentProfile.survey_address_zip" placeholder="Zip">
+          </md-input-container>
+        </div>
+
       </div>
       <div class="client-contact">
         <h3>Company Contacts</h3>
@@ -30,8 +54,12 @@
         </div>
       </div>
       <div class="survey-info">
-        <p>Survey#: {{ma.companyInfo.id}}</p>
-        <a href="#">Edit Client Info</a>
+        <md-button ng-show="ma.showInput" ng-click="ma.editClient()" class="md-raised md-primary" aria-label="edit clientn profile">
+          Edit Client Profile
+        </md-button>
+        <md-button ng-hide="ma.showInput" ng-click="ma.updateClient()" class="md-raised md-primary" aria-label="edit clientn profile">
+          Save
+        </md-button>
       </div>
     </div>
   </md-card-content>
