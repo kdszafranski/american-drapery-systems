@@ -29,7 +29,7 @@ router.post('/', function(req,res) {
     });
 });
 
-router.delete('/', function(req, res) {
+router.delete('/:areaId', function(req, res) {
   var areaId = req.params.areaId;
   pool.connect()
     .then(function(client) {
