@@ -1,6 +1,8 @@
-app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory',  function($http, IdFactory, $location, UserFactory) {
+app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, UserFactory, InfoFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
+  self.loading = false;
+
   self.newAreaName = '';
   console.log(survey_id);
   self.inputAreaName = false;
@@ -17,7 +19,9 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   self.showInput = function() {
     self.inputAreaName = true;
   }
-
+  self.addNote = function(){
+    console.log("addnote clicked");
+  }
   self.addNewArea = function() {
     console.log("Clicked Add New Area:");
     self.inputAreaName = false;
@@ -93,6 +97,8 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
           console.log("Area Array: ", self.areaArray);
           self.areaArrayId = self.surveyDetails.map(survey => survey.id);
           console.log("Area ID: ", self.areaArrayId);
+          InfoFactory.companyInfo = self.companyInfo
+          self.loading = true;
         },
         function(err) {
           console.log("error getting survey details: ", err);
