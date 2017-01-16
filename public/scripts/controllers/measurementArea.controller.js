@@ -63,7 +63,8 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
           headers: {
             id_token: idToken
           }
-        }).then(function(response){
+        })
+        .then(function(response){
           self.surveyDetails = response.data;
           console.log("Response From Server: ", self.surveyDetails);
           self.companyInfo = self.surveyDetails[0];
