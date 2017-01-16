@@ -29,6 +29,23 @@ router.post('/', function(req,res) {
     });
 });
 
-
+router.delete('/', function(req, res) {
+  var areaId = req.params.areaId;
+  pool.connect()
+    .then(function(client) {
+      client.query("DELETE from areas " +
+      "WHERE id = $1",
+      [areaId])
+      .then(function(result) {
+        client.release();
+        console.log("delete complete");
+        res.sendStatus(201);
+      })
+      .catch(function(err) {
+        console.log('select query error: ', err);
+        res.sendStatus(500);
+      });
+    });
+})
 
 module.exports = router;
