@@ -50,11 +50,8 @@
 
       </div>
 
-      <md-button  ng-repeat="area in ma.areaArray track by $index" class="measurement-areas md-raised" ng-click="ma.setArea($index)">
-        <p>{{area}}</p>  
-      </md-button>
-      <md-button ng-click="" class="md-raised md-primary"   aria-label="description" >
-        <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+      <md-button  ng-repeat="area in ma.areaArray track by $index" class="measurement-areas" ng-click="ma.setArea($index)">
+        <p>{{area}}</p>
       </md-button>
     </section>
   </md-card-content>
