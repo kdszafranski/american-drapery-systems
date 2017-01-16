@@ -2,7 +2,7 @@
 Create UserFactory
 *******************/
 app.factory('UserFactory', ['$firebaseAuth', "$http",
-function($firebaseAuth, $http, $q) {
+function($firebaseAuth, $http) {
   console.log("User Factory is running!");
   //Auth is constant (won't change), assign to $firebaseAuth()
   const auth = $firebaseAuth();
