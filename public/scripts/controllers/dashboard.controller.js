@@ -6,7 +6,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.pageSize = 20;
   self.filtered = [];
   self.loading = false;
-  
+
   self.show = {
     completed: false,
     declined: false,
@@ -36,7 +36,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         }
       }).then(function(response){
         console.log('success');
-        surveyList = formatData(response.data);
+        surveyList = formatDates(response.data);
         self.statusFilter(self.show);
         self.loading = true;
       });
