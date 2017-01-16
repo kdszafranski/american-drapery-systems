@@ -1,4 +1,4 @@
-app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory',  function($http, IdFactory, $location, UserFactory) {
+app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, UserFactory, InfoFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.loading = false;
@@ -75,6 +75,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
           console.log("Area Array: ", self.areaArray);
           self.areaArrayId = self.surveyDetails.map(survey => survey.id);
           console.log("Area ID: ", self.areaArrayId);
+          InfoFactory.companyInfo = self.companyInfo
           self.loading = true;
         },
         function(err) {
