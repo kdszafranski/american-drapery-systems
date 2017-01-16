@@ -1,3 +1,8 @@
+//put this into app.js to create ~10,000 test data
+// for (var i = 0; i < 33; i++) {
+//   testdata.client();
+// }
+
 
 var express = require('express');
 var router = express.Router();
