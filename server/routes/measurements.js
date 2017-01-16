@@ -70,4 +70,22 @@ router.get('/:area_id', function(req, res) {
 });
 
 
+router.delete('/:idToDelete', function(req, res) {
+  var idToDelete = req.params.idToDelete;
+  pool.connect()
+    .then(function(client) {
+      client.query('DELETE FROM measurements ' +
+      'WHERE id = $1',
+      [idToDelete])
+      .then(function(results) {
+        console.log("Delete complete");
+        res.sendStatus(201);
+      })
+      .catch(function(err) {
+        console.log("Error with delete: ", err);
+        res.sendStatus(501);
+      })
+    })
+})
+
 module.exports = router;
