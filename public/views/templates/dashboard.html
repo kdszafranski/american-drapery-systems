@@ -38,17 +38,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="survey-items" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" id="tableBodyRow">
+          <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
             <td>{{result.id}}</td>
             <td>{{result.job_number}}</td>
             <td>{{result.client_name}}</td>
             <td>{{result.status}}</td>
             <td>{{result.last_modified}}</td>
             <td>{{result.survey_date}}</td>
-            <td><div class="md-icon-button md-ink-ripple itemBtn" aria-label="view">
+            <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="view">
               <md-icon ng-click="dash.survey(result.id)" md-svg-icon="./img/pdf.svg"></md-icon>
             </div></td>
-            <td><div class="md-icon-button md-ink-ripple itemBtn" aria-label="edit">
+            <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="edit">
               <md-icon ng-click="dash.area(result.id)" md-svg-icon="./img/edit.svg"></md-icon>
             </div></td>
           </tr>

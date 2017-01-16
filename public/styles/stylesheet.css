@@ -56,6 +56,18 @@ md-input-container{
   padding: 0;
   margin: 0;
 }
+.tableBodyRow td{
+  border: 1px solid;
+  border-color: rgba(251, 247, 247, 0.91);
+  padding-left: 5px;
+}
+.tableBodyRow .removeIconPadding{
+  padding-left: 0;
+}
+.tableBodyRow md-input-container, input{
+  padding: 0;
+  margin: 0;
+}
 tr:nth-child(odd) {
     background-color: rgb(234, 231, 235);
 }
@@ -71,7 +83,7 @@ tr:nth-child(even) {
   list-style-type: none;
 }
 
-table{
+table {
   border: 1px;
 }
 
@@ -139,4 +151,22 @@ table{
 }
 .areaName {
   margin: 8px;
+}
+.client-name h1 {
+  margin-top: 8px;
+  margin-bottom: 0;
+
+}
+ .job-number h1 {
+  margin: 8px;
+}
+.client-address li {
+  float: left;
+}
+.client-address {
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+.notes {
+  padding: 0 20px;
 }
