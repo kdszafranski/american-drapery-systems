@@ -8,16 +8,16 @@
       </md-card-title>
       <md-card-content layout="row" layout-wrap>
         <div layout="column">
-          <span class="md-headline">Company Name</span>
-          <span id="cardTitle" class="md-subhead">survey_address_street</span>
-          <span id="cardTitle" class="md-subhead">city, state zip </span>
-          <span id="cardTitle" class="md-subhead">Contact Phone number</span>
-          <span id="cardTitle" class="md-subhead">alt Contact phone number </span>
+          <span class="md-headline">{{measure.companyInfo.client_name}}</span>
+          <span id="cardTitle" class="md-subhead">{{measure.companyInfo.survey_address_street}}</span>
+          <span id="cardTitle" class="md-subhead">{{measure.companyInfo.survey_address_city}}, {{measure.companyInfo.survey_address_state}} {{measure.companyInfo.survey_address_zip}} </span>
+          <span id="cardTitle" class="md-subhead">{{measure.companyInfo.primary_contact_phone_number}}</span>
+          <span id="cardTitle" class="md-subhead">alt {{measure.companyInfo.alt_phone_number}}</span>
         </div>
         <div layout="column">
           <span class="md-headline">&nbsp</span>
-          <span id="cardTitle" class="md-subhead">Job Number: 1111111</span>
-          <span id="cardTitle" class="md-subhead">Survey Date</span>
+          <span id="cardTitle" class="md-subhead">Job Number: {{measure.companyInfo.job_number}}</span>
+          <span id="cardTitle" class="md-subhead">{{measure.companyInfo.survey_date}}</span>
         </div>
       </md-card-content>
       <md-card-footer>
@@ -39,15 +39,21 @@
   </div>
   <div>
     <md-card>
+
       <md-card-title id="measurementTitle">
+        <div layout="column">
           <md-card-title-text >
             <span id="cardTitle" class="md-subhead"><u>Measurements</u></span>
+            <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
+              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
           </md-card-title-text>
+        </div>
       </md-card-title>
       <md-card-content>
         <table id="measurementsTable"  cellspacing="0">
           <thead>
-            <tr id="headerRow">
+            <tr ng-show="measure.loading" id="headerRow">
               <th>Floor</th>
               <th>Room</th>
               <th>Quantity</th>
@@ -63,6 +69,7 @@
             </tr>
           </thead>
           <tbody>
+
             <tr ng-repeat="dimension in measure.measurements track by $index" id="tableBodyRow">
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
@@ -113,17 +120,27 @@
                 </md-button>
               </td>
               <td id="removeIconPadding">
-                <md-button ng-click="measure.deleteRowButton($index)" class="md-icon-button" aria-label="delete">
+                <md-button ng-click="measure.showConfirm($event, $index)" class="md-icon-button" aria-label="delete">
                   <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
                 </md-button>
               </td>
             </tr>
-            <tr layout-wrap id="inputRow">
-              <td><md-input-container><input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`"></md-input-container></td>
+            <tr ng-show="measure.loading" layout-wrap id="inputRow">
+              <td><md-input-container>
+                <input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`">
+              </md-input-container></td>
               <td>
                 <md-input-container>
                   <md-select ng-model="measure.measurement.ib_ob" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
@@ -149,7 +166,7 @@
             </tr>
         </tbody>
       </table>
-        <md-button ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
+        <md-button ng-show="measure.loading" ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
           <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
         </md-button>
       </md-card-content>

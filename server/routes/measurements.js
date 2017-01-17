@@ -17,6 +17,7 @@ router.put('/:area_id', function(req,res) {
       "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
       [newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.ib_ob, newMeasurement.fascia_size, newMeasurement.controls, newMeasurement.mount, newMeasurement.fabric, area_id])
       .then(function(result) {
+        client.release();
         console.log("put complete");
         res.sendStatus(201);
       })
@@ -39,6 +40,7 @@ router.put('/', function(req,res) {
       'WHERE id = $11',
       [newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.ib_ob, newMeasurement.controls, newMeasurement.fascia_size, newMeasurement.fabric, newMeasurement.mount, newMeasurement.id])
       .then(function(result) {
+        client.release();
         console.log("put complete");
         res.sendStatus(201);
       })
@@ -56,10 +58,12 @@ router.get('/:area_id', function(req, res) {
     .then(function(client) {
       client.query('SELECT * FROM areas ' +
       'JOIN measurements on measurements.area_id = areas.id ' +
-      'WHERE areas.id = $1',
+      'WHERE areas.id = $1 '+
+      'ORDER BY measurements.id',
       [area_id])
       .then(function(results) {
-        // console.log("Received these results from the measurements table: ", results);
+        client.release();
+        console.log("Received these results from the measurements table: ", results);
         res.send(results.rows);
       })
       .catch(function(err) {
@@ -69,5 +73,24 @@ router.get('/:area_id', function(req, res) {
     })
 });
 
+
+router.delete('/:idToDelete', function(req, res) {
+  var idToDelete = req.params.idToDelete;
+  pool.connect()
+    .then(function(client) {
+      client.query('DELETE FROM measurements ' +
+      'WHERE id = $1',
+      [idToDelete])
+      .then(function(results) {
+        client.release();
+        console.log("Delete complete");
+        res.sendStatus(201);
+      })
+      .catch(function(err) {
+        console.log("Error with delete: ", err);
+        res.sendStatus(501);
+      })
+    })
+})
 
 module.exports = router;

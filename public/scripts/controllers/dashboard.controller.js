@@ -5,6 +5,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.currentPage = 0;
   self.pageSize = 20;
   self.filtered = [];
+  self.loading = false;
+
 
   self.show = {
     completed: false,
@@ -37,6 +39,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         console.log('success');
         surveyList = formatDates(response.data);
         self.statusFilter(self.show);
+        self.loading = true;
       });
     });
   }
@@ -50,7 +53,6 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     }
     console.log('filtered 0', self.filtered[0]);
   }
-
   self.newJob = function() {
     $location.path('/profile');
   }

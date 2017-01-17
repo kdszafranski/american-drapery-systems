@@ -2,7 +2,7 @@
 Create UserFactory
 *******************/
 app.factory('UserFactory', ['$firebaseAuth', "$http",
-function($firebaseAuth, $http, $q) {
+function($firebaseAuth, $http) {
   console.log("User Factory is running!");
   //Auth is constant (won't change), assign to $firebaseAuth()
   const auth = $firebaseAuth();
@@ -16,7 +16,6 @@ function($firebaseAuth, $http, $q) {
       return auth.$signInWithPopup("google").then(function(firebaseUser) {
       //Assign result of signin to current user object
       currentUser = firebaseUser;
-      isUser = true;
       //Log user's email
       console.log("Firebase User: ", firebaseUser.user.email);
       //Get idToken
@@ -31,7 +30,15 @@ function($firebaseAuth, $http, $q) {
         }).then(function(response) { //when $http promise resolved:
           console.log("Retrieved this data from server at login: ", response);
           isUser = true;
-        });
+        }).catch(function(err) {
+          if(err.status == 403) {
+            console.log("User not authorized");
+            return logOut();
+          } else if(err.status !== 403) {
+            console.log("Server error: ", err);
+            return logOut();
+          }
+        })
       });
     });
 
