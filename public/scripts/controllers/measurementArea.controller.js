@@ -84,9 +84,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   }
   //save edits to client profile button
   self.updateClient = function(){
-    self.currentProfile = formatDates([self.currentProfile[0]])[0]  ;
     console.log("profile to be updated", self.currentProfile);
-
     var clientId = self.currentProfile.client_id;
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
