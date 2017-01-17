@@ -13,6 +13,8 @@ function(UserFactory, $location, $rootScope) {
       if (self.currentUser) {
         self.isUser = true;
         $location.path('/dashboard');
+      } else {
+        $location.path('/login')
       }
       if (self.currentUser.displayName == null) {
         self.currentUser.displayName = "need to log in";
@@ -28,6 +30,9 @@ function(UserFactory, $location, $rootScope) {
 
   self.goToDashboard = function() {
     $location.path('/dashboard');
+  }
+  self.goToAdmin = function() {
+    $location.path('/admin');
   }
 
   $rootScope.$on('$routeChangeSuccess', function (next, last) {

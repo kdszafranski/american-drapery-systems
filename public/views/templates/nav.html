@@ -1,4 +1,4 @@
-<md-toolbar layout="row">
+<md-toolbar id="nav" layout="row">
     <div class="md-toolbar-tools" id="md-toolbar-tools"  layout="column" layout-align="center start" flex>
         <h1><a href="#dashboard">ADS</a></h1>
     </div>
@@ -8,6 +8,9 @@
     <div layout="row" layout-align="end center" layout-sm="column" layout-align-sm="space-between end"  layout-xs="column" layout-align-xs="space-between end" >
       <md-button id="toolbarButton" class="md-raised" ng-click="nav.goToDashboard()" ng-show="nav.isUser">
         Dashboard
+      </md-button>
+      <md-button id="toolbarButton" class="md-raised" ng-click="nav.goToAdmin()" ng-show="nav.isUser">
+        Admin
       </md-button>
       <md-button id="toolbarButton" class="md-raised" ng-click="nav.logOut()" ng-show="nav.isUser">
         Log Out
