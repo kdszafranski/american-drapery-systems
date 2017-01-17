@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var areas = require('./routes/areas');
 var testdata = require('./routes/testdata');
 var files = require('./routes/files');
+var userChecker = require('./modules/user-checker');
 
 // serve static files
 app.use(express.static('public'));
@@ -29,6 +30,7 @@ app.listen(portDecision, function() {
 //everything below decoder requires authentication
 
 app.use(decoder.token);
+app.use(userChecker.user);
 
 app.use('/users', users);
 app.use('/surveys', surveys);
