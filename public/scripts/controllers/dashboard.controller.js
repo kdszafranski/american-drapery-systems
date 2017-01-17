@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', function(UserFactory, IdFactory, $http, $location) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope',  function(UserFactory, IdFactory, $http, $location, $scope) {
   const self = this;
   var currentUser = {};
   var surveyList = [];
@@ -8,7 +8,19 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.loading = false;
   self.sortType     = 'last_modified'; // set the default sort type
   self.sortReverse  = false;  // set the default sort order
+  self.pageCheck = function(numResults) {
+    var total = self.totalPages(numResults);
+    console.log('total', total);
+    console.log('old currentpage', self.currentPage);
 
+    if (self.currentPage >= total || ((self.currentPage == -1) && total)) {
+      self.currentPage = total ;
+    }
+    console.log('new currentpage', self.currentPage);
+    $scope.$apply;
+    console.log('scope currentpage', self.currentPage);
+
+  }
 
   self.show = {
     completed: false,
@@ -46,7 +58,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     });
   }
 
-  self.statusFilter = function(show) {
+  self.statusFilter = function(show, ary) {
     self.filtered = [];
     for (var i = 0; i < surveyList.length; i++) {
       if(!show.compare(surveyList[i].status)) {
@@ -66,7 +78,14 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     IdFactory.setSurvey(surveyId)
     $location.path('/area');
   }
+
   self.totalPages = function (num) {
-    return parseInt(num / self.pageSize) + 1;
+    var total = 0;
+    if (num) {
+      total = parseInt(((num - 1) / self.pageSize) + 1);
+    }
+    return total;
   }
+  console.log(self.totalPages(0), self.totalPages(1), self.totalPages(19), self.totalPages(20), self.totalPages(21));
+
 }]);

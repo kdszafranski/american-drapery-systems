@@ -25,7 +25,7 @@
           <span>Results: {{(dash.filtered  | filter: query).length}} </span>
           <md-input-container>
             <label>Search</label>
-            <input ng-model="query" aria-invalid="false" />
+            <input ng-model="query" aria-invalid="false" ng-change="dash.pageCheck((dash.filtered  | filter: query).length)"/>
             <div class="md-errors-spacer"></div>
           </md-input-container>
         </div>
@@ -81,7 +81,7 @@
           </tbody>
         </table>
       </div>
-      <div layout="row" layout-align="center center" layout-wrap="">
+      <div layout="row" ng-show="dash.totalPages((dash.filtered  | filter: query).length)" layout-align="center center" layout-wrap>
         <md-button ng-class="md-mini" ng-disabled="dash.currentPage == 0" ng-click="dash.currentPage=dash.currentPage-1">
           Previous
         </md-button>
