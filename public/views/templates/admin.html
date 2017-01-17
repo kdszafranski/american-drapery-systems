@@ -40,17 +40,17 @@
                 <input ng-model="newUser.email" size="25">
               </md-input-container></td>
               <td><md-input-container>
-                <md-select ng-model="newUser.can_edit_users" aria-label="Admin Privlages"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
-                  <md-option value="true" aria-label="yes">Yes</md-option>
-                  <md-option value="false" aria-label="no">No</md-option>
-                </md-select>
+                <md-checkbox ng-model="newUser.can_edit_users"></md-checkbox>
+              </md-input-container></td>
+              <td><md-input-container>
+                <md-button ng-click="admin.addUser(newUser)" class="md-icon-button" >
+                  <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+                </md-button>
               </md-input-container></td>
             </tr>
           </tbody>
         </table>
-        <md-button ng-click="admin.addUser(newUser)" class="md-icon-button" >
-          <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
-        </md-button>
+
       </div>
 
     </md-card-content>

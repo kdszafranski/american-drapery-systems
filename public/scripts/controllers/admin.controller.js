@@ -3,6 +3,10 @@ app.controller('AdminController', ['UserFactory', 'IdFactory', '$http', '$locati
   var currentUser = {};
   self.users = [];
   self.newUser = {};
+  self.options = [
+    {value: false, label: 'No'},
+    {value: true, label: 'Yes'}
+  ];
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
     // firebaseUser will be null if not logged in
@@ -35,7 +39,7 @@ app.controller('AdminController', ['UserFactory', 'IdFactory', '$http', '$locati
     console.log('adding user - newuser:', newUser);
     currentUser.getToken().then(function(idToken) {
       $http({
-        method: 'postClients',
+        method: 'POST',
         url: '/users/',
         data: newUser,
         headers: {
