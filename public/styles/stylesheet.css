@@ -181,3 +181,6 @@ table {
 .notes {
   padding: 0 20px;
 }
+.columnSort:hover {
+  cursor: pointer;
+}

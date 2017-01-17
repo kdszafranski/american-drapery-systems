@@ -6,6 +6,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.pageSize = 20;
   self.filtered = [];
   self.loading = false;
+  self.sortType     = 'last_modified'; // set the default sort type
+  self.sortReverse  = false;  // set the default sort order
 
 
   self.show = {

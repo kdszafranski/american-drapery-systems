@@ -35,19 +35,37 @@
         <table id="dashTable">
           <thead>
             <tr id="headerRow">
-              <th>Survey #</th>
-              <th>Job #</th>
-              <th>Client</th>
-              <th>Status</th>
-              <th>Last Modified</th>
-              <th>Survey Date</th>
+              <th class="columnSort" ng-click="dash.sortType = 'id'; dash.sortReverse = !dash.sortReverse">Survey #
+                <span ng-show="dash.sortType == 'id' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'id' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'job_number'; dash.sortReverse = !dash.sortReverse">Job #
+                <span ng-show="dash.sortType == 'job_number' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'job_number' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'client_name'; dash.sortReverse = !dash.sortReverse">Client
+                <span ng-show="dash.sortType == 'client_name' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'client_name' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'status'; dash.sortReverse = !dash.sortReverse">Status
+                <span ng-show="dash.sortType == 'status' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'status' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'last_modified'; dash.sortReverse = !dash.sortReverse">Lasty Modified
+                <span ng-show="dash.sortType == 'last_modified' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'last_modified' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'survey_date'; dash.sortReverse = !dash.sortReverse">Survey Date
+                <span ng-show="dash.sortType == 'survey_date' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'survey_date' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
-              <td>{{result.id}}</
+            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | orderBy:dash.sortType:dash.sortReverse | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
+              <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td>{{result.client_name}}</td>
               <td>{{result.status}}</td>
