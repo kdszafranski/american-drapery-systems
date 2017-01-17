@@ -1,20 +1,19 @@
-<div layout="row" layout-align="center center">
-  <md-card flex="80">
+<div id="survey" layout="row" layout-align="center center" class="container">
+  <md-card flex="100">
     <md-card-content >
       <div class="survey-header" layout="row">
         <div class="client-info" layout="column" layout-align="center left">
           <div class="client-name" layout="row" layout-align="center left">
             <h1><i>{{survey.surveyDetails[0].client_name}}</i></h1>
           </div>
-          <div class="client-name" layout="row" layout-align="center left">
+          <div layout="row" layout-align="center left">
             <ul class="client-address">
               <li>{{survey.surveyDetails[0].billing_address_street}}</li>
               <li>&nbsp• {{survey.surveyDetails[0].billing_address_city}},  {{survey.surveyDetails[0].billing_address_state}} •&nbsp</li>
               <li>{{survey.surveyDetails[0].billing_address_zip}}</li>
-
           </div>
 
-          <div class="client-name" layout="row" layout-align="center left">
+          <div layout="row" layout-align="center left">
             <div class="client-contact" layout="column">
               <ul>
                 <li><b>Primary Contact</b></li>
@@ -47,9 +46,9 @@
   </md-card>
 </div>
 <div layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
-  <md-card flex="80">
+  <md-card flex="100">
     <md-card-content>
-      <h3 class="areaName">Area: {{area[0].area_name}}</h4>
+      <h3 class="areaName" ng-if="area[0].area_name">Area: {{area[0].area_name}}</h4>
       <table style="width:100%" >
         <thead>
           <tr id="headerRow">

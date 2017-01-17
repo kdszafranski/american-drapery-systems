@@ -31,6 +31,9 @@ function(UserFactory, $location, $rootScope) {
   self.goToDashboard = function() {
     $location.path('/dashboard');
   }
+  self.goToAdmin = function() {
+    $location.path('/admin');
+  }
 
   $rootScope.$on('$routeChangeSuccess', function (next, last) {
     console.log("Nav controller detected a change in Angular route");
