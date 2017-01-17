@@ -26,7 +26,6 @@ router.get('/all', function(req, res) {
 });
 
 
-
 //Get request to fetch specified job information(Measurements, client information and images)
 router.get('/one/:survey_id', function(req, res) {
   console.log('reached get one survey route')
