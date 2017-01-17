@@ -2,6 +2,8 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.loading = false;
+  self.showInput = false
+  self.currentProfile = {};
 
   self.newAreaName = '';
   console.log(survey_id);
@@ -73,8 +75,36 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     })
   }
 
+  //Edit client profile button
+  self.editClient = function(){
+    console.log("clicked");
+    self.showInput = !self.showInput;
 
 
+
+  }
+  //save edits to client profile button
+  self.updateClient = function(){
+    var clientId = self.currentProfile.client_id;
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+      $http({
+        method: 'POST',
+        url: '/clients/'+ clientId,
+        data: self.currentProfile,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log("Response from new area post: ", response.data);
+        self.showInput = !self.showInput;
+      },
+      function(err) {
+        console.log("error getting survey details: ", err);
+      });
+    });
+  }
   //function to handle clicking of an already existing area
 
   //function to get all areas associated with survey
@@ -97,7 +127,8 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
           console.log("Area Array: ", self.areaArray);
           self.areaArrayId = self.surveyDetails.map(survey => survey.id);
           console.log("Area ID: ", self.areaArrayId);
-          InfoFactory.companyInfo = self.companyInfo
+          self.currentProfile = self.companyInfo;
+          InfoFactory.companyInfo = self.companyInfo;
           self.loading = true;
         },
         function(err) {
