@@ -5,9 +5,14 @@ app.controller('LoginController', ['UserFactory', '$location', function(UserFact
 
   self.logIn = function() {
 
-    UserFactory.logIn().then(function() {
+    UserFactory.logIn()
+    .then(function() {
       $location.path('/dashboard');
-    });
+    })
+    .catch(function() {
+      console.log("Could not log in!");
+      UserFactory.logOut()
+    })
   };
 
 }]);

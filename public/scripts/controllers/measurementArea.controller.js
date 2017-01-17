@@ -1,9 +1,8 @@
 app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, UserFactory, InfoFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
+  console.log("Survey ID: ", survey_id);
   self.loading = false;
-  self.showInput = false
-  self.currentProfile = {};
 
   self.newAreaName = '';
   console.log(survey_id);
@@ -75,19 +74,28 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     })
   }
 
-  //Edit client profile button
-  self.editClient = function(){
-    console.log("clicked");
-    self.showInput = !self.showInput;
-
-  }
   //save edits to client profile button
   self.updateClient = function(){
-    self.showInput = !self.showInput;
-    console.log(self.currentProfile);
-
+    var clientId = self.currentProfile.client_id;
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+      $http({
+        method: 'POST',
+        url: '/clients/'+ clientId,
+        data: self.currentProfile,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log("Response from new area post: ", response.data);
+        self.showInput = !self.showInput;
+      },
+      function(err) {
+        console.log("error getting survey details: ", err);
+      });
+    });
   }
-  //function to handle clicking of an already existing area
 
   //function to get all areas associated with survey
   function getSurveyDetails() {
@@ -105,12 +113,12 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
           self.surveyDetails = response.data;
           console.log("Response From Server: ", self.surveyDetails);
           self.companyInfo = self.surveyDetails[0];
-          self.areaArray = self.surveyDetails.map(survey => survey.area_name);
+          self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
           console.log("Area Array: ", self.areaArray);
-          self.areaArrayId = self.surveyDetails.map(survey => survey.id);
+          self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
+
           console.log("Area ID: ", self.areaArrayId);
-          self.currentProfile = self.companyInfo;
-          InfoFactory.companyInfo = self.companyInfo;
+          InfoFactory.companyInfo = self.companyInfo
           self.loading = true;
         },
         function(err) {

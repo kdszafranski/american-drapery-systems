@@ -4,7 +4,8 @@ app.factory("IdFactory", function($interval)
     survey: 0,
     area: 0,
     measurement: 0,
-    client: 0
+    client: 0,
+    isFirstSurvey: false
   };
   return {
     id: id,
