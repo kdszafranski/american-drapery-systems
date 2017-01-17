@@ -41,6 +41,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: '/views/templates/admin.html',
     controller: 'AdminController',
     controllerAs: 'admin'
+  })
   .otherwise({
     redirectTo: 'login'
   });

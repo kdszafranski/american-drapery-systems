@@ -124,11 +124,21 @@
               </td>
             </tr>
             <tr ng-show="measure.loading" layout-wrap id="inputRow">
-              <td><md-input-container><input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`"></md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`">
+              </md-input-container></td>
               <td>
                 <md-input-container>
                   <md-select ng-model="measure.measurement.ib_ob" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->

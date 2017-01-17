@@ -75,20 +75,20 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     console.log("measurements", self.measurements[index]);
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
-    .then(function(idToken) {
-        $http({
-          method: 'PUT',
-          url: '/measurements/',
-          data: self.measurements[index],
-          headers: {
-            id_token: idToken
-          }
-        }).then(function(response) {
-          console.log("Response from measurement route: ", response);
-        }).catch(function(err) {
-          console.log("Error in measurement post");
+      .then(function(idToken) {
+          $http({
+            method: 'PUT',
+            url: '/measurements/',
+            data: self.measurements[index],
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            console.log("Response from measurement route: ", response);
+          }).catch(function(err) {
+            console.log("Error in measurement post");
+          });
         });
-      });
   }
 
   //Confirming user wants to delete measurement. Index is the measurement to delete

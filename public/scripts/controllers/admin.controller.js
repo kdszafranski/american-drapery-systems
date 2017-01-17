@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', function(UserFactory, IdFactory, $http, $location) {
+app.controller('AdminController', ['UserFactory', 'IdFactory', '$http', '$location', function(UserFactory, IdFactory, $http, $location) {
   const self = this;
   var currentUser = {};
   self.users = [];
@@ -7,7 +7,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
     // firebaseUser will be null if not logged in
     currentUser = firebaseUser;
-    getSurveys();
+    getUsers();
     console.log("onAuthStateChanged", currentUser);
   });
 
@@ -30,11 +30,12 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   }
 
   self.addUser = function(newUser) {
+    newUser.authorized = true;
     currentUser = UserFactory.getUser();
-    console.log('adding user - currentUser:', currentUser);
+    console.log('adding user - newuser:', newUser);
     currentUser.getToken().then(function(idToken) {
       $http({
-        method: 'PUT',
+        method: 'postClients',
         url: '/users/',
         data: newUser,
         headers: {
@@ -43,6 +44,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       }).then(function(response){
         console.log('success');
         $location.path('/admin');
+      }).catch(function(err) {
+        console.log("Error in user post");
       });
     });
   }
@@ -59,13 +62,10 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       }).then(function(response){
         console.log('delete success');
         $location.path('/admin');
+      }).catch(function(err) {
+        console.log("Error in user post");
       });
     });
-  }
-
-
-  self.saveUser = function() {
-    $location.path('/profile');
   }
 
 }]);
