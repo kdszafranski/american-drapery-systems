@@ -43,7 +43,7 @@
       <md-card-title id="measurementTitle">
         <div layout="column">
           <md-card-title-text >
-            <span id="cardTitle" class="md-subhead"><u>Measurements</u></span>
+            <span id="cardTitle" class="md-subhead"><u>Area:  {{measure.area}}</u></span>
             <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
               <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
@@ -168,6 +168,9 @@
       </table>
         <md-button ng-show="measure.loading" ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
           <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+        </md-button>
+        <md-button ng-click="measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
+          <span>Back To Areas</span>
         </md-button>
       </md-card-content>
     </md-card>
