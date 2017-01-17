@@ -64,7 +64,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | orderBy:dash.sortType:dash.sortReverse | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
+            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td>{{result.client_name}}</td>
