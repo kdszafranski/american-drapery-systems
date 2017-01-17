@@ -150,30 +150,8 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
       }).then(function(response){
         //setting the survey # in factory to the new survey id
         IdFactory.setSurvey(response.data[0].id);
-        addNewArea(response.data[0].id);
-        console.log('success in adding new survey');
-      });
-    });
-  }
-
-  function addNewArea(survey_id) {
-    console.log("Adding area to survey #: ", survey_id);
-    self.area = {
-      survey_id: survey_id,
-      area_name: "Click the + to add a new area"
-    }
-    currentUser = UserFactory.getUser();
-    currentUser.getToken().then(function(idToken) {
-      $http({
-        method: 'POST',
-        url: '/areas',
-        data: self.area,
-        headers: {
-          id_token: idToken
-        }
-      }).then(function(response){
-        console.log('success in adding new area');
         $location.path('/area');
+        console.log('success in adding new survey');
       });
     });
   }
