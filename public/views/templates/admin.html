@@ -1,0 +1,50 @@
+<div layout="row" layout-align="center center">
+  <md-card flex="70">
+    <md-card-content  ng-hide="admin.loading">
+      <div layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+    </md-card-content>
+    <md-card-content ng-show="admin.loading">
+      <div layout="row">
+        <div layout="column" flex="33" layout-align="space-around center">
+          <md-button id="newJob" class="md-raised md-primary md-ink-ripple" ng-click="admin.newUser()">
+            New User
+          </md-button>
+        </div>
+      </div>
+
+      <div layout="row" layout-sm="column" layout-align="center center" layout-wrap="">
+        <table id="adminTable">
+          <thead>
+            <tr id="headerRow">
+              <th>Name</th>
+              <th>Email</th>
+              <th>Admin Privlages</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tableBodyRow" ng-repeat="user in admin.users" >
+              <td>{{user.first_name + user.last_name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.can_edit_users}}</td>
+              <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="view">
+                <md-icon ng-click="admin.delete(user.id)" md-svg-icon="./img/pdf.svg"></md-icon>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div layout="row" layout-align="center center" layout-wrap="">
+        <md-button ng-class="md-mini" ng-disabled="admin.currentPage == 0" ng-click="admin.currentPage=admin.currentPage-1">
+          Previous
+        </md-button>
+          {{admin.currentPage+1}}/{{admin.totalPages((admin.filtered  | filter: query).length)}}
+        <md-button ng-class="md-mini" ng-disabled="admin.currentPage >= ((admin.filtered  | filter: query).length / admin.pageSize - 1)" ng-click="admin.currentPage=admin.currentPage+1">
+          Next
+        </md-button>
+      </div>
+    </md-card-content>
+  </md-card>
+</div>
