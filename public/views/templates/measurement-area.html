@@ -1,93 +1,90 @@
 <md-card>
   <md-card-content>
-    <div ng-hide="ma.loading" layout="row" layout-sm="column" layout-align="space-around">
-      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-    </div>
-    <div ng-hide="ma.show" class="survey-header" >
-      <div div class="client-info" layout="column" layout-align="center start">
-        <div class="">
-          <div ng-show="ma.showInput" class="client-name" layout="row" layout-align="center start">
+      <div ng-hide="ma.loading" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+    <div layout="row">
+      <div layout="column">
+        <!--company name  -->
+        <div class="row" layout-align="left">
+          <div ng-show="ma.showInput" class="client-name" layout="row" layout-align="left">
             <h1> <i>{{ma.companyInfo.client_name}}</i> </h1>
           </div>
           <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" flex-gt-xs>
             <input ng-model="ma.currentProfile.client_name" placeholder="Company Name">
           </md-input-container>
         </div>
-
-
-        <div layout="column" layout-align="center start">
-          <ul layout="column" class="client-address">
-            <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_street}}</li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_city}}, {{ma.companyInfo.billing_address_state}}</li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_zip}}</li>
-          </ul>
-
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.survey_address_street" placeholder="Street Address">
-          </md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.survey_address_city" placeholder="City">
-          </md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.survey_address_state" placeholder="State">
-          </md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.survey_address_zip" placeholder="Zip">
-          </md-input-container>
-        </div>
-
-      </div>
-      <div class="client-contact">
-        <div class="primary-contact">
-          <ul>
-            <li><b>Primary Contact</b></li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_name}}</li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_phone_number}}</li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_email}}</li>
-          </ul>
-
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.primary_contact_name" placeholder="Company Contact Name">
-          </md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.primary_contact_phone_number" placeholder="Phone Number">
-          </md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.primary_contact_email" placeholder="Email">
-          </md-input-container>
-
-
-
-        </div>
-        <div class="alt-contact">
-          <ul>
-            <li><b>Alternate Contact</b></li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_name}}</li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.alt_phone_number}}</li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_email}}</li>
-          </ul>
-
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.alt_contact_name" placeholder="Alt Company Contact Name">
-          </md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.alt_phone_number" placeholder="Alt Phone Number">
-          </md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-            <input ng-model="ma.currentProfile.alt_contact_email" placeholder="Alt Email">
-          </md-input-container>
-
+        <!-- Data Row  -->
+        <div class="area-survey-header" layout="row">
+          <div layout="column" layout-align="start start">
+            <ul layout="column" class="client-address">
+              <li><b>Address</b></li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_street}}</li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_city}}, {{ma.companyInfo.billing_address_state}}</li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_zip}}</li>
+            </ul>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.currentProfile.survey_address_street" placeholder="Street Address"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.currentProfile.survey_address_city" placeholder="City"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.currentProfile.survey_address_state" placeholder="State"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.currentProfile.survey_address_zip" placeholder="Zip"></md-input-container>
+          </div>
+          <div layout="column" layout-align="start center">
+            <ul>
+              <li><b>Primary Contact</b></li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_name}}</li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_phone_number}}</li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_email}}</li>
+            </ul>
+              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.primary_contact_name" placeholder="Company Contact Name"></md-input-container>
+              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.primary_contact_phone_number" placeholder="Phone Number"></md-input-container>
+              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.primary_contact_email" placeholder="Email"></md-input-container>
+          </div>
+          <div layout="column" layout-align="start center">
+            <ul >
+              <li><b>Alternate Contact</b></li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_name}}</li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.alt_phone_number}}</li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_email}}</li>
+            </ul>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.alt_contact_name" placeholder="Alt Company Contact Name"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.alt_phone_number" placeholder="Alt Phone Number"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.alt_contact_email" placeholder="Alt Email"></md-input-container>
+          </div>
         </div>
       </div>
-      <div class="survey-info">
-        <md-button ng-show="ma.showInput" ng-click="ma.editClient()" class="md-raised md-primary" aria-label="edit clientn profile">
-          Edit Client Profile
-        </md-button>
-        <md-button ng-hide="ma.showInput" ng-click="ma.updateClient()" class="md-raised md-primary" aria-label="edit clientn profile">
-          Save
-        </md-button>
-      </div>
+        <div layout="column" layout-align="start" class="area-survey-header">
+          <h1 ng-show="ma.showInput"><i>Job# {{ma.companyInfo.job_number}}</i></h1>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.job_number" placeholder="Job Number"></md-input-container>
+
+          <div layout="column">
+            <ul>
+              <li><b>Survey Date:</b></li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.survey_date}}</li>
+              <md-input-container ng-hide="ma.showInput" md-no-float>
+                <md-datepicker ng-hide="ma.showInput" ng-model="ma.currentProfile.survey_date" placeholder="Survey Date"></md-datepicker>
+              </md-input-container>
+              <li><b>Completion Date:</b></li>
+              <li ng-show="ma.showInput">{{ma.companyInfo.completion_date}}</li>
+              <md-input-container ng-hide="ma.showInput" md-no-float>
+                <md-datepicker ng-model="ma.currentProfile.completion_date" placeholder="Survey Date"></md-datepicker>
+              </md-input-container>
+            </ul>
+          </div>
+        </div>
+        <div layout="column" layout-align="center">
+          <md-button ng-show="ma.showInput" ng-click="ma.editClient()" class="md-raised md-primary" aria-label="edit clientn profile">
+            Edit Client Profile
+          </md-button>
+          <md-button ng-hide="ma.showInput" ng-click="ma.updateClient()" class="md-raised md-primary" aria-label="edit clientn profile">
+            Save
+          </md-button>
+        </div>
     </div>
+
+
+
+
+
   </md-card-content>
 </md-card>
 

@@ -1,11 +1,15 @@
 app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory) {
   var self = this;
+  var survey_id = IdFactory.getSurveyId();
   self.measurement = {};
   self.measurements =[];
   self.measurement.edit = true;
   self.areaId = IdFactory.getAreaId();
   self.loading = false;
+  self.showInput = true
   self.companyInfo = formatDates([InfoFactory.companyInfo])[0];
+  self.currentProfile = {};
+
 
 
   self.getMeasurements = function() {
@@ -35,6 +39,38 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
 
   self.getMeasurements();
 
+  function getSurveyDetails() {
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+      .then(function(idToken) {
+        $http({
+          method: 'GET',
+          url: '/surveys/one/' + survey_id,
+          headers: {
+            id_token: idToken
+          }
+        })
+        .then(function(response){
+          self.surveyDetails = response.data;
+          console.log("Response From Server: ", self.surveyDetails);
+          self.companyInfo = self.surveyDetails[0];
+          self.areaArray = self.surveyDetails.map(survey => survey.area_name);
+          console.log("Area Array: ", self.areaArray);
+          self.areaArrayId = self.surveyDetails.map(survey => survey.id);
+          console.log("Area ID: ", self.areaArrayId);
+          self.currentProfile = self.companyInfo;
+          InfoFactory.companyInfo = self.companyInfo;
+          self.loading = true;
+        },
+        function(err) {
+          console.log("error getting survey details: ", err);
+        });
+    })
+
+  }
+
+  getSurveyDetails();
+
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
     console.log("survey ID: ", self.areaId);
@@ -58,6 +94,36 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     console.log("mesurement array", self.measurements);
     self.getMeasurements();
   }
+
+  //Edit client profile button
+  self.editClient = function(){
+    console.log("clicked");
+    self.showInput = !self.showInput;
+  }
+
+  //save edits to client profile button
+  self.updateClient = function(){
+    var clientId = self.currentProfile.client_id;
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+      $http({
+        method: 'POST',
+        url: '/clients/'+ clientId,
+        data: self.currentProfile,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log("Response from new area post: ", response.data);
+        self.showInput = !self.showInput;
+      },
+      function(err) {
+        console.log("error getting survey details: ", err);
+      });
+    });
+  }
+
   //Trashcan icon to clear current input row
   self.activeRowClear = function(){
     console.log("current trashcn clicked");
@@ -69,6 +135,8 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     self.measurements[index].edit = !self.measurements[index].edit;
     console.log("measurements", self.measurements);
   }
+
+  //button clicked to update the edited row
   self.updateRowButton = function(index){
     console.log("check clicked", index);
     self.measurements[index].edit = !self.measurements[index].edit;

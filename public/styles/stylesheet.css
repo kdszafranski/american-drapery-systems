@@ -35,6 +35,9 @@ md-input-container{
   background-color: white;
   border-color: white;
 }
+#mdInput{
+  padding: 1px;
+}
 
 #headerRow th {
   padding: 5px;
@@ -89,6 +92,18 @@ tr:nth-child(even) {
 }
 .survey-header li {
   list-style-type: none;
+}
+
+.area-survey-header li {
+  list-style-type: none;
+}
+.area-survey-header ul {
+  padding:3px;
+  margin: 0;
+}
+.area-survey-header h1 {
+  padding:3px;
+  margin: 0;
 }
 
 table {
