@@ -1,6 +1,7 @@
 app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, UserFactory, InfoFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
+  console.log("Survey ID: ", survey_id);
   self.loading = false;
 
   self.newAreaName = '';
@@ -73,9 +74,28 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     })
   }
 
-
-
-  //function to handle clicking of an already existing area
+  //save edits to client profile button
+  self.updateClient = function(){
+    var clientId = self.currentProfile.client_id;
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+      $http({
+        method: 'POST',
+        url: '/clients/'+ clientId,
+        data: self.currentProfile,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log("Response from new area post: ", response.data);
+        self.showInput = !self.showInput;
+      },
+      function(err) {
+        console.log("error getting survey details: ", err);
+      });
+    });
+  }
 
   //function to get all areas associated with survey
   function getSurveyDetails() {

@@ -84,7 +84,7 @@ router.delete('/:idToDelete', function(req, res) {
       .then(function(results) {
         client.release();
         console.log("Delete complete");
-        res.sendStatus(201);
+        res.sendStatus(204);
       })
       .catch(function(err) {
         console.log("Error with delete: ", err);
