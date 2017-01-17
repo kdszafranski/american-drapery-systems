@@ -11,15 +11,25 @@ function(UserFactory, $location, $rootScope) {
       self.currentUser = firebaseUser;
       console.log("onAuthStateChanged Nav", self.currentUser);
       if (self.currentUser) {
+
         self.isUser = true;
-        $location.path('/dashboard');
+        // $location.path('/dashboard');
       } else {
-        $location.path('/login')
+        // $location.path('/login')
+        self.isUser = false;
       }
       if (self.currentUser.displayName == null) {
         self.currentUser.displayName = "need to log in";
       }
-    });
+    }).then(function() {
+      getUser()
+      .then(function() {
+        $location.path('/dashboard');
+      })
+      .catch(function() {
+        $location.path('/login');
+      })
+    })
 
   self.logOut = function() {
     UserFactory.logOut().then(function() {

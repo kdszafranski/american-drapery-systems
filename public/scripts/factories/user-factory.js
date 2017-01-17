@@ -33,10 +33,10 @@ function($firebaseAuth, $http) {
         }).catch(function(err) {
           if(err.status == 403) {
             console.log("User not authorized");
-            return logOut();
+            throw err;
           } else if(err.status !== 403) {
             console.log("Server error: ", err);
-            return logOut();
+            throw err;
           }
         })
       });
@@ -77,7 +77,23 @@ function($firebaseAuth, $http) {
   that need to ngShow/Hide buttons
   *************************************/
   function userChecker() {
-    return isUser;
+    return currentUser.user.getToken().then(function(idToken) {
+      return $http({
+        method: 'GET',
+        url: '/users',
+        headers: {
+          id_token: idToken
+        }
+      })
+      .then(function(response) {
+        console.log("User checker ran in UserFactory, response: ", response);
+        return isUser;
+      })
+      .catch(function(err) {
+        console.log("User checker in UserFactory err: ", err);
+        throw err;
+      });
+    });
   }
   /*********************
   Put all functions
