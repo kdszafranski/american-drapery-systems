@@ -13,7 +13,7 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
     .then(function(idToken) {
         $http({
           method: 'GET',
-          url: '/surveys/oneComplete/' + survey_id,
+          url: '/surveys/one/' + survey_id,
           headers: {
             id_token: idToken
           }
