@@ -1,3 +1,9 @@
+node_modules
+*.log
+server/fb-service-account.json
 .env
 *.sql
-.DS_Store 
+.DS_Store
+node_modules/
+firebase-service-accounts.json
+uploads/
