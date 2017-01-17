@@ -59,7 +59,7 @@ router.get('/:area_id', function(req, res) {
       'WHERE areas.id = $1',
       [area_id])
       .then(function(results) {
-        console.log("Received these results from the measurements table: ", results);
+        // console.log("Received these results from the measurements table: ", results);
         res.send(results.rows);
       })
       .catch(function(err) {

@@ -25,15 +25,17 @@
       </md-card-footer>
     </md-card flex>
     <md-card>
-      <md-card-title id="measurementTitle">
+      <md-card-title id="addFiles">
           <md-card-title-text>
-            <span id="cardTitle" class="md-subhead" ng-include="'/views/templates/files.html'">Files</span>
+            <span id="cardTitle" class="md-subhead">Add Files</span>
           </md-card-title-text>
       </md-card-title>
       <md-card-content>
-
+        <md-card-content layout="row" layout-wrap>
+          <div ng-include="'/views/templates/files.html'"></div>
+        </md-card-content>
       </md-card-content>
-    </md-card>
+    </md-card flex>
   </div>
   <div>
     <md-card>

@@ -12,6 +12,7 @@ var users = require('./routes/users');
 var areas = require('./routes/areas');
 var testdata = require('./routes/testdata');
 var files = require('./routes/files');
+var userChecker = require('./modules/user-checker');
 
 //create ~10,000 test data
 // for (var i = 0; i < 33; i++) {
@@ -40,6 +41,7 @@ app.listen(portDecision, function() {
 //TODO: Get firebase-server-account-json
 
 app.use(decoder.token);
+app.use(userChecker.user);
 
 app.use('/users', users);
 app.use('/dashboard', dashboard);
