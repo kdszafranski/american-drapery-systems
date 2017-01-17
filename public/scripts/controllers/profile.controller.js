@@ -106,7 +106,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   function updateClient() {
     currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients/' + self.selected.id,
@@ -116,6 +116,13 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
         }
       }).then(function(response){
         console.log('success');
+        self.survey = {
+          client_id: self.selected.id,
+          survey_date: self.currentProfile.surveyDate,
+          status: "Pending",
+          last_modified: new Date()
+        }
+        addNewSurvey(self.survey);
       });
     });
   }

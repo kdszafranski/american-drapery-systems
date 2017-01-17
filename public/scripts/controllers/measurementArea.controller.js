@@ -2,8 +2,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   console.log("Survey ID: ", survey_id);
-  var isNewSurvey = IdFactory.getIsNewSurvey();
-  console.log("IsNew: ", isNewSurvey);
   self.loading = false;
 
   self.newAreaName = '';
