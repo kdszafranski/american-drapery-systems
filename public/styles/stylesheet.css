@@ -184,3 +184,6 @@ table {
 .columnSort:hover {
   cursor: pointer;
 }
+#dashCard {
+  min-width: 750px;
+}
