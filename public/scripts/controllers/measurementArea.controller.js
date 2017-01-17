@@ -131,7 +131,9 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
       });
   }
 
-  //function to get all areas associated with survey
+
+
+  //function to get all areas associated with survey or just company and survey information if the survey is new
   function getSurveyDetails() {
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
@@ -145,21 +147,45 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
         })
         .then(function(response){
           self.surveyDetails = response.data;
-          console.log("Response From Server: ", self.surveyDetails);
-          self.companyInfo = formatDates([self.surveyDetails[0]])[0];
-          self.areaArray = self.surveyDetails.map(survey => survey.area_name);
-          console.log("Area Array: ", self.areaArray);
-          self.areaArrayId = self.surveyDetails.map(survey => survey.id);
-          console.log("Area ID: ", self.areaArrayId);
-          self.currentProfile = self.companyInfo;
-          InfoFactory.companyInfo = self.companyInfo;
-          self.loading = true;
+          console.log(self.surveyDetails);
+          //Check to see if it is a new survey. Length will be zero if it is a new survey
+          if (self.surveyDetails.length === 0) {
+            currentUser.getToken()
+              .then(function(idToken) {
+                $http({
+                  method: 'GET',
+                  url: '/surveys/new/' + survey_id,
+                  headers: {
+                    id_token: idToken
+                  }
+                })
+                .then(function(response){
+                  self.surveyDetails = formatDates(response.data);
+                  console.log("Response From Server: ", self.surveyDetails);
+                  self.companyInfo = self.surveyDetails[0];
+                  InfoFactory.companyInfo = self.companyInfo
+                  self.loading = true;
+                },
+                function(err) {
+                  console.log("error getting survey details: ", err);
+                });
+            });
+          } else {
+            console.log("Response From Server: ", self.surveyDetails);
+            self.companyInfo = self.surveyDetails[0];
+            self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
+            console.log("Area Array: ", self.areaArray);
+            self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
+            console.log("Area ID: ", self.areaArrayId);
+            InfoFactory.companyInfo = self.companyInfo
+            self.currentProfile = self.companyInfo;
+            self.loading = true;
+          }
         },
         function(err) {
           console.log("error getting survey details: ", err);
         });
-    })
-
+    });
   }
 
   getSurveyDetails();
