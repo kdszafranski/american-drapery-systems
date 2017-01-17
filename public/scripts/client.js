@@ -58,6 +58,19 @@ app.filter('startFrom', function() {
   }
 });
 
+app.filter('excludeByStatus', function () {
+    return function (items, excludedList) {
+        var ret = [];
+        angular.forEach(items, function (item) {
+            if (excludedList.indexOf(item.status) === -1) {
+                ret.push(item);
+            }
+        });
+        // or you could use Array.prototype.filter() in browsers that support it
+        return ret;
+    };
+})
+
 //Utilities
 function formatDates(aryOfObjs){
   //convert the ISO Dates to readable format

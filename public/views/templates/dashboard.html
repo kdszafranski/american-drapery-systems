@@ -14,23 +14,22 @@
           </md-button>
         </div>
         <div layout="column" flex="33" layout-align="space-around start">
-          <md-checkbox ng-model="dash.show.completed" ng-change="dash.statusFilter(dash.show)">
+          <md-checkbox ng-model="dash.show.completed" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
             Show Completed Jobs
           </md-checkbox>
-          <md-checkbox ng-model="dash.show.declined" ng-change="dash.statusFilter(dash.show)">
+          <md-checkbox ng-model="dash.show.declined" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
             Show Declined Jobs
           </md-checkbox>
         </div>
         <div layout="column" flex="33" layout-align="space-around start">
-          <span>Results: {{(dash.filtered  | filter: query).length}} </span>
+          <span>Results: {{(dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length}} </span>
           <md-input-container>
             <label>Search</label>
-            <input ng-model="query" aria-invalid="false" ng-change="dash.pageCheck((dash.filtered  | filter: query).length)"/>
+            <input ng-model="query" aria-invalid="false" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)"/>
             <div class="md-errors-spacer"></div>
           </md-input-container>
         </div>
       </div>
-
       <div layout="row" layout-align="center center" layout-wrap>
         <table id="dashTable">
           <thead>
@@ -64,7 +63,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
+            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | excludeByStatus: dash.show.text() | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td>{{result.client_name}}</td>
@@ -81,12 +80,12 @@
           </tbody>
         </table>
       </div>
-      <div layout="row" ng-show="dash.totalPages((dash.filtered  | filter: query).length)" layout-align="center center" layout-wrap>
+      <div layout="row" ng-show="dash.totalPages((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)" layout-align="center center" layout-wrap>
         <md-button ng-class="md-mini" ng-disabled="dash.currentPage == 0" ng-click="dash.currentPage=dash.currentPage-1">
           Previous
         </md-button>
-          {{dash.currentPage+1}}/{{dash.totalPages((dash.filtered  | filter: query).length)}}
-        <md-button ng-class="md-mini" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query).length / dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
+          {{dash.currentPage+1}}/{{dash.totalPages((dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length)}}
+        <md-button ng-class="md-mini" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length / dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
           Next
         </md-button>
       </div>
