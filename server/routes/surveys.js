@@ -37,7 +37,7 @@ router.get('/one/:survey_id', function(req, res) {
       client.query('SELECT * FROM client ' +
       'JOIN survey on survey.client_id = client.id ' +
       'JOIN areas on areas.survey_id = survey.id ' +
-      // 'JOIN measurements on measurements.area_id = areas.id ' +
+      'JOIN measurements on measurements.area_id = areas.id ' +
       'WHERE survey_id = $1', [survey_id])
         .then(function(result) {
           client.release();
@@ -51,22 +51,20 @@ router.get('/one/:survey_id', function(req, res) {
     });
 });
 
-//Get request to fetch specified job information(Measurements, client information and images)
-router.get('/oneComplete/:survey_id', function(req, res) {
-  console.log('reached get one survey route');
+//Get client and survey information for newly added survey
+router.get('/new/:survey_id', function(req, res) {
+  console.log('reached get one survey route')
   console.log(req.params.survey_id);
   var survey_id = req.params.survey_id;
   pool.connect()
     .then(function(client) {
       client.query('SELECT * FROM client ' +
       'JOIN survey on survey.client_id = client.id ' +
-      'JOIN areas on areas.survey_id = survey.id ' +
-      'JOIN measurements on measurements.area_id = areas.id ' +
-      'WHERE survey_id = $1', [survey_id])
+      'WHERE survey.id = $1', [survey_id])
         .then(function(result) {
-          console.log("result.rows: ", result.rows);
-          res.send(result.rows);
           client.release();
+          console.log(result.rows);
+          res.send(result.rows);
         })
         .catch(function(err) {
           console.log('select query error: ', err);
@@ -74,6 +72,7 @@ router.get('/oneComplete/:survey_id', function(req, res) {
         });
     });
 });
+
 
 //update survey
 router.put('/update/:survey_id', function(req, res) {
@@ -99,6 +98,7 @@ router.put('/update/:survey_id', function(req, res) {
 });
 
 //add new survey
+
 router.post('/', function(req, res) {
   var newSurvey = req.body;
   console.log("Reached add new survey route: ", newSurvey);
@@ -119,8 +119,6 @@ router.post('/', function(req, res) {
       });
     });
 });
-
-
 
 
 module.exports = router;

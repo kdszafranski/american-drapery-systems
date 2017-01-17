@@ -1,4 +1,4 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location',   function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.measurement = {};
@@ -30,6 +30,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
           self.loading = true;
           console.log(self.measurements);
+          self.area = self.measurements[0].area_name;
           console.log("InfoFactory", self.companyInfo);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
@@ -143,20 +144,20 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     console.log("measurements", self.measurements[index]);
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
-    .then(function(idToken) {
-        $http({
-          method: 'PUT',
-          url: '/measurements/',
-          data: self.measurements[index],
-          headers: {
-            id_token: idToken
-          }
-        }).then(function(response) {
-          console.log("Response from measurement route: ", response);
-        }).catch(function(err) {
-          console.log("Error in measurement post");
+      .then(function(idToken) {
+          $http({
+            method: 'PUT',
+            url: '/measurements/',
+            data: self.measurements[index],
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response) {
+            console.log("Response from measurement route: ", response);
+          }).catch(function(err) {
+            console.log("Error in measurement post");
+          });
         });
-      });
   }
 
   //Confirming user wants to delete measurement. Index is the measurement to delete
@@ -193,6 +194,10 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           console.log("Error in measurement post");
         });
       });
+  }
+
+  self.backToArea = function() {
+    $location.path('/area');
   }
 
 }]);

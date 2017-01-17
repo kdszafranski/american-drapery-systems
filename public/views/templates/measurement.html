@@ -96,15 +96,17 @@
         </div>
     </md-card flex>
     <md-card>
-      <md-card-title id="measurementTitle">
+      <md-card-title id="addFiles">
           <md-card-title-text>
-            <span id="cardTitle" class="md-subhead" ng-include="'/views/templates/files.html'">Files</span>
+            <span id="cardTitle" class="md-subhead">Add Files</span>
           </md-card-title-text>
       </md-card-title>
       <md-card-content>
-
+        <md-card-content layout="row" layout-wrap>
+          <div ng-include="'/views/templates/files.html'"></div>
+        </md-card-content>
       </md-card-content>
-    </md-card>
+    </md-card flex>
   </div>
   <div>
     <md-card>
@@ -112,7 +114,7 @@
       <md-card-title id="measurementTitle">
         <div layout="column">
           <md-card-title-text >
-            <span id="cardTitle" class="md-subhead"><u>Measurements</u></span>
+            <span id="cardTitle" class="md-subhead"><u>Area:  {{measure.area}}</u></span>
             <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
               <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
@@ -195,11 +197,21 @@
               </td>
             </tr>
             <tr ng-show="measure.loading" layout-wrap id="inputRow">
-              <td><md-input-container><input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor"></md-input-container></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`"></md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`">
+              </md-input-container></td>
               <td>
                 <md-input-container>
                   <md-select ng-model="measure.measurement.ib_ob" aria-label="IB/OB"> <!--md-on-close: expression; multiple:boolean; placeholder: string;-->
@@ -227,6 +239,9 @@
       </table>
         <md-button ng-show="measure.loading" ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
           <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+        </md-button>
+        <md-button ng-click="measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
+          <span>Save and Go Back to Areas</span>
         </md-button>
       </md-card-content>
     </md-card>
