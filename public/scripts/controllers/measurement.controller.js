@@ -1,4 +1,4 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location',   function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location) {
   var self = this;
   self.measurement = {};
   self.measurements =[];
@@ -26,6 +26,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
           self.loading = true;
           console.log(self.measurements);
+          self.area = self.measurements[0].area_name;
           console.log("InfoFactory", self.companyInfo);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
@@ -125,6 +126,10 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           console.log("Error in measurement post");
         });
       });
+  }
+
+  self.backToArea = function() {
+    $location.path('/area');
   }
 
 }]);
