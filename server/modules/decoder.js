@@ -15,12 +15,6 @@ admin.initializeApp({
   databaseURL: "https://american-drapery-systems.firebaseio.com"
 });
 
-// //Configure Firebase Admin... Insert credentials from local JSON file (.gitignore-d, of course)
-// admin.initializeApp({
-//   credential: admin.credential.cert("./server/fb-service-account.json"),
-//   databaseURL: "https://american-drapery-systems.firebaseio.com" //URL for out firbase user database
-// });
-
 var tokenDecoder = function(req, res, next){
   // console.log("token decoder runnning. Headers: ", req.headers);
   if (req.headers.id_token) {
