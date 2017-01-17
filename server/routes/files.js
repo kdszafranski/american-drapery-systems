@@ -46,12 +46,13 @@ var upload = multer({
       awsLocation = 'survey_' + surveyId + '/' + 'area_' + areaId + '/' + currentKey;
       cb(null, awsLocation);
       console.log("Done with image upload to: ", awsLocation);
-    }
+    },
+    contentType: multerS3.AUTO_CONTENT_TYPE
   })
 });
 
 router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//max of 10 files
-  res.send("Files uploaded successfully");
+
   fileInfo = req.body;
   pool.connect()
     .then(function(client) {
@@ -60,6 +61,7 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
         "VALUES ($1, $2, $3, $4)", [fileInfo[key], bucket, keys[key], areaId])
       }
     }).then(function(result, err) {
+      client.release();
       if(err) {
       console.log("Error in query: ", err);
     } else {
@@ -73,5 +75,23 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
     // })
 });//end route
 
+router.get('/:areaId', function(req, res) {
+  areaId = req.params.areaId;
+  console.log("files get route hit, search db for areaId: ", areaId);
+  pool.connect()
+    .then(function(client) {
+      client.query('SELECT * FROM files WHERE area_id = $1', [areaId])
+        .then(function(result) {
+          console.log("Success! Retrieved these results from the DB: ", result.rows);
+          res.send(result.rows);
+          client.release();
+        })
+        .catch(function(err) {
+          console.log("Error querying DB: ", err);
+          res.sendStatus(500);
+          client.release();
+        });
+    });
+});//end route
 
 module.exports = router;
