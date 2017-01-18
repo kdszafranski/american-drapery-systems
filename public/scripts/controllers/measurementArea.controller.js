@@ -29,27 +29,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     }
     console.log("New Area Object: ", self.newArea);
     var currentUser = UserFactory.getUser();
-    for (var i = 0; i < self.areaArray.length; i++) {
-      if(self.areaArray[i] === "Click the + to add a new area") {
-        console.log("Found one");
-        var areaId = self.areaArrayId[i];
-        currentUser.getToken()
-          .then(function(idToken) {
-            $http({
-              method: 'DELETE',
-              url: '/areas/' + areaId,
-              headers: {
-                id_token: idToken
-              }
-            }).then(function(response){
-              console.log("Delete successful");
-            },
-            function(err) {
-              console.log("error with delete: ", err);
-            });
-        });
-      }
-    }
     currentUser.getToken()
       .then(function(idToken) {
         $http({

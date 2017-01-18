@@ -22,12 +22,6 @@ app.factory("IdFactory", function($interval)
       console.log('changing survey to ', newId);
       id.measurement = newId;
     },
-    setNewSurvey: function(name) {
-      id.newSurvey = name;
-    },
-    setNewArea: function(name) {
-      id.newArea = name;
-    },
     setClient: function(newId) {
       console.log('changing survey to ', newId);
       id.client = newId;
@@ -38,11 +32,21 @@ app.factory("IdFactory", function($interval)
     getAreaId: function() {
       return id.area;
     },
+    setNewSurvey: function(name) {
+      id.newSurvey = name;
+    },
+    setNewArea: function(name) {
+      id.newArea = name;
+    },
     getNewArea: function() {
-      return id.newArea;
+      var tmp = id.newArea;
+      id.newArea = false;
+      return tmp;
     },
     getNewSurvey: function() {
-      return id.newMeasurement;
+      var tmp = id.newMeasurement;
+      id.newMeasurement = false;
+      return tmp;
     }
   }
 });

@@ -215,22 +215,20 @@
               <td><md-input-container><input ng-model="measure.measurement.fabric" size="10"  aria-label="fabric"></md-input-container></td>
               <td><md-input-container><input ng-model="measure.measurement.mount" size="6"  aria-label="mount"></md-input-container></td>
               <td>
-                <md-button class="md-icon-button" aria-label="edit">
-                  <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
+                <md-button ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
+                  <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
                 </md-button>
               </td>
               <td>
-                <md-button ng-click="measure.mwasurement = {}" class="md-icon-button md-primary" aria-label="delete">
+                <md-button ng-click="measure.measurement = {}" class="md-icon-button md-primary" aria-label="delete">
                   <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
                 </md-button>
               </td>
             </tr>
         </tbody>
       </table>
-        <md-button ng-show="measure.loading" ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
-          <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
-        </md-button>
-        <md-button ng-click="measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
+
+        <md-button ng-click="measure.addButton(); measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
           <span>Save and Go Back to Areas</span>
         </md-button>
       </md-card-content>
