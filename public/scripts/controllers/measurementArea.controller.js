@@ -1,20 +1,20 @@
 app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, UserFactory, InfoFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
-  console.log("Survey ID: ", survey_id);
   self.loading = false;
-
+  self.showInput = false
+  self.currentProfile = {};
   self.newAreaName = '';
   console.log(survey_id);
   self.inputAreaName = false;
+
+
   //function to send area to measurent controller
   self.setArea = function(index) {
     console.log("index: ", index);
     IdFactory.setArea(self.areaArrayId[index]);
-
     $location.path('/measurement');
   }
-
 
   //function to add a new area
   self.showInput = function() {
@@ -74,8 +74,17 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     })
   }
 
+  //Edit client profile button
+  self.editClient = function(){
+    console.log("clicked");
+    self.showInput = !self.showInput;
+
+
+
+  }
   //save edits to client profile button
   self.updateClient = function(){
+    console.log("profile to be updated", self.currentProfile);
     var clientId = self.currentProfile.client_id;
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
@@ -89,13 +98,40 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
         }
       }).then(function(response){
         console.log("Response from new area post: ", response.data);
-        self.showInput = !self.showInput;
+        updateSurvey();
       },
       function(err) {
         console.log("error getting survey details: ", err);
       });
     });
   }
+  //function to handle clicking of an already existing area
+
+  //function to update survey data
+  function updateSurvey(){
+    var currentUser = UserFactory.getUser();
+    var survey_id = self.currentProfile.survey_id;
+    console.log("survey id", survey_id);
+    currentUser.getToken()
+      .then(function(idToken) {
+        $http({
+          method: 'PUT',
+          url: '/surveys/update/' + survey_id,
+          data: self.currentProfile,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          console.log("Updated: ", response.data);
+          self.showInput = !self.showInput;
+        },
+        function(err) {
+          console.log("error updating survey details: ", err);
+        });
+      });
+  }
+
+
 
   //function to get all areas associated with survey or just company and survey information if the survey is new
   function getSurveyDetails() {
@@ -124,7 +160,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
                   }
                 })
                 .then(function(response){
-                  self.surveyDetails = response.data;
+                  self.surveyDetails = formatDates(response.data);
                   console.log("Response From Server: ", self.surveyDetails);
                   self.companyInfo = self.surveyDetails[0];
                   InfoFactory.companyInfo = self.companyInfo
@@ -142,6 +178,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
             self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
             console.log("Area ID: ", self.areaArrayId);
             InfoFactory.companyInfo = self.companyInfo
+            self.currentProfile = self.companyInfo;
             self.loading = true;
           }
         },
