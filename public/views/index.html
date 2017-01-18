@@ -44,13 +44,17 @@
 
 
 </head>
-<body ng-app="app" >
+<body ng-app="app">
+  <div class="content">
+    <header>
+      <div ng-controller="NavController as nav" ng-include="'/views/templates/nav.html'"></div>
+    </header>
 
-  <div ng-controller="NavController as nav" ng-include="'/views/templates/nav.html'"></div>
+    <main class="container" ng-view></main>
+  </div>
 
-  <main class="container" ng-view></main>
-
-  <!-- <footer class="text-center" ng-include="'/views/templates/footer.html'"></footer> -->
-  <div ng-controller="FooterController as footer" ng-include="'/views/templates/footer.html'" id="footer"></div>
+  <footer ng-controller="FooterController as footer">
+      <p class="footer-info">American Drapery Systems &copy; {{footer.date}}</p>
+  </footer>
 </body>
 </html>

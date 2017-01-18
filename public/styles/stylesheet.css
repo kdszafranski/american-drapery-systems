@@ -1,3 +1,8 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
 table {
   font-family: 'Roboto', sans-serif;
 }
@@ -182,11 +187,23 @@ table {
   padding: 0 20px;
 }
 
-#footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
+.content {
+  min-height: calc(100vh - 50px);
+}
+
+footer {
+  height: 50px;
+  width: 100%;
+  display: flex;
+}
+
+.footer-info {
+  padding-top: 13px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: rgb(63,81,181);
+  color: rgba(255,255,255,0.87);
   text-align: center;
 }
