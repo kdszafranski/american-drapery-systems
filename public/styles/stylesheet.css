@@ -13,6 +13,9 @@ md-input-container{
   margin: 1px;
   height: 25.8990px;
 }
+#notesDiv{
+  padding: 3px;
+}
 #profileCheckbox{
   margin: 2px;
   margin-left: 3px;

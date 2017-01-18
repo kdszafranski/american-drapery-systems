@@ -40,7 +40,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
           self.loading = true;
           console.log(self.measurements);
-          self.area_name = self.measurements.area_name;
+          self.area_name = self.measurements[0].area_name;
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
         });

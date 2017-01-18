@@ -104,7 +104,7 @@
       <md-card-title id="measurementTitle">
         <div layout="column">
           <md-card-title-text >
-            <span id="cardTitle" class="md-subhead"><u>Area:  {{measure.area_name}}</u></span>
+            <span id="cardTitle" class="md-subhead"><u>Area:</u>  {{measure.area_name}}</span>
             <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
               <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
@@ -227,10 +227,18 @@
             </tr>
         </tbody>
       </table>
+        <div id="notesDiv" layout="row" layout-align="start end">
+          <h3 style="margin: 0">Area Notes:</h3>
+          <md-input-container layout-align="start end" flex>
+            <input flex ng-model="measure.measurements[0].notes" >
+          </md-input-container>
+        </div>
+        <div>
+          <md-button ng-click="measure.addButton(); measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
+            <span>Save and Go Back to Areas</span>
+          </md-button>
+        </div>
 
-        <md-button ng-click="measure.addButton(); measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
-          <span>Save and Go Back to Areas</span>
-        </md-button>
       </md-card-content>
     </md-card>
   </div>
