@@ -3,7 +3,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   var survey_id = IdFactory.getSurveyId();
   self.loading = false;
   self.showInput = false
-  self.currentProfile = {};
   self.newAreaName = '';
   console.log(survey_id);
   self.inputAreaName = false;
@@ -15,15 +14,12 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     IdFactory.setArea(self.areaArrayId[index]);
     $location.path('/measurement');
   }
-
-  //function to add a new area
-  self.showInput = function() {
-    self.inputAreaName = true;
-  }
   self.addNote = function(){
     console.log("addnote clicked");
   }
   self.addNewArea = function() {
+    InfoFactory.setCompanyInfo(self.companyInfo);
+    IdFactory.setNewArea(self.newAreaName);
     console.log("Clicked Add New Area:");
     self.inputAreaName = false;
     self.newArea = {
@@ -63,7 +59,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
             id_token: idToken
           }
         }).then(function(response){
-          console.log("Response from new area post: ", response.data[0].id);
+          console.log("Response from new area post: ", response.data);
           self.newAreaId = response.data[0].id;
           IdFactory.setArea(self.newAreaId);
           $location.path('/measurement');
@@ -78,9 +74,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   self.editClient = function(){
     console.log("clicked");
     self.showInput = !self.showInput;
-
-
-
   }
   //save edits to client profile button
   self.updateClient = function(){
@@ -99,11 +92,11 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
           id_token: idToken
         }
       }).then(function(response){
-        console.log("Response from new area post: ", response.data);
+        console.log("Response from new client post: ", response.data);
         updateSurvey();
       },
       function(err) {
-        console.log("error getting survey details: ", err);
+        console.log("error posting client: ", err);
       });
     });
   }
@@ -132,8 +125,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
         });
       });
   }
-
-
 
   //function to get all areas associated with survey or just company and survey information if the survey is new
   function getSurveyDetails() {
@@ -177,6 +168,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
         });
     });
   }
+
   function surveyOps() {
     self.companyInfo = self.surveyDetails[0];
     console.log("Response From Server: ", self.surveyDetails);
@@ -184,7 +176,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     console.log("Area Array: ", self.areaArray);
     self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
     console.log("Area ID: ", self.areaArrayId);
-    InfoFactory.companyInfo = self.companyInfo;
     self.completionDate = new Date(self.companyInfo.completion_date);
     self.surveyDate = new Date(self.companyInfo.survey_date);
     self.loading = true;

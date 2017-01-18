@@ -18,7 +18,7 @@
                 <h1> <i>{{measure.companyInfo.client_name}}</i> </h1>
               </div>
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" flex-gt-xs>
-                <input ng-model="measure.currentProfile.client_name" placeholder="Company Name">
+                <input ng-model="measure.companyInfo.client_name" placeholder="Company Name">
               </md-input-container>
             </div>
 
@@ -31,16 +31,16 @@
               </ul>
 
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.survey_address_street" placeholder="Street Address">
+                <input ng-model="measure.companyInfo.survey_address_street" placeholder="Street Address">
               </md-input-container>
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.survey_address_city" placeholder="City">
+                <input ng-model="measure.companyInfo.survey_address_city" placeholder="City">
               </md-input-container>
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.survey_address_state" placeholder="State">
+                <input ng-model="measure.companyInfo.survey_address_state" placeholder="State">
               </md-input-container>
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.survey_address_zip" placeholder="Zip">
+                <input ng-model="measure.companyInfo.survey_address_zip" placeholder="Zip">
               </md-input-container>
             </div>
 
@@ -55,13 +55,13 @@
               </ul>
 
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.primary_contact_name" placeholder="Company Contact Name">
+                <input ng-model="measure.companyInfo.primary_contact_name" placeholder="Company Contact Name">
               </md-input-container>
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.primary_contact_phone_number" placeholder="Phone Number">
+                <input ng-model="measure.companyInfo.primary_contact_phone_number" placeholder="Phone Number">
               </md-input-container>
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.primary_contact_email" placeholder="Email">
+                <input ng-model="measure.companyInfo.primary_contact_email" placeholder="Email">
               </md-input-container>
 
             </div>
@@ -74,13 +74,13 @@
               </ul>
 
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.alt_contact_name" placeholder="Alt Company Contact Name">
+                <input ng-model="measure.companyInfo.alt_contact_name" placeholder="Alt Company Contact Name">
               </md-input-container>
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.alt_phone_number" placeholder="Alt Phone Number">
+                <input ng-model="measure.companyInfo.alt_phone_number" placeholder="Alt Phone Number">
               </md-input-container>
               <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
-                <input ng-model="measure.currentProfile.alt_contact_email" placeholder="Alt Email">
+                <input ng-model="measure.companyInfo.alt_contact_email" placeholder="Alt Email">
               </md-input-container>
 
             </div>
@@ -114,7 +114,7 @@
       <md-card-title id="measurementTitle">
         <div layout="column">
           <md-card-title-text >
-            <span id="cardTitle" class="md-subhead"><u>Area:  {{measure.area}}</u></span>
+            <span id="cardTitle" class="md-subhead"><u>Area:  {{measure.area_name}}</u></span>
             <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
               <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
@@ -198,19 +198,19 @@
             </tr>
             <tr ng-show="measure.loading" layout-wrap id="inputRow">
               <td><md-input-container>
-                <input ng-model="measure.measurement.floor" size="6" ng-model="measure.floor" aria-label="floor">
+                <input ng-model="measure.measurement.floor" size="6"  aria-label="floor">
               </md-input-container></td>
               <td><md-input-container>
-                <input ng-model="measure.measurement.room" size="6" ng-model="measure.room" aria-label="room">
+                <input ng-model="measure.measurement.room" size="6" aria-label="room">
               </md-input-container></td>
               <td><md-input-container>
-                <input ng-model="measure.measurement.quantity" size="6" ng-model="measure.quantity" aria-label="quantity">
+                <input ng-model="measure.measurement.quantity" size="6"  aria-label="quantity">
               </md-input-container></td>
               <td><md-input-container>
-                <input ng-model="measure.measurement.width" size="6" ng-model="measure.width" aria-label="width">
+                <input ng-model="measure.measurement.width" size="6"  aria-label="width">
               </md-input-container></td>
               <td><md-input-container>
-                <input ng-model="measure.measurement.length" size="6" ng-model="measure.length" aria-label="length`">
+                <input ng-model="measure.measurement.length" size="6"  aria-label="length`">
               </md-input-container></td>
               <td>
                 <md-input-container>
@@ -220,10 +220,10 @@
                   </md-select>
                 </md-input-container>
               </td>
-              <td><md-input-container><input ng-model="measure.measurement.controls" size="6" ng-model="measure.controls"  aria-label="controls"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.fascia_size" size="6" ng-model="measure.fascia_size" aria-label="fascia_size"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.fabric" size="10" ng-model="measure.fabric" aria-label="fabric"></md-input-container></td>
-              <td><md-input-container><input ng-model="measure.measurement.mount" size="6" ng-model="measure.mount" aria-label="mount"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.controls" size="6" aria-label="controls"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.fascia_size" size="6" aria-label="fascia_size"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.fabric" size="10"  aria-label="fabric"></md-input-container></td>
+              <td><md-input-container><input ng-model="measure.measurement.mount" size="6"  aria-label="mount"></md-input-container></td>
               <td>
                 <md-button class="md-icon-button" aria-label="edit">
                   <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>

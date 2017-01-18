@@ -1,8 +1,10 @@
 <md-card>
-  <md-card-content>
-      <div ng-hide="ma.loading" layout="row" layout-sm="column" layout-align="space-around">
-        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-      </div>
+  <md-card-content ng-hide="ma.loading">
+    <div layout="row" layout-sm="column" layout-align="space-around">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+  </md-card-content>
+  <md-card-content ng-show="ma.loading">
     <div layout="row">
       <div layout="column">
         <!--company name  -->
@@ -80,25 +82,19 @@
           </md-button>
         </div>
     </div>
-
-
-
-
-
   </md-card-content>
 </md-card>
 
-<md-card>
+<md-card ng-show="ma.loading">
   <md-card-content>
-    <section ng-hide="ma.show" class="areas">
+    <section class="areas">
   <!-- ng-repeat divs for every area we have added plus one div for add new area-->
       <div class="add-new-area">
-        <p ng-hide="ma.inputAreaName" ng-click="ma.showInput()" id="plus">+</p>
-        <div class="area-input" ng-show="ma.inputAreaName === true">
-          <input type="text" ng-model="ma.newAreaName">
-          <button type="button" ng-click="ma.addNewArea()"></button>
+        <p ng-hide="ma.inputAreaName" ng-click="ma.inputAreaName = true" id="plus">+</p>
+        <div class="area-input" ng-show="ma.inputAreaName">
+          <input type="text" ng-model="ma.newAreaName"><br>
+          <button type="button" ng-click="ma.addNewArea()">Submit</button>
         </div>
-
       </div>
 
       <md-button  ng-repeat="area in ma.areaArray track by $index" class="measurement-areas" ng-click="ma.setArea($index)">

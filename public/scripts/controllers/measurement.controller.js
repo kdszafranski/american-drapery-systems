@@ -7,12 +7,21 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
   self.areaId = IdFactory.getAreaId();
   self.loading = false;
   self.showInput = true
-  self.companyInfo = formatDates([InfoFactory.companyInfo])[0];
   self.currentProfile = {};
 
 
+  if(IdFactory.getNewArea()) {
+    console.log('newstatus');
+    self.companyInfo = formatDates([InfoFactory.getCompanyInfo()])[0];
+    self.area_name = IdFactory.getNewArea();
+    self.loading = true;
 
-  self.getMeasurements = function() {
+  } else {
+    getMeasurements();
+    getSurveyDetails();
+  }
+
+  function getMeasurements() {
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
       .then(function(idToken) {
@@ -30,15 +39,13 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
           self.loading = true;
           console.log(self.measurements);
-          self.area = self.measurements[0].area_name;
+          self.area_name = self.measurements.area_name;
           console.log("InfoFactory", self.companyInfo);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
         });
       })
   }
-
-  self.getMeasurements();
 
   function getSurveyDetails() {
     var currentUser = UserFactory.getUser();
@@ -52,15 +59,9 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
         })
         .then(function(response){
-          self.surveyDetails = response.data;
-          console.log("Response From Server: ", self.surveyDetails);
-          self.companyInfo = self.surveyDetails[0];
-          self.areaArray = self.surveyDetails.map(survey => survey.area_name);
-          console.log("Area Array: ", self.areaArray);
-          self.areaArrayId = self.surveyDetails.map(survey => survey.id);
-          console.log("Area ID: ", self.areaArrayId);
-          self.currentProfile = self.companyInfo;
-          InfoFactory.companyInfo = self.companyInfo;
+          self.companyInfo = response.data[0];
+          self.completionDate = new Date(self.companyInfo.completion_date);
+          self.surveyDate = new Date(self.companyInfo.survey_date);
           self.loading = true;
         },
         function(err) {
@@ -70,7 +71,6 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
 
   }
 
-  getSurveyDetails();
 
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
@@ -79,7 +79,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     currentUser.getToken()
     .then(function(idToken) {
         $http({
-          method: 'PUT',
+          method: 'POST',
           url: '/measurements/' + self.areaId,
           data: self.measurement,
           headers: {
@@ -87,13 +87,14 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
+          getMeasurements();
+
         }).catch(function(err) {
           console.log("Error in measurement post");
         });
       })
     self.measurements.push(angular.copy(self.measurement));
     console.log("mesurement array", self.measurements);
-    self.getMeasurements();
   }
 
   //Edit client profile button
@@ -189,7 +190,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
-          self.getMeasurements();
+          getMeasurements();
         }).catch(function(err) {
           console.log("Error in measurement post");
         });
