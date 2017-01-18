@@ -39,12 +39,13 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       if (decBool) {
         ret.push(decBool);
       }
-      if (compBool) {
+      if (dispBool) {
         ret.push(dispBool);
       }
-      if (decBool) {
+      if (pendBool) {
         ret.push(pendBool);
       }
+      console.log('ret', ret);
       return ret;
     }
   }
