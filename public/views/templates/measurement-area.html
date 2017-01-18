@@ -11,7 +11,7 @@
             <h1> <i>{{ma.companyInfo.client_name}}</i> </h1>
           </div>
           <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" flex-gt-xs>
-            <input ng-model="ma.currentProfile.client_name" placeholder="Company Name">
+            <input ng-model="ma.companyInfo.client_name" placeholder="Company Name">
           </md-input-container>
         </div>
         <!-- Data Row  -->
@@ -23,10 +23,10 @@
               <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_city}}, {{ma.companyInfo.billing_address_state}}</li>
               <li ng-show="ma.showInput">{{ma.companyInfo.billing_address_zip}}</li>
             </ul>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.currentProfile.survey_address_street" placeholder="Street Address"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.currentProfile.survey_address_city" placeholder="City"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.currentProfile.survey_address_state" placeholder="State"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.currentProfile.survey_address_zip" placeholder="Zip"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.companyInfo.survey_address_street" placeholder="Street Address"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.companyInfo.survey_address_city" placeholder="City"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.companyInfo.survey_address_state" placeholder="State"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.companyInfo.survey_address_zip" placeholder="Zip"></md-input-container>
           </div>
           <div layout="column" layout-align="start center">
             <ul>
@@ -35,9 +35,9 @@
               <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_phone_number}}</li>
               <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_email}}</li>
             </ul>
-              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.primary_contact_name" placeholder="Company Contact Name"></md-input-container>
-              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.primary_contact_phone_number" placeholder="Phone Number"></md-input-container>
-              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.primary_contact_email" placeholder="Email"></md-input-container>
+              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_name" placeholder="Company Contact Name"></md-input-container>
+              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_phone_number" placeholder="Phone Number"></md-input-container>
+              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_email" placeholder="Email"></md-input-container>
           </div>
           <div layout="column" layout-align="start center">
             <ul >
@@ -46,15 +46,15 @@
               <li ng-show="ma.showInput">{{ma.companyInfo.alt_phone_number}}</li>
               <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_email}}</li>
             </ul>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.alt_contact_name" placeholder="Alt Company Contact Name"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.alt_phone_number" placeholder="Alt Phone Number"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.alt_contact_email" placeholder="Alt Email"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_contact_name" placeholder="Alt Company Contact Name"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_phone_number" placeholder="Alt Phone Number"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_contact_email" placeholder="Alt Email"></md-input-container>
           </div>
         </div>
       </div>
         <div layout="column" layout-align="start" class="area-survey-header">
           <h1 ng-show="ma.showInput"><i>Job# {{ma.companyInfo.job_number}}</i></h1>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.currentProfile.job_number" placeholder="Job Number"></md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.job_number" placeholder="Job Number"></md-input-container>
 
           <div layout="column">
             <ul>

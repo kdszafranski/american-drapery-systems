@@ -84,17 +84,17 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   }
   //save edits to client profile button
   self.updateClient = function(){
-    console.log("profile to be updated", self.currentProfile);
-    self.currentProfile.completion_date = new Date(self.completionDate);
-    self.currentProfile.survey_date = new Date(self.surveyDate);
-    var clientId = self.currentProfile.client_id;
+    console.log("profile to be updated", self.companyInfo);
+    self.companyInfo.completion_date = new Date(self.completionDate);
+    self.companyInfo.survey_date = new Date(self.surveyDate);
+    var clientId = self.companyInfo.client_id;
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients/'+ clientId,
-        data: self.currentProfile,
+        data: self.companyInfo,
         headers: {
           id_token: idToken
         }
@@ -112,21 +112,20 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   //function to update survey data
   function updateSurvey(){
     var currentUser = UserFactory.getUser();
-    var survey_id = self.currentProfile.survey_id;
     console.log("survey id", survey_id);
     currentUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'PUT',
           url: '/surveys/update/' + survey_id,
-          data: self.currentProfile,
+          data: self.companyInfo,
           headers: {
             id_token: idToken
           }
         }).then(function(response){
           console.log("Updated: ", response.data);
           self.showInput = !self.showInput;
-          self.currentProfile = self.currentProfile[0];
+          console.log('current profile all, [0]', self.companyInfo, self.companyInfo[0]);
         },
         function(err) {
           console.log("error updating survey details: ", err);
@@ -150,7 +149,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
         })
         .then(function(response){
           self.surveyDetails = response.data;
-          console.log(self.surveyDetails);
           //Check to see if it is a new survey. Length will be zero if it is a new survey
           if (self.surveyDetails.length === 0) {
             currentUser.getToken()
@@ -164,34 +162,34 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
                 })
                 .then(function(response){
                   self.surveyDetails = response.data;
-                  console.log("Response From Server: ", self.surveyDetails);
-                  self.companyInfo = self.surveyDetails[0];
-                  InfoFactory.companyInfo = self.companyInfo
-                  self.loading = true;
+                  surveyOps();
                 },
                 function(err) {
                   console.log("error getting survey details: ", err);
                 });
             });
           } else {
-            console.log("Response From Server: ", self.surveyDetails);
-            self.companyInfo = self.surveyDetails[0];
-            self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
-            console.log("Area Array: ", self.areaArray);
-            self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
-            console.log("Area ID: ", self.areaArrayId);
-            InfoFactory.companyInfo = self.companyInfo
-            self.currentProfile = self.companyInfo;
-            self.loading = true;
+            surveyOps();
           }
-          self.completionDate = new Date(self.currentProfile.completion_date);
-          self.surveyDate = new Date(self.currentProfile.survey_date);
         },
         function(err) {
           console.log("error getting survey details: ", err);
         });
     });
   }
+  function surveyOps() {
+    self.companyInfo = self.surveyDetails[0];
+    console.log("Response From Server: ", self.surveyDetails);
+    self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
+    console.log("Area Array: ", self.areaArray);
+    self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
+    console.log("Area ID: ", self.areaArrayId);
+    InfoFactory.companyInfo = self.companyInfo;
+    self.completionDate = new Date(self.companyInfo.completion_date);
+    self.surveyDate = new Date(self.companyInfo.survey_date);
+    self.loading = true;
+  }
+
 
   getSurveyDetails();
 }]);
