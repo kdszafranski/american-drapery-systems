@@ -6,8 +6,8 @@ var pg = require('pg');
 var pool = new pg.Pool(config);
 
 //Post request to add new measurement information to survey
-router.put('/:area_id', function(req,res) {
-  console.log("Req.body in Post: ", req.body);
+router.post('/:area_id', function(req,res) {
+  console.log("Req.body in measirement Post: ", req.body);
   var newMeasurement = req.body;
   var area_id = req.params.area_id;
   console.log(area_id);
@@ -84,7 +84,7 @@ router.delete('/:idToDelete', function(req, res) {
       .then(function(results) {
         client.release();
         console.log("Delete complete");
-        res.sendStatus(201);
+        res.sendStatus(204);
       })
       .catch(function(err) {
         console.log("Error with delete: ", err);

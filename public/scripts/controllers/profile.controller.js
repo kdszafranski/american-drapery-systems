@@ -1,4 +1,4 @@
-app.controller('ProfileController', ["$http", "UserFactory", function($http, UserFactory) {
+app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$location", function($http, UserFactory, IdFactory, $location) {
   var self = this;
   self.currentProfile = {};
   self.checkbox = true;
@@ -17,7 +17,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
       self.currentProfile.billing_address_zip = self.currentProfile.survey_address_zip
     }
     console.log("submit button clicked. Object:", self.currentProfile);
-    //postClients();
+    postClients();
   }
 
   //Update existing client information Button
@@ -88,7 +88,16 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
           id_token: idToken
         }
       }).then(function(response){
-        console.log('success');
+        console.log('success in adding new client');
+        var clientId = response.data[0].id;
+        console.log(response.data[0].id);
+        self.survey = {
+          client_id: clientId,
+          survey_date: self.currentProfile.surveyDate,
+          status: "Pending",
+          last_modified: new Date()
+        }
+        addNewSurvey(self.survey);
       });
     });
   }
@@ -97,7 +106,7 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
   function updateClient() {
     currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
-    currentUser.user.getToken().then(function(idToken) {
+    currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients/' + self.selected.id,
@@ -107,6 +116,13 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
         }
       }).then(function(response){
         console.log('success');
+        self.survey = {
+          client_id: self.selected.id,
+          survey_date: self.currentProfile.surveyDate,
+          status: "Pending",
+          last_modified: new Date()
+        }
+        addNewSurvey(self.survey);
       });
     });
   }
@@ -124,5 +140,26 @@ app.controller('ProfileController', ["$http", "UserFactory", function($http, Use
       self.showSubmitButton = true;
       getClient();
     }
+  }
+
+
+  function addNewSurvey(survey) {
+    console.log("Running addNewSurvey");
+    currentUser = UserFactory.getUser();
+    currentUser.getToken().then(function(idToken) {
+      $http({
+        method: 'POST',
+        url: '/surveys',
+        data: self.survey,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        //setting the survey # in factory to the new survey id
+        IdFactory.setSurvey(response.data[0].id);
+        $location.path('/area');
+        console.log('success in adding new survey');
+      });
+    });
   }
 }]);

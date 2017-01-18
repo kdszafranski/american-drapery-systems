@@ -35,6 +35,9 @@ md-input-container{
   background-color: white;
   border-color: white;
 }
+#mdInput{
+  padding: 1px;
+}
 
 #headerRow th {
   padding: 5px;
@@ -56,6 +59,26 @@ md-input-container{
   padding: 0;
   margin: 0;
 }
+.headerRow th {
+  padding: 5px;
+}
+#survey.headerRow{
+  background-color: rgb(63,81,181);
+  color: rgba(255,255,255,0.87);
+  padding-top: 5px;
+}
+.tableBodyRow td{
+  border: 1px solid;
+  border-color: rgba(251, 247, 247, 0.91);
+  padding-left: 5px;
+}
+.tableBodyRow .removeIconPadding{
+  padding-left: 0;
+}
+.tableBodyRow md-input-container, input{
+  padding: 0;
+  margin: 0;
+}
 tr:nth-child(odd) {
     background-color: rgb(234, 231, 235);
 }
@@ -71,7 +94,19 @@ tr:nth-child(even) {
   list-style-type: none;
 }
 
-table{
+.area-survey-header li {
+  list-style-type: none;
+}
+.area-survey-header ul {
+  padding:3px;
+  margin: 0;
+}
+.area-survey-header h1 {
+  padding:3px;
+  margin: 0;
+}
+
+table {
   border: 1px;
 }
 
@@ -133,13 +168,37 @@ table{
   border-radius: 40%;
 }
 
-#newJob {
+/*#newJob {
   margin: 10px;
-}
+}*/
 
 .itemBtn:hover {
   cursor: pointer;
 }
 .areaName {
   margin: 8px;
+}
+.client-name h1 {
+  margin-top: 8px;
+  margin-bottom: 0;
+
+}
+ .job-number h1 {
+  margin: 8px;
+}
+.client-address li {
+  float: left;
+}
+.client-address {
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+.notes {
+  padding: 0 20px;
+}
+.columnSort:hover {
+  cursor: pointer;
+}
+#dashCard {
+  min-width: 750px;
 }

@@ -1,49 +1,57 @@
-<div layout="row" layout-align="center center">
-  <md-card flex="80">
-    <md-card-content>
-      <div class="survey-header" layout="row" layout-align="left center">
-        <div class="client-address" layout="column">
-          <h1><i>{{survey.surveyDetails[0].client_name}}</i></h1>
-            <ul>
+<div id="survey" layout="row" layout-align="center center" class="container">
+  <md-card flex="100">
+    <md-card-content >
+      <div class="survey-header" layout="row">
+        <div class="client-info" layout="column" layout-align="center left">
+          <div class="client-name" layout="row" layout-align="center left">
+            <h1><i>{{survey.surveyDetails[0].client_name}}</i></h1>
+          </div>
+          <div layout="row" layout-align="center left">
+            <ul class="client-address">
               <li>{{survey.surveyDetails[0].billing_address_street}}</li>
-              <li>{{survey.surveyDetails[0].billing_address_city}}</li>
-              <li>{{survey.surveyDetails[0].billing_address_state}}</li>
+              <li>&nbsp• {{survey.surveyDetails[0].billing_address_city}},  {{survey.surveyDetails[0].billing_address_state}} •&nbsp</li>
               <li>{{survey.surveyDetails[0].billing_address_zip}}</li>
-            </ul>
-        </div>
-        <div class="client-contact" layout="column">
-          <ul>
-            <li><b>Primary Contact</b></li>
-            <li>{{survey.surveyDetails[0].primary_contact_name}}</li>
-            <li>{{survey.surveyDetails[0].primary_contact_phone_number}}</li>
-            <li>{{survey.surveyDetails[0].primary_contact_email}}</li>
-          </ul>
-          <ul ng-show="survey.surveyDetails[0].alt_contact_name.length">
-            <li>
-            <b>Alternate Contact</b></li>
-            <li>{{survey.surveyDetails[0].alt_contact_name}}</li>
-            <li>{{survey.surveyDetails[0].alt_phone_number}}</li>
-            <li>{{survey.surveyDetails[0].alt_contact_email}}</li>
-          </ul>
-        </div>
-        <div class="job-info" layout="column">
-          <h1><i>Job# {{survey.surveyDetails[0].job_number}}</i></h1>
-          <p>Completion Date: {{survey.surveyDetails[0].completion_date}}</p>
-          <p>Survey Date: {{survey.surveyDetails[0].survey_date}}</p>
-        </div>
+          </div>
 
+          <div layout="row" layout-align="center left">
+            <div class="client-contact" layout="column">
+              <ul>
+                <li><b>Primary Contact</b></li>
+                <li>{{survey.surveyDetails[0].primary_contact_name}}</li>
+                <li>{{survey.surveyDetails[0].primary_contact_phone_number}}</li>
+                <li>{{survey.surveyDetails[0].primary_contact_email}}</li>
+              </ul>
+            </div>
+            <div class="client-contact" layout="column">
+              <ul ng-show="survey.surveyDetails[0].alt_contact_name.length">
+                <li><b>Alternate Contact</b></li>
+                <li>{{survey.surveyDetails[0].alt_contact_name}}</li>
+                <li>{{survey.surveyDetails[0].alt_phone_number}}</li>
+                <li>{{survey.surveyDetails[0].alt_contact_email}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="job-number" layout="column" layout-align="center right">
+          <h1><i>Job# {{survey.surveyDetails[0].job_number}}</i></h1>
+            <ul>
+              <li><b>Completion Date:</b></li>
+              <li>{{survey.surveyDetails[0].completion_date}}</li>
+              <li><b>Survey Date:</b></li>
+              <li>{{survey.surveyDetails[0].survey_date}}</li>
+            </ul>
         </div>
       </div>
     </md-card-content>
   </md-card>
 </div>
 <div layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
-  <md-card flex="80">
+  <md-card flex="100">
     <md-card-content>
-      <h4 class="areaName">Area: {{area[0].area_name}}</h4>
+      <h3 class="areaName" ng-if="area[0].area_name">Area: {{area[0].area_name}}</h4>
       <table style="width:100%" >
         <thead>
-          <tr>
+          <tr id="headerRow">
             <th>Floor</th>
             <th>Room</th>
             <th>Quantity</th>
@@ -57,7 +65,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr id="tableBodyRow" ng-repeat="measurements in area">
+          <tr class="tableBodyRow" ng-repeat="measurements in area">
             <td>{{measurements.floor}}</td>
             <td>{{measurements.room}}</td>
             <td>{{measurements.quantity}}</td>
@@ -71,7 +79,7 @@
           </tr>
         </tbody>
       </table>
-      <p>
+      <p class="notes">
         <b>Notes:</b>
         {{area[$index].notes}}
       </p>

@@ -1,0 +1,58 @@
+<div layout="row" layout-align="center center">
+  <md-card flex="70">
+    <md-card-content  ng-hide="admin.loading">
+      <div layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+    </md-card-content>
+    <md-card-content ng-show="admin.loading">
+      <h1>User Admin Page</h1>
+
+      <div layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <table id="adminTable">
+          <thead>
+            <tr id="headerRow">
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Admin Privlages</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="tableBodyRow" ng-repeat="user in admin.users" >
+              <td>{{user.first_name}}</td>
+              <td>{{user.last_name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.can_edit_users}}</td>
+              <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="delete">
+                <md-icon ng-click="admin.deleteUser(user.id)" md-svg-icon="./img/ic_delete_forever_black_48px.svg"></md-icon>
+              </div></td>
+            </tr>
+            <tr layout-wrap id="inputRow">
+              <td><md-input-container>
+                <input ng-model="newUser.first_name" size="6">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="newUser.last_name" size="6">
+              </md-input-container></td>
+              <td><md-input-container>
+                <input ng-model="newUser.email" size="25">
+              </md-input-container></td>
+              <td><md-input-container>
+                <md-checkbox ng-model="newUser.can_edit_users"></md-checkbox>
+              </md-input-container></td>
+              <td><md-input-container>
+                <md-button ng-click="admin.addUser(newUser)" class="md-icon-button" >
+                  <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+                </md-button>
+              </md-input-container></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </md-card-content>
+  </md-card>
+</div>

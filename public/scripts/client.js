@@ -1,7 +1,5 @@
 var app = angular.module('app', ['ngRoute', 'firebase', 'ngMaterial']);
 
-
-
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/login', {
@@ -39,12 +37,20 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'MeasurementAreaController',
     controllerAs: 'ma'
   })
+  .when('/admin' ,{
+    templateUrl: '/views/templates/admin.html',
+    controller: 'AdminController',
+    controllerAs: 'admin'
+  })
   .otherwise({
     redirectTo: 'login'
   });
 
 }]);
 
+
+
+//dashboard search filter
 app.filter('startFrom', function() {
   return function(input, start) {
     start = +start; //parse to int
@@ -52,23 +58,32 @@ app.filter('startFrom', function() {
   }
 });
 
+app.filter('excludeByStatus', function () {
+  return function (items, excludedList) {
+    var ret = [];
+    angular.forEach(items, function (item) {
+      if (excludedList.indexOf(item.status) === -1) {
+          ret.push(item);
+      }
+    });
+    return ret;
+  };
+})
+
+//Utilities
 function formatDates(aryOfObjs){
   //convert the ISO Dates to readable format
-  // aryOfObjs.map(function(obj){
-  //   if(moment(obj).isValid){
-  //     return moment(obj).format("YYYY/MM/DD");
-  //   }
-  // });
+  //expects array of objects
   for (var i = 0; i < aryOfObjs.length; i++) {
+    console.log('date', aryOfObjs[i].survey_date);
+    
     if(moment(aryOfObjs[i].last_modified).isValid()) {
       aryOfObjs[i].last_modified = moment(aryOfObjs[i].last_modified).format("YYYY/MM/DD");
     }
     if(moment(aryOfObjs[i].survey_date).isValid()) {
       aryOfObjs[i].survey_date = moment(aryOfObjs[i].survey_date).format("YYYY/MM/DD");
     }
-    console.log('valid', moment(aryOfObjs[i].completion_date).isValid(), aryOfObjs[i].completion_date);
     if(moment(aryOfObjs[i].completion_date).isValid()) {
-      console.log('moment');
       aryOfObjs[i].completion_date = moment(aryOfObjs[i].completion_date).format("YYYY/MM/DD");
     }
   }

@@ -15,10 +15,10 @@ router.post('/', function(req,res) {
       client.query("INSERT INTO areas (area_name, survey_id) " +
       "VALUES ($1,$2) " +
       "RETURNING id",
-      [newArea.area, newArea.survey_id])
+      [newArea.area_name, newArea.survey_id])
       .then(function(result) {
         client.release();
-        console.log("client info put complete");
+        console.log("area info put complete");
         //Get the id of the most recently added area
         res.send(result.rows);
       })
@@ -29,6 +29,23 @@ router.post('/', function(req,res) {
     });
 });
 
-
+router.delete('/:areaId', function(req, res) {
+  var areaId = req.params.areaId;
+  pool.connect()
+    .then(function(client) {
+      client.query("DELETE from areas " +
+      "WHERE id = $1",
+      [areaId])
+      .then(function(result) {
+        client.release();
+        console.log("delete complete");
+        res.sendStatus(204);
+      })
+      .catch(function(err) {
+        console.log('select query error: ', err);
+        res.sendStatus(500);
+      });
+    });
+})
 
 module.exports = router;

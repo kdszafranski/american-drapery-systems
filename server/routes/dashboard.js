@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
       client.query('SELECT * FROM survey')
         .then(function(result) {
           client.release();
-          // console.log(result.rows);
+          console.log(result.rows);
           res.send(result.rows);
         })
         .catch(function(err) {
