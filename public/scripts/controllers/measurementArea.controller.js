@@ -1,19 +1,22 @@
-app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, UserFactory, InfoFactory) {
+app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', '$route',
+function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
   var self = this;
-  var survey_id = IdFactory.getSurveyId();
+  // var survey_id = IdFactory.getSurveyId();
+  var survey_id = $route.current.params.surveyId;
   self.loading = false;
   self.showInput = false
   self.currentProfile = {};
+  self.currentUser = UserFactory.getUser();
 
   self.newAreaName = '';
-  console.log(survey_id);
   self.inputAreaName = false;
   //function to send area to measurent controller
   self.setArea = function(index) {
     console.log("index: ", index);
-    IdFactory.setArea(self.areaArrayId[index]);
+    var areaId = self.areaArrayId[index];
+    IdFactory.setArea(areaId);
 
-    $location.path('/measurement');
+    $location.path('/measurement/' + areaId);
   }
 
 
@@ -108,9 +111,9 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   //function to handle clicking of an already existing area
 
   //function to get all areas associated with survey
-  function getSurveyDetails() {
-    var currentUser = UserFactory.getUser();
-    currentUser.getToken()
+  function getSurveyDetails(firebaseUser) {
+    // var currentUser = UserFactory.getUser(); *******
+    firebaseUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
@@ -120,6 +123,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
           }
         })
         .then(function(response){
+          console.log("GETTING AREAS FOR SURVEY \n\n");
           self.surveyDetails = response.data;
           console.log("Response From Server: ", self.surveyDetails);
           self.companyInfo = self.surveyDetails[0];
@@ -137,8 +141,14 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     })
 
   }
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    console.log("\n\nOn auth state change runs when view changes\n\n");
+    getSurveyDetails(firebaseUser);
+  });
+  // if(!self.currentUser) {
+  //
+  // }
 
-  getSurveyDetails();
 }]);
 
 //Function to group measurements by area

@@ -12,17 +12,17 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'DashboardController',
     controllerAs: 'dash'
   })
-  .when('/measurement', {
+  .when('/measurement/:areaId', {
     templateUrl: '/views/templates/measurement.html',
     controller: 'MeasurementController',
     controllerAs: 'measure'
   })
-  .when('/survey', {
+  .when('/survey/:surveyid', {
     templateUrl: '/views/templates/survey.html',
     controller: 'SurveyController',
     controllerAs: 'survey'
   })
-  .when('/profile' ,{
+  .when('/profile/:clientid' ,{
     templateUrl: '/views/templates/profile.html',
     controller: 'ProfileController',
     controllerAs: 'profile'
@@ -32,7 +32,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'FileController',
     controllerAs: 'files'
   })
-  .when('/area' ,{
+  .when('/area/:surveyId' ,{
     templateUrl: '/views/templates/measurement-area.html',
     controller: 'MeasurementAreaController',
     controllerAs: 'ma'

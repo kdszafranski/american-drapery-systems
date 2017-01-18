@@ -1,16 +1,18 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory',  '$route',
+function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route) {
   var self = this;
   self.measurement = {};
   self.measurements =[];
   self.measurement.edit = true;
-  self.areaId = IdFactory.getAreaId();
+  // self.areaId = IdFactory.getAreaId();
+  self.areaId = $route.current.params.areaId;
   self.loading = false;
   self.companyInfo = formatDates([InfoFactory.companyInfo])[0];
 
 
-  self.getMeasurements = function() {
-    var currentUser = UserFactory.getUser();
-    currentUser.getToken()
+  self.getMeasurements = function(firebaseUser) {
+    // var currentUser = UserFactory.getUser();
+    firebaseUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
@@ -33,7 +35,10 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
       })
   }
 
-  self.getMeasurements();
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    self.getMeasurements(firebaseUser);
+  })
+
 
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
