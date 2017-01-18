@@ -1,4 +1,4 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location',   function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location', '$anchorScroll',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location, $anchorScroll) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.measurement = {};
@@ -246,6 +246,11 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     $location.path('/area');
     console.log("self.measurements", self.measurements);
     updateNotes();
+  }
+  self.goToTopOfPage = function(){
+    console.log("clicked");
+    $location.hash('measurementTitle');
+    $anchorScroll();
   }
 
 }]);

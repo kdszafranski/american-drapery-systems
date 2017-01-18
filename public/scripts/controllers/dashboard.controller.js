@@ -45,7 +45,6 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       if (pendBool) {
         ret.push(pendBool);
       }
-      console.log('ret', ret);
       return ret;
     }
   }
