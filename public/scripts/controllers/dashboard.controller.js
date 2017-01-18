@@ -2,6 +2,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   const self = this;
   var currentUser = {};
   var surveyList = [];
+  self.statusOptions = ['Pending', 'Dispatched', 'Completed', 'Declined'];
   self.currentPage = 0;
   self.pageSize = 20;
   self.filtered = [];

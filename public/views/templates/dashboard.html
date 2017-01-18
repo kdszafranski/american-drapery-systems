@@ -50,7 +50,7 @@
                 <span ng-show="dash.sortType == 'status' && !dash.sortReverse" class="fa fa-caret-down"></span>
                 <span ng-show="dash.sortType == 'status' && dash.sortReverse" class="fa fa-caret-up"></span>
               </th>
-              <th class="columnSort" ng-click="dash.sortType = 'last_modified'; dash.sortReverse = !dash.sortReverse">Lasty Modified
+              <th class="columnSort" ng-click="dash.sortType = 'last_modified'; dash.sortReverse = !dash.sortReverse">Last Modified
                 <span ng-show="dash.sortType == 'last_modified' && !dash.sortReverse" class="fa fa-caret-down"></span>
                 <span ng-show="dash.sortType == 'last_modified' && dash.sortReverse" class="fa fa-caret-up"></span>
               </th>
@@ -67,7 +67,7 @@
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td>{{result.client_name}}</td>
-              <td>{{result.status}}</td>
+              <td><select ng-options="statusOptions as statusOptions for statusOptions in dash.statusOptions" ng-model="result.status"></select></td>
               <td>{{result.last_modified}}</td>
               <td>{{result.survey_date}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="view">
