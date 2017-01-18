@@ -67,7 +67,9 @@
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td>{{result.client_name}}</td>
-              <td><select ng-options="statusOptions as statusOptions for statusOptions in dash.statusOptions" ng-model="result.status"></select></td>
+              <td><md-select ng-model="result.status" placeholder="{{result.status}}">
+                <md-option ng-value="opt" ng-repeat="status in dash.statusOptions">{{status}}</md-option>
+              </md-select></td>
               <td>{{result.last_modified}}</td>
               <td>{{result.survey_date}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="view">
