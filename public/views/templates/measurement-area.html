@@ -59,14 +59,14 @@
           <div layout="column">
             <ul>
               <li><b>Survey Date:</b></li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.survey_date}}</li>
-              <md-input-container ng-hide="ma.showInput" md-no-float>
-                <md-datepicker ng-hide="ma.showInput" ng-model="ma.currentProfile.survey_date" placeholder="Survey Date"></md-datepicker>
+              <!-- <li ng-show="ma.showInput">{{ma.companyInfo.survey_date}}</li> -->
+              <md-input-container  md-no-float>
+                <md-datepicker ng-model="ma.surveyDate" ng-disabled="ma.showInput" ng-change="ma.companyInfo.survey_date = ma.surveyDate.toISOString()" placeholder="Survey Date"></md-datepicker>
               </md-input-container>
               <li><b>Completion Date:</b></li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.completion_date}}</li>
-              <md-input-container ng-hide="ma.showInput" md-no-float>
-                <md-datepicker ng-model="ma.currentProfile.completion_date" placeholder="Survey Date"></md-datepicker>
+              <!-- <li ng-show="ma.showInput">{{ma.companyInfo.completion_date}}</li> -->
+              <md-input-container  md-no-float>
+                <md-datepicker ng-model="ma.completionDate" ng-disabled="ma.showInput" ng-change="ma.companyInfo.completion_date = ma.completionDate.toISOString()" placeholder="Survey Date"></md-datepicker>
               </md-input-container>
             </ul>
           </div>

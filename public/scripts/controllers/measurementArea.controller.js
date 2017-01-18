@@ -85,6 +85,8 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   //save edits to client profile button
   self.updateClient = function(){
     console.log("profile to be updated", self.currentProfile);
+    self.currentProfile.completion_date = new Date(self.completionDate);
+    self.currentProfile.survey_date = new Date(self.surveyDate);
     var clientId = self.currentProfile.client_id;
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
@@ -124,6 +126,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
         }).then(function(response){
           console.log("Updated: ", response.data);
           self.showInput = !self.showInput;
+          self.currentProfile = self.currentProfile[0];
         },
         function(err) {
           console.log("error updating survey details: ", err);
@@ -160,7 +163,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
                   }
                 })
                 .then(function(response){
-                  self.surveyDetails = formatDates(response.data);
+                  self.surveyDetails = response.data;
                   console.log("Response From Server: ", self.surveyDetails);
                   self.companyInfo = self.surveyDetails[0];
                   InfoFactory.companyInfo = self.companyInfo
@@ -181,6 +184,8 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
             self.currentProfile = self.companyInfo;
             self.loading = true;
           }
+          self.completionDate = new Date(self.currentProfile.completion_date);
+          self.surveyDate = new Date(self.currentProfile.survey_date);
         },
         function(err) {
           console.log("error getting survey details: ", err);
