@@ -6,17 +6,18 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
   self.measurement.edit = true;
   self.areaId = IdFactory.getAreaId();
   self.loading = false;
-  self.showInput = true
+  self.showInput = true;
   self.currentProfile = {};
 
 
   if(IdFactory.getNewArea()) {
+    //use client info passed along from area controller if this is a new area
     console.log('newstatus');
     self.companyInfo = formatDates([InfoFactory.getCompanyInfo()])[0];
     self.area_name = IdFactory.getNewArea();
     self.loading = true;
-
   } else {
+    //get client info from server
     getMeasurements();
     getSurveyDetails();
   }
@@ -68,9 +69,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           console.log("error getting survey details: ", err);
         });
     })
-
   }
-
 
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
@@ -105,25 +104,49 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
 
   //save edits to client profile button
   self.updateClient = function(){
-    var clientId = self.currentProfile.client_id;
+    console.log("profile to be updated", self.companyInfo);
+    self.companyInfo.completion_date = new Date(self.completionDate);
+    self.companyInfo.survey_date = new Date(self.surveyDate);
+    var clientId = self.companyInfo.client_id;
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients/'+ clientId,
-        data: self.currentProfile,
+        data: self.companyInfo,
         headers: {
           id_token: idToken
         }
       }).then(function(response){
-        console.log("Response from new area post: ", response.data);
-        self.showInput = !self.showInput;
+        console.log("Response from new client post: ", response.data);
+        updateSurvey();
       },
       function(err) {
-        console.log("error getting survey details: ", err);
+        console.log("error posting client: ", err);
       });
     });
+  }
+  function updateSurvey(){
+    var currentUser = UserFactory.getUser();
+    console.log("survey id", survey_id);
+    currentUser.getToken()
+      .then(function(idToken) {
+        $http({
+          method: 'PUT',
+          url: '/surveys/update/' + survey_id,
+          data: self.companyInfo,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          console.log("Updated: ", response.data);
+          self.showInput = !self.showInput;
+        },
+        function(err) {
+          console.log("error updating survey details: ", err);
+        });
+      });
   }
 
   //Trashcan icon to clear current input row

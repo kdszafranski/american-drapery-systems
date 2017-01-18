@@ -2,11 +2,12 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.loading = false;
-  self.showInput = false
+  self.showInput = true;
   self.newAreaName = '';
   console.log(survey_id);
   self.inputAreaName = false;
 
+  getSurveyDetails();
 
   //function to send area to measurent controller
   self.setArea = function(index) {
@@ -72,7 +73,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
 
   //Edit client profile button
   self.editClient = function(){
-    console.log("clicked");
+    console.log("edit clicked");
     self.showInput = !self.showInput;
   }
   //save edits to client profile button
@@ -100,7 +101,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
       });
     });
   }
-  //function to handle clicking of an already existing area
 
   //function to update survey data
   function updateSurvey(){
@@ -118,7 +118,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
         }).then(function(response){
           console.log("Updated: ", response.data);
           self.showInput = !self.showInput;
-          console.log('current profile all, [0]', self.companyInfo, self.companyInfo[0]);
         },
         function(err) {
           console.log("error updating survey details: ", err);
@@ -180,9 +179,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     self.surveyDate = new Date(self.companyInfo.survey_date);
     self.loading = true;
   }
-
-
-  getSurveyDetails();
 }]);
 
 //Function to group measurements by area
