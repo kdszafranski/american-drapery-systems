@@ -2,7 +2,12 @@ app.factory("InfoFactory", function($interval)
 {
   var companyInfo={};
   return {
-    companyInfo: companyInfo
+    getCompanyInfo: function() {
+      return companyInfo;
+    },
+    setCompanyInfo: function(infoObj) {
+      companyInfo=infoObj;
+    }
 
   }
 });

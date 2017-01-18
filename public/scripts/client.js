@@ -59,16 +59,15 @@ app.filter('startFrom', function() {
 });
 
 app.filter('excludeByStatus', function () {
-    return function (items, excludedList) {
-        var ret = [];
-        angular.forEach(items, function (item) {
-            if (excludedList.indexOf(item.status) === -1) {
-                ret.push(item);
-            }
-        });
-        // or you could use Array.prototype.filter() in browsers that support it
-        return ret;
-    };
+  return function (items, excludedList) {
+    var ret = [];
+    angular.forEach(items, function (item) {
+      if (excludedList.indexOf(item.status) === -1) {
+          ret.push(item);
+      }
+    });
+    return ret;
+  };
 })
 
 //Utilities
@@ -76,6 +75,8 @@ function formatDates(aryOfObjs){
   //convert the ISO Dates to readable format
   //expects array of objects
   for (var i = 0; i < aryOfObjs.length; i++) {
+    console.log('date', aryOfObjs[i].survey_date);
+    
     if(moment(aryOfObjs[i].last_modified).isValid()) {
       aryOfObjs[i].last_modified = moment(aryOfObjs[i].last_modified).format("YYYY/MM/DD");
     }

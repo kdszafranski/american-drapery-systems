@@ -4,7 +4,9 @@ app.factory("IdFactory", function($interval)
     survey: 0,
     area: 0,
     measurement: 0,
-    client: 0
+    client: 0,
+    newArea: false,
+    newSurvey: false
   };
   return {
     id: id,
@@ -29,6 +31,22 @@ app.factory("IdFactory", function($interval)
     },
     getAreaId: function() {
       return id.area;
+    },
+    setNewSurvey: function(name) {
+      id.newSurvey = name;
+    },
+    setNewArea: function(name) {
+      id.newArea = name;
+    },
+    getNewArea: function() {
+      var tmp = id.newArea;
+      id.newArea = false;
+      return tmp;
+    },
+    getNewSurvey: function() {
+      var tmp = id.newMeasurement;
+      id.newMeasurement = false;
+      return tmp;
     }
   }
 });
