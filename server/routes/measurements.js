@@ -64,7 +64,7 @@ router.get('/:area_id', function(req, res) {
       [area_id])
       .then(function(results) {
         client.release();
-        console.log("Received these results from the measurements table: ", results);
+        console.log("Received esults from the measurements table:");
         res.send(results.rows);
       })
       .catch(function(err) {

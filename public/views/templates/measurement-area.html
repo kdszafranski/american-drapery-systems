@@ -105,8 +105,10 @@
           <md-icon md-svg-icon="../../img/add.svg"></md-icon>
         </md-button>
         <div class="area-input" ng-show="ma.inputAreaName">
-          <md-input-container><label>Area Name</label><input type="text" ng-model="ma.newAreaName" required></md-input-container>
-          <md-button class="md-raised md-primary md-ink-ripple" type="button" ng-click="ma.addNewArea()" id="addAreaButton">Add Area</md-button>
+          <md-input-container><label>Area Name</label>
+            <input ng-enter="ma.addNewArea()" type="text" ng-model="ma.newAreaName" required>
+          </md-input-container>
+          <md-button class="md-raised md-primary md-ink-ripple" type="button"  ng-click="ma.addNewArea()" id="addAreaButton">Add Area</md-button>
         </div>
       </div>
 
