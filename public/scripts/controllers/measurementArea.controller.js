@@ -1,6 +1,7 @@
 app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', "$mdDialog", 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, $mdDialog, UserFactory, InfoFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
+  var noSurveyAreas = false;
   self.loading = false;
   self.showInput = true;
   self.newAreaName = '';
@@ -170,6 +171,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
           self.surveyDetails = response.data;
           //Check to see if it is a new survey. Length will be zero if it is a new survey
           if (self.surveyDetails.length === 0) {
+            noSurveyAreas = true;
             currentUser.getToken()
               .then(function(idToken) {
                 $http({
@@ -199,11 +201,16 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
 
   function surveyOps() {
     self.companyInfo = self.surveyDetails[0];
-    self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
-    self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
-    for (var i = 0; i < self.areaArray.length; i++) {
-      self.toRemove[i] = false;
+    if (noSurveyAreas = false) {
+      self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
+      self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
+      for (var i = 0; i < self.areaArray.length; i++) {
+        self.toRemove[i] = false;
+      }
+    } else {
+      noSurveyAreas = false;
     }
+
     self.completionDate = new Date(self.companyInfo.completion_date);
     self.surveyDate = new Date(self.companyInfo.survey_date);
     self.editAreas = false;
@@ -211,7 +218,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     console.log("Response From Server: ", self.surveyDetails);
     console.log("Area Array: ", self.areaArray);
     console.log("Area ID: ", self.areaArrayId);
-
   }
 }]);
 
