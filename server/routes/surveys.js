@@ -48,7 +48,7 @@ router.get('/one/:survey_id', function(req, res) {
           res.sendStatus(500);
         });
     });
-});
+}); 
 
 router.get('/preview/one/:survey_id', function(req, res) {
   console.log('reached get one survey route')

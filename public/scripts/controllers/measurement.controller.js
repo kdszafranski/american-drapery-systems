@@ -63,7 +63,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
       .then(function(idToken) {
         $http({
           method: 'GET',
-          url: '/surveys/one/' + surveyId,
+          url: '/areas/' + self.areaId,
           headers: {
             id_token: idToken
           }
@@ -73,6 +73,8 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           self.completionDate = new Date(self.companyInfo.completion_date);
           self.surveyDate = new Date(self.companyInfo.survey_date);
           self.loading = true;
+          self.areaNotes = self.companyInfo.notes;
+          console.log('info', self.companyInfo);
         },
         function(err) {
           console.log("error getting survey details: ", err);
@@ -164,14 +166,13 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
 
     function updateNotes(){
       // var currentUser = UserFactory.getUser();
-      var area_id = self.measurements[0].area_id
-      console.log("Notes", area_id);
+      console.log("Notes");
       currentUser.getToken()
         .then(function(idToken) {
           $http({
             method: 'PUT',
-            url: '/areas/notes/' + area_id,
-            data: self.measurements[0],
+            url: '/areas/notes/' + self.areaId,
+            data: {note: self.areaNotes},
             headers: {
               id_token: idToken
             }
@@ -252,9 +253,9 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   }
 
   self.backToArea = function() {
+    updateNotes();
     $location.path('/area/' + surveyId);
     console.log("self.measurements", self.measurements);
-    updateNotes();
   }
 
   self.goToTopOfPage = function(){
