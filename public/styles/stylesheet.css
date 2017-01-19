@@ -213,7 +213,7 @@ table {
 }
 
 .content {
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - 73px);
 }
 
 footer {
@@ -223,7 +223,7 @@ footer {
 }
 
 .footer-info {
-  padding-top: 13px;
+  padding-top: 19px;
   width: 100%;
   justify-content: center;
   align-items: center;
