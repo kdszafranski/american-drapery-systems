@@ -2,6 +2,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   const self = this;
   var currentUser = {};
   var surveyList = [];
+  self.statusOptions = ['Pending', 'Dispatched', 'Completed', 'Declined'];
   self.currentPage = 0;
   self.pageSize = 20;
   self.filtered = [];
@@ -93,5 +94,34 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     return total;
   }
   console.log(self.totalPages(0), self.totalPages(1), self.totalPages(19), self.totalPages(20), self.totalPages(21));
+
+  self.changeStatus = function(survey_id) {
+    console.log("Select Changed - Survey Id is: ", survey_id);
+
+    //Find the index of the survey that has been changed to capture the status change
+    var indexOfSurvey = self.filtered.findIndex(item => item.id === survey_id);
+    console.log("Index of changed survey: ", self.filtered[indexOfSurvey].status);
+    self.statusUpdate = {
+      status: self.filtered[indexOfSurvey].status,
+      last_modified: new Date()
+    }
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+      $http({
+        method: 'PUT',
+        url: '/surveys/status/'+ survey_id,
+        data: self.statusUpdate,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log("Response from new area post: ", response);
+      },
+      function(err) {
+        console.log("error getting survey details: ", err);
+      });
+    });
+  }
 
 }]);
