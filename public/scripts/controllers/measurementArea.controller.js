@@ -95,7 +95,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     self.newArea = {
       area_name: self.newAreaName,
       survey_id: surveyId,
-      notes: "(NONE)"
+      notes: ""
     }
     console.log("New Area Object: ", self.newArea);
     // currentUser = UserFactory.getUser();

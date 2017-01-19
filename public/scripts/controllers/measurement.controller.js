@@ -6,22 +6,12 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   self.measurement = {};
   self.measurements =[];
   self.measurement.edit = true;
-  // self.areaId = IdFactory.getAreaId();
   self.areaId = $route.current.params.areaId;
-  // self.areaName = $route.current.params.areaName;
   self.area_name = $route.current.params.areaName;
   self.loading = false;
   self.showInput = true;
   self.currentProfile = {};
   var currentUser;
-
-  // if(self.areaName == 0) {
-  //   //use client info passed along from area controller if this is a new area
-  //   console.log('newstatus');
-  //   self.companyInfo = formatDates([InfoFactory.getCompanyInfo()])[0];
-  //   self.area_name = IdFactory.getNewArea();
-  //   self.loading = true;
-  // }
 
   function getMeasurements(firebaseUser) {
     console.log("CurrentUser in getmeasure: ", currentUser);
@@ -55,10 +45,10 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     currentUser = firebaseUser;
     getMeasurements(firebaseUser);
-    getSurveyDetails(firebaseUser);
+    getAreaInfo(firebaseUser);
   })
 
-  function getSurveyDetails(firebaseUser) {
+  function getAreaInfo(firebaseUser) {
     currentUser = firebaseUser;
     currentUser.getToken()
       .then(function(idToken) {
@@ -73,9 +63,9 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           self.companyInfo = response.data[0];
           self.completionDate = new Date(self.companyInfo.completion_date);
           self.surveyDate = new Date(self.companyInfo.survey_date);
-          self.loading = true;
           self.areaNotes = self.companyInfo.notes;
-          console.log('info', self.companyInfo);
+          self.loading = true;
+
         },
         function(err) {
           console.log("error getting survey details: ", err);
