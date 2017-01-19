@@ -96,12 +96,6 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     console.log("mesurement array", self.measurements);
   }
 
-  //Edit client profile button
-  self.editClient = function(){
-    console.log("clicked");
-    self.showInput = !self.showInput;
-  }
-
   //save edits to client profile button
   self.updateClient = function(){
     console.log("profile to be updated", self.companyInfo);
