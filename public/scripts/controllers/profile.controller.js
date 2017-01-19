@@ -34,7 +34,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
 
   //GET client_name and id for Dropdown
   function getClients() {
-    currentUser = UserFactory.getUser();
+    // currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
@@ -50,11 +50,11 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
     });
   }
 
-  getClients();
+  // getClients();
 
   //GET client information from client selected from dropdown
   function getClient() {
-    currentUser = UserFactory.getUser();
+    // currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
@@ -77,7 +77,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
 
   //POST client information to database
   function postClients() {
-    currentUser = UserFactory.getUser();
+    // currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
@@ -104,7 +104,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
 
   //Update client information in database
   function updateClient() {
-    currentUser = UserFactory.getUser();
+    // currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
@@ -135,9 +135,11 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
       self.showCompany = false;
       self.showUpdateButton = true;
       self.showSubmitButton = false;
+      console.log("This if statement works");
     } else {
       self.showUpdateButton = false;
       self.showSubmitButton = true;
+      console.log("SELECTED ID: ", self.selected.id);
       getClient();
     }
   }
@@ -145,7 +147,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
 
   function addNewSurvey(survey) {
     console.log("Running addNewSurvey");
-    currentUser = UserFactory.getUser();
+    // currentUser = UserFactory.getUser();
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
@@ -156,10 +158,16 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
         }
       }).then(function(response){
         //setting the survey # in factory to the new survey id
-        IdFactory.setSurvey(response.data[0].id);
-        $location.path('/area');
+        var newSurveyId = response.data[0].id;
+        IdFactory.setSurvey(newSurveyId);
+        $location.path('/area/' + newSurveyId);
         console.log('success in adding new survey');
       });
     });
   }
+
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    currentUser = firebaseUser;
+    getClients();
+  })
 }]);

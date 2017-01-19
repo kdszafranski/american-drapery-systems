@@ -1,23 +1,35 @@
 
-app.controller('NavController', ["UserFactory", "$location", "$rootScope",
-function(UserFactory, $location, $rootScope) {
+app.controller('NavController', ["UserFactory", "$location", "$scope",
+function(UserFactory, $location, $scope) {
   console.log("Nav controller is running!");
   const self = this;
-  self.isUser = UserFactory.isUser;
+  self.isUser = false;
   self.currentUser = {};
 
     UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
       // firebaseUser will be null if not logged in
       self.currentUser = firebaseUser;
-      console.log("onAuthStateChanged Nav", self.currentUser);
+      console.log("\n\n\n onAuth ran in nav controller \n\n\n");
+
       if (self.currentUser) {
-        self.isUser = true;
-        $location.path('/dashboard');
+        //check if user is authorized in DB
+        UserFactory.userChecker()
+          .then(function(response) {
+            console.log("\n\nNavController response: ", response + '\n\n');
+            //if authorized, self.isUser is true
+            self.isUser = true;
+          })
+          .catch(function(err) {
+            console.log("\n\nNavController error: ", err + '\n\n');
+            //if not authorized, log out (also changes route to /login)
+            self.isUser = false;
+            self.logOut()
+          });
       } else {
-        $location.path('/login')
-      }
-      if (self.currentUser.displayName == null) {
-        self.currentUser.displayName = "need to log in";
+        //user not authenticated with firebase
+        self.isUser = false;
+        self.currentUser.displayName = "";
+        $location.path('/login');
       }
     });
 
@@ -35,10 +47,10 @@ function(UserFactory, $location, $rootScope) {
     $location.path('/admin');
   }
 
-  $rootScope.$on('$routeChangeSuccess', function (next, last) {
-    console.log("Nav controller detected a change in Angular route");
-    getUser();
-  });
+  // $rootScope.$on('$routeChangeSuccess', function (next, last) {
+  //   console.log("Nav controller detected a change in Angular route");
+  //   getUser();
+  // });
 
   function getUser() {
     self.currentUser = UserFactory.getUser();
