@@ -9,8 +9,8 @@ app.controller('LoginController', ['UserFactory', '$location', function(UserFact
     .then(function() {
       $location.path('/dashboard');
     })
-    .catch(function() {
-      console.log("Could not log in!");
+    .catch(function(err) {
+      console.log("Could not log in!", err);
       UserFactory.logOut()
     })
   };

@@ -13,6 +13,9 @@ md-input-container{
   margin: 1px;
   height: 25.8990px;
 }
+#notesDiv{
+  padding: 3px;
+}
 #profileCheckbox{
   margin: 2px;
   margin-left: 3px;
@@ -35,6 +38,9 @@ md-input-container{
   background-color: white;
   border-color: white;
 }
+#mdInput{
+  padding: 1px;
+}
 
 #headerRow th {
   padding: 5px;
@@ -55,6 +61,7 @@ md-input-container{
 #tableBodyRow md-input-container, input{
   padding: 0;
   margin: 0;
+
 }
 .headerRow th {
   padding: 5px;
@@ -63,6 +70,9 @@ md-input-container{
   background-color: rgb(63,81,181);
   color: rgba(255,255,255,0.87);
   padding-top: 5px;
+}
+.inputTd{
+  background-color: rgb(245, 231, 164);
 }
 .tableBodyRow td{
   border: 1px solid;
@@ -89,6 +99,18 @@ tr:nth-child(even) {
 }
 .survey-header li {
   list-style-type: none;
+}
+
+.area-survey-header li {
+  list-style-type: none;
+}
+.area-survey-header ul {
+  padding:3px;
+  margin: 0;
+}
+.area-survey-header h1 {
+  padding:3px;
+  margin: 0;
 }
 
 table {
@@ -135,6 +157,9 @@ table {
   /*background-color: rgb(16,108,200);
   color: rgba(255,255,255,0.87);
   border-radius: 3px;*/
+}
+.for-delete {
+  background-color: rgb(233, 47, 47);
 }
 
 .add-new-area {
@@ -186,4 +211,7 @@ table {
 }
 #dashCard {
   min-width: 750px;
+}
+.md-select-placeholder {
+  color: rgba(0,0,0,0.87) !important;
 }

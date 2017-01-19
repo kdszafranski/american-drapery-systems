@@ -2,39 +2,30 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$md
   const self = this;
   var currentUser = {};
   var surveyList = [];
+  self.statusOptions = ['Pending', 'Dispatched', 'Completed', 'Declined'];
   self.currentPage = 0;
   self.pageSize = 20;
   self.filtered = [];
   self.loading = false;
-  self.sortType     = 'last_modified'; // set the default sort type
-  self.sortReverse  = false;  // set the default sort order
-  self.pageCheck = function(numResults) {
-    var total = self.totalPages(numResults);
-    console.log('total', total);
-    console.log('old currentpage', self.currentPage);
+  self.sortType     = 'id'; // set the default sort type
+  self.sortReverse  = true;  // set the default sort order
 
-    if (self.currentPage >= total || ((self.currentPage == -1) && total)) {
-      self.currentPage = total -1 ;
-    }
-    console.log('new currentpage', self.currentPage);
-    $scope.$apply;
-    console.log('scope currentpage', self.currentPage);
-
-  }
 
   self.show = {
-    completed: false,
-    declined: false,
+    completed: true,
+    declined: true,
+    dispatched: true,
+    pending: true,
     text: function () {
       var ret = [];
       var compBool = (!this.completed && "Completed");
+      var dispBool = (!this.dispatched && "Dispatched");
+      var pendBool = (!this.pending && "Pending");
       var decBool = (!this.declined && "Declined");
-      if (compBool) {
-        ret.push(compBool);
-      }
-      if (decBool) {
-        ret.push(decBool);
-      }
+      if (compBool) { ret.push(compBool) }
+      if (decBool) { ret.push(decBool) }
+      if (dispBool) { ret.push(dispBool) }
+      if (pendBool) { ret.push(pendBool) }
       return ret;
     }
   }
@@ -95,7 +86,6 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$md
     });
   }
 
-
   self.newJob = function() {
     $location.path('/profile');
   }
@@ -108,12 +98,54 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$md
     $location.path('/area');
   }
 
+  self.pageCheck = function(numResults) {
+    var total = self.totalPages(numResults);
+    console.log('total', total);
+    console.log('old currentpage', self.currentPage);
+
+    if (self.currentPage >= total || ((self.currentPage == -1) && total)) {
+      self.currentPage = total -1 ;
+    }
+    console.log('new currentpage', self.currentPage);
+    $scope.$apply;
+    console.log('scope currentpage', self.currentPage);
+  }
+
   self.totalPages = function (num) {
     var total = 0;
     if (num) {
       total = parseInt(((num - 1) / self.pageSize) + 1);
     }
     return total;
+  }
+
+  self.changeStatus = function(survey_id) {
+    console.log("Select Changed - Survey Id is: ", survey_id);
+
+    //Find the index of the survey that has been changed to capture the status change
+    var indexOfSurvey = self.filtered.findIndex(item => item.id === survey_id);
+    console.log("Index of changed survey: ", self.filtered[indexOfSurvey].status);
+    self.statusUpdate = {
+      status: self.filtered[indexOfSurvey].status,
+      last_modified: new Date()
+    }
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+      $http({
+        method: 'PUT',
+        url: '/surveys/status/'+ survey_id,
+        data: self.statusUpdate,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log("Response from new area post: ", response);
+      },
+      function(err) {
+        console.log("error getting survey details: ", err);
+      });
+    });
   }
 
 }]);
