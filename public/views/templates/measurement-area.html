@@ -98,10 +98,12 @@
     <section class="areas">
   <!-- ng-repeat divs for every area we have added plus one div for add new area-->
       <div class="add-new-area" ng-hide="ma.editAreas">
-        <p ng-hide="ma.inputAreaName" ng-click="ma.inputAreaName = true" id="plus">+</p>
+        <md-button ng-hide="ma.inputAreaName" ng-click="ma.inputAreaName = true" class="md-icon-button" aria-label="add-new-area">
+          <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+        </md-button>
         <div class="area-input" ng-show="ma.inputAreaName">
           <input type="text" ng-model="ma.newAreaName"><br>
-          <button type="button" ng-click="ma.addNewArea()">Submit</button>
+          <md-button class="md-raised md-primary md-ink-ripple" type="button" ng-click="ma.addNewArea()" id="addAreaButton">Add Area</md-button>
         </div>
       </div>
 
