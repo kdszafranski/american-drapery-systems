@@ -9,18 +9,19 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   // self.areaId = IdFactory.getAreaId();
   self.areaId = $route.current.params.areaId;
   // self.areaName = $route.current.params.areaName;
+  self.area_name = $route.current.params.areaName;
   self.loading = false;
   self.showInput = true;
   self.currentProfile = {};
   var currentUser;
 
-  if(self.areaName == 0) {
-    //use client info passed along from area controller if this is a new area
-    console.log('newstatus');
-    self.companyInfo = formatDates([InfoFactory.getCompanyInfo()])[0];
-    self.area_name = IdFactory.getNewArea();
-    self.loading = true;
-  }
+  // if(self.areaName == 0) {
+  //   //use client info passed along from area controller if this is a new area
+  //   console.log('newstatus');
+  //   self.companyInfo = formatDates([InfoFactory.getCompanyInfo()])[0];
+  //   self.area_name = IdFactory.getNewArea();
+  //   self.loading = true;
+  // }
 
   function getMeasurements(firebaseUser) {
     console.log("CurrentUser in getmeasure: ", currentUser);
@@ -41,7 +42,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           }
           self.loading = true;
           console.log(self.measurements);
-          self.area_name = self.measurements[0].area_name;
+          // self.area_name = self.measurements[0].area_name;
           console.log('AREA NAME', self.area_name);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);

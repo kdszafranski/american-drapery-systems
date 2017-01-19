@@ -12,7 +12,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'DashboardController',
     controllerAs: 'dash'
   })
-  .when('/measurement/:surveyId/:areaId', {
+  .when('/measurement/:surveyId/:areaId/:areaName', {
     templateUrl: '/views/templates/measurement.html',
     controller: 'MeasurementController',
     controllerAs: 'measure'
