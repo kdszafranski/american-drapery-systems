@@ -201,10 +201,8 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     console.log("surveyOps Running");
     self.companyInfo = self.surveyDetails[0];
     self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
-    self.areaArrayId = [...new Set(self.surveyDetails.map(survey => {
-      survey.area_id;
-      console.log("survey in map fxn: ", survey);
-    }))];
+    self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.id))];
+
     for (var i = 0; i < self.areaArray.length; i++) {
       self.toRemove[i] = false;
     }
