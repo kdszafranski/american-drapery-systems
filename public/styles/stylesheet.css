@@ -158,6 +158,9 @@ table {
   color: rgba(255,255,255,0.87);
   border-radius: 3px;*/
 }
+.for-delete {
+  background-color: rgb(233, 47, 47);
+}
 
 .add-new-area {
   display: flex;
@@ -208,4 +211,7 @@ table {
 }
 #dashCard {
   min-width: 750px;
+}
+.md-select-placeholder {
+  color: rgba(0,0,0,0.87) !important;
 }
