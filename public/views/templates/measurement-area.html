@@ -102,13 +102,13 @@
           <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
         </md-button>
         <div class="area-input" ng-show="ma.inputAreaName">
-          <input type="text" ng-model="ma.newAreaName"><br>
+          <md-input-container><label>Area Name</label><input type="text" ng-model="ma.newAreaName"></md-input-container>
           <md-button class="md-raised md-primary md-ink-ripple" type="button" ng-click="ma.addNewArea()" id="addAreaButton">Add Area</md-button>
         </div>
       </div>
 
       <md-button  ng-repeat="area in ma.areaArray track by $index" ng-class="{'for-delete': ma.toRemove[$index] === true}" class="measurement-areas" ng-click="ma.areaClick($index)">
-        <p>{{area}} {{ma.areaArrayId[$index]}}</p><br>
+        <p>{{area}}</p><br>
       </md-button>
 
     </section>

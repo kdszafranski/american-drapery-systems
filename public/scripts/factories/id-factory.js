@@ -5,6 +5,7 @@ app.factory("IdFactory", function($interval)
     area: 0,
     measurement: 0,
     client: 0,
+    newAreaName: '',
     newArea: false,
     newSurvey: false
   };
@@ -35,13 +36,13 @@ app.factory("IdFactory", function($interval)
     setNewSurvey: function(name) {
       id.newSurvey = name;
     },
-    setNewArea: function(name) {
-      id.newArea = name;
+    setNewAreaName: function(name) {
+      id.newAreaName = name;
+      id.newArea = true;
     },
     getNewArea: function() {
-      var tmp = id.newArea;
       id.newArea = false;
-      return tmp;
+      return id.newAreaName;
     },
     getNewSurvey: function() {
       var tmp = id.newMeasurement;
