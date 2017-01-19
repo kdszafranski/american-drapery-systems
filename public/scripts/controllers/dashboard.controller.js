@@ -1,4 +1,5 @@
-app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$mdDialog", '$location', '$scope', function(UserFactory, IdFactory, $http, $mdDialog, $location, $scope) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', '$mdToast', "$mdDialog", function(UserFactory, IdFactory, $http, $location, $scope, $mdToast, $mdDialog) {
+
   const self = this;
   var currentUser = {};
   var surveyList = [];
@@ -35,8 +36,9 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$md
     getSurveys();
     console.log("onAuthStateChanged", currentUser);
   });
+
   function getSurveys() {
-    currentUser = UserFactory.getUser();
+    // currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
@@ -91,11 +93,12 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$md
   }
   self.survey = function(surveyId) {
     IdFactory.setSurvey(surveyId);
-    $location.path('/survey');
+    console.log("\n\nsurveyId in dash.survey: ", surveyId);
+    $location.path('/survey/' + surveyId);
   }
   self.area = function(surveyId) {
     IdFactory.setSurvey(surveyId)
-    $location.path('/area');
+    $location.path('/area/' + surveyId);
   }
 
   self.pageCheck = function(numResults) {
@@ -141,6 +144,15 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$md
         }
       }).then(function(response){
         console.log("Response from new area post: ", response);
+        console.log("survey_id", survey_id);
+
+        $mdToast.show(
+          $mdToast.simple()
+          .textContent('Updated')
+          .position('top left' )
+          .hideDelay(2000)
+          .parent('#row'+ survey_id)
+        );
       },
       function(err) {
         console.log("error getting survey details: ", err);
