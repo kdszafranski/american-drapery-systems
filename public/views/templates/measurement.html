@@ -111,17 +111,17 @@
 
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.editRowButton($index)" class="md-icon-button" aria-label="edit">
-                  <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="../../img/edit.svg"></md-icon>
                 </md-button>
               </td>
               <td ng-hide="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.updateRowButton($index)" class="md-icon-button" aria-label="edit">
-                  <md-icon md-svg-icon="../../img/ic_check_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="../../img/check.svg"></md-icon>
                 </md-button>
               </td>
               <td id="removeIconPadding">
                 <md-button ng-click="measure.showConfirm($event, $index)" class="md-icon-button" aria-label="delete">
-                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="../../img/delete.svg"></md-icon>
                 </md-button>
               </td>
             </tr>
@@ -155,19 +155,19 @@
               <td><md-input-container><input ng-model="measure.measurement.mount" size="6" ng-model="measure.mount" aria-label="mount"></md-input-container></td>
               <td>
                 <md-button class="md-icon-button" aria-label="edit">
-                  <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="../../img/edit.svg"></md-icon>
                 </md-button>
               </td>
               <td>
                 <md-button ng-click="measure.activeRowClear()" class="md-icon-button md-primary" aria-label="delete">
-                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="../../img/delete.svg"></md-icon>
                 </md-button>
               </td>
             </tr>
         </tbody>
       </table>
         <md-button ng-show="measure.loading" ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
-          <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+          <md-icon md-svg-icon="../../img/add.svg"></md-icon>
         </md-button>
         <md-button ng-click="measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
           <span>Save and Go Back to Areas</span>

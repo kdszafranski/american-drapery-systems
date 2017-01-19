@@ -72,6 +72,26 @@ router.get('/new/:survey_id', function(req, res) {
     });
 });
 
+router.delete('/:survey_id', function(req, res) {
+  console.log('reached delete one survey route')
+  console.log('deleting survey', req.params.survey_id);
+  var survey_id = req.params.survey_id;
+  pool.connect()
+    .then(function(client) {
+      client.query('DELETE FROM survey ' +
+      'WHERE id = $1', [survey_id])
+        .then(function(result) {
+          console.log('delete success');
+          client.release();
+          res.sendStatus(204);
+        })
+        .catch(function(err) {
+          console.log('select query error: ', err);
+          res.sendStatus(500);
+        });
+    });
+});
+
 router.post('/', function(req, res) {
   var newSurvey = req.body;
   console.log("Reached add new survey route: ", newSurvey);
