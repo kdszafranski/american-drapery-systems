@@ -128,11 +128,11 @@
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tableBody">
 
-            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" id="row{{measure.measurements[$index].id}}">
+            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" >
 
-              <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
+              <td ng-show="measure.measurements[$index].edit" id="row{{measure.measurements[$index].id}}">{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.room}}</td>

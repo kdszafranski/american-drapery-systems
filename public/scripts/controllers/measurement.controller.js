@@ -228,7 +228,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
       $mdToast.simple()
       .textContent('Deleted')
       .position('left' )
-      .hideDelay(4000)
+      .hideDelay(2000)
       .parent('#row'+ self.measurements[index].id)
     );
     console.log('#row'+ self.measurements[index].id);
