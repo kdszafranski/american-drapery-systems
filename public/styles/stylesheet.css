@@ -13,6 +13,9 @@ md-input-container{
   margin: 1px;
   height: 25.8990px;
 }
+#notesDiv{
+  padding: 3px;
+}
 #profileCheckbox{
   margin: 2px;
   margin-left: 3px;
@@ -58,6 +61,7 @@ md-input-container{
 #tableBodyRow md-input-container, input{
   padding: 0;
   margin: 0;
+
 }
 .headerRow th {
   padding: 5px;
@@ -66,6 +70,9 @@ md-input-container{
   background-color: rgb(63,81,181);
   color: rgba(255,255,255,0.87);
   padding-top: 5px;
+}
+.inputTd{
+  background-color: rgb(245, 231, 164);
 }
 .tableBodyRow td{
   border: 1px solid;
@@ -204,4 +211,7 @@ table {
 }
 #dashCard {
   min-width: 750px;
+}
+.md-select-placeholder {
+  color: rgba(0,0,0,0.87) !important;
 }

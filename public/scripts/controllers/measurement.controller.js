@@ -1,4 +1,4 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location',   function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location', '$anchorScroll',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location, $anchorScroll) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.measurement = {};
@@ -141,7 +141,29 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           console.log("error updating survey details: ", err);
         });
       });
-  }
+    }
+
+    function updateNotes(){
+      var currentUser = UserFactory.getUser();
+      var area_id = self.measurements[0].area_id
+      console.log("Notes", area_id);
+      currentUser.getToken()
+        .then(function(idToken) {
+          $http({
+            method: 'PUT',
+            url: '/areas/notes/' + area_id,
+            data: self.measurements[0],
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response){
+            console.log("Updated: ", response.data);
+          },
+          function(err) {
+            console.log("error updating survey details: ", err);
+          });
+        });
+      }
 
   //Trashcan icon to clear current input row
   self.activeRowClear = function(){
@@ -216,6 +238,13 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
 
   self.backToArea = function() {
     $location.path('/area');
+    console.log("self.measurements", self.measurements);
+    updateNotes();
+  }
+  self.goToTopOfPage = function(){
+    console.log("clicked");
+    $location.hash('measurementTitle');
+    $anchorScroll();
   }
 
 }]);
