@@ -8,6 +8,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   self.companyInfo = {};
   var currentUser;
   var areaId;
+  var selectedAreaName;
 
   self.newAreaName = '';
   self.editAreas = false;
@@ -23,8 +24,9 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     console.log("self.areaArrayId: ", self.areaArrayId);
     console.log("setArea() areaId: ", areaId);
     IdFactory.setArea(areaId);
+    selectedAreaName = self.areaArray[index];
 
-    $location.path('/measurement/' + surveyId + '/' + areaId);
+    $location.path('/measurement/' + surveyId + '/' + areaId + '/' + selectedAreaName);
   }
 
 
@@ -113,7 +115,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
           areaId = response.data[0].id;
           IdFactory.setArea(areaId);
           //We do need to do this now.
-          $location.path('/measurement/' + surveyId + '/' + areaId);
+          $location.path('/measurement/' + surveyId + '/' + areaId + '/' + self.newAreaName);
         },
         function(err) {
           console.log("error getting survey details: ", err);

@@ -10,6 +10,7 @@ router.post('/:area_id', function(req,res) {
   console.log("Req.body in measirement Post: ", req.body);
   var newMeasurement = req.body;
   var area_id = req.params.area_id;
+  console.log("\n\nAREA ID: ", area_id);
   console.log(area_id);
   pool.connect()
     .then(function(client) {
