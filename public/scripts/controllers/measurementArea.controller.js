@@ -204,6 +204,7 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     }
     self.completionDate = new Date(self.companyInfo.completion_date);
     self.surveyDate = new Date(self.companyInfo.survey_date);
+    self.editAreas = false;
     self.loading = true;
     console.log("Response From Server: ", self.surveyDetails);
     console.log("Area Array: ", self.areaArray);
