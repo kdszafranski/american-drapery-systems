@@ -98,7 +98,7 @@
       </md-card-content>
     </md-card flex>
   </div>
-  <div layout="row" layout-align="center center" layout-wrap>
+  <div  layout="row" layout-align="center center" layout-wrap>
     <md-card>
       <md-card-title id="measurementTitle">
         <div layout="column">
@@ -130,7 +130,7 @@
           </thead>
           <tbody>
 
-            <tr ng-repeat="dimension in measure.measurements track by $index" id="tableBodyRow">
+            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" id="row{{measure.measurements[$index].id}}">
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
@@ -238,7 +238,7 @@
             <input flex ng-model="measure.measurements[0].notes" >
           </md-input-container>
         </div>
-        <div>
+        <div id="saveAndGoBackButton">
           <md-button ng-click="measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
             <span>Save and Go Back to Areas</span>
           </md-button>

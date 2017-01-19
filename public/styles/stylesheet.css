@@ -63,6 +63,9 @@ md-input-container{
   margin: 0;
 
 }
+#saveAndGoBackButton button{
+  margin-left: 0;
+}
 .headerRow th {
   padding: 5px;
 }

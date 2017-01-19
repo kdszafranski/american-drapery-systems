@@ -85,13 +85,13 @@
 <md-card ng-show="ma.loading">
   <md-card-content>
     <div layout="row">
-      <md-button ng-hide="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-primary" aria-label="Select Areas to Delete">
+      <md-button ng-hide="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-raised md-primary" aria-label="Select Areas to Delete">
         Select Areas to Delete
       </md-button>
-      <md-button ng-show="ma.editAreas" ng-click="ma.showConfirm($event)" class="md-primary" aria-label="delete selected areas">
+      <md-button ng-show="ma.editAreas" ng-click="ma.showConfirm($event)" class="md-warn md-raised md-hue-2" aria-label="delete selected areas">
         Delete Selected Areas
       </md-button>
-      <md-button ng-show="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-primary" aria-label="cancel">
+      <md-button ng-show="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-raised md-primary" aria-label="cancel">
         Cancel
       </md-button>
     </div>

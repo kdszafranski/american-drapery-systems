@@ -1,4 +1,4 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location', '$mdToast',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location, $mdToast) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.measurement = {};
@@ -74,6 +74,13 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
     console.log("survey ID: ", self.areaId);
+    $mdToast.show(
+      $mdToast.simple()
+      .textContent('Saved')
+      .position('bottom right' )
+      .hideDelay(800)
+      .parent('#saveAndGoBackButton')
+    );
     var currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
@@ -86,6 +93,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
+
           getMeasurements();
 
         }).catch(function(err) {
@@ -216,6 +224,14 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
   };
   //Deleting measurement after confirmation
   self.deleteRowButton = function(index){
+    $mdToast.show(
+      $mdToast.simple()
+      .textContent('Deleted')
+      .position('left' )
+      .hideDelay(4000)
+      .parent('#row'+ self.measurements[index].id)
+    );
+    console.log('#row'+ self.measurements[index].id);
     console.log("remove row number: ", self.measurements[index].id);
     var idToDelete = self.measurements[index].id;
     var currentUser = UserFactory.getUser();
