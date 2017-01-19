@@ -1,4 +1,5 @@
-app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$mdDialog", '$location', '$scope', function(UserFactory, IdFactory, $http, $mdDialog, $location, $scope) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', '$mdToast', "$mdDialog", function(UserFactory, IdFactory, $http, $location, $scope, $mdToast, $mdDialog) {
+
   const self = this;
   var currentUser = {};
   var surveyList = [];
@@ -141,6 +142,15 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$md
         }
       }).then(function(response){
         console.log("Response from new area post: ", response);
+        console.log("survey_id", survey_id);
+
+        $mdToast.show(
+          $mdToast.simple()
+          .textContent('Updated')
+          .position('top left' )
+          .hideDelay(2000)
+          .parent('#row'+ survey_id)
+        );
       },
       function(err) {
         console.log("error getting survey details: ", err);

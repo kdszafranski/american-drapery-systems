@@ -101,7 +101,7 @@
       </md-card-content>
     </md-card flex>
   </div>
-  <div layout="row" layout-align="center center" layout-wrap>
+  <div  layout="row" layout-align="center center" layout-wrap>
     <md-card>
       <md-card-title id="measurementTitle">
         <div layout="column">
@@ -131,12 +131,12 @@
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tableBody">
 
-            <tr ng-repeat="dimension in measure.measurements track by $index" id="tableBodyRow">
+            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" >
 
-              <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
-              <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
+              <td ng-show="measure.measurements[$index].edit" id="row{{measure.measurements[$index].id}}">{{dimension.floor}}</td>
+              <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
 
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.room}}</td>
@@ -252,6 +252,7 @@
             <textarea value="measure.measurements[0].notes" ng-model="measure.measurements[0].notes" ></textarea>
           </md-input-container>
         </div>
+
       </form>
 
       <div id="backToAreaButtonContainer">
