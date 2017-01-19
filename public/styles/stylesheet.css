@@ -20,6 +20,8 @@ md-input-container{
 }
 #notesDiv{
   padding: 3px;
+  display: flex;
+  align-items: center;
 }
 #profileCheckbox{
   margin: 2px;
@@ -258,3 +260,17 @@ footer {
 /*md-card:last-child {
   margin-bottom: 30px;
 }*/
+
+#notesHeader {
+  align-self: flex-start;
+}
+
+#areaNotes {
+  margin-top: 20px;
+  height: auto;
+}
+
+#backToAreaButtonContainer {
+  display: flex;
+  justify-content: center;
+}
