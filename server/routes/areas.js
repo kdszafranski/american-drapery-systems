@@ -34,7 +34,7 @@ router.delete('/', function(req, res) {
   var string = "(";
   //parse array into SQL string
   for (var i = 0; i < ids.length; i++) {
-    string+= ids[i] + ',';
+    string+= parseInt(ids[i]) + ',';
   }
   string = string.substring(0, string.length-1);
   string+=')';
@@ -49,7 +49,7 @@ router.delete('/', function(req, res) {
         res.sendStatus(204);
       })
       .catch(function(err) {
-        console.log('select query error: ', err);
+        console.log('delete error: ', err);
         res.sendStatus(500);
       } );
     });
