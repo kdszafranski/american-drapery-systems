@@ -96,6 +96,29 @@ router.put('/update/:survey_id', function(req, res) {
     });
 });
 
+//update survey status
+router.put('/status/:survey_id', function(req, res) {
+  var status = req.body;
+  var id = req.params.survey_id;
+  console.log(`Editing survey #${id} to a status of ${status.status}`);
+  pool.connect()
+    .then(function(client) {
+      client.query('UPDATE survey ' +
+      'SET status = $1, last_modified=$2' +
+      'WHERE survey.id = $3',
+      [status.status, status.last_modified, id])
+      .then(function(result) {
+        client.release();
+        console.log("PUT complete");
+        res.sendStatus(200);
+      })
+      .catch(function(err) {
+        console.log("Post unsuccesful: ", err);
+        res.sendStatus(500);
+      });
+    });
+});
+
 //add new survey
 
 router.post('/', function(req, res) {

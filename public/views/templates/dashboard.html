@@ -67,8 +67,8 @@
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td>{{result.client_name}}</td>
-              <td><md-select ng-model="result.status" placeholder="{{result.status}}">
-                <md-option ng-value="opt" ng-repeat="status in dash.statusOptions">{{status}}</md-option>
+              <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)">
+                <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
               </md-select></td>
               <td>{{result.last_modified}}</td>
               <td>{{result.survey_date}}</td>
