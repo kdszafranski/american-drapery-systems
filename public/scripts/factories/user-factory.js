@@ -7,7 +7,7 @@ function($firebaseAuth, $http) {
   //Auth is constant (won't change), assign to $firebaseAuth()
   const auth = $firebaseAuth();
   //Instantiate currentUser object
-  var currentUser = {};
+  var currentUser;
   var isUser = false;
   //logIn fxn, called when logIn button clicked
   function logIn() {

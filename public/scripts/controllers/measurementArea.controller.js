@@ -2,21 +2,22 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
 function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
   var self = this;
   // var survey_id = IdFactory.getSurveyId();
-  var survey_id = $route.current.params.surveyId;
+  var surveyId = $route.current.params.surveyId;
   self.loading = false;
   self.showInput = false
   self.currentProfile = {};
-  self.currentUser = UserFactory.getUser();
+  var currentUser;
+  var areaId;
 
   self.newAreaName = '';
   self.inputAreaName = false;
   //function to send area to measurent controller
   self.setArea = function(index) {
     console.log("index: ", index);
-    var areaId = self.areaArrayId[index];
+    areaId = self.areaArrayId[index];
     IdFactory.setArea(areaId);
 
-    $location.path('/measurement/' + areaId);
+    $location.path('/measurement/' + surveyId + '/' + areaId);
   }
 
 
@@ -32,31 +33,11 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
     self.inputAreaName = false;
     self.newArea = {
       area_name: self.newAreaName,
-      survey_id: survey_id
+      survey_id: surveyId
     }
     console.log("New Area Object: ", self.newArea);
-    var currentUser = UserFactory.getUser();
-    for (var i = 0; i < self.areaArray.length; i++) {
-      if(self.areaArray[i] === "Click the + to add a new area") {
-        console.log("Found one");
-        var areaId = self.areaArrayId[i];
-        currentUser.getToken()
-          .then(function(idToken) {
-            $http({
-              method: 'DELETE',
-              url: '/areas/' + areaId,
-              headers: {
-                id_token: idToken
-              }
-            }).then(function(response){
-              console.log("Delete successful");
-            },
-            function(err) {
-              console.log("error with delete: ", err);
-            });
-        });
-      }
-    }
+    // currentUser = UserFactory.getUser();
+
     currentUser.getToken()
       .then(function(idToken) {
         $http({
@@ -68,9 +49,11 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
           }
         }).then(function(response){
           console.log("Response from new area post: ", response.data[0].id);
-          self.newAreaId = response.data[0].id;
-          IdFactory.setArea(self.newAreaId);
-          $location.path('/measurement');
+          //We shouldn't really need to do this anymore, as we're storing this info in the url now
+          areaId = response.data[0].id;
+          IdFactory.setArea(areaId);
+          //We do need to do this now.
+          $location.path('/measurement/' + surveyId + '/' + areaId);
         },
         function(err) {
           console.log("error getting survey details: ", err);
@@ -89,7 +72,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
   //save edits to client profile button
   self.updateClient = function(){
     var clientId = self.currentProfile.client_id;
-    var currentUser = UserFactory.getUser();
+    // var currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
       $http({
@@ -112,12 +95,12 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
 
   //function to get all areas associated with survey
   function getSurveyDetails(firebaseUser) {
-    // var currentUser = UserFactory.getUser(); *******
+    console.log("SURVEY ID\n\n", surveyId);
     firebaseUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
-          url: '/surveys/one/' + survey_id,
+          url: '/surveys/one/' + surveyId,
           headers: {
             id_token: idToken
           }
@@ -141,13 +124,12 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
     })
 
   }
+  // getSurveyDetails(firebaseUser);
+  //This happens when when we switch to this view/controller AND when page is refreshed
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
-    console.log("\n\nOn auth state change runs when view changes\n\n");
+    currentUser = firebaseUser;
     getSurveyDetails(firebaseUser);
   });
-  // if(!self.currentUser) {
-  //
-  // }
 
 }]);
 

@@ -26,7 +26,6 @@ router.get('/all', function(req, res) {
 });
 
 
-
 //Get request to fetch specified job information(Measurements, client information and images)
 router.get('/one/:survey_id', function(req, res) {
   console.log('reached get one survey route')
@@ -51,9 +50,8 @@ router.get('/one/:survey_id', function(req, res) {
     });
 });
 
-//Get request to fetch specified job information(Measurements, client information and images)
-router.get('/oneComplete/:survey_id', function(req, res) {
-  console.log('reached get one survey route');
+router.get('/preview/one/:survey_id', function(req, res) {
+  console.log('reached get one survey route')
   console.log(req.params.survey_id);
   var survey_id = req.params.survey_id;
   pool.connect()
@@ -64,9 +62,9 @@ router.get('/oneComplete/:survey_id', function(req, res) {
       'JOIN measurements on measurements.area_id = areas.id ' +
       'WHERE survey_id = $1', [survey_id])
         .then(function(result) {
-          console.log("result.rows: ", result.rows);
-          res.send(result.rows);
           client.release();
+          console.log(result.rows);
+          res.send(result.rows);
         })
         .catch(function(err) {
           console.log('select query error: ', err);
@@ -75,6 +73,53 @@ router.get('/oneComplete/:survey_id', function(req, res) {
     });
 });
 
+//Get client and survey information for newly added survey
+router.get('/new/:survey_id', function(req, res) {
+  console.log('reached get one survey route')
+  console.log(req.params.survey_id);
+  var survey_id = req.params.survey_id;
+  pool.connect()
+    .then(function(client) {
+      client.query('SELECT * FROM client ' +
+      'JOIN survey on survey.client_id = client.id ' +
+      'WHERE survey.id = $1', [survey_id])
+        .then(function(result) {
+          client.release();
+          console.log(result.rows);
+          res.send(result.rows);
+        })
+        .catch(function(err) {
+          console.log('select query error: ', err);
+          res.sendStatus(500);
+        });
+    });
+});
+
+
+//update survey
+router.put('/update/:survey_id', function(req, res) {
+  var survey = req.body;
+  var id = req.params.survey_id;
+  console.log("Reached edit new survey route: ", survey);
+  pool.connect()
+    .then(function(client) {
+      client.query('UPDATE survey ' +
+      'SET job_number = $1, survey_date=$2, completion_date=$3 ' +
+      'WHERE survey.id = $4',
+      [survey.job_number, survey.survey_date, survey.completion_date, id])
+      .then(function(result) {
+        client.release();
+        console.log("PUT complete");
+        res.sendStatus(201);
+      })
+      .catch(function(err) {
+        console.log("Post unsuccesful: ", err);
+        res.sendStatus(500);
+      });
+    });
+});
+
+//add new survey
 
 router.post('/', function(req, res) {
   var newSurvey = req.body;
