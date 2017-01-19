@@ -2,6 +2,12 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
   console.log("In Survey Controller");
   var self = this;
   var survey_id = IdFactory.getSurveyId();
+  const MIN_AREA_GOTO_TOP = 4;
+
+  self.goToTop = function() {
+    window.scrollTo(0, 0);
+    console.log("Clicked Top");
+  }
 
   console.log("Id Factory: ", IdFactory.survey);
   console.log("Survey_id: ", survey_id);
@@ -27,8 +33,6 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
-          self.areaArray
-          console.log('areaArray', self.areaArray);
         },
         function(err) {
           console.log("error getting survey details: ", err);
