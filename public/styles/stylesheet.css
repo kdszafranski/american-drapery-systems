@@ -1,3 +1,8 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
 table {
   font-family: 'Roboto', sans-serif;
 }
@@ -15,6 +20,8 @@ md-input-container{
 }
 #notesDiv{
   padding: 3px;
+  display: flex;
+  align-items: center;
 }
 #profileCheckbox{
   margin: 2px;
@@ -173,12 +180,15 @@ table {
   width: 200px;
   border: 1px solid black;
   margin: 10px;
+  flex-wrap: wrap;
 }
 
-#plus {
-  padding: 10px;
-  border: 1px solid black;
-  border-radius: 40%;
+.area-input {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /*#newJob {
@@ -209,12 +219,61 @@ table {
 .notes {
   padding: 0 20px;
 }
+
+.content {
+  min-height: calc(100vh - 73px);
+}
+
+footer {
+  height: 50px;
+  width: 100%;
+  display: flex;
+}
+
+.footer-info {
+  padding-top: 19px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: rgb(63,81,181);
+  color: rgba(255,255,255,0.87);
+  text-align: center;
+}
 .columnSort:hover {
   cursor: pointer;
 }
 #dashCard {
   min-width: 750px;
 }
+
+.status-update {
+  margin: 0px 0px 0px;
+}
 .md-select-placeholder {
   color: rgba(0,0,0,0.87) !important;
+}
+
+#goToTopButton {
+  position: fixed;
+  bottom: 6px;
+  left: 25px;
+}
+
+/*md-card:last-child {
+  margin-bottom: 30px;
+}*/
+
+#notesHeader {
+  align-self: flex-start;
+}
+
+#areaNotes {
+  margin-top: 20px;
+  height: auto;
+}
+
+#backToAreaButtonContainer {
+  display: flex;
+  justify-content: center;
 }
