@@ -36,8 +36,9 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     getSurveys();
     console.log("onAuthStateChanged", currentUser);
   });
+
   function getSurveys() {
-    currentUser = UserFactory.getUser();
+    // currentUser = UserFactory.getUser();
     console.log('getting surveys - currentUser:', currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
@@ -92,11 +93,12 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   }
   self.survey = function(surveyId) {
     IdFactory.setSurvey(surveyId);
-    $location.path('/survey');
+    console.log("\n\nsurveyId in dash.survey: ", surveyId);
+    $location.path('/survey/' + surveyId);
   }
   self.area = function(surveyId) {
     IdFactory.setSurvey(surveyId)
-    $location.path('/area');
+    $location.path('/area/' + surveyId);
   }
 
   self.pageCheck = function(numResults) {
