@@ -228,7 +228,7 @@ footer {
   background-color: rgb(63,81,181);
   color: rgba(255,255,255,0.87);
   text-align: center;
-
+}
 .columnSort:hover {
   cursor: pointer;
 }
@@ -239,12 +239,12 @@ footer {
   color: rgba(0,0,0,0.87) !important;
 }
 
-#goToTop {
+#goToTopButton {
   position: fixed;
-  bottom: 25px;
+  bottom: 6px;
   left: 25px;
 }
 
-md-card:last-child {
-  margin-bottom: 80px;
-}
+/*md-card:last-child {
+  margin-bottom: 30px;
+}*/
