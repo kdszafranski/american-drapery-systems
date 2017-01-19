@@ -72,6 +72,7 @@
               </th>
               <th></th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -79,7 +80,7 @@
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td>{{result.client_name}}</td>
-              <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)">
+              <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)" class="status-update">
                 <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
               </md-select></td>
               <td>{{result.last_modified}}</td>
@@ -89,6 +90,9 @@
               </div></td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="edit">
                 <md-icon ng-click="dash.area(result.id)" md-svg-icon="./img/edit.svg"></md-icon>
+              </div></td>
+              <td><div ng-click="dash.showConfirm($event, result.id)" class="md-icon-button md-primary" aria-label="delete">
+                <md-icon md-svg-icon="../../img/delete.svg">
               </div></td>
             </tr>
           </tbody>

@@ -73,8 +73,9 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
 
   self.addNewArea = function() {
     InfoFactory.setCompanyInfo(self.companyInfo);
-    IdFactory.setNewArea(self.newAreaName);
+    IdFactory.setNewAreaName(self.newAreaName);
     console.log("Clicked Add New Area:");
+    console.log("New Area Name: ", self.newAreaName);
     self.inputAreaName = false;
     self.newArea = {
       area_name: self.newAreaName,

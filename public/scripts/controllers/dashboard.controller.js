@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', function(UserFactory, IdFactory, $http, $location, $scope) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', "$mdDialog", '$location', '$scope', function(UserFactory, IdFactory, $http, $mdDialog, $location, $scope) {
   const self = this;
   var currentUser = {};
   var surveyList = [];
@@ -53,6 +53,39 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     });
   }
 
+  self.showConfirm = function(ev, id) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+      .title('Are you sure you wish to delete survey # ' + id + ', along with all associated areas and measurements?')
+      .targetEvent(ev)
+      .ok('Yes. Delete survey.')
+      .cancel('No. Go back to dashboard');
+    $mdDialog.show(confirm).then(function() {
+      deleteSurvey(id);
+    }, function() {
+    });
+  };
+
+  function deleteSurvey(id) {
+    console.log("remove survey ", id);
+    var currentUser = UserFactory.getUser();
+    currentUser.getToken()
+    .then(function(idToken) {
+        $http({
+          method: 'DELETE',
+          url: '/surveys/' + id,
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response) {
+          console.log("Response from survey route: ", response);
+          getSurveys();
+        }).catch(function(err) {
+          console.log("Error in survey delete");
+        });
+    });
+  }
+
   self.newJob = function() {
     $location.path('/profile');
   }
@@ -85,7 +118,6 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     }
     return total;
   }
-  console.log(self.totalPages(0), self.totalPages(1), self.totalPages(19), self.totalPages(20), self.totalPages(21));
 
   self.changeStatus = function(survey_id) {
     console.log("Select Changed - Survey Id is: ", survey_id);

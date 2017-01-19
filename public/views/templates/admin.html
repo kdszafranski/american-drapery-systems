@@ -26,7 +26,7 @@
               <td>{{user.email}}</td>
               <td>{{user.can_edit_users}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="delete">
-                <md-icon ng-click="admin.deleteUser(user.id)" md-svg-icon="./img/ic_delete_forever_black_48px.svg"></md-icon>
+                <md-icon ng-click="admin.deleteUser(user.id)" md-svg-icon="./img/delete.svg"></md-icon>
               </div></td>
             </tr>
             <tr layout-wrap id="inputRow">
@@ -44,7 +44,7 @@
               </md-input-container></td>
               <td><md-input-container>
                 <md-button ng-click="admin.addUser(newUser)" class="md-icon-button" >
-                  <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="../../img/add.svg"></md-icon>
                 </md-button>
               </md-input-container></td>
             </tr>
