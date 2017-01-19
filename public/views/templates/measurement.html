@@ -1,5 +1,5 @@
 <md-content>
-  <div layout="row">
+  <div layout="row" layout-align="center center" layout-wrap>
     <md-card>
       <md-card-title id="measurementTitle">
           <md-card-title-text >
@@ -100,7 +100,6 @@
   </div>
   <div layout="row" layout-align="center center" layout-wrap>
     <md-card>
-
       <md-card-title id="measurementTitle">
         <div layout="column">
           <md-card-title-text >
@@ -172,23 +171,24 @@
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].mount" size="6"  aria-label="mount"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
+
                 <md-button ng-click="measure.measurements[$index].edit = !measure.measurements[$index].edit;" class="md-icon-button" aria-label="edit">
-                  <md-icon md-svg-icon="../../img/ic_mode_edit_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/edit.svg"></md-icon>
                 </md-button>
               </td>
               <td ng-hide="measure.measurements[$index].edit" id="removeIconPadding" class="inputTd">
                 <md-button ng-click="measure.updateRowButton($index)" class="md-icon-button" aria-label="edit">
-                  <md-icon md-svg-icon="../../img/ic_check_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/check.svg"></md-icon>
                 </md-button>
               </td>
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.showConfirm($event, $index)" class="md-icon-button" aria-label="delete">
-                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/delete.svg"></md-icon>
                 </md-button>
               </td>
               <td ng-hide="measure.measurements[$index].edit" id="removeIconPadding" class="inputTd">
                 <md-button ng-click="measure.showConfirm($event, $index)" class="md-icon-button" aria-label="delete">
-                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/delete.svg"></md-icon>
                 </md-button>
               </td>
             </tr>
@@ -221,13 +221,14 @@
               <td><md-input-container><input ng-model="measure.measurement.fabric" size="10"  aria-label="fabric"></md-input-container></td>
               <td><md-input-container><input ng-model="measure.measurement.mount" size="6"  aria-label="mount"></md-input-container></td>
               <td>
-                <md-button ng-click="measure.addButton()" class="md-icon-button" aria-label="delete">
-                  <md-icon md-svg-icon="../../img/ic_add_circle_outline_black_48px.svg"></md-icon>
+                <md-button class="md-icon-button" aria-label="add" ng-click="measure.addButton()">
+                  <md-icon md-svg-icon="./img/add.svg"></md-icon>
                 </md-button>
               </td>
               <td>
                 <md-button ng-click="measure.measurement = {}" class="md-icon-button md-primary" aria-label="delete">
-                  <md-icon md-svg-icon="../../img/ic_delete_forever_black_48px.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/delete.svg"></md-icon>
+
                 </md-button>
               </td>
             </tr>
@@ -246,8 +247,6 @@
         </div>
 
         <span id="cardTitle"><a href="" ng-click="measure.goToTopOfPage()">Go To Top</a></span>
-
-
       </md-card-content>
     </md-card>
   </div>
