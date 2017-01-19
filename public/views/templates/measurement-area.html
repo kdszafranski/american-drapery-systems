@@ -13,6 +13,7 @@
             <h1> <i>{{ma.companyInfo.client_name}}</i> </h1>
           </div>
           <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" flex-gt-xs>
+            <label>Company Name</label>
             <input ng-model="ma.companyInfo.client_name" placeholder="Company Name">
           </md-input-container>
         </div>
@@ -56,7 +57,9 @@
       </div>
       <div layout="column" layout-align="start" class="area-survey-header">
         <h1 ng-show="ma.showInput"><i>Job# {{ma.companyInfo.job_number}}</i></h1>
-        <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.job_number" placeholder="Job Number"></md-input-container>
+        <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+          <label>Job Number</label>
+          <input ng-model="ma.companyInfo.job_number" placeholder="Job Number"></md-input-container>
         <ul>
           <li><b>Survey Date:</b></li>
           <!-- <li ng-show="ma.showInput">{{ma.companyInfo.survey_date}}</li> -->
@@ -85,13 +88,13 @@
 <md-card ng-show="ma.loading">
   <md-card-content>
     <div layout="row">
-      <md-button ng-hide="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-primary" aria-label="Select Areas to Delete">
+      <md-button ng-hide="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-raised md-primary" aria-label="Select Areas to Delete">
         Select Areas to Delete
       </md-button>
-      <md-button ng-show="ma.editAreas" ng-click="ma.showConfirm($event)" class="md-primary" aria-label="delete selected areas">
+      <md-button ng-show="ma.editAreas" ng-click="ma.showConfirm($event)" class="md-warn md-raised md-hue-2" aria-label="delete selected areas">
         Delete Selected Areas
       </md-button>
-      <md-button ng-show="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-primary" aria-label="cancel">
+      <md-button ng-show="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-raised md-primary" aria-label="cancel">
         Cancel
       </md-button>
     </div>

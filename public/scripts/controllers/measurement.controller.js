@@ -1,6 +1,6 @@
 app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",
-"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll',
-function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll) {
+"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll', '$mdToast',
+function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast) {
   var self = this;
   var surveyId = $route.current.params.surveyId;
   self.measurement = {};
@@ -84,6 +84,14 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
     console.log("survey ID: ", self.areaId);
+    $mdToast.show(
+      $mdToast.simple()
+      .textContent('Saved')
+      .position('bottom right' )
+      .hideDelay(800)
+      .parent('#saveAndGoBackButton')
+    );
+    var currentUser = UserFactory.getUser();
     // var currentUser = UserFactory.getUser();
     console.log("Current User at addButton: ", currentUser);
     currentUser.getToken()
@@ -97,6 +105,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
+
           getMeasurements(currentUser);
 
         }).catch(function(err) {
@@ -215,6 +224,14 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   };
   //Deleting measurement after confirmation
   self.deleteRowButton = function(index){
+    $mdToast.show(
+      $mdToast.simple()
+      .textContent('Deleted')
+      .position('left' )
+      .hideDelay(2000)
+      .parent('#row'+ self.measurements[index].id)
+    );
+    console.log('#row'+ self.measurements[index].id);
     console.log("remove row number: ", self.measurements[index].id);
     var idToDelete = self.measurements[index].id;
     currentUser = UserFactory.getUser();

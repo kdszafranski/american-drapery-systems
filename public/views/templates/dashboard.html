@@ -47,28 +47,22 @@
           <thead>
             <tr id="headerRow">
               <th class="columnSort" ng-click="dash.sortType = 'id'; dash.sortReverse = !dash.sortReverse">Survey #
-                <span ng-show="dash.sortType == 'id' && !dash.sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="dash.sortType == 'id' && dash.sortReverse" class="fa fa-caret-up"></span>
+                <span ng-class="{'fa fa-caret-down': dash.sortType == 'id' && !dash.sortReverse, 'fa fa-caret-up': dash.sortType == 'id' && dash.sortReverse}"></span>
               </th>
               <th class="columnSort" ng-click="dash.sortType = 'job_number'; dash.sortReverse = !dash.sortReverse">Job #
-                <span ng-show="dash.sortType == 'job_number' && !dash.sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="dash.sortType == 'job_number' && dash.sortReverse" class="fa fa-caret-up"></span>
+                <span ng-class="{'fa fa-caret-down': dash.sortType == 'job_number' && !dash.sortReverse, 'fa fa-caret-up': dash.sortType == 'job_number' && dash.sortReverse}"></span>
               </th>
               <th class="columnSort" ng-click="dash.sortType = 'client_name'; dash.sortReverse = !dash.sortReverse">Client
-                <span ng-show="dash.sortType == 'client_name' && !dash.sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="dash.sortType == 'client_name' && dash.sortReverse" class="fa fa-caret-up"></span>
+                <span ng-class="{'fa fa-caret-down': dash.sortType == 'client_name' && !dash.sortReverse, 'fa fa-caret-up': dash.sortType == 'client_name' && dash.sortReverse}"></span>
               </th>
               <th class="columnSort" ng-click="dash.sortType = 'status'; dash.sortReverse = !dash.sortReverse">Status
-                <span ng-show="dash.sortType == 'status' && !dash.sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="dash.sortType == 'status' && dash.sortReverse" class="fa fa-caret-up"></span>
+                <span ng-class="{'fa fa-caret-down': dash.sortType == 'status' && !dash.sortReverse, 'fa fa-caret-up': dash.sortType == 'status' && dash.sortReverse}"></span>
               </th>
               <th class="columnSort" ng-click="dash.sortType = 'last_modified'; dash.sortReverse = !dash.sortReverse">Last Modified
-                <span ng-show="dash.sortType == 'last_modified' && !dash.sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="dash.sortType == 'last_modified' && dash.sortReverse" class="fa fa-caret-up"></span>
+                <span ng-class="{'fa fa-caret-down': dash.sortType == 'last_modified' && !dash.sortReverse, 'fa fa-caret-up': dash.sortType == 'last_modified' && dash.sortReverse}"></span>
               </th>
               <th class="columnSort" ng-click="dash.sortType = 'survey_date'; dash.sortReverse = !dash.sortReverse">Survey Date
-                <span ng-show="dash.sortType == 'survey_date' && !dash.sortReverse" class="fa fa-caret-down"></span>
-                <span ng-show="dash.sortType == 'survey_date' && dash.sortReverse" class="fa fa-caret-up"></span>
+                <span ng-class="{'fa fa-caret-down': dash.sortType == 'survey_date' && !dash.sortReverse, 'fa fa-caret-up': dash.sortType == 'survey_date' && dash.sortReverse}"></span>
               </th>
               <th></th>
               <th></th>
@@ -79,7 +73,7 @@
             <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | excludeByStatus: dash.show.text() | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
-              <td>{{result.client_name}}</td>
+              <td id="row{{result.id}}">{{result.client_name}}</td>
               <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)" class="status-update">
                 <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
               </md-select></td>
