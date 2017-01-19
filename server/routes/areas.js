@@ -5,7 +5,6 @@ var pg = require('pg');
 
 var pool = new pg.Pool(config);
 
-
 router.post('/', function(req,res) {
   console.log(req.body);
   var newArea = req.body;
