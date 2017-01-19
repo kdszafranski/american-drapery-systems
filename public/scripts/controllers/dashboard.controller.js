@@ -58,7 +58,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.showConfirm = function(ev, id) {
     // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
-      .title('Are you sure you wish to delete survey # ' + id + ', along with all associated areas and measurements?')
+      .title('Are you sure you wish to delete survey # ' + id + ', along with all associated areas, measurements and files?')
       .targetEvent(ev)
       .ok('Yes. Delete survey.')
       .cancel('No. Go back to dashboard');

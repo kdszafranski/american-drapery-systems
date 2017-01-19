@@ -38,7 +38,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     // Appending dialog to document.body to cover sidenav in docs app
     if(self.toRemove.indexOf(true) != -1) {
       var confirm = $mdDialog.confirm()
-        .title('Are you sure you wish to delete the selected areas and all associated measurements')
+        .title('Are you sure you wish to delete the selected areas and all associated measurements and files')
         .targetEvent(ev)
         .ok('Yes. Delete areas.')
         .cancel('No. Go back to areas');
@@ -94,7 +94,8 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     self.inputAreaName = false;
     self.newArea = {
       area_name: self.newAreaName,
-      survey_id: surveyId
+      survey_id: surveyId,
+      notes: ""
     }
     console.log("New Area Object: ", self.newArea);
     // currentUser = UserFactory.getUser();
