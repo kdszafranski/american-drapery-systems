@@ -5,6 +5,13 @@ function($http, UserFactory, IdFactory, $route) {
   // var surveyId = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
   var currentUser;
+  const MIN_AREA_GOTO_TOP = 4;
+
+  self.goToTop = function() {
+    window.scrollTo(0, 0);
+    console.log("Clicked Top");
+  }
+
   console.log("Id Factory: ", IdFactory.survey);
   console.log("surveyId: ", surveyId);
 
@@ -29,8 +36,6 @@ function($http, UserFactory, IdFactory, $route) {
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
-          self.areaArray
-          console.log('areaArray', self.areaArray);
         },
         function(err) {
           console.log("error getting survey details: ", err);

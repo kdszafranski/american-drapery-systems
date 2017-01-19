@@ -203,7 +203,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
     self.areaArrayId = [...new Set(self.surveyDetails.map(survey => {
       survey.area_id;
-      console.log("Survey in map fxn: ", survey);
+      console.log("survey in map fxn: ", survey);
     }))];
     for (var i = 0; i < self.areaArray.length; i++) {
       self.toRemove[i] = false;

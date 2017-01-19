@@ -242,8 +242,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
 
   self.goToTopOfPage = function(){
     console.log("clicked");
-    $location.hash('measurementTitle');
-    $anchorScroll();
+    window.scrollTo(0,0)
   }
 
 }]);
