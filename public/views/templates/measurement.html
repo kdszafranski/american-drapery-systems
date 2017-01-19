@@ -20,6 +20,7 @@
               <h1> <i>{{measure.companyInfo.client_name}}</i> </h1>
             </div>
             <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" flex-gt-xs>
+              <label>Company Name</label>
               <input ng-model="measure.companyInfo.client_name" placeholder="Company Name">
             </md-input-container>
           </div>
@@ -63,7 +64,9 @@
         </div>
         <div layout="column" layout-align="start" class="area-survey-header">
           <h1 ng-show="measure.showInput"><i>Job# {{measure.companyInfo.job_number}}</i></h1>
-          <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" ><input ng-model="measure.companyInfo.job_number" placeholder="Job Number"></md-input-container>
+          <md-input-container ng-hide="measure.showInput" md-no-float class="md-block" >
+            <label>Job Number</label>
+            <input ng-model="measure.companyInfo.job_number" placeholder="Job Number"></md-input-container>
           <ul>
             <li><b>Survey Date:</b></li>
             <md-input-container  md-no-float layout="row">
