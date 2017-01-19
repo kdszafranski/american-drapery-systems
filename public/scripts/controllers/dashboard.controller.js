@@ -7,8 +7,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.pageSize = 20;
   self.filtered = [];
   self.loading = false;
-  self.sortType     = 'last_modified'; // set the default sort type
-  self.sortReverse  = false;  // set the default sort order
+  self.sortType     = 'id'; // set the default sort type
+  self.sortReverse  = true;  // set the default sort order
   self.pageCheck = function(numResults) {
     var total = self.totalPages(numResults);
     console.log('total', total);
@@ -24,17 +24,27 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   }
 
   self.show = {
-    completed: false,
-    declined: false,
+    completed: true,
+    declined: true,
+    dispatched: true,
+    pending: true,
     text: function () {
       var ret = [];
       var compBool = (!this.completed && "Completed");
+      var dispBool = (!this.dispatched && "Dispatched");
+      var pendBool = (!this.pending && "Pending");
       var decBool = (!this.declined && "Declined");
       if (compBool) {
         ret.push(compBool);
       }
       if (decBool) {
         ret.push(decBool);
+      }
+      if (dispBool) {
+        ret.push(dispBool);
+      }
+      if (pendBool) {
+        ret.push(pendBool);
       }
       return ret;
     }

@@ -48,4 +48,28 @@ router.delete('/:areaId', function(req, res) {
     });
 })
 
+//update area
+router.put('/notes/:area_id', function(req, res) {
+  var area = req.body;
+  var id = req.params.area_id;
+  console.log("Reached edit new area route: ", area);
+  pool.connect()
+    .then(function(client) {
+      client.query('UPDATE areas ' +
+      'SET notes = $1 ' +
+      'WHERE areas.id = $2',
+      [area.notes, id])
+      .then(function(result) {
+        client.release();
+        console.log("PUT complete");
+        res.sendStatus(201);
+      })
+      .catch(function(err) {
+        console.log("PUT unsuccesful: Notes not updated ", err);
+        res.sendStatus(500);
+      });
+    });
+});
+
+
 module.exports = router;
