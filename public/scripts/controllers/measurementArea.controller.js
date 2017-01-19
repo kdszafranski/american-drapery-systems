@@ -198,9 +198,13 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   }
 
   function surveyOps() {
+    console.log("surveyOps Running");
     self.companyInfo = self.surveyDetails[0];
     self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
-    self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
+    self.areaArrayId = [...new Set(self.surveyDetails.map(survey => {
+      survey.area_id;
+      console.log("Survey in map fxn: ", survey);
+    }))];
     for (var i = 0; i < self.areaArray.length; i++) {
       self.toRemove[i] = false;
     }
@@ -211,6 +215,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     console.log("Response From Server: ", self.surveyDetails);
     console.log("Area Array: ", self.areaArray);
     console.log("Area ID: ", self.areaArrayId);
+
   }
   // getSurveyDetails(firebaseUser);
   //This happens when when we switch to this view/controller AND when page is refreshed
