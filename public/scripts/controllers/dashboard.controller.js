@@ -8,19 +8,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.loading = false;
   self.sortType     = 'id'; // set the default sort type
   self.sortReverse  = true;  // set the default sort order
-  self.pageCheck = function(numResults) {
-    var total = self.totalPages(numResults);
-    console.log('total', total);
-    console.log('old currentpage', self.currentPage);
 
-    if (self.currentPage >= total || ((self.currentPage == -1) && total)) {
-      self.currentPage = total -1 ;
-    }
-    console.log('new currentpage', self.currentPage);
-    $scope.$apply;
-    console.log('scope currentpage', self.currentPage);
-
-  }
 
   self.show = {
     completed: true,
@@ -33,19 +21,10 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       var dispBool = (!this.dispatched && "Dispatched");
       var pendBool = (!this.pending && "Pending");
       var decBool = (!this.declined && "Declined");
-      if (compBool) {
-        ret.push(compBool);
-      }
-      if (decBool) {
-        ret.push(decBool);
-      }
-      if (dispBool) {
-        ret.push(dispBool);
-      }
-      if (pendBool) {
-        ret.push(pendBool);
-      }
-      console.log('ret', ret);
+      if (compBool) { ret.push(compBool) }
+      if (decBool) { ret.push(decBool) }
+      if (dispBool) { ret.push(dispBool) }
+      if (pendBool) { ret.push(pendBool) }
       return ret;
     }
   }
@@ -73,7 +52,6 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     });
   }
 
-
   self.newJob = function() {
     $location.path('/profile');
   }
@@ -84,6 +62,19 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.area = function(surveyId) {
     IdFactory.setSurvey(surveyId)
     $location.path('/area');
+  }
+
+  self.pageCheck = function(numResults) {
+    var total = self.totalPages(numResults);
+    console.log('total', total);
+    console.log('old currentpage', self.currentPage);
+
+    if (self.currentPage >= total || ((self.currentPage == -1) && total)) {
+      self.currentPage = total -1 ;
+    }
+    console.log('new currentpage', self.currentPage);
+    $scope.$apply;
+    console.log('scope currentpage', self.currentPage);
   }
 
   self.totalPages = function (num) {

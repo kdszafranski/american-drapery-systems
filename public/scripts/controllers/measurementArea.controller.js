@@ -1,12 +1,13 @@
-app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, UserFactory, InfoFactory) {
+app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', "$mdDialog", 'UserFactory', 'InfoFactory', function($http, IdFactory, $location, $mdDialog, UserFactory, InfoFactory) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.loading = false;
   self.showInput = true;
   self.newAreaName = '';
+  self.editAreas = false;
   console.log(survey_id);
   self.inputAreaName = false;
-
+  self.toRemove = [];
   getSurveyDetails();
 
   //function to send area to measurent controller
@@ -15,9 +16,61 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     IdFactory.setArea(self.areaArrayId[index]);
     $location.path('/measurement');
   }
-  self.addNote = function(){
-    console.log("addnote clicked");
+  self.showConfirm = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    if(self.toRemove.indexOf(true) != -1) {
+      var confirm = $mdDialog.confirm()
+        .title('Are you sure you wish to delete the selected areas and all associated measurements')
+        .targetEvent(ev)
+        .ok('Yes. Delete areas.')
+        .cancel('No. Go back to areas');
+      $mdDialog.show(confirm).then(function() {
+        deleteAreas();
+      }, function() {
+      });
+    }
+  };
+
+  self.areaClick = function(index) {
+    if(self.editAreas) {
+      self.toRemove[index]=!self.toRemove[index];
+    } else {
+      self.setArea(index);
+      self.editAreas = true;
+    }
   }
+  function deleteAreas() {
+    self.loading = false;
+    var deleteIds = [];
+    var currentUser = UserFactory.getUser();
+    for (var i = 0; i < self.toRemove.length; i++) {
+      if (self.toRemove[i]) {
+        deleteIds.push(self.areaArrayId[i])
+      }
+    }
+    console.log('deleteIds', deleteIds);
+    currentUser.getToken()
+      .then(function(idToken) {
+        $http({
+          method: 'DELETE',
+          url: '/areas/',
+          params: {
+            "id[]": deleteIds
+          },
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          //get survey details on last iteration
+          getSurveyDetails();
+          console.log('deletes complete')
+        },
+        function(err) {
+          console.log("error with delete: ", err);
+    });
+    });
+  }
+
   self.addNewArea = function() {
     InfoFactory.setCompanyInfo(self.companyInfo);
     IdFactory.setNewArea(self.newAreaName);
@@ -50,11 +103,6 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     })
   }
 
-  //Edit client profile button
-  self.editClient = function(){
-    console.log("edit clicked");
-    self.showInput = !self.showInput;
-  }
   //save edits to client profile button
   self.updateClient = function(){
     console.log("profile to be updated", self.companyInfo);
@@ -149,14 +197,18 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
 
   function surveyOps() {
     self.companyInfo = self.surveyDetails[0];
-    console.log("Response From Server: ", self.surveyDetails);
     self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
-    console.log("Area Array: ", self.areaArray);
     self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
-    console.log("Area ID: ", self.areaArrayId);
+    for (var i = 0; i < self.areaArray.length; i++) {
+      self.toRemove[i] = false;
+    }
     self.completionDate = new Date(self.companyInfo.completion_date);
     self.surveyDate = new Date(self.companyInfo.survey_date);
     self.loading = true;
+    console.log("Response From Server: ", self.surveyDetails);
+    console.log("Area Array: ", self.areaArray);
+    console.log("Area ID: ", self.areaArrayId);
+
   }
 }]);
 

@@ -77,7 +77,7 @@
         </div>
       </div>
       <div layout="row" layout-align="start">
-        <md-button ng-show="measure.showInput" ng-click="measure.editClient()" class="md-raised md-primary" aria-label="edit client profile">
+        <md-button ng-show="measure.showInput" ng-click="measure.showInput = !measure.showInput" class="md-raised md-primary" aria-label="edit client profile">
           Edit Client Profile
         </md-button>
         <md-button ng-hide="measure.showInput" ng-click="measure.updateClient()" class="md-raised md-primary" aria-label="edit client profile">
