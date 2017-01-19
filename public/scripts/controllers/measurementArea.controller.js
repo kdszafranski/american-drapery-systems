@@ -79,7 +79,8 @@ app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 
     self.inputAreaName = false;
     self.newArea = {
       area_name: self.newAreaName,
-      survey_id: survey_id
+      survey_id: survey_id,
+      notes: ''
     }
     console.log("New Area Object: ", self.newArea);
     var currentUser = UserFactory.getUser();
