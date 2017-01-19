@@ -101,7 +101,7 @@
       </md-card-content>
     </md-card flex>
   </div>
-  <div layout="row" layout-align="center center" layout-wrap>
+  <div  layout="row" layout-align="center center" layout-wrap>
     <md-card>
       <md-card-title id="measurementTitle">
         <div layout="column">
@@ -131,30 +131,23 @@
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="tableBody">
 
-            <tr ng-repeat="dimension in measure.measurements track by $index" id="tableBodyRow">
-
-              <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
-              <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
-                <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
-
+            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" >
+              <td ng-show="measure.measurements[$index].edit" id="row{{measure.measurements[$index].id}}">{{dimension.floor}}</td>
+              <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
               <td ng-show="measure.measurements[$index].edit">{{dimension.room}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].room" size="6" aria-label="room"></md-input-container></td>
-
               <td ng-show="measure.measurements[$index].edit">{{dimension.quantity}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].quantity" size="6"  aria-label="room"></md-input-container></td>
-
               <td ng-show="measure.measurements[$index].edit">{{dimension.width | number:2}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].width" size="6"  aria-label="width"></md-input-container></td>
-
               <td ng-show="measure.measurements[$index].edit">{{dimension.length | number:2}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].length" size="6"  aria-label="length"></md-input-container></td>
-
               <td ng-show="measure.measurements[$index].edit">{{dimension.ib_ob}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd">
                 <md-input-container>
@@ -260,6 +253,7 @@
             <textarea value="measure.measurements[0].notes" ng-model="measure.measurements[0].notes" ></textarea>
           </md-input-container>
         </div>
+
       </form>
 
       <div id="backToAreaButtonContainer">

@@ -73,7 +73,7 @@
             <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | excludeByStatus: dash.show.text() | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
-              <td>{{result.client_name}}</td>
+              <td id="row{{result.id}}">{{result.client_name}}</td>
               <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)" class="status-update">
                 <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
               </md-select></td>
