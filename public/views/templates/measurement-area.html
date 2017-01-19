@@ -72,7 +72,7 @@
       </div>
     </div>
     <div layout="row" layout-align="start">
-      <md-button ng-show="ma.showInput" ng-click="ma.editClient()" class="md-raised md-primary" aria-label="edit client profile">
+      <md-button ng-show="ma.showInput" ng-click="ma.showInput = !ma.showInput;" class="md-raised md-primary" aria-label="edit client profile">
         Edit Client Profile
       </md-button>
       <md-button ng-hide="ma.showInput" ng-click="ma.updateClient()" class="md-raised md-primary" aria-label="edit client profile">
@@ -84,9 +84,20 @@
 
 <md-card ng-show="ma.loading">
   <md-card-content>
+    <div layout="row">
+      <md-button ng-hide="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-primary" aria-label="Select Areas to Delete">
+        Select Areas to Delete
+      </md-button>
+      <md-button ng-show="ma.editAreas" ng-click="ma.showConfirm($event)" class="md-primary" aria-label="delete selected areas">
+        Delete Selected Areas
+      </md-button>
+      <md-button ng-show="ma.editAreas" ng-click="ma.editAreas = !ma.editAreas" class="md-primary" aria-label="cancel">
+        Cancel
+      </md-button>
+    </div>
     <section class="areas">
   <!-- ng-repeat divs for every area we have added plus one div for add new area-->
-      <div class="add-new-area">
+      <div class="add-new-area" ng-hide="ma.editAreas">
         <p ng-hide="ma.inputAreaName" ng-click="ma.inputAreaName = true" id="plus">+</p>
         <div class="area-input" ng-show="ma.inputAreaName">
           <input type="text" ng-model="ma.newAreaName"><br>
@@ -94,9 +105,10 @@
         </div>
       </div>
 
-      <md-button  ng-repeat="area in ma.areaArray track by $index" class="measurement-areas" ng-click="ma.setArea($index)">
-        <p>{{area}}</p>
+      <md-button  ng-repeat="area in ma.areaArray track by $index" ng-class="{'for-delete': ma.toRemove[$index] === true}" class="measurement-areas" ng-click="ma.areaClick($index)">
+        <p>{{area}} {{ma.areaArrayId[$index]}}</p><br>
       </md-button>
+
     </section>
   </md-card-content>
 </md-card>

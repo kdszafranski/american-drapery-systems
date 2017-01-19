@@ -63,7 +63,7 @@ router.get('/preview/one/:survey_id', function(req, res) {
       'WHERE survey_id = $1', [survey_id])
         .then(function(result) {
           client.release();
-          console.log(result.rows);
+          console.log('get one survey success');
           res.send(result.rows);
         })
         .catch(function(err) {
@@ -111,6 +111,29 @@ router.put('/update/:survey_id', function(req, res) {
         client.release();
         console.log("PUT complete");
         res.sendStatus(201);
+      })
+      .catch(function(err) {
+        console.log("Post unsuccesful: ", err);
+        res.sendStatus(500);
+      });
+    });
+});
+
+//update survey status
+router.put('/status/:survey_id', function(req, res) {
+  var status = req.body;
+  var id = req.params.survey_id;
+  console.log(`Editing survey #${id} to a status of ${status.status}`);
+  pool.connect()
+    .then(function(client) {
+      client.query('UPDATE survey ' +
+      'SET status = $1, last_modified=$2' +
+      'WHERE survey.id = $3',
+      [status.status, status.last_modified, id])
+      .then(function(result) {
+        client.release();
+        console.log("PUT complete");
+        res.sendStatus(200);
       })
       .catch(function(err) {
         console.log("Post unsuccesful: ", err);

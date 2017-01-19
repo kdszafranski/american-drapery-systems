@@ -1,11 +1,6 @@
-//data we need coming into this controller:
-  //surevey Id   [x]
-  //area Id      [x]
-  //newArea bool []
-  //
-
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory',  '$route', '$location',
-function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",
+"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll',
+function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll) {
   var self = this;
   var surveyId = $route.current.params.surveyId;
   self.measurement = {};
@@ -27,13 +22,6 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
     self.loading = true;
   }
 
-  // else {
-  //   //get client info from server
-  //   getMeasurements();
-  //   getSurveyDetails();
-  // }
-
-
   function getMeasurements(firebaseUser) {
     console.log("CurrentUser in getmeasure: ", currentUser);
     currentUser = firebaseUser;
@@ -53,7 +41,8 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           }
           self.loading = true;
           console.log(self.measurements);
-          self.area_name = self.measurements.area_name;
+          self.area_name = self.measurements[0].area_name;
+          console.log('AREA NAME', self.area_name);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
         });
@@ -63,6 +52,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
 
   //Runs when page refreshed AND when switching to this controller
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    currentUser = firebaseUser;
     getMeasurements(firebaseUser);
     getSurveyDetails(firebaseUser);
   })
@@ -116,19 +106,13 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
     console.log("mesurement array", self.measurements);
   }
 
-  //Edit client profile button
-  self.editClient = function(){
-    console.log("clicked");
-    self.showInput = !self.showInput;
-  }
-
   //save edits to client profile button
   self.updateClient = function(){
     console.log("profile to be updated", self.companyInfo);
     self.companyInfo.completion_date = new Date(self.completionDate);
     self.companyInfo.survey_date = new Date(self.surveyDate);
     var clientId = self.companyInfo.client_id;
-    var currentUser = UserFactory.getUser();
+    // var currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
       $http({
@@ -167,7 +151,29 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           console.log("error updating survey details: ", err);
         });
       });
-  }
+    }
+
+    function updateNotes(){
+      // var currentUser = UserFactory.getUser();
+      var area_id = self.measurements[0].area_id
+      console.log("Notes", area_id);
+      currentUser.getToken()
+        .then(function(idToken) {
+          $http({
+            method: 'PUT',
+            url: '/areas/notes/' + area_id,
+            data: self.measurements[0],
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response){
+            console.log("Updated: ", response.data);
+          },
+          function(err) {
+            console.log("error updating survey details: ", err);
+          });
+        });
+      }
 
   //button clicked to update the edited row
   self.updateRowButton = function(index){
@@ -230,6 +236,14 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
 
   self.backToArea = function() {
     $location.path('/area/' + surveyId);
+    console.log("self.measurements", self.measurements);
+    updateNotes();
+  }
+
+  self.goToTopOfPage = function(){
+    console.log("clicked");
+    $location.hash('measurementTitle');
+    $anchorScroll();
   }
 
 }]);

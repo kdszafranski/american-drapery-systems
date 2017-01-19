@@ -29,13 +29,20 @@ router.post('/', function(req,res) {
     });
 });
 
-router.delete('/:areaId', function(req, res) {
-  var areaId = req.params.areaId;
+router.delete('/', function(req, res) {
+  var ids = req.query.id;
+  var string = "(";
+  //parse array into SQL string
+  for (var i = 0; i < ids.length; i++) {
+    string+= ids[i] + ',';
+  }
+  string = string.substring(0, string.length-1);
+  string+=')';
+  console.log('delstring, ids', string, ids);
   pool.connect()
     .then(function(client) {
       client.query("DELETE from areas " +
-      "WHERE id = $1",
-      [areaId])
+      "WHERE id in " + string)
       .then(function(result) {
         client.release();
         console.log("delete complete");
@@ -44,8 +51,32 @@ router.delete('/:areaId', function(req, res) {
       .catch(function(err) {
         console.log('select query error: ', err);
         res.sendStatus(500);
+      } );
+    });
+});
+
+//update area
+router.put('/notes/:area_id', function(req, res) {
+  var area = req.body;
+  var id = req.params.area_id;
+  console.log("Reached edit new area route: ", area);
+  pool.connect()
+    .then(function(client) {
+      client.query('UPDATE areas ' +
+      'SET notes = $1 ' +
+      'WHERE areas.id = $2',
+      [area.notes, id])
+      .then(function(result) {
+        client.release();
+        console.log("PUT complete");
+        res.sendStatus(201);
+      })
+      .catch(function(err) {
+        console.log("PUT unsuccesful: Notes not updated ", err);
+        res.sendStatus(500);
       });
     });
-})
+});
+
 
 module.exports = router;

@@ -22,7 +22,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'SurveyController',
     controllerAs: 'survey'
   })
-  .when('/profile/:clientid' ,{
+  .when('/profile/', {
     templateUrl: '/views/templates/profile.html',
     controller: 'ProfileController',
     controllerAs: 'profile'

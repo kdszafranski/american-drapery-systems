@@ -1,5 +1,5 @@
-app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', '$route',
-function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
+app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', '$route', '$mdDialog',
+function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialog) {
   var self = this;
   // var survey_id = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
@@ -10,7 +10,12 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
   var areaId;
 
   self.newAreaName = '';
+  self.editAreas = false;
+  console.log(surveyId);
   self.inputAreaName = false;
+  self.toRemove = [];
+  // getSurveyDetails();
+
   //function to send area to measurent controller
   self.setArea = function(index) {
     console.log("index: ", index);
@@ -25,9 +30,61 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
   self.showInput = function() {
     self.inputAreaName = true;
   }
-  self.addNote = function(){
-    console.log("addnote clicked");
+  self.showConfirm = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    if(self.toRemove.indexOf(true) != -1) {
+      var confirm = $mdDialog.confirm()
+        .title('Are you sure you wish to delete the selected areas and all associated measurements')
+        .targetEvent(ev)
+        .ok('Yes. Delete areas.')
+        .cancel('No. Go back to areas');
+      $mdDialog.show(confirm).then(function() {
+        deleteAreas();
+      }, function() {
+      });
+    }
+  };
+
+  self.areaClick = function(index) {
+    if(self.editAreas) {
+      self.toRemove[index]=!self.toRemove[index];
+    } else {
+      self.setArea(index);
+      self.editAreas = true;
+    }
   }
+  function deleteAreas() {
+    self.loading = false;
+    var deleteIds = [];
+    var currentUser = UserFactory.getUser();
+    for (var i = 0; i < self.toRemove.length; i++) {
+      if (self.toRemove[i]) {
+        deleteIds.push(self.areaArrayId[i])
+      }
+    }
+    console.log('deleteIds', deleteIds);
+    currentUser.getToken()
+      .then(function(idToken) {
+        $http({
+          method: 'DELETE',
+          url: '/areas/',
+          params: {
+            "id[]": deleteIds
+          },
+          headers: {
+            id_token: idToken
+          }
+        }).then(function(response){
+          //get survey details on last iteration
+          getSurveyDetails();
+          console.log('deletes complete')
+        },
+        function(err) {
+          console.log("error with delete: ", err);
+    });
+    });
+  }
+
   self.addNewArea = function() {
     console.log("Clicked Add New Area:");
     self.inputAreaName = false;
@@ -60,14 +117,10 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
         });
     })
   }
-
   //Edit client profile button
   self.editClient = function(){
     console.log("clicked");
     self.showInput = !self.showInput;
-
-
-
   }
   //save edits to client profile button
   self.updateClient = function(){
@@ -96,7 +149,12 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
   //function to get all areas associated with survey
   function getSurveyDetails(firebaseUser) {
     console.log("SURVEY ID\n\n", surveyId);
-    firebaseUser.getToken()
+    if(firebaseUser) {
+      user = firebaseUser;
+    } else {
+      user = currentUser;
+    }
+    user.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
@@ -117,12 +175,27 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route) {
           self.currentProfile = self.companyInfo;
           InfoFactory.companyInfo = self.companyInfo;
           self.loading = true;
-        },
-        function(err) {
+        })
+        .catch(function(err) {
           console.log("error getting survey details: ", err);
         });
     })
+  }
 
+  function surveyOps() {
+    self.companyInfo = self.surveyDetails[0];
+    self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
+    self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.area_id))];
+    for (var i = 0; i < self.areaArray.length; i++) {
+      self.toRemove[i] = false;
+    }
+    self.completionDate = new Date(self.companyInfo.completion_date);
+    self.surveyDate = new Date(self.companyInfo.survey_date);
+    self.editAreas = false;
+    self.loading = true;
+    console.log("Response From Server: ", self.surveyDetails);
+    console.log("Area Array: ", self.areaArray);
+    console.log("Area ID: ", self.areaArrayId);
   }
   // getSurveyDetails(firebaseUser);
   //This happens when when we switch to this view/controller AND when page is refreshed
