@@ -1,7 +1,10 @@
-app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  function($http, UserFactory, IdFactory) {
+app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory', '$route',
+function($http, UserFactory, IdFactory, $route) {
   console.log("In Survey Controller");
   var self = this;
-  var survey_id = IdFactory.getSurveyId();
+  // var surveyId = IdFactory.getSurveyId();
+  var surveyId = $route.current.params.surveyId;
+  var currentUser;
   const MIN_AREA_GOTO_TOP = 4;
 
   self.goToTop = function() {
@@ -10,7 +13,7 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
   }
 
   console.log("Id Factory: ", IdFactory.survey);
-  console.log("Survey_id: ", survey_id);
+  console.log("surveyId: ", surveyId);
 
   function getSurveyDetails() {
     currentUser = UserFactory.getUser();
@@ -19,7 +22,7 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
     .then(function(idToken) {
         $http({
           method: 'GET',
-          url: '/surveys/one/' + survey_id,
+          url: '/surveys/preview/one/' + surveyId,
           headers: {
             id_token: idToken
           }
@@ -39,8 +42,14 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory',  functi
         });
     })}
 
-  getSurveyDetails();
+  // getSurveyDetails();
+
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    currentUser = firebaseUser;
+    getSurveyDetails();
+  });
 }]);
+
 
 //Function to group measurements by area
 function groupBy(arr, property) {
