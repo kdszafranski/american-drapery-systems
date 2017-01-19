@@ -1,4 +1,4 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location',   function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location', '$anchorScroll',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location, $anchorScroll) {
   var self = this;
   var survey_id = IdFactory.getSurveyId();
   self.measurement = {};
@@ -40,7 +40,8 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
           self.loading = true;
           console.log(self.measurements);
-          self.area_name = self.measurements.area_name;
+          self.area_name = self.measurements[0].area_name;
+          console.log('AREA NAME', self.area_name);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
         });
@@ -95,12 +96,6 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     console.log("mesurement array", self.measurements);
   }
 
-  //Edit client profile button
-  self.editClient = function(){
-    console.log("clicked");
-    self.showInput = !self.showInput;
-  }
-
   //save edits to client profile button
   self.updateClient = function(){
     console.log("profile to be updated", self.companyInfo);
@@ -146,7 +141,29 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           console.log("error updating survey details: ", err);
         });
       });
-  }
+    }
+
+    function updateNotes(){
+      var currentUser = UserFactory.getUser();
+      var area_id = self.measurements[0].area_id
+      console.log("Notes", area_id);
+      currentUser.getToken()
+        .then(function(idToken) {
+          $http({
+            method: 'PUT',
+            url: '/areas/notes/' + area_id,
+            data: self.measurements[0],
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response){
+            console.log("Updated: ", response.data);
+          },
+          function(err) {
+            console.log("error updating survey details: ", err);
+          });
+        });
+      }
 
   //Trashcan icon to clear current input row
   self.activeRowClear = function(){
@@ -221,6 +238,13 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
 
   self.backToArea = function() {
     $location.path('/area');
+    console.log("self.measurements", self.measurements);
+    updateNotes();
+  }
+  self.goToTopOfPage = function(){
+    console.log("clicked");
+    $location.hash('measurementTitle');
+    $anchorScroll();
   }
 
 }]);
