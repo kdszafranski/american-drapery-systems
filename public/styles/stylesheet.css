@@ -212,3 +212,13 @@ table {
 .md-select-placeholder {
   color: rgba(0,0,0,0.87) !important;
 }
+
+#goToTop {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+}
+
+md-card:last-child {
+  margin-bottom: 80px;
+}
