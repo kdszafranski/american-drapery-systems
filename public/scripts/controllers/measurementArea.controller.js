@@ -5,7 +5,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   var surveyId = $route.current.params.surveyId;
   self.loading = false;
   self.showInput = false
-  self.currentProfile = {};
+  self.companyInfo = {};
   var currentUser;
   var areaId;
 
@@ -20,6 +20,8 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   self.setArea = function(index) {
     console.log("index: ", index);
     areaId = self.areaArrayId[index];
+    console.log("self.areaArrayId: ", self.areaArrayId);
+    console.log("setArea() areaId: ", areaId);
     IdFactory.setArea(areaId);
 
     $location.path('/measurement/' + surveyId + '/' + areaId);
@@ -56,7 +58,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   function deleteAreas() {
     self.loading = false;
     var deleteIds = [];
-    var currentUser = UserFactory.getUser();
+    // var currentUser = UserFactory.getUser();
     for (var i = 0; i < self.toRemove.length; i++) {
       if (self.toRemove[i]) {
         deleteIds.push(self.areaArrayId[i])
@@ -124,14 +126,15 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   }
   //save edits to client profile button
   self.updateClient = function(){
-    var clientId = self.currentProfile.client_id;
+    var clientId = self.companyInfo.client_id;
+    console.log("Update client clicked, clientId: ", clientId, self.companyInfo);
     // var currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients/'+ clientId,
-        data: self.currentProfile,
+        data: self.companyInfo,
         headers: {
           id_token: idToken
         }
@@ -146,9 +149,9 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   }
   //function to handle clicking of an already existing area
 
-  //function to get all areas associated with survey
+  //function to get all areas associated with survey or just company and survey information if the survey is new
   function getSurveyDetails(firebaseUser) {
-    console.log("SURVEY ID\n\n", surveyId);
+    // var currentUser = UserFactory.getUser();
     if(firebaseUser) {
       user = firebaseUser;
     } else {
@@ -164,22 +167,34 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
           }
         })
         .then(function(response){
-          console.log("GETTING AREAS FOR SURVEY \n\n");
           self.surveyDetails = response.data;
-          console.log("Response From Server: ", self.surveyDetails);
-          self.companyInfo = self.surveyDetails[0];
-          self.areaArray = self.surveyDetails.map(survey => survey.area_name);
-          console.log("Area Array: ", self.areaArray);
-          self.areaArrayId = self.surveyDetails.map(survey => survey.id);
-          console.log("Area ID: ", self.areaArrayId);
-          self.currentProfile = self.companyInfo;
-          InfoFactory.companyInfo = self.companyInfo;
-          self.loading = true;
-        })
-        .catch(function(err) {
+          //Check to see if it is a new survey. Length will be zero if it is a new survey
+          if (self.surveyDetails.length === 0) {
+            user.getToken()
+              .then(function(idToken) {
+                $http({
+                  method: 'GET',
+                  url: '/surveys/new/' + surveyId,
+                  headers: {
+                    id_token: idToken
+                  }
+                })
+                .then(function(response){
+                  self.surveyDetails = response.data;
+                  surveyOps();
+                },
+                function(err) {
+                  console.log("error getting survey details: ", err);
+                });
+            });
+          } else {
+            surveyOps();
+          }
+        },
+        function(err) {
           console.log("error getting survey details: ", err);
         });
-    })
+    });
   }
 
   function surveyOps() {
