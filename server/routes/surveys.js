@@ -40,7 +40,7 @@ router.get('/one/:survey_id', function(req, res) {
       'WHERE survey_id = $1', [survey_id])
         .then(function(result) {
           client.release();
-          console.log(result.rows);
+          console.log('get one survey success');
           res.send(result.rows);
         })
         .catch(function(err) {

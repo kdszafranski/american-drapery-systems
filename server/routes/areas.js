@@ -29,13 +29,20 @@ router.post('/', function(req,res) {
     });
 });
 
-router.delete('/:areaId', function(req, res) {
-  var areaId = req.params.areaId;
+router.delete('/', function(req, res) {
+  var ids = req.query.id;
+  var string = "(";
+  //parse array into SQL string
+  for (var i = 0; i < ids.length; i++) {
+    string+= ids[i] + ',';
+  }
+  string = string.substring(0, string.length-1);
+  string+=')';
+  console.log('delstring, ids', string, ids);
   pool.connect()
     .then(function(client) {
       client.query("DELETE from areas " +
-      "WHERE id = $1",
-      [areaId])
+      "WHERE id in " + string)
       .then(function(result) {
         client.release();
         console.log("delete complete");
@@ -44,9 +51,9 @@ router.delete('/:areaId', function(req, res) {
       .catch(function(err) {
         console.log('select query error: ', err);
         res.sendStatus(500);
-      });
+      } );
     });
-})
+});
 
 //update area
 router.put('/notes/:area_id', function(req, res) {
