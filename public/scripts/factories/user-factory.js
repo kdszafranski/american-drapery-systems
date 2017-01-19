@@ -7,7 +7,7 @@ function($firebaseAuth, $http) {
   //Auth is constant (won't change), assign to $firebaseAuth()
   const auth = $firebaseAuth();
   //Instantiate currentUser object
-  var currentUser = {};
+  var currentUser;
   var isUser = false;
   //logIn fxn, called when logIn button clicked
   function logIn() {
@@ -30,13 +30,14 @@ function($firebaseAuth, $http) {
         }).then(function(response) { //when $http promise resolved:
           console.log("Retrieved this data from server at login: ", response);
           isUser = true;
-        }).catch(function(err) {
-          if(err.status == 403) {
+          return response;
+        }).catch(function(err) { //If theres an err status code
+          if(err.status == 403) { //The user is either not authorized
             console.log("User not authorized");
-            return logOut();
-          } else if(err.status !== 403) {
+            throw err;
+          } else if(err.status !== 403) { //Or there was some other error (likely 500, query erro)
             console.log("Server error: ", err);
-            return logOut();
+            throw err;
           }
         })
       });
@@ -48,7 +49,7 @@ function($firebaseAuth, $http) {
   auth.$onAuthStateChanged(function(firebaseUser){
     // firebaseUser will be null if not logged in
     currentUser = firebaseUser;
-    console.log("onAuthStateChanged", currentUser);
+    console.log("onAuthStateChanged in userfactory", currentUser);
     if(firebaseUser) {
       isUser = true;
     }
@@ -69,15 +70,33 @@ function($firebaseAuth, $http) {
   Function to be called in controllers
   that need access to currentUser
   *************************************/
-  function getUser() {
-    return currentUser;
+  function userChecker() {
+    console.log("Current user in USERFACTORY at get user: ", currentUser);
+    return currentUser.getToken()
+      .then(function(idToken) {
+        return $http({
+          method: 'GET',
+          url: '/users',
+          headers: {
+            id_token: idToken
+          }
+        })
+        .then(function(response) {
+          console.log("getUser ran in UserFactory, response: ", response);
+          return response;
+        })
+        .catch(function(err) {
+          console.log("getUser in UserFactory err: ", err);
+          throw err;
+        })
+      })
   }
   /************************************
   function to be called in controllers
   that need to ngShow/Hide buttons
   *************************************/
-  function userChecker() {
-    return isUser;
+  function getUser() {
+    return currentUser;
   }
   /*********************
   Put all functions

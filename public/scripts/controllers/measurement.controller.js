@@ -1,29 +1,30 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$mdDialog", 'InfoFactory', '$location', '$mdToast',  function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $location, $mdToast) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",
+"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll',
+function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll) {
   var self = this;
-  var survey_id = IdFactory.getSurveyId();
+  var surveyId = $route.current.params.surveyId;
   self.measurement = {};
   self.measurements =[];
   self.measurement.edit = true;
-  self.areaId = IdFactory.getAreaId();
+  // self.areaId = IdFactory.getAreaId();
+  self.areaId = $route.current.params.areaId;
+  // self.areaName = $route.current.params.areaName;
   self.loading = false;
   self.showInput = true;
   self.currentProfile = {};
+  var currentUser;
 
-
-  if(IdFactory.getNewArea()) {
+  if(self.areaName == 0) {
     //use client info passed along from area controller if this is a new area
     console.log('newstatus');
     self.companyInfo = formatDates([InfoFactory.getCompanyInfo()])[0];
     self.area_name = IdFactory.getNewArea();
     self.loading = true;
-  } else {
-    //get client info from server
-    getMeasurements();
-    getSurveyDetails();
   }
 
-  function getMeasurements() {
-    var currentUser = UserFactory.getUser();
+  function getMeasurements(firebaseUser) {
+    console.log("CurrentUser in getmeasure: ", currentUser);
+    currentUser = firebaseUser;
     currentUser.getToken()
       .then(function(idToken) {
         $http({
@@ -48,13 +49,21 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
       })
   }
 
-  function getSurveyDetails() {
-    var currentUser = UserFactory.getUser();
+
+  //Runs when page refreshed AND when switching to this controller
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    currentUser = firebaseUser;
+    getMeasurements(firebaseUser);
+    getSurveyDetails(firebaseUser);
+  })
+
+  function getSurveyDetails(firebaseUser) {
+    currentUser = firebaseUser;
     currentUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
-          url: '/surveys/one/' + survey_id,
+          url: '/surveys/one/' + surveyId,
           headers: {
             id_token: idToken
           }
@@ -82,6 +91,8 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
       .parent('#saveAndGoBackButton')
     );
     var currentUser = UserFactory.getUser();
+    // var currentUser = UserFactory.getUser();
+    console.log("Current User at addButton: ", currentUser);
     currentUser.getToken()
     .then(function(idToken) {
         $http({
@@ -94,7 +105,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
 
-          getMeasurements();
+          getMeasurements(currentUser);
 
         }).catch(function(err) {
           console.log("Error in measurement post");
@@ -110,7 +121,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     self.companyInfo.completion_date = new Date(self.completionDate);
     self.companyInfo.survey_date = new Date(self.surveyDate);
     var clientId = self.companyInfo.client_id;
-    var currentUser = UserFactory.getUser();
+    // var currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
       $http({
@@ -131,12 +142,12 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
   }
   function updateSurvey(){
     var currentUser = UserFactory.getUser();
-    console.log("survey id", survey_id);
+    console.log("survey id", surveyId);
     currentUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'PUT',
-          url: '/surveys/update/' + survey_id,
+          url: '/surveys/update/' + surveyId,
           data: self.companyInfo,
           headers: {
             id_token: idToken
@@ -152,7 +163,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     }
 
     function updateNotes(){
-      var currentUser = UserFactory.getUser();
+      // var currentUser = UserFactory.getUser();
       var area_id = self.measurements[0].area_id
       console.log("Notes", area_id);
       currentUser.getToken()
@@ -172,18 +183,6 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           });
         });
       }
-
-  //Trashcan icon to clear current input row
-  self.activeRowClear = function(){
-    console.log("current trashcn clicked");
-    self.measurement = {};
-  }
-  //Edit row pencil icon
-  self.editRowButton = function(index){
-    console.log("pencil clicked", index);
-    self.measurements[index].edit = !self.measurements[index].edit;
-    console.log("measurements", self.measurements);
-  }
 
   //button clicked to update the edited row
   self.updateRowButton = function(index){
@@ -234,7 +233,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
     console.log('#row'+ self.measurements[index].id);
     console.log("remove row number: ", self.measurements[index].id);
     var idToDelete = self.measurements[index].id;
-    var currentUser = UserFactory.getUser();
+    currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
         $http({
@@ -245,7 +244,7 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
-          getMeasurements();
+          getMeasurements(currentUser);
         }).catch(function(err) {
           console.log("Error in measurement post");
         });
@@ -253,10 +252,11 @@ app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory", "$
   }
 
   self.backToArea = function() {
-    $location.path('/area');
+    $location.path('/area/' + surveyId);
     console.log("self.measurements", self.measurements);
     updateNotes();
   }
+
   self.goToTopOfPage = function(){
     console.log("clicked");
     window.scrollTo(0,0)

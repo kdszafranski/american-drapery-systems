@@ -12,17 +12,17 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'DashboardController',
     controllerAs: 'dash'
   })
-  .when('/measurement', {
+  .when('/measurement/:surveyId/:areaId', {
     templateUrl: '/views/templates/measurement.html',
     controller: 'MeasurementController',
     controllerAs: 'measure'
   })
-  .when('/survey', {
+  .when('/survey/:surveyId', {
     templateUrl: '/views/templates/survey.html',
     controller: 'SurveyController',
     controllerAs: 'survey'
   })
-  .when('/profile' ,{
+  .when('/profile/', {
     templateUrl: '/views/templates/profile.html',
     controller: 'ProfileController',
     controllerAs: 'profile'
@@ -32,7 +32,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'FileController',
     controllerAs: 'files'
   })
-  .when('/area' ,{
+  .when('/area/:surveyId' ,{
     templateUrl: '/views/templates/measurement-area.html',
     controller: 'MeasurementAreaController',
     controllerAs: 'ma'
@@ -75,7 +75,8 @@ function formatDates(aryOfObjs){
   //convert the ISO Dates to readable format
   //expects array of objects
   for (var i = 0; i < aryOfObjs.length; i++) {
-    
+    console.log('date', aryOfObjs[i].survey_date);
+
     if(moment(aryOfObjs[i].last_modified).isValid()) {
       aryOfObjs[i].last_modified = moment(aryOfObjs[i].last_modified).format("YYYY/MM/DD");
     }
