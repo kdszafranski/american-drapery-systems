@@ -239,19 +239,25 @@
             </tr>
         </tbody>
       </table>
-        <div id="notesDiv" layout="row" layout-align="start end">
-          <h3 style="margin: 0">Area Notes:</h3>
-          <md-input-container layout-align="start end" flex>
-            <input flex ng-model="measure.measurements[0].notes" >
+
+      <form>
+        <div id="notesDiv" layout="row">
+          <!-- <h3 id="notesHeader" style="margin: 0">Area Notes:</h3> -->
+
+          <md-input-container layout-align="start end" flex class="md-block" id="areaNotes">
+            <label>Area Notes:</label>
+            <textarea value="measure.measurements[0].notes" ng-model="measure.measurements[0].notes" ></textarea>
           </md-input-container>
         </div>
-        <div>
-          <md-button ng-click="measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
-            <span>Save and Go Back to Areas</span>
-          </md-button>
-        </div>
+      </form>
 
-        <span id="cardTitle"><a href="" ng-click="measure.goToTopOfPage()">Go To Top</a></span>
+      <div id="backToAreaButtonContainer">
+        <md-button ng-click="measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
+          <span>Save and Go Back to Areas</span>
+        </md-button>
+      </div>
+
+      <span id="cardTitle"><a href="" ng-click="measure.goToTopOfPage()">Go To Top</a></span>
       </md-card-content>
     </md-card>
   </div>
