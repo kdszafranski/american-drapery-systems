@@ -1,55 +1,87 @@
-<div layout="row" layout-align="center center">
-  <md-card flex="70">
-    <md-card-content  ng-hide="dash.loading">
+<div layout="row" layout-align="center center" >
+  <md-card id="dashCard" flex="70">
+    <md-card-content ng-hide="dash.loading">
       <div layout="row" layout-sm="column" layout-align="space-around">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
+
     <md-card-content ng-show="dash.loading">
       <div layout="row">
-        <div layout="column" flex="33" layout-align="space-around center">
+        <div layout="column" flex="33" layout-align="space-around end">
           <md-button id="newJob" class="md-raised md-primary md-ink-ripple" ng-click="dash.newJob()">
             New Job
           </md-button>
         </div>
-        <div layout="column" flex="33" layout-align="space-around start">
-          <md-checkbox ng-model="dash.show.completed" ng-change="dash.statusFilter(dash.show)">
-            Show Completed Jobs
-          </md-checkbox>
-          <md-checkbox ng-model="dash.show.declined" ng-change="dash.statusFilter(dash.show)">
-            Show Declined Jobs
-          </md-checkbox>
+        <div layout="column" flex="33" layout-align="space-around center">
+          <h3>Show Jobs</h3>
+          <div layout="row">
+            <md-checkbox ng-model="dash.show.pending" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
+              Pending
+            </md-checkbox>
+            <md-checkbox ng-model="dash.show.dispatched" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
+              Dispatched
+            </md-checkbox>
+          </div>
+          <div layout="row">
+            <md-checkbox ng-model="dash.show.completed" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
+              Completed
+            </md-checkbox>
+            <md-checkbox ng-model="dash.show.declined" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
+              Declined
+            </md-checkbox>
+          </div>
         </div>
         <div layout="column" flex="33" layout-align="space-around start">
-          <span>Results: {{(dash.filtered  | filter: query).length}} </span>
+          <span>Results: {{(dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length}} </span>
           <md-input-container>
-            <label for="input_23">Search</label>
-            <input ng-model="query" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" />
+            <label>Search</label>
+            <input ng-model="query" aria-invalid="false" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)"/>
             <div class="md-errors-spacer"></div>
           </md-input-container>
         </div>
       </div>
 
-      <div layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
+      <div layout="row" layout-align="center center" layout-wrap>
         <table id="dashTable">
           <thead>
             <tr id="headerRow">
-              <th>Survey #</th>
-              <th>Job #</th>
-              <th>Client</th>
-              <th>Status</th>
-              <th>Last Modified</th>
-              <th>Survey Date</th>
+              <th class="columnSort" ng-click="dash.sortType = 'id'; dash.sortReverse = !dash.sortReverse">Survey #
+                <span ng-show="dash.sortType == 'id' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'id' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'job_number'; dash.sortReverse = !dash.sortReverse">Job #
+                <span ng-show="dash.sortType == 'job_number' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'job_number' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'client_name'; dash.sortReverse = !dash.sortReverse">Client
+                <span ng-show="dash.sortType == 'client_name' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'client_name' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'status'; dash.sortReverse = !dash.sortReverse">Status
+                <span ng-show="dash.sortType == 'status' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'status' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'last_modified'; dash.sortReverse = !dash.sortReverse">Last Modified
+                <span ng-show="dash.sortType == 'last_modified' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'last_modified' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
+              <th class="columnSort" ng-click="dash.sortType = 'survey_date'; dash.sortReverse = !dash.sortReverse">Survey Date
+                <span ng-show="dash.sortType == 'survey_date' && !dash.sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="dash.sortType == 'survey_date' && dash.sortReverse" class="fa fa-caret-up"></span>
+              </th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered  | filter: query |  startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
+            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | excludeByStatus: dash.show.text() | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td>{{result.client_name}}</td>
-              <td>{{result.status}}</td>
+              <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)">
+                <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
+              </md-select></td>
               <td>{{result.last_modified}}</td>
               <td>{{result.survey_date}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="view">
@@ -62,12 +94,12 @@
           </tbody>
         </table>
       </div>
-      <div layout="row" layout-align="center center" layout-wrap="">
+      <div layout="row" ng-show="dash.totalPages((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)" layout-align="center center" layout-wrap>
         <md-button ng-class="md-mini" ng-disabled="dash.currentPage == 0" ng-click="dash.currentPage=dash.currentPage-1">
           Previous
         </md-button>
-          {{dash.currentPage+1}}/{{dash.totalPages((dash.filtered  | filter: query).length)}}
-        <md-button ng-class="md-mini" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query).length / dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
+          {{dash.currentPage+1}}/{{dash.totalPages((dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length)}}
+        <md-button ng-class="md-mini" ng-disabled="dash.currentPage >= ((dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length / dash.pageSize - 1)" ng-click="dash.currentPage=dash.currentPage+1">
           Next
         </md-button>
       </div>

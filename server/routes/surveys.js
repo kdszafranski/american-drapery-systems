@@ -26,7 +26,6 @@ router.get('/all', function(req, res) {
 });
 
 
-
 //Get request to fetch specified job information(Measurements, client information and images)
 router.get('/one/:survey_id', function(req, res) {
   console.log('reached get one survey route')
@@ -73,6 +72,55 @@ router.get('/new/:survey_id', function(req, res) {
     });
 });
 
+
+//update survey
+router.put('/update/:survey_id', function(req, res) {
+  var survey = req.body;
+  var id = req.params.survey_id;
+  console.log("Reached edit new survey route: ", survey);
+  pool.connect()
+    .then(function(client) {
+      client.query('UPDATE survey ' +
+      'SET job_number = $1, survey_date=$2, completion_date=$3 ' +
+      'WHERE survey.id = $4',
+      [survey.job_number, survey.survey_date, survey.completion_date, id])
+      .then(function(result) {
+        client.release();
+        console.log("pPUT complete");
+        res.sendStatus(201);
+      })
+      .catch(function(err) {
+        console.log("Post unsuccesful: ", err);
+        res.sendStatus(500);
+      });
+    });
+});
+
+//update survey status
+router.put('/status/:survey_id', function(req, res) {
+  var status = req.body;
+  var id = req.params.survey_id;
+  console.log(`Editing survey #${id} to a status of ${status.status}`);
+  pool.connect()
+    .then(function(client) {
+      client.query('UPDATE survey ' +
+      'SET status = $1, last_modified=$2' +
+      'WHERE survey.id = $3',
+      [status.status, status.last_modified, id])
+      .then(function(result) {
+        client.release();
+        console.log("PUT complete");
+        res.sendStatus(200);
+      })
+      .catch(function(err) {
+        console.log("Post unsuccesful: ", err);
+        res.sendStatus(500);
+      });
+    });
+});
+
+//add new survey
+
 router.post('/', function(req, res) {
   var newSurvey = req.body;
   console.log("Reached add new survey route: ", newSurvey);
@@ -93,5 +141,6 @@ router.post('/', function(req, res) {
       });
     });
 });
+
 
 module.exports = router;
