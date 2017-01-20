@@ -210,6 +210,7 @@ table {
   border-top-right-radius: 3px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  background-color: rgb(255,255,255);
 }
 
 .area-input {
