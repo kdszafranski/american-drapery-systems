@@ -17,8 +17,8 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
   console.log("surveyId: ", surveyId);
 
   function getSurveyDetails() {
-    currentUser = UserFactory.getUser();
-    console.log("Current User", currentUser);
+    // currentUser = UserFactory.getUser();
+    // console.log("Current User", currentUser);
     currentUser.getToken()
     .then(function(idToken) {
         $http({
@@ -37,6 +37,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
+          console.log("areaArray: ", self.areaArray);
         },
         function(err) {
           console.log("error getting survey details: ", err);

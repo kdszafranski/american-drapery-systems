@@ -39,6 +39,7 @@
               <li>{{survey.surveyDetails[0].completion_date}}</li>
               <li><b>Survey Date:</b></li>
               <li>{{survey.surveyDetails[0].survey_date}}</li>
+              <li></li>
             </ul>
         </div>
       </div>
@@ -83,15 +84,13 @@
         <b>Notes:</b>
         {{area[$index].notes}}
       </p>
-
-      <p class="files" ng-init="areaId = area[$index].area_id">
-        <b>Files:</b>
-        {{areaId}}
-        <i ng-repeat="file in survey.currentFilesObject | "></i>
-      </p>
     </md-card-content>
   </md-card>
 </div>
+<p class="files" ng-init="areaId = area[$index].area_id">
+  <b>Files: {{areaId}}</b>
+  <i ng-repeat="file in survey.currentFilesObject"></br>{{file.originalName}}</br></i>
+</p>
 <div>
   <md-button id="goToTopButton" class="md-raised md-primary md-ink-ripple" ng-show="survey.areaArray.length > 4" ng-click="survey.goToTop()">Go To Top</md-button>
 </div>

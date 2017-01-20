@@ -37,7 +37,7 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
       template:
         '<md-card>' +
           '<md-card-content layout="row" layout-wrap>' +
-            '<img src="' + currentFileUrl + '"/>' +
+            '<img ng-src="' + currentFileUrl + '"/>' +
           '</md-card-content>' +
         '</md-card flex>',
       targetEvent: ev,
