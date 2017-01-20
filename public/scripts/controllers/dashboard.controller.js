@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', '$mdToast', "$mdDialog", function(UserFactory, IdFactory, $http, $location, $scope, $mdToast, $mdDialog) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', '$mdToast', "$mdDialog", "$timeout", function(UserFactory, IdFactory, $http, $location, $scope, $mdToast, $mdDialog, $timeout) {
 
   const self = this;
   var currentUser = {};
@@ -159,5 +159,13 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       });
     });
   }
+  self.toast = function(id) {
+    self.toastId = id;
+
+    $timeout(function(){
+      self.toastId = 0;
+    }, 1000);
+  }
+
 
 }]);

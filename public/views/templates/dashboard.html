@@ -74,7 +74,7 @@
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
               <td id="row{{result.id}}">{{result.client_name}}</td>
-              <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)" class="status-update">
+              <td data-ng-class="{dashToast: dash.toastId == result.id, dashNoToast: dash.toastId != result.id}"><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.toast(result.id)" class="status-update">
                 <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
               </md-select></td>
               <td>{{result.last_modified}}</td>
