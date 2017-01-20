@@ -149,8 +149,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         $mdToast.show(
           $mdToast.simple()
           .textContent('Updated')
-          .position('top left' )
-          .hideDelay(2000)
+          .position('top' )
+          .hideDelay(600)
           .parent('#row'+ survey_id)
         );
       },

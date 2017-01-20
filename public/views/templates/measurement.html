@@ -134,7 +134,7 @@
           <tbody id="tableBody">
 
             <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" >
-              <td ng-show="measure.measurements[$index].edit" id="row{{measure.measurements[$index].id}}">{{dimension.floor}}</td>
+              <td id="row{{measure.measurements[$index].id}}" ng-show="measure.measurements[$index].edit" >{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
               <td ng-show="measure.measurements[$index].edit">{{dimension.room}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
@@ -168,6 +168,9 @@
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].fascia_size" size="6"  aria-label="fascia_size"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.fabric}}</td>
+              <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].fabric" size="20"  aria-label="fabric"></md-input-container></td>
+
+              <td ng-show="measure.measurements[$index].edit">{{dimension.mount}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].fabric" size="10"  aria-label="fabric"></md-input-container></td>
 
@@ -176,7 +179,6 @@
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].mount" size="6"  aria-label="mount"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
-
                 <md-button ng-click="measure.measurements[$index].edit = !measure.measurements[$index].edit;" class="md-icon-button" aria-label="edit">
                   <md-icon md-svg-icon="./img/edit.svg"></md-icon>
                 </md-button>
