@@ -8,6 +8,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   self.companyInfo = {};
   var currentUser;
   var areaId;
+  var selectedAreaName;
 
   self.newAreaName = '';
   self.editAreas = false;
@@ -23,8 +24,9 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     console.log("self.areaArrayId: ", self.areaArrayId);
     console.log("setArea() areaId: ", areaId);
     IdFactory.setArea(areaId);
+    selectedAreaName = self.areaArray[index];
 
-    $location.path('/measurement/' + surveyId + '/' + areaId);
+    $location.path('/measurement/' + surveyId + '/' + areaId + '/' + selectedAreaName);
   }
 
 
@@ -36,7 +38,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     // Appending dialog to document.body to cover sidenav in docs app
     if(self.toRemove.indexOf(true) != -1) {
       var confirm = $mdDialog.confirm()
-        .title('Are you sure you wish to delete the selected areas and all associated measurements')
+        .title('Are you sure you wish to delete the selected areas and all associated measurements and files')
         .targetEvent(ev)
         .ok('Yes. Delete areas.')
         .cancel('No. Go back to areas');
@@ -92,7 +94,8 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     self.inputAreaName = false;
     self.newArea = {
       area_name: self.newAreaName,
-      survey_id: surveyId
+      survey_id: surveyId,
+      notes: ""
     }
     console.log("New Area Object: ", self.newArea);
     // currentUser = UserFactory.getUser();
@@ -112,7 +115,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
           areaId = response.data[0].id;
           IdFactory.setArea(areaId);
           //We do need to do this now.
-          $location.path('/measurement/' + surveyId + '/' + areaId);
+          $location.path('/measurement/' + surveyId + '/' + areaId + '/' + self.newAreaName);
         },
         function(err) {
           console.log("error getting survey details: ", err);

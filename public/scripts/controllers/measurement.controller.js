@@ -6,21 +6,12 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   self.measurement = {};
   self.measurements =[];
   self.measurement.edit = true;
-  // self.areaId = IdFactory.getAreaId();
   self.areaId = $route.current.params.areaId;
-  // self.areaName = $route.current.params.areaName;
+  self.area_name = $route.current.params.areaName;
   self.loading = false;
   self.showInput = true;
   self.currentProfile = {};
   var currentUser;
-
-  if(self.areaName == 0) {
-    //use client info passed along from area controller if this is a new area
-    console.log('newstatus');
-    self.companyInfo = formatDates([InfoFactory.getCompanyInfo()])[0];
-    self.area_name = IdFactory.getNewArea();
-    self.loading = true;
-  }
 
   function getMeasurements(firebaseUser) {
     console.log("CurrentUser in getmeasure: ", currentUser);
@@ -41,7 +32,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           }
           self.loading = true;
           console.log(self.measurements);
-          self.area_name = self.measurements[0].area_name;
+          // self.area_name = self.measurements[0].area_name;
           console.log('AREA NAME', self.area_name);
         }).catch(function(err) {
           console.log("Error in measurment controller get req: ", err);
@@ -54,16 +45,16 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     currentUser = firebaseUser;
     getMeasurements(firebaseUser);
-    getSurveyDetails(firebaseUser);
+    getAreaInfo(firebaseUser);
   })
 
-  function getSurveyDetails(firebaseUser) {
+  function getAreaInfo(firebaseUser) {
     currentUser = firebaseUser;
     currentUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
-          url: '/surveys/one/' + surveyId,
+          url: '/areas/' + self.areaId,
           headers: {
             id_token: idToken
           }
@@ -72,7 +63,9 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           self.companyInfo = response.data[0];
           self.completionDate = new Date(self.companyInfo.completion_date);
           self.surveyDate = new Date(self.companyInfo.survey_date);
+          self.areaNotes = self.companyInfo.notes;
           self.loading = true;
+
         },
         function(err) {
           console.log("error getting survey details: ", err);
@@ -164,14 +157,13 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
 
     function updateNotes(){
       // var currentUser = UserFactory.getUser();
-      var area_id = self.measurements[0].area_id
-      console.log("Notes", area_id);
+      console.log("Notes");
       currentUser.getToken()
         .then(function(idToken) {
           $http({
             method: 'PUT',
-            url: '/areas/notes/' + area_id,
-            data: self.measurements[0],
+            url: '/areas/notes/' + self.areaId,
+            data: {note: self.areaNotes},
             headers: {
               id_token: idToken
             }
@@ -253,9 +245,9 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   }
 
   self.backToArea = function() {
+    updateNotes();
     $location.path('/area/' + surveyId);
     console.log("self.measurements", self.measurements);
-    updateNotes();
   }
 
   self.goToTopOfPage = function(){
