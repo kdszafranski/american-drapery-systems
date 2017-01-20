@@ -77,6 +77,7 @@ md-toast .md-toast-content span {
   background-color: rgb(63,81,181);
   color: rgba(255,255,255,0.87);
   padding-top: 5px;
+  border: none;
 }
 #tableBodyRow td{
   border: 1px solid;
@@ -96,6 +97,11 @@ md-toast .md-toast-content span {
 }
 .headerRow th {
   padding: 5px;
+}
+tr.headerRow{
+  background-color: rgb(63,81,181);
+  color: rgba(255,255,255,0.87);
+  padding-top: 5px;
 }
 #survey.headerRow{
   background-color: rgb(63,81,181);
@@ -276,7 +282,7 @@ footer {
   color: rgba(0,0,0,0.87) !important;
 }
 
-#goToTopButton {
+#surveyButtons {
   position: fixed;
   bottom: 6px;
   left: 25px;
