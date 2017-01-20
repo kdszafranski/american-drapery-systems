@@ -5,6 +5,7 @@ function($http, UserFactory, IdFactory, $route) {
   // var surveyId = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
   var currentUser;
+  self.loading = false;
   const MIN_AREA_GOTO_TOP = 4;
 
   self.goToTop = function() {
@@ -33,6 +34,7 @@ function($http, UserFactory, IdFactory, $route) {
           var separateAreas = groupBy(self.surveyDetails, 'area_name');
           console.log(separateAreas);
           self.areaArray = [];
+          self.loading = true;
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
@@ -48,6 +50,10 @@ function($http, UserFactory, IdFactory, $route) {
     currentUser = firebaseUser;
     getSurveyDetails();
   });
+
+  self.printPage = function() {
+    window.print();
+  }
 }]);
 
 

@@ -89,16 +89,29 @@
       </div>
 
     </md-card flex>
-    <md-card>
-      <md-card-title id="addFiles">
+    <!-- FILES -->
+    <div layout="row" layout-align="center center" layout-wrap ng-controller="FileController as files">
+      <md-card>
+        <md-card-title id="addFiles">
+            <md-card-title-text>
+              <span id="cardTitle" class="md-subhead">Add Files</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="row" layout-wrap>
+          <div ng-include="'/views/templates/new-files.html'"></div>
+        </md-card-content>
+      </md-card flex>
+      <md-card>
+        <md-card-title id="currentFiles">
           <md-card-title-text>
-            <span id="cardTitle" class="md-subhead"><u>Add Files</u></span>
+            <span id="cardTitle" class="md-subhead">Current Files</span>
           </md-card-title-text>
-      </md-card-title>
-        <md-card-content layout="column" layout-wrap>
-          <div ng-include="'/views/templates/files.html'"></div>
-      </md-card-content>
-    </md-card flex>
+        </md-card-title>
+        <md-card-content layout="row" layout-wrap>
+          <div ng-include="'/views/templates/current-files.html'"></div>
+        </md-card-content>
+      </md-card flex>
+    </div>
   </div>
   <div  layout="row" layout-align="center center" layout-wrap>
     <md-card>
@@ -172,7 +185,7 @@
               <td ng-show="measure.measurements[$index].edit">{{dimension.fabric}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].fabric" size="20"  aria-label="fabric"></md-input-container></td>
 
-               <td ng-show="measure.measurements[$index].edit">{{dimension.mount}}</td>
+              <td ng-show="measure.measurements[$index].edit">{{dimension.mount}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].mount" size="10"  aria-label="mount"></md-input-container></td>
 
