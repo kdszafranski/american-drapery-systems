@@ -9,7 +9,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   var currentUser;
   var areaId;
   var selectedAreaName;
-
+  var surveyHasAreas = true;
   self.newAreaName = '';
   self.editAreas = false;
   console.log(surveyId);
@@ -173,6 +173,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
           self.surveyDetails = response.data;
           //Check to see if it is a new survey. Length will be zero if it is a new survey
           if (self.surveyDetails.length === 0) {
+            surveyHasAreas = false;
             user.getToken()
               .then(function(idToken) {
                 $http({
@@ -203,11 +204,13 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   function surveyOps() {
     console.log("surveyOps Running");
     self.companyInfo = self.surveyDetails[0];
-    self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
-    self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.id))];
+    if(surveyHasAreas) {
+      self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
+      self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.id))];
 
-    for (var i = 0; i < self.areaArray.length; i++) {
-      self.toRemove[i] = false;
+      for (var i = 0; i < self.areaArray.length; i++) {
+        self.toRemove[i] = false;
+      }
     }
     self.completionDate = new Date(self.companyInfo.completion_date);
     self.surveyDate = new Date(self.companyInfo.survey_date);
@@ -216,7 +219,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     console.log("Response From Server: ", self.surveyDetails);
     console.log("Area Array: ", self.areaArray);
     console.log("Area ID: ", self.areaArrayId);
-
+    surveyHasAreas = true;
   }
   // getSurveyDetails(firebaseUser);
   //This happens when when we switch to this view/controller AND when page is refreshed
@@ -224,6 +227,12 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     currentUser = firebaseUser;
     getSurveyDetails(firebaseUser);
   });
+
+  self.survey = function() {
+    IdFactory.setSurvey(surveyId);
+    console.log("\n\nsurveyId in ma.survey: ", surveyId);
+    $location.path('/survey/' + surveyId);
+  }
 
 }]);
 

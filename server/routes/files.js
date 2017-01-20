@@ -21,9 +21,11 @@ var currentFileNumber,
     currentKey,
     areaId,
     surveyId,
+    originalName,
     awsLocation;
 var bucket = 'american-drapery-systems';
 var keys = {}; //storing AWS.S3 file keys here
+var fileNames = {};
 var fileInfo = {};
 var s3 = new aws.S3();
 var pool = new pg.Pool(config);
@@ -38,16 +40,19 @@ var upload = multer({
       cb(null, bucket);
     },
     key: function(req, file, cb) {
+      console.log("FILE IN KEY FXN: ", file.originalname);
       currentFileNumber = req.files.length;//files.length increments by one each iteration and corresponds with file number
       currentKey = uuid();//each file needs a uuid for a key
       keys["file_" + currentFileNumber] = currentKey; //saves each key to the keys object
+      fileNames["file_" + currentFileNumber] = file.originalname;
       areaId = req.params.areaId;
       surveyId = req.headers.survey_id;
-      awsLocation = 'survey_' + surveyId + '/' + 'area_' + areaId + '/' + currentKey;
+      awsLocation = 'survey_' + surveyId + '/' + 'area_' + areaId + '/' + currentKey + file.originalname;
       cb(null, awsLocation);
       console.log("Done with image upload to: ", awsLocation);
     },
-    contentType: multerS3.AUTO_CONTENT_TYPE
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: 'public-read'
   })
 });
 
@@ -57,22 +62,21 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
   pool.connect()
     .then(function(client) {
       for (var key in keys) {
-        client.query("INSERT INTO files (file_info, bucket, key, area_id) " +
-        "VALUES ($1, $2, $3, $4)", [fileInfo[key], bucket, keys[key], areaId])
+        client.query("INSERT INTO files (file_info, bucket, key, area_id, original_name) " +
+        "VALUES ($1, $2, $3, $4, $5)", [fileInfo[key], bucket, keys[key], areaId, fileNames[key]])
       }
-    }).then(function(result, err) {
-      client.release();
-      if(err) {
-      console.log("Error in query: ", err);
-    } else {
-      console.log("Success!: ", result);
-      res.sendStatus(201);
-    }
     })
-    // .catch(function(err) {
-    //   console.log("Insert query error: ", err);
-    //   res.sendStatus(500);
-    // })
+    .then(function(result) {
+      console.log("Files info INSERT query success: ");
+      res.sendStatus(201);
+      client.release();
+    })
+    .catch(function(err) {
+      console.log("Client: ", client);
+      console.log("Query error inserting files info: ", err);
+      res.sendStatus(500);
+      client.release();
+    })
 });//end route
 
 router.get('/:areaId', function(req, res) {
@@ -93,5 +97,29 @@ router.get('/:areaId', function(req, res) {
         });
     });
 });//end route
+
+
+router.delete('/:surveyId/:areaId/:key/:name', function(req, res) {
+  surveyId = req.params.surveyId;
+  areaId = req.params.areaId;
+  currentKey = req.params.key;
+  originalName = req.params.name;
+  console.log("Delete route hit");
+  pool.connect()
+    .then(function(client) {
+      client.query('DELETE FROM files WHERE key = $1', [currentKey])
+        .then(function(result) {
+          console.log("Delete from DB success: ", result);
+          res.sendStatus(200);
+          client.release();
+        })
+        .catch(function(err) {
+          console.log("Error deleting from DB: ", err);
+          res.sendStatus(500);
+          client.release();
+        });
+    });
+});//end route
+
 
 module.exports = router;
