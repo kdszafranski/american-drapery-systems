@@ -1,6 +1,11 @@
 <div id="survey" layout="row" layout-align="center center" class="container">
   <md-card flex="100">
-    <md-card-content >
+    <md-card-content ng-hide="survey.loading">
+      <div layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+    </md-card-content>
+    <md-card-content ng-show="survey.loading">
       <div class="survey-header" layout="row">
         <div class="client-info" layout="column" layout-align="center left">
           <div class="client-name" layout="row" layout-align="center left">
@@ -45,11 +50,11 @@
     </md-card-content>
   </md-card>
 </div>
-<div layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
+<div class="survey-area" layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
   <md-card flex="100">
     <md-card-content>
       <h3 class="areaName" ng-if="area[0].area_name">Area: {{area[0].area_name}}</h4>
-      <table style="width:100%" >
+      <table cellspacing="0">
         <thead>
           <tr id="headerRow">
             <th>Floor</th>
@@ -86,6 +91,8 @@
     </md-card-content>
   </md-card>
 </div>
-<div>
-  <md-button id="goToTopButton" class="md-raised md-primary md-ink-ripple" ng-show="survey.areaArray.length > 4" ng-click="survey.goToTop()">Go To Top</md-button>
+<div id="surveyButtons" layout="row" layout-align="center start">
+  <md-button class="md-raised md-button md-ink-ripple" ng-click="survey.printPage()">PDF/PRINT</md-button>
+
+  <md-button class="md-raised md-button md-ink-ripple" ng-show="survey.areaArray.length > 4" ng-click="survey.goToTop()">Go To Top</md-button>
 </div>
