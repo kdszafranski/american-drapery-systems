@@ -46,11 +46,12 @@ var upload = multer({
       fileNames["file_" + currentFileNumber] = file.originalname;
       areaId = req.params.areaId;
       surveyId = req.headers.survey_id;
-      awsLocation = 'survey_' + surveyId + '/' + 'area_' + areaId + '/' + currentKey;
+      awsLocation = 'survey_' + surveyId + '/' + 'area_' + areaId + '/' + currentKey + file.originalname;
       cb(null, awsLocation);
       console.log("Done with image upload to: ", awsLocation);
     },
-    contentType: multerS3.AUTO_CONTENT_TYPE
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    acl: 'public-read'
   })
 });
 

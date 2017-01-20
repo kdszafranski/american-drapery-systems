@@ -12,7 +12,7 @@
       <td>{{file.originalName}}</td>
       <td>{{file.fileInfo}}</td>
       <td>
-        <md-button ng-click="files.previewCurrentFile($index)" class="md-icon-button" aria-label="view">
+        <md-button ng-click="files.showPreview($event, $index)" class="md-icon-button" aria-label="view">
           <md-icon md-svg-icon="./img/pdf.svg"></md-icon>
         </md-button>
       </td>

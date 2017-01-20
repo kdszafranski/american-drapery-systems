@@ -1,8 +1,8 @@
 /**********************
 Create file controller
 ***********************/
-app.controller('FileController', ['FileFactory', 'UserFactory', 'IdFactory', '$route',
-function(FileFactory, UserFactory, IdFactory, $route) {
+app.controller('FileController', ['FileFactory', 'UserFactory', 'IdFactory', '$route', '$mdDialog',
+function(FileFactory, UserFactory, IdFactory, $route, $mdDialog) {
   console.log("File controller running");
   const self = this;
 
@@ -28,7 +28,28 @@ function(FileFactory, UserFactory, IdFactory, $route) {
 
   self.currentFilesObject = {};
 
-  // FileFactory.getFiles(currentUser, areaId).then(function() {
+  // self.currentFilesObject["file_" + (index + 1)].
+
+  self.showPreview = function(ev, index) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var currentFile = self.currentFilesObject["file_" + (index + 1)];
+    var baseUrl = 'https://s3.amazonaws.com/american-drapery-systems/survey_';
+    var currentFileUrl = baseUrl + surveyId + '/' + 'area_' + currentFile.areaId + '/' + currentFile.key + currentFile.originalName;
+
+    $mdDialog.show({
+      template:
+        '<md-card>' +
+          '<md-card-content layout="row" layout-wrap>' +
+            '<img src="' + currentFileUrl + '"/>' +
+          '</md-card-content>' +
+        '</md-card flex>',
+      targetEvent: ev,
+      clickOutsideToClose: true
+    })
+  };
+
+
+      // FileFactory.getFiles(currentUser, areaId).then(function() {
   //   //Clear currentFilesObject in FileFactory
   //   FileFactory.currentFilesObject.files = FileList;
   //   FileFactory.currentFilesObject.filesInfo = {};
