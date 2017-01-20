@@ -219,9 +219,10 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
       $mdToast.simple()
       .textContent('Deleted')
       .position('top left' )
-      .hideDelay(600)
+      .hideDelay(0)
       .highlightClass('md-primary')
-      .parent('#row'+ self.measurements[index].id)
+      .parent('#test')
+      // .parent('#row'+ self.measurements[index].id)
     );
     console.log('#row'+ self.measurements[index].id);
     console.log("remove row number: ", self.measurements[index].id);

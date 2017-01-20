@@ -182,27 +182,34 @@ table {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 200px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   margin: 10px;
   /*background-color: rgb(16,108,200);
   color: rgba(255,255,255,0.87);
   border-radius: 3px;*/
 }
-.for-delete {
-  background-color: rgb(233, 47, 47);
-}
-
 .add-new-area {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 200px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   margin: 10px;
   flex-wrap: wrap;
+}
+
+.for-delete {
+  background-color: rgb(216,67,21);
+}
+
+.md-whiteframe-14dp{
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .area-input {
