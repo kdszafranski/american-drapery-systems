@@ -76,6 +76,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
     console.log("survey ID: ", self.areaId);
+    self.deleteColor = false;
     $mdToast.show(
       $mdToast.simple()
       .textContent('Saved')
@@ -200,8 +201,10 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   }
 
   //Confirming user wants to delete measurement. Index is the measurement to delete
-  self.showConfirm = function(ev, index) {
+  self.showConfirm = function(ev, index, id) {
     // Appending dialog to document.body to cover sidenav in docs app
+    console.log("IIIIDDDD", id);
+    self.deleteColor = id;
     var confirm = $mdDialog.confirm()
           .title('Are you sure you wish to delete this measurement?')
           .targetEvent(ev)
@@ -211,18 +214,11 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
     $mdDialog.show(confirm).then(function() {
       self.deleteRowButton(index);
     }, function() {
+      self.deleteColor = false;
     });
   };
   //Deleting measurement after confirmation
   self.deleteRowButton = function(index){
-    $mdToast.show(
-      $mdToast.simple()
-      .textContent('Deleted')
-      .position('top left' )
-      .hideDelay(600)
-      .highlightClass('md-primary')
-      .parent('#row'+ self.measurements[index].id)
-    );
     console.log('#row'+ self.measurements[index].id);
     console.log("remove row number: ", self.measurements[index].id);
     var idToDelete = self.measurements[index].id;
@@ -238,6 +234,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
           getMeasurements(currentUser);
+          self.deleteColor = false;
         }).catch(function(err) {
           console.log("Error in measurement post");
         });
