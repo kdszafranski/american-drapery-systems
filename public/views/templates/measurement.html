@@ -88,18 +88,29 @@
         </md-button>
       </div>
     </md-card flex>
-    <md-card>
-      <md-card-title id="addFiles">
-          <md-card-title-text>
-            <span id="cardTitle" class="md-subhead">Add Files</span>
-          </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
+    <!-- FILES -->
+    <div layout="row" layout-align="center center" layout-wrap ng-controller="FileController as files">
+      <md-card>
+        <md-card-title id="addFiles">
+            <md-card-title-text>
+              <span id="cardTitle" class="md-subhead">Add Files</span>
+            </md-card-title-text>
+        </md-card-title>
         <md-card-content layout="row" layout-wrap>
-          <div ng-include="'/views/templates/files.html'"></div>
+          <div ng-include="'/views/templates/new-files.html'"></div>
         </md-card-content>
-      </md-card-content>
-    </md-card flex>
+      </md-card flex>
+      <md-card>
+        <md-card-title id="currentFiles">
+          <md-card-title-text>
+            <span id="cardTitle" class="md-subhead">Current Files</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="row" layout-wrap>
+          <div ng-include="'/views/templates/current-files.html'"></div>
+        </md-card-content>
+      </md-card flex>
+    </div>
   </div>
   <div  layout="row" layout-align="center center" layout-wrap>
     <md-card>
