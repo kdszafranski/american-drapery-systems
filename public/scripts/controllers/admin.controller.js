@@ -1,12 +1,8 @@
-app.controller('AdminController', ['UserFactory', 'IdFactory', '$http', '$location', function(UserFactory, IdFactory, $http, $location) {
+app.controller('AdminController', ['UserFactory', '$http', function(UserFactory, $http) {
   const self = this;
   var currentUser = {};
   self.users = [];
   self.newUser = {};
-  self.options = [
-    {value: false, label: 'No'},
-    {value: true, label: 'Yes'}
-  ];
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
     // firebaseUser will be null if not logged in
@@ -47,7 +43,7 @@ app.controller('AdminController', ['UserFactory', 'IdFactory', '$http', '$locati
         }
       }).then(function(response){
         console.log('success');
-        $location.path('/admin');
+        getUsers();
       }).catch(function(err) {
         console.log("Error in user post");
       });
@@ -65,7 +61,7 @@ app.controller('AdminController', ['UserFactory', 'IdFactory', '$http', '$locati
         }
       }).then(function(response){
         console.log('delete success');
-        $location.path('/admin');
+        getUsers();
       }).catch(function(err) {
         console.log("Error in user post");
       });
