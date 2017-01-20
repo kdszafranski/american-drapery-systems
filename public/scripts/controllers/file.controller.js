@@ -25,7 +25,10 @@ function(FileFactory, UserFactory, IdFactory, $route) {
 
   self.currentFilesObject = {
     files: FileList,
-    filesInfo: {}
+    filesInfo: {
+      file_1: "HELLO",
+      file_2: "WORLD"
+    }
   }
 
   // FileFactory.getFiles(currentUser, areaId).then(function() {

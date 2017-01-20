@@ -1,14 +1,5 @@
 <!-- File input and view -->
-<div ng-controller="FileController as files">
-  <!-- <div>
-    <ul>
-      <li ng-repeat="file in files.currentFilesObject.filesInfo"><p>File Key: {{files.currentFilesObject.filesInfo['file_' + ($index + 1)].key}}</p>
-        <md-input-container class="md-block">
-        <label for="input_23">File Info</label>
-        <input  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  ng-model="files.currentFilesObject.filesInfo['file_' + ($index + 1)].file_info">
-      </md-input-container></li>
-    </ul>
-  </div> -->
+<div>
   <div>
     <input type="file" name="files" file-model="files.newFilesObject.files" multiple/>
     <ul>
