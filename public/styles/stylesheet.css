@@ -56,6 +56,9 @@ md-toast .md-toast-content span {
 #cardTitle{
   padding: 0;
 }
+#addFiles{
+  padding: 4px;
+}
 #cardTitle a{
   color: rgba(0,0,0,0.87);
 }
@@ -118,6 +121,15 @@ md-toast .md-toast-content span {
   padding: 0;
   margin: 0;
 }
+.tableBody .toastColorRed {
+    background-color: rgb(216,67,21);
+  }
+
+.tableBody .noToastColor {
+  transition: background-color 0.2s ease-in;
+
+}
+
 tr:nth-child(odd) {
     background-color: rgb(234, 231, 235);
 }

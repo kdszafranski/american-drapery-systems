@@ -6,11 +6,11 @@
             <span id="cardTitle" class="md-subhead"> <u>Info</u></span>
           </md-card-title-text>
       </md-card-title>
-      <md-card-content layout="row" layout-wrap>
+
         <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
           <md-progress-circular md-mode="indeterminate"></md-progress-circular>
         </div>
-      </md-card-content>
+
       <md-card-content ng-show="measure.loading">
       <div layout="row">
         <div layout="column">
@@ -87,17 +87,16 @@
           Save
         </md-button>
       </div>
+
     </md-card flex>
     <md-card>
       <md-card-title id="addFiles">
           <md-card-title-text>
-            <span id="cardTitle" class="md-subhead">Add Files</span>
+            <span id="cardTitle" class="md-subhead"><u>Add Files</u></span>
           </md-card-title-text>
       </md-card-title>
-      <md-card-content>
-        <md-card-content layout="row" layout-wrap>
+        <md-card-content layout="column" layout-wrap>
           <div ng-include="'/views/templates/files.html'"></div>
-        </md-card-content>
       </md-card-content>
     </md-card flex>
   </div>
@@ -131,13 +130,13 @@
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody id="tableBody">
+          <tbody class="tableBody">
 
-            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" >
-              <!-- <div  id="row{{measure.measurements[$index].id}}"> -->
-
-              <div id="test">
-              <td ng-show="measure.measurements[$index].edit" >{{dimension.floor}}</td>
+            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" ng-class="{'toastColorRed': dimension.id == measure.deleteColor, 'noToastColor': dimension.id != measure.deleteColor}" >
+              <!-- <div  id="row{{measure.measurements[$index].id}}"></div> -->
+              <!-- <div id="test"> -->
+              <!-- ng-class="{deleteColor: measure.measurements[$index].toastId == dimension.id, noDeleteColor: measure.measurements[$index].toastId != dimension.id}" -->
+              <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
               <td ng-show="measure.measurements[$index].edit">{{dimension.room}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
@@ -188,7 +187,7 @@
                 </md-button>
               </td>
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
-                <md-button ng-click="measure.showConfirm($event, $index)" class="md-icon-button" aria-label="delete">
+                <md-button ng-click="measure.showConfirm($event, $index, measure.measurements[$index].id)" class="md-icon-button" aria-label="delete">
                   <md-icon md-svg-icon="./img/delete.svg"></md-icon>
                 </md-button>
               </td>
