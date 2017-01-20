@@ -21,6 +21,7 @@ var currentFileNumber,
     currentKey,
     areaId,
     surveyId,
+    originalName,
     awsLocation;
 var bucket = 'american-drapery-systems';
 var keys = {}; //storing AWS.S3 file keys here
@@ -96,5 +97,29 @@ router.get('/:areaId', function(req, res) {
         });
     });
 });//end route
+
+
+router.delete('/:surveyId/:areaId/:key/:name', function(req, res) {
+  surveyId = req.params.surveyId;
+  areaId = req.params.areaId;
+  currentKey = req.params.key;
+  originalName = req.params.name;
+  console.log("Delete route hit");
+  pool.connect()
+    .then(function(client) {
+      client.query('DELETE FROM files WHERE key = $1', [currentKey])
+        .then(function(result) {
+          console.log("Delete from DB success: ", result);
+          res.sendStatus(200);
+          client.release();
+        })
+        .catch(function(err) {
+          console.log("Error deleting from DB: ", err);
+          res.sendStatus(500);
+          client.release();
+        });
+    });
+});//end route
+
 
 module.exports = router;
