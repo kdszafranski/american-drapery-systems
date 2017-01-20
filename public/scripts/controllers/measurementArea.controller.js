@@ -228,6 +228,12 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     getSurveyDetails(firebaseUser);
   });
 
+  self.survey = function() {
+    IdFactory.setSurvey(surveyId);
+    console.log("\n\nsurveyId in ma.survey: ", surveyId);
+    $location.path('/survey/' + surveyId);
+  }
+
 }]);
 
 //Function to group measurements by area
