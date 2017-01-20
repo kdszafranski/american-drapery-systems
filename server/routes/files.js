@@ -13,6 +13,8 @@ aws.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY
 });
 
+console.log("KEYS: ", process.env.AWS_SECRET_ACCESS_KEY);
+
 /**********************************************
                 GLOBAL STORAGE
 ***********************************************/

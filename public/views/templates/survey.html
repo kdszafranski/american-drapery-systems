@@ -89,7 +89,7 @@
 </div>
 <p class="files" ng-init="areaId = area[$index].area_id">
   <b>Files: {{areaId}}</b>
-  <i ng-repeat="file in survey.currentFilesObject"></br>{{file.originalName}}</br></i>
+  <i ng-repeat="file in survey.currentFilesObject"></br>{{file.originalName}}</br><i>{{file.fileInfo}}</i></br></i>
 </p>
 <div>
   <md-button id="goToTopButton" class="md-raised md-primary md-ink-ripple" ng-show="survey.areaArray.length > 4" ng-click="survey.goToTop()">Go To Top</md-button>
