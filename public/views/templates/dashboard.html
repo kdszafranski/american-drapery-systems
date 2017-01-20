@@ -5,6 +5,13 @@
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
+    <md-card class="loggedOut" flex="70">
+      <md-card-content ng-show="dash.loggedOut">
+        <div layout="row" layout-sm="column" layout-align="space-around">
+          <h3>You are logged out and will be redirected to the login screen.</h3>
+        </div>
+      </md-card-content>
+    </md-card>
 
     <md-card-content ng-show="dash.loading">
       <div layout="row">
