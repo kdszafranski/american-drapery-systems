@@ -15,6 +15,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   console.log(surveyId);
   self.inputAreaName = false;
   self.toRemove = [];
+  self.loggedOut = false;
   // getSurveyDetails();
 
   //function to send area to measurent controller
@@ -224,6 +225,13 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   // getSurveyDetails(firebaseUser);
   //This happens when when we switch to this view/controller AND when page is refreshed
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    if (!firebaseUser) {
+      console.log("No User");
+      self.loggedOut = true;
+      $timeout(function() {
+        $location.path('/login');
+      }, 3000);
+    }
     currentUser = firebaseUser;
     getSurveyDetails(firebaseUser);
   });
