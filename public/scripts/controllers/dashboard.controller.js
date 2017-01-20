@@ -1,4 +1,4 @@
-app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', '$mdToast', "$mdDialog", "$timeout", function(UserFactory, IdFactory, $http, $location, $scope, $mdToast, $mdDialog, $timeout) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', "$mdDialog", "$timeout", function(UserFactory, IdFactory, $http, $location, $scope, $mdDialog, $timeout) {
 
   const self = this;
   var currentUser = {};

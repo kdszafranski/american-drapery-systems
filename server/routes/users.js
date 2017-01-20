@@ -11,12 +11,12 @@ router.post('/', function(req,res) {
   pool.connect()
     .then(function(client) {
       client.query("INSERT INTO users (first_name, last_name, email, can_edit_users, authorized) " +
-      "VALUES ($1,$2,$3,$4,$5)",
+      "VALUES ($1,$2,$3,$4,$5) RETURNING id",
       [newUser.first_name, newUser.last_name, newUser.email, newUser.can_edit_users, newUser.authorized])
       .then(function(result) {
         console.log("put complete");
         client.release();
-        res.sendStatus(201);
+        res.send(result.rows);
       })
       .catch(function(err) {
         console.log('select query error: ', err);

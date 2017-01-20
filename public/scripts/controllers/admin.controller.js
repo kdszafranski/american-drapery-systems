@@ -1,10 +1,10 @@
-app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeout", function(UserFactory, $http, $mdDialog, $timeout) {
+app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeout", function(UserFactory, $http, $mdDialog, $timeout ) {
   const self = this;
   var currentUser = {};
   self.users = [];
   self.newUser = {};
   self.redId = false;
-  self.greenId = true;
+  self.greenId = false;
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
     // firebaseUser will be null if not logged in
@@ -44,10 +44,9 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
           id_token: idToken
         }
       }).then(function(response){
-        console.log('success');
-        getUsers();
-        greenRow();
-
+        newUser.id = response.data[0].id;
+        self.users.push(newUser);
+        greenRow(newUser.id);
       }).catch(function(err) {
         console.log("Error in user post");
       });
@@ -64,19 +63,23 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
           id_token: idToken
         }
       }).then(function(response){
-        console.log('delete success');
-        getUsers();
+        console.log('delete success - id');
+
+      removeObjById(self.users, id);
+      self.redId = false;
+      console.log('self.users', self.users);
       }).catch(function(err) {
         console.log("Error in user post");
       });
     });
   }
 
-  self.showConfirm = function(ev, id) {
+  self.showConfirm = function(ev, id, first, last) {
     // Appending dialog to document.body to cover sidenav in docs app
+    console.log('id del', id);
     self.redId = id;
     var confirm = $mdDialog.confirm()
-      .title('Are you sure you wish to delete user ' + self.users[id].first_name + ' ' + self.users[id].last_name + '?')
+      .title('Are you sure you wish to delete user ' + first + ' ' + last + '?')
       .targetEvent(ev)
       .ok('Yes, delete user.')
       .cancel('No');
@@ -89,9 +92,18 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
 
   function greenRow(id) {
     self.greenId = id;
+    console.log('green id', id);
     $timeout(function(){
       self.greenId = 0;
     }, 1000);
   }
 
 }]);
+
+
+
+function removeObjById(arr, id) {
+  var idx =  arr.map(function(x) {return x.id; }).indexOf(id);
+  ~idx && arr.splice(idx, 1);
+  return idx;
+}
