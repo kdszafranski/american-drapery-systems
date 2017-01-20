@@ -172,11 +172,7 @@
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.mount}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
-                <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].fabric" size="10"  aria-label="fabric"></md-input-container></td>
-
-              <td ng-show="measure.measurements[$index].edit">{{dimension.mount}}</td>
-              <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
-                <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].mount" size="6"  aria-label="mount"></md-input-container></td>
+                <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].mount" size="10"  aria-label="mount"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.measurements[$index].edit = !measure.measurements[$index].edit;" class="md-icon-button" aria-label="edit">
