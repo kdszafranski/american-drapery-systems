@@ -83,6 +83,12 @@
         <b>Notes:</b>
         {{area[$index].notes}}
       </p>
+
+      <p class="files" ng-init="areaId = area[$index].area_id">
+        <b>Files:</b>
+        {{areaId}}
+        <i ng-repeat="file in survey.currentFilesObject | "></i>
+      </p>
     </md-card-content>
   </md-card>
 </div>

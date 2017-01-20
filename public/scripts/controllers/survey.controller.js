@@ -1,11 +1,12 @@
-app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory', '$route',
-function($http, UserFactory, IdFactory, $route) {
+app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory', '$route', 'FileFactory',
+function($http, UserFactory, IdFactory, $route, FileFactory) {
   console.log("In Survey Controller");
   var self = this;
   // var surveyId = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
   var currentUser;
   const MIN_AREA_GOTO_TOP = 4;
+  var currentFilesObject = {};
 
   self.goToTop = function() {
     window.scrollTo(0, 0);
@@ -47,6 +48,10 @@ function($http, UserFactory, IdFactory, $route) {
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     currentUser = firebaseUser;
     getSurveyDetails();
+    FileFactory.getSurveyFiles(currentUser, surveyId)
+      .then(function() {
+        self.currentFilesObject = FileFactory.currentFilesObject;
+      })
   });
 }]);
 
