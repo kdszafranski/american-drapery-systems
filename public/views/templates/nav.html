@@ -6,13 +6,13 @@
       <span ng-show="nav.isUser">{{nav.currentUser.displayName}} </span>
     </div>
     <div layout="row" layout-align="end center" layout-sm="column" layout-align-sm="space-between end"  layout-xs="column" layout-align-xs="space-between end" >
-      <button id="toolbarButton" class="btn third" ng-click="nav.goToDashboard()" ng-show="nav.isUser">
+      <button id="toolbarButton" class="btn nav-buttons" ng-click="nav.goToDashboard()" ng-show="nav.isUser">
         Dashboard
       </button>
-      <button id="toolbarButton" class="btn third" ng-click="nav.goToAdmin()" ng-show="nav.isUser">
+      <button id="toolbarButton" class="btn nav-buttons" ng-click="nav.goToAdmin()" ng-show="nav.isUser">
         Admin
       </button>
-      <button id="toolbarButton" class="btn third" ng-click="nav.logOut()" ng-show="nav.isUser">
+      <button id="toolbarButton" class="btn nav-buttons" ng-click="nav.logOut()" ng-show="nav.isUser">
         Log Out
       </button>
     </div>

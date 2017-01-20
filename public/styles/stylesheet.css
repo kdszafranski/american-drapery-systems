@@ -45,14 +45,14 @@ nav>ul>li {
   outline: 0;
 }
 
-.third {
+.nav-buttons {
   border-color: #3F51B5;
   color: #3F51B5;
   box-shadow: 0 0 40px 40px #fff inset, 0 0 0 0 #fff;
   -webkit-transition: all 225ms ease-in-out;
   transition: all 225ms ease-in-out;
 }
-.third:hover {
+.nav-buttons:hover {
   box-shadow: 0 0 10px 0 #fff;
 }
 
