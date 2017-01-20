@@ -8,17 +8,17 @@
     </tr>
   </thead>
   <tbody id="tableBody">
-    <tr ng-repeat="file in files.currentFilesObject.filesInfo">
-      <td>{{file}}</td>
-      <td>{{file}}</td>
-      <td>
-        <md-button ng-click="files.deleteCurrentFile($index)" class="md-icon-button" aria-label="delete">
-          <md-icon md-svg-icon="./img/delete.svg"></md-icon>
-        </md-button>
-      </td>
+    <tr ng-repeat="file in files.currentFilesObject">
+      <td>{{file.originalName}}</td>
+      <td>{{file.fileInfo}}</td>
       <td>
         <md-button ng-click="files.previewCurrentFile($index)" class="md-icon-button" aria-label="view">
           <md-icon md-svg-icon="./img/pdf.svg"></md-icon>
+        </md-button>
+      </td>
+      <td>
+        <md-button ng-click="files.deleteCurrentFile($index)" class="md-icon-button" aria-label="delete">
+          <md-icon md-svg-icon="./img/delete.svg"></md-icon>
         </md-button>
       </td>
     </tr>

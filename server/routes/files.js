@@ -24,6 +24,7 @@ var currentFileNumber,
     awsLocation;
 var bucket = 'american-drapery-systems';
 var keys = {}; //storing AWS.S3 file keys here
+var fileNames = {};
 var fileInfo = {};
 var s3 = new aws.S3();
 var pool = new pg.Pool(config);
@@ -38,9 +39,11 @@ var upload = multer({
       cb(null, bucket);
     },
     key: function(req, file, cb) {
+      console.log("FILE IN KEY FXN: ", file.originalname);
       currentFileNumber = req.files.length;//files.length increments by one each iteration and corresponds with file number
       currentKey = uuid();//each file needs a uuid for a key
       keys["file_" + currentFileNumber] = currentKey; //saves each key to the keys object
+      fileNames["file_" + currentFileNumber] = file.originalname;
       areaId = req.params.areaId;
       surveyId = req.headers.survey_id;
       awsLocation = 'survey_' + surveyId + '/' + 'area_' + areaId + '/' + currentKey;
@@ -57,8 +60,8 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
   pool.connect()
     .then(function(client) {
       for (var key in keys) {
-        client.query("INSERT INTO files (file_info, bucket, key, area_id) " +
-        "VALUES ($1, $2, $3, $4)", [fileInfo[key], bucket, keys[key], areaId])
+        client.query("INSERT INTO files (file_info, bucket, key, area_id, original_name) " +
+        "VALUES ($1, $2, $3, $4, $5)", [fileInfo[key], bucket, keys[key], areaId, fileNames[key]])
       }
     })
     .then(function(result) {

@@ -12,24 +12,21 @@ function(FileFactory, UserFactory, IdFactory, $route) {
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     currentUser = firebaseUser;
+    FileFactory.getFiles(currentUser, areaId)
+      .then(function() {
+        self.currentFilesObject = FileFactory.currentFilesObject;
+        console.log(self.currentFilesObject);
+    });
+
   });
 
-  console.log("FileController currentUser: \n", currentUser, '\n\n');
-  console.log("FileController surveyId: \n\n", surveyId, '\n\n');
-  console.log("FileController areaId: \n\n", areaId, '\n\n');
 
   self.newFilesObject = { //store files and info here
     files: FileList,
     filesInfo: {}
   };
 
-  self.currentFilesObject = {
-    files: FileList,
-    filesInfo: {
-      file_1: "HELLO",
-      file_2: "WORLD"
-    }
-  }
+  self.currentFilesObject = {};
 
   // FileFactory.getFiles(currentUser, areaId).then(function() {
   //   //Clear currentFilesObject in FileFactory
