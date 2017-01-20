@@ -1,8 +1,8 @@
 /**********************
 Create file controller
 ***********************/
-app.controller('FileController', ['FileFactory', 'UserFactory', 'IdFactory', '$route', '$mdDialog', '$scope',
-function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope) {
+app.controller('FileController', ['FileFactory', 'UserFactory', 'IdFactory', '$route', '$mdDialog', '$scope', '$mdToast',
+function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToast) {
   console.log("File controller running");
   const self = this;
 
@@ -46,6 +46,9 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope) {
   };
 
   self.submitFiles = function() {
+    console.log('submit files clicked');
+    console.log('sending these files to FileFactory: ', self.newFilesObject.files);
+    console.log('sending this file info to FileFactory: ', self.newFilesObject.filesInfo);
     FileFactory.updateFiles(self.newFilesObject); //send newFilesObject to FileFactory
     FileFactory.submitFiles(currentUser, surveyId, areaId)
     .then(function() {
