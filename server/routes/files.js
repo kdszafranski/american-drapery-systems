@@ -13,6 +13,8 @@ aws.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY
 });
 
+console.log("KEYS: ", process.env.AWS_SECRET_ACCESS_KEY);
+
 /**********************************************
                 GLOBAL STORAGE
 ***********************************************/
@@ -85,6 +87,28 @@ router.get('/:areaId', function(req, res) {
   pool.connect()
     .then(function(client) {
       client.query('SELECT * FROM files WHERE area_id = $1', [areaId])
+        .then(function(result) {
+          console.log("Success! Retrieved these results from the DB: ", result.rows);
+          res.send(result.rows);
+          client.release();
+        })
+        .catch(function(err) {
+          console.log("Error querying DB: ", err);
+          res.sendStatus(500);
+          client.release();
+        });
+    });
+});//end route
+
+router.get('/survey/:surveyId', function(req, res) {
+  surveyId = req.params.surveyId;
+  console.log("files get route hit, search db for areaId: ", surveyId);
+  pool.connect()
+    .then(function(client) {
+      client.query('SELECT * FROM survey ' +
+      'JOIN areas on areas.survey_id = survey.id ' +
+      'JOIN files on files.area_id = areas.id ' +
+      'WHERE survey.id = $1', [surveyId])
         .then(function(result) {
           console.log("Success! Retrieved these results from the DB: ", result.rows);
           res.send(result.rows);
