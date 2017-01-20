@@ -70,11 +70,21 @@ app.filter('excludeByStatus', function () {
   };
 })
 
+app.filter('true_false', function() {
+    return function(text, length, end) {
+        if (text) {
+            return 'Yes';
+        }
+        return 'No';
+    }
+});
+
 //Utilities
 function formatDates(aryOfObjs){
   //convert the ISO Dates to readable format
   //expects array of objects
   for (var i = 0; i < aryOfObjs.length; i++) {
+
     if(moment(aryOfObjs[i].last_modified).isValid()) {
       aryOfObjs[i].last_modified = moment(aryOfObjs[i].last_modified).format("YYYY/MM/DD");
     }

@@ -6,11 +6,11 @@
             <span id="cardTitle" class="md-subhead"> <u>Info</u></span>
           </md-card-title-text>
       </md-card-title>
-      <md-card-content layout="row" layout-wrap>
+
         <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
           <md-progress-circular md-mode="indeterminate"></md-progress-circular>
         </div>
-      </md-card-content>
+
       <md-card-content ng-show="measure.loading">
       <div layout="row">
         <div layout="column">
@@ -87,19 +87,31 @@
           Save
         </md-button>
       </div>
+
     </md-card flex>
-    <md-card>
-      <md-card-title id="addFiles">
-          <md-card-title-text>
-            <span id="cardTitle" class="md-subhead">Add Files</span>
-          </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
+    <!-- FILES -->
+    <div layout="row" layout-align="center center" layout-wrap ng-controller="FileController as files">
+      <md-card>
+        <md-card-title id="addFiles">
+            <md-card-title-text>
+              <span id="cardTitle" class="md-subhead">Add Files</span>
+            </md-card-title-text>
+        </md-card-title>
         <md-card-content layout="row" layout-wrap>
-          <div ng-include="'/views/templates/files.html'"></div>
+          <div ng-include="'/views/templates/new-files.html'"></div>
         </md-card-content>
-      </md-card-content>
-    </md-card flex>
+      </md-card flex>
+      <md-card>
+        <md-card-title id="currentFiles">
+          <md-card-title-text>
+            <span id="cardTitle" class="md-subhead">Current Files</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="row" layout-wrap>
+          <div ng-include="'/views/templates/current-files.html'"></div>
+        </md-card-content>
+      </md-card flex>
+    </div>
   </div>
   <div  layout="row" layout-align="center center" layout-wrap>
     <md-card>
@@ -131,10 +143,13 @@
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody id="tableBody">
+          <tbody class="tableBody">
 
-            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" >
-              <td ng-show="measure.measurements[$index].edit" id="row{{measure.measurements[$index].id}}">{{dimension.floor}}</td>
+            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" ng-class="{'toastColorRed': dimension.id == measure.deleteColor, 'noToastColor': dimension.id != measure.deleteColor}" >
+              <!-- <div  id="row{{measure.measurements[$index].id}}"></div> -->
+              <!-- <div id="test"> -->
+              <!-- ng-class="{deleteColor: measure.measurements[$index].toastId == dimension.id, noDeleteColor: measure.measurements[$index].toastId != dimension.id}" -->
+              <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
               <td ng-show="measure.measurements[$index].edit">{{dimension.room}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
@@ -168,15 +183,13 @@
                 <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].fascia_size" size="6"  aria-label="fascia_size"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.fabric}}</td>
-              <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
-                <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].fabric" size="10"  aria-label="fabric"></md-input-container></td>
+              <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].fabric" size="20"  aria-label="fabric"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.mount}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container>
-                <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].mount" size="6"  aria-label="mount"></md-input-container></td>
+                <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].mount" size="10"  aria-label="mount"></md-input-container></td>
 
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
-
                 <md-button ng-click="measure.measurements[$index].edit = !measure.measurements[$index].edit;" class="md-icon-button" aria-label="edit">
                   <md-icon md-svg-icon="./img/edit.svg"></md-icon>
                 </md-button>
@@ -187,7 +200,7 @@
                 </md-button>
               </td>
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
-                <md-button ng-click="measure.showConfirm($event, $index)" class="md-icon-button" aria-label="delete">
+                <md-button ng-click="measure.showConfirm($event, $index, measure.measurements[$index].id)" class="md-icon-button" aria-label="delete">
                   <md-icon md-svg-icon="./img/delete.svg"></md-icon>
                 </md-button>
               </td>
@@ -196,6 +209,7 @@
                   <md-icon md-svg-icon="./img/delete.svg"></md-icon>
                 </md-button>
               </td>
+              </div>
             </tr>
             <tr ng-show="measure.loading" layout-wrap id="inputRow">
               <form>

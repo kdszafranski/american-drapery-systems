@@ -1,4 +1,5 @@
-app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', '$mdToast', "$mdDialog", "$timeout", function(UserFactory, IdFactory, $http, $location, $scope, $mdToast, $mdDialog, $timeout) {
+app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$location', '$scope', "$mdDialog", "$timeout", function(UserFactory, IdFactory, $http, $location, $scope, $mdDialog, $timeout) {
+
 
   const self = this;
   var currentUser = {};
@@ -11,6 +12,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.sortType     = 'id'; // set the default sort type
   self.sortReverse  = true;  // set the default sort order
 
+  self.loggedOut = false;
 
   self.show = {
     completed: true,
@@ -32,6 +34,13 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   }
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
+    if (!firebaseUser) {
+      console.log("No User");
+      self.loggedOut = true;
+      $timeout(function() {
+        $location.path('/login');
+      }, 3000);
+    }
     currentUser = firebaseUser;
     getSurveys();
     console.log("onAuthStateChanged", currentUser);
@@ -149,8 +158,8 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         $mdToast.show(
           $mdToast.simple()
           .textContent('Updated')
-          .position('top left' )
-          .hideDelay(2000)
+          .position('top' )
+          .hideDelay(600)
           .parent('#row'+ survey_id)
         );
       },

@@ -5,6 +5,13 @@
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
+    <md-card class="loggedOut" flex="70">
+      <md-card-content ng-show="dash.loggedOut">
+        <div layout="row" layout-sm="column" layout-align="space-around">
+          <h3>You are logged out and will be redirected to the login screen.</h3>
+        </div>
+      </md-card-content>
+    </md-card>
 
     <md-card-content ng-show="dash.loading">
       <div layout="row">
@@ -43,7 +50,7 @@
       </div>
 
       <div layout="row" layout-align="center center" layout-wrap>
-        <table id="dashTable">
+        <table id="dashTable" cellspacing="0">
           <thead>
             <tr id="headerRow">
               <th class="columnSort" ng-click="dash.sortType = 'id'; dash.sortReverse = !dash.sortReverse">Survey #
@@ -77,7 +84,7 @@
               <td data-ng-class="{dashToast: dash.toastId == result.id, dashNoToast: dash.toastId != result.id}"><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.toast(result.id)" class="status-update">
                 <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
               </md-select></td>
-              <td>{{result.last_modified}}</td>
+              <td id="row{{result.id}}" >{{result.last_modified}}</td>
               <td>{{result.survey_date}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="view">
                 <md-icon ng-click="dash.survey(result.id)" md-svg-icon="./img/pdf.svg"></md-icon>
