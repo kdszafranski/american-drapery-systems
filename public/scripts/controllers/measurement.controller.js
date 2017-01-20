@@ -1,6 +1,6 @@
 app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",
-"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll',
-function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll) {
+"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll', '$mdToast',
+function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast) {
   var self = this;
   var surveyId = $route.current.params.surveyId;
   self.measurement = {};
@@ -86,9 +86,9 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
     $mdToast.show(
       $mdToast.simple()
       .textContent('Saved')
-      .position('bottom right' )
-      .hideDelay(800)
-      .parent('#saveAndGoBackButton')
+      .position('top right')
+      .hideDelay(600)
+      .parent('#notesDiv')
     );
     var currentUser = UserFactory.getUser();
     // var currentUser = UserFactory.getUser();
@@ -226,8 +226,9 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
     $mdToast.show(
       $mdToast.simple()
       .textContent('Deleted')
-      .position('left' )
-      .hideDelay(2000)
+      .position('top left' )
+      .hideDelay(600)
+      .highlightClass('md-primary')
       .parent('#row'+ self.measurements[index].id)
     );
     console.log('#row'+ self.measurements[index].id);

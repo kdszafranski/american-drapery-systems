@@ -79,11 +79,11 @@
             <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | excludeByStatus: dash.show.text() | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
-              <td id="row{{result.id}}">{{result.client_name}}</td>
+              <td>{{result.client_name}}</td>
               <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)" class="status-update">
                 <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
               </md-select></td>
-              <td>{{result.last_modified}}</td>
+              <td id="row{{result.id}}" >{{result.last_modified}}</td>
               <td>{{result.survey_date}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="view">
                 <md-icon ng-click="dash.survey(result.id)" md-svg-icon="./img/pdf.svg"></md-icon>
