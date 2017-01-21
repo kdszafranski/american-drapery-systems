@@ -264,10 +264,6 @@ table {
   align-items: center;
 }
 
-/*#newJob {
-  margin: 10px;
-}*/
-
 .itemBtn:hover {
   cursor: pointer;
 }
@@ -316,8 +312,43 @@ footer {
 .columnSort:hover {
   cursor: pointer;
 }
+
+#dashboardHeader {
+  text-align: center;
+}
+
+#newJobButton {
+  margin-bottom: 0px;
+}
+
+#surveySearchResults {
+  margin: 0;
+}
+
 #dashCard {
   min-width: 750px;
+}
+
+#filterBoxes {
+  max-width: 80%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#topDashRow {
+  max-width: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.sortBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0px;
 }
 
 .loggedOut {
@@ -361,4 +392,8 @@ footer {
 .tableBodyRow .dashNoToast {
   transition: background-color 1s ease-in;
   background-color: inherit;
+}
+
+#adminHeader {
+  text-align: center;
 }

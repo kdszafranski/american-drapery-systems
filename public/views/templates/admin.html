@@ -5,8 +5,8 @@
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
-    <md-card-content ng-show="admin.loading">
-      <h1>User Admin Page</h1>
+    <md-card-content ng-show="admin.loading" id="adminHeader">
+      <h1>User Admin Dashboard</h1>
       <p ng-show="admin.unauthorized">You are not authorized to edit/add users.</p>
       <div layout="row" layout-sm="column" layout-align="center center" layout-wrap>
         <table id="adminTable" cellspacing="0">
