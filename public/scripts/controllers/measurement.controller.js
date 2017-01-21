@@ -1,6 +1,6 @@
 app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",
-"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll', '$mdToast',
-function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast) {
+"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll', '$mdToast', '$timeout',
+function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast, $timeout) {
   var self = this;
   var surveyId = $route.current.params.surveyId;
   self.measurement = {};
@@ -72,18 +72,16 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
         });
     })
   }
-
-  self.addButton = function(){
-    console.log("mesurement: ", self.measurement);
-    console.log("survey ID: ", self.areaId);
+  //add measurement Button
+  self.addButton = function(id){
     self.deleteColor = false;
-    $mdToast.show(
-      $mdToast.simple()
-      .textContent('Saved')
-      .position('top right')
-      .hideDelay(600)
-      .parent('#notesDiv')
-    );
+    // $mdToast.show(
+    //   $mdToast.simple()
+    //   .textContent('Saved')
+    //   .position('top right')
+    //   .hideDelay(600)
+    //   .parent('#notesDiv')
+    // );
     var currentUser = UserFactory.getUser();
     // var currentUser = UserFactory.getUser();
     console.log("Current User at addButton: ", currentUser);
@@ -99,6 +97,8 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
 
+
+
           getMeasurements(currentUser);
 
         }).catch(function(err) {
@@ -107,6 +107,9 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
       })
     self.measurements.push(angular.copy(self.measurement));
     console.log("mesurement array", self.measurements);
+    console.log("mesurement object", self.measurement);
+    console.log("AAADDDDDDD", self.addColor, id);
+
   }
 
   //save edits to client profile button
@@ -203,7 +206,6 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   //Confirming user wants to delete measurement. Index is the measurement to delete
   self.showConfirm = function(ev, index, id) {
     // Appending dialog to document.body to cover sidenav in docs app
-    console.log("IIIIDDDD", id);
     self.deleteColor = id;
     var confirm = $mdDialog.confirm()
           .title('Are you sure you wish to delete this measurement?')

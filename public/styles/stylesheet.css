@@ -152,7 +152,9 @@ tr.headerRow{
 .tableBody .toastColorRed {
     background-color: rgb(216,67,21);
   }
-
+.tableBody .toastColorGreen {
+    background-color: rgb(161,255,80);
+  }
 .tableBody .noToastColor {
   transition: background-color 0.2s ease-in;
 
