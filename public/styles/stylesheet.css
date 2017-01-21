@@ -4,6 +4,12 @@ html, body {
   min-width: 640px;
 }
 
+html.md-default-theme, html, body.md-default-theme, body {
+  background-color: none;
+  background-image: url(/img/triangular.png);
+  background-repeat: repeat;
+}
+
 table {
   font-family: 'Roboto', sans-serif;
 }
