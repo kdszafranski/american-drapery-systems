@@ -57,7 +57,6 @@ var upload = multer({
 });
 
 router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//max of 10 files
-
   fileInfo = req.body;
   pool.connect()
     .then(function(client) {
