@@ -1,8 +1,7 @@
-app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory', '$route',
-function($http, UserFactory, IdFactory, $route) {
+app.controller('SurveyController', ["$http", 'UserFactory', '$route',
+function($http, UserFactory, $route) {
   console.log("In Survey Controller");
   var self = this;
-  // var surveyId = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
   var currentUser;
   self.loading = false;
@@ -13,7 +12,6 @@ function($http, UserFactory, IdFactory, $route) {
     console.log("Clicked Top");
   }
 
-  console.log("Id Factory: ", IdFactory.survey);
   console.log("surveyId: ", surveyId);
 
   function getSurveyDetails() {
@@ -43,8 +41,6 @@ function($http, UserFactory, IdFactory, $route) {
           console.log("error getting survey details: ", err);
         });
     })}
-
-  // getSurveyDetails();
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     currentUser = firebaseUser;

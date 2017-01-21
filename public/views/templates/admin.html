@@ -9,7 +9,7 @@
       <h1>User Admin Page</h1>
       <p ng-show="admin.unauthorized">You are not authorized to edit/add users.</p>
       <div layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <table id="adminTable">
+        <table id="adminTable" cellspacing="0">
           <thead>
             <tr id="headerRow">
               <th>First Name</th>
@@ -20,15 +20,18 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="tableBodyRow" ng-repeat="user in admin.users" >
+          <tbody class="tableBody">
+            <tr class="tableBodyRow" ng-repeat="user in admin.users" ng-class="
+            {'toastColorRed': user.id == admin.redId,
+            'toastColorGreen': user.id == admin.greenId,
+            'noToastColor': admin.redId == admin.greenId}" >
               <td>{{user.first_name}}</td>
               <td>{{user.last_name}}</td>
               <td>{{user.email}}</td>
-              <td>{{user.can_edit_users}}</td>
+              <td>{{user.can_edit_users | true_false}}</td>
               <td>{{user.authorized}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="delete">
-                <md-icon ng-click="admin.deleteUser(user.id)" md-svg-icon="./img/delete.svg"></md-icon>
+                <md-icon ng-click="admin.showConfirm($event, user.id, user.first_name, user.last_name)" md-svg-icon="./img/delete.svg"></md-icon>
               </div></td>
             </tr>
             <tr layout-wrap id="inputRow">
@@ -49,7 +52,7 @@
               </md-input-container></td>
               <td><md-input-container>
                 <md-button ng-click="admin.addUser(newUser)" class="md-icon-button" >
-                  <md-icon md-svg-icon="../../img/add.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/add.svg"></md-icon>
                 </md-button>
               </md-input-container></td>
             </tr>

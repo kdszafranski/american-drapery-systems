@@ -1,6 +1,6 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",
+app.controller('MeasurementController', ["$http", "UserFactory",
 "$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll', '$mdToast',
-function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast) {
+function($http, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast) {
   var self = this;
   var surveyId = $route.current.params.surveyId;
   self.measurement = {};
