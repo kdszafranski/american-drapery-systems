@@ -80,6 +80,12 @@ app.filter('true_false', function() {
 });
 
 //Utilities
+
+function removeObjById(arr, id) {
+  var idx = arr.findIndex(item => item.id === id);
+  ~idx && arr.splice(idx, 1);
+  return idx;
+}
 function formatDates(aryOfObjs){
   //convert the ISO Dates to readable format
   //expects array of objects

@@ -6,11 +6,9 @@
             <span id="cardTitle" class="md-subhead"> <u>Info</u></span>
           </md-card-title-text>
       </md-card-title>
-
         <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
           <md-progress-circular md-mode="indeterminate"></md-progress-circular>
         </div>
-
       <md-card-content ng-show="measure.loading">
       <div layout="row">
         <div layout="column">
@@ -88,7 +86,7 @@
         </md-button>
       </div>
 
-    </md-card flex>
+    </md-card>
     <!-- FILES -->
     <div layout="row" layout-align="center center" layout-wrap ng-controller="FileController as files">
       <md-card>
@@ -113,13 +111,13 @@
       </md-card flex>
     </div>
   </div>
-  <div  layout="row" layout-align="center center" layout-wrap>
+  <div layout="row" layout-align="center center" layout-wrap>
     <md-card>
       <md-card-title id="measurementTitle">
         <div layout="column">
           <md-card-title-text >
             <span id="cardTitle" class="md-subhead"><u>Area:</u>  {{measure.area_name}}</span>
-            <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
+            <div ng-hide="measure.loading" layout="row" layout-align="space-around">
               <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
           </md-card-title-text>

@@ -99,11 +99,3 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
   }
 
 }]);
-
-
-
-function removeObjById(arr, id) {
-  var idx =  arr.map(function(x) {return x.id; }).indexOf(id);
-  ~idx && arr.splice(idx, 1);
-  return idx;
-}
