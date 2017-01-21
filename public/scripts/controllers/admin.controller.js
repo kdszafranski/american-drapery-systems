@@ -31,7 +31,12 @@ app.controller('AdminController', ['UserFactory', '$http', function(UserFactory,
   }
 
   self.addUser = function(newUser) {
-    newUser.authorized = true;
+    if (newUser.authorized == null) {
+      newUser.authorized = false;
+    }
+    if (newUser.can_edit_users == null) {
+      newUser.can_edit_users = false;
+    }
     currentUser = UserFactory.getUser();
     console.log('adding user - newuser:', newUser);
     currentUser.getToken().then(function(idToken) {

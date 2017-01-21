@@ -16,6 +16,7 @@
               <th>Last Name</th>
               <th>Email</th>
               <th>Admin Privlages</th>
+              <th>Survey Privaleges</th>
               <th></th>
             </tr>
           </thead>
@@ -25,6 +26,7 @@
               <td>{{user.last_name}}</td>
               <td>{{user.email}}</td>
               <td>{{user.can_edit_users}}</td>
+              <td>{{user.authorized}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="delete">
                 <md-icon ng-click="admin.deleteUser(user.id)" md-svg-icon="./img/delete.svg"></md-icon>
               </div></td>
@@ -41,6 +43,9 @@
               </md-input-container></td>
               <td><md-input-container>
                 <md-checkbox ng-model="newUser.can_edit_users"></md-checkbox>
+              </md-input-container></td>
+              <td><md-input-container>
+                <md-checkbox ng-model="newUser.authorized"></md-checkbox>
               </md-input-container></td>
               <td><md-input-container>
                 <md-button ng-click="admin.addUser(newUser)" class="md-icon-button" >
