@@ -2,10 +2,10 @@ app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory', '$route
 function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) {
   console.log("In Survey Controller");
   var self = this;
-  // var surveyId = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
   self.surveyId = surveyId;
   var currentUser;
+  self.loading = false;
   const MIN_AREA_GOTO_TOP = 4;
   var currentFilesObject = {};
 
@@ -35,7 +35,6 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
   };
 
 
-  console.log("Id Factory: ", IdFactory.survey);
   console.log("surveyId: ", surveyId);
 
   function getSurveyDetails() {
@@ -57,6 +56,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
           var separateAreas = groupBy(self.surveyDetails, 'area_name');
           console.log(separateAreas);
           self.areaArray = [];
+          self.loading = true;
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
@@ -82,8 +82,11 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
     getSurveyDetails();
   });
 
-}]);//end controller
+  self.printPage = function() {
+    window.print();
+  }
 
+}]);//end controller
 
 //Function to group measurements by area
 function groupBy(arr, property) {

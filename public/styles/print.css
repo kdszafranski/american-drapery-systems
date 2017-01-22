@@ -41,15 +41,22 @@
    * http://css-discuss.incutio.com/wiki/Printing_Tables
    */
 
-  thead {
+  table {
+    border: 2px solid black;
+    width: 100%;
+  }
+  /*thead {
       display: table-header-group;
+  }*/
+  td {
+    border: 1px solid rgb(194, 194, 194) !important;
+    border-collapse: collapse;
+  }
+  th {
+    border-bottom: 2px solid black;
   }
 
-  thead #headerRow {
-    border-bottom: 1px solid black !important;
-  }
-
-  tr,img, .row {
+  tr,img, .survey-area {
       page-break-inside: avoid;
   }
 
@@ -67,7 +74,7 @@
       page-break-after: avoid;
   }
 
-  #header, #footer, #nav {
+  #header, #footer, #nav, #surveyButtons {
     display: none !important;
   }
 
