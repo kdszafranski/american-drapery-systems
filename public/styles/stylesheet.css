@@ -1,16 +1,14 @@
 html, body {
   margin: 0;
   height: 100%;
+  min-width: 640px;
 }
 
 table {
   font-family: 'Roboto', sans-serif;
 }
-nav {
-  border-bottom: solid black 3px;
-}
-nav>ul>li {
-  display: inline-block;
+
+li {
   list-style-type: none;
 }
 
@@ -39,6 +37,30 @@ md-toast .md-toast-content span {
   max-width: 100px;
   min-width: 100px;
 }
+#nav div{
+  width: 100%;
+  height: 62px;
+}
+#nav div md-button {
+  width:83px;
+}
+#companyName {
+  padding-left: 15px;
+}
+#companyName li:nth-child(2) {
+  left: 40px;
+}
+#companyName li:nth-child(3) {
+  left: 80px;
+}
+#companyName li {
+  font-size: .75em;
+  text-align: left;
+  position: relative;
+  display: block;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
 #notesDiv{
   padding: 3px;
   display: flex;
@@ -56,6 +78,9 @@ md-toast .md-toast-content span {
 #cardTitle{
   padding: 0;
 }
+#addFiles{
+  padding: 4px;
+}
 #cardTitle a{
   color: rgba(0,0,0,0.87);
 }
@@ -70,6 +95,7 @@ md-toast .md-toast-content span {
   padding: 1px;
 }
 
+
 #headerRow th {
   padding: 5px;
 }
@@ -77,6 +103,7 @@ md-toast .md-toast-content span {
   background-color: rgb(63,81,181);
   color: rgba(255,255,255,0.87);
   padding-top: 5px;
+  border: none;
 }
 #tableBodyRow td{
   border: 1px solid;
@@ -96,6 +123,11 @@ md-toast .md-toast-content span {
 }
 .headerRow th {
   padding: 5px;
+}
+tr.headerRow{
+  background-color: rgb(63,81,181);
+  color: rgba(255,255,255,0.87);
+  padding-top: 5px;
 }
 #survey.headerRow{
   background-color: rgb(63,81,181);
@@ -118,10 +150,23 @@ md-toast .md-toast-content span {
   padding: 0;
   margin: 0;
 }
+.tableBody .toastColorRed {
+    background-color: rgb(216,67,21);
+  }
+  .tableBody .toastColorGreen {
+      background-color: rgb(122, 221, 101);
+    }
+
+.tableBody .noToastColor {
+  transition: background-color 0.3s ease-in;
+}
+
 tr:nth-child(odd) {
+
     background-color: rgb(234, 231, 235);
 }
 tr:nth-child(even) {
+
     background-color: rgb(211, 210, 212);
 }
 .survey-header {
@@ -129,13 +174,7 @@ tr:nth-child(even) {
   justify-content: space-around;
   align-items: center;
 }
-.survey-header li {
-  list-style-type: none;
-}
 
-.area-survey-header li {
-  list-style-type: none;
-}
 .area-survey-header ul {
   padding:3px;
   margin: 0;
@@ -159,9 +198,7 @@ table {
   justify-content: space-around;
 }
 
-.company-info-header li {
-  list-style-type: none;
-}
+
 
 .client-contact {
   display: flex;
@@ -182,27 +219,35 @@ table {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 200px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   margin: 10px;
   /*background-color: rgb(16,108,200);
   color: rgba(255,255,255,0.87);
   border-radius: 3px;*/
 }
-.for-delete {
-  background-color: rgb(233, 47, 47);
-}
-
 .add-new-area {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 200px;
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   margin: 10px;
   flex-wrap: wrap;
+}
+
+.for-delete {
+  background-color: rgb(216,67,21);
+}
+
+.md-whiteframe-14dp{
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  background-color: rgb(255,255,255);
 }
 
 .area-input {
@@ -269,6 +314,10 @@ footer {
   min-width: 750px;
 }
 
+.loggedOut {
+  min-width: 730px;
+}
+
 .status-update {
   margin: 0px 0px 0px;
 }
@@ -276,7 +325,7 @@ footer {
   color: rgba(0,0,0,0.87) !important;
 }
 
-#goToTopButton {
+#surveyButtons {
   position: fixed;
   bottom: 6px;
   left: 25px;
@@ -298,4 +347,12 @@ footer {
 #backToAreaButtonContainer {
   display: flex;
   justify-content: center;
+}
+
+.tableBodyRow .dashToast {
+  background-color: rgb(113, 238, 106);
+}
+.tableBodyRow .dashNoToast {
+  transition: background-color 1s ease-in;
+  background-color: inherit;
 }

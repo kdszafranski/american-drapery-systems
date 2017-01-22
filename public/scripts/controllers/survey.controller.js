@@ -1,10 +1,15 @@
+// <<<<<<< HEAD
 app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory', '$route', 'FileFactory',
 function($http, UserFactory, IdFactory, $route, FileFactory) {
+// =======
+// app.controller('SurveyController', ["$http", 'UserFactory', '$route',
+// function($http, UserFactory, $route) {
+// >>>>>>> 24300b59d1c4d9fed5f3fdcadc66df37ae4ac7a4
   console.log("In Survey Controller");
   var self = this;
-  // var surveyId = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
   var currentUser;
+  self.loading = false;
   const MIN_AREA_GOTO_TOP = 4;
   var currentFilesObject = {};
 
@@ -13,7 +18,6 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
     console.log("Clicked Top");
   }
 
-  console.log("Id Factory: ", IdFactory.survey);
   console.log("surveyId: ", surveyId);
 
   function getSurveyDetails() {
@@ -34,6 +38,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
           var separateAreas = groupBy(self.surveyDetails, 'area_name');
           console.log(separateAreas);
           self.areaArray = [];
+          self.loading = true;
           for (x in separateAreas) {
             self.areaArray.push(separateAreas[x]);
           }
@@ -44,8 +49,6 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
         });
     })}
 
-  // getSurveyDetails();
-
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     currentUser = firebaseUser;
     getSurveyDetails();
@@ -54,6 +57,10 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
         self.currentFilesObject = FileFactory.currentFilesObject;
       })
   });
+
+  self.printPage = function() {
+    window.print();
+  }
 }]);
 
 
