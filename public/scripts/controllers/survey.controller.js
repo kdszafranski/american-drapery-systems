@@ -1,9 +1,10 @@
-app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory', '$route', 'FileFactory',
-function($http, UserFactory, IdFactory, $route, FileFactory) {
+app.controller('SurveyController', ["$http", 'UserFactory', 'IdFactory', '$route', 'FileFactory', '$scope', '$mdDialog',
+function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) {
   console.log("In Survey Controller");
   var self = this;
   // var surveyId = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
+  self.surveyId = surveyId;
   var currentUser;
   const MIN_AREA_GOTO_TOP = 4;
   var currentFilesObject = {};
@@ -11,7 +12,28 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
   self.goToTop = function() {
     window.scrollTo(0, 0);
     console.log("Clicked Top");
-  }
+  };
+
+  self.show = true;
+
+  self.showPreview = function(ev, index) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var currentFile = self.currentFilesObject["file_" + (index + 1)];
+    var baseUrl = 'https://s3.amazonaws.com/american-drapery-systems/survey_';
+    var currentFileUrl = baseUrl + surveyId + '/' + 'area_' + currentFile.areaId + '/' + currentFile.key + currentFile.originalName;
+
+    $mdDialog.show({
+      template:
+        '<md-card>' +
+          '<md-card-content layout="row" layout-wrap>' +
+            '<img ng-src="' + currentFileUrl + '"/>' +
+          '</md-card-content>' +
+        '</md-card flex>',
+      targetEvent: ev,
+      clickOutsideToClose: true
+    })
+  };
+
 
   console.log("Id Factory: ", IdFactory.survey);
   console.log("surveyId: ", surveyId);
@@ -27,7 +49,8 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
           headers: {
             id_token: idToken
           }
-        }).then(function(response){
+        })
+        .then(function(response){
           self.surveyDetails = formatDates(response.data);
           console.log("Response From Server: ", self.surveyDetails);
           //Seperate measurements into areas
@@ -38,23 +61,28 @@ function($http, UserFactory, IdFactory, $route, FileFactory) {
             self.areaArray.push(separateAreas[x]);
           }
           console.log("areaArray: ", self.areaArray);
-        },
-        function(err) {
+        })
+        .then(function() {
+          FileFactory.getSurveyFiles(currentUser, surveyId)
+            .then(function() {
+              console.log("This .then() is happening");
+              self.currentFilesObject = FileFactory.currentFilesObject;
+              console.log("currentFilesObject: ", self.currentFilesObject);
+              $scope.$apply();
+            })
+        })
+        .catch(function(err) {
           console.log("error getting survey details: ", err);
-        });
-    })}
-
-  // getSurveyDetails();
+        })
+    })
+  };
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     currentUser = firebaseUser;
     getSurveyDetails();
-    FileFactory.getSurveyFiles(currentUser, surveyId)
-      .then(function() {
-        self.currentFilesObject = FileFactory.currentFilesObject;
-      })
   });
-}]);
+
+}]);//end controller
 
 
 //Function to group measurements by area

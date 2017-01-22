@@ -49,7 +49,7 @@
 <div layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
   <md-card flex="100">
     <md-card-content>
-      <h3 class="areaName" ng-if="area[0].area_name">Area: {{area[0].area_name}}</h4>
+      <h3 class="areaName" ng-if="area[0].area_name">Area: {{area[0].area_name}}</h3>
       <table style="width:100%" >
         <thead>
           <tr id="headerRow">
@@ -84,13 +84,31 @@
         <b>Notes:</b>
         {{area[$index].notes}}
       </p>
+      <div class="fileInfo">
+        <ul class="notes" ng-init="areaId = area[0].area_id">
+          <li class="unbulleted"><b>Files:</b></li>
+          <li ng-repeat="file in survey.currentFilesObject track by $index" ng-if="file.areaId == areaId" class="unbulleted"><b>{{file.originalName}}</b>
+            <ul>
+              <li class="unbulleted">
+                <i>"{{file.fileInfo}}"</i>
+              </li>
+            </ul>
+            <md-button ng-click="survey.showPreview($event, $index)">
+              <span>Preview</span>
+              <div class="md-ripple-container"></div>
+            </md-button>
+            <md-switch class="md-primary" md-no-ink aria-label="Switch No Ink" ng-model="survey.currentFilesObject['file_' + ($index +1)].print">
+              Include {{survey.currentFilesObject['file_' + ($index +1)].print}}
+            </md-switch>
+          </li>
+        </ul>
+      </div>
     </md-card-content>
   </md-card>
 </div>
-<p class="files" ng-init="areaId = area[$index].area_id">
-  <b>Files: {{areaId}}</b>
-  <i ng-repeat="file in survey.currentFilesObject"></br>{{file.originalName}}</br><i>{{file.fileInfo}}</i></br></i>
-</p>
+<div class="filePrint" ng-repeat="file in survey.currentFilesObject" ng-init="fileUrl = 'https://s3.amazonaws.com/american-drapery-systems/survey_' + survey.surveyId + '/area_' + file.areaId + '/' + file.key + file.originalName" ng-if="file.print == true">
+  <img ng-src="{{fileUrl}}" alt="file"/>
+</div>
 <div>
   <md-button id="goToTopButton" class="md-raised md-primary md-ink-ripple" ng-show="survey.areaArray.length > 4" ng-click="survey.goToTop()">Go To Top</md-button>
 </div>

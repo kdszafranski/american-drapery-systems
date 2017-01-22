@@ -70,4 +70,12 @@
   #header, #footer, #nav {
     display: none !important;
   }
+
+  .filePrint {
+    display: inline-flex;
+  }
+
+  .fileInfo {
+    display: none;
+  }
 }

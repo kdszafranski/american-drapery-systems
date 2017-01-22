@@ -86,6 +86,7 @@ router.get('/:areaId', function(req, res) {
   console.log("files get route hit, search db for areaId: ", areaId);
   pool.connect()
     .then(function(client) {
+      console.log("\n\nareaId bieng pulled: ", areaId);
       client.query('SELECT * FROM files WHERE area_id = $1', [areaId])
         .then(function(result) {
           console.log("Success! Retrieved these results from the DB: ", result.rows);
