@@ -2,7 +2,6 @@ app.controller('AdminController', ['UserFactory', '$http', function(UserFactory,
   const self = this;
   var currentUser = {};
   self.users = [];
-  self.newUser = {};
   self.unauthorized = false;
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
