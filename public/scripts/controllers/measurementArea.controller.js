@@ -154,6 +154,27 @@ function($http, $location, UserFactory, $route, $mdDialog) {
         }
       });
     });
+
+    currentUser.getToken()
+    .then(function(idToken) {
+      $http({
+        method: 'PUT',
+        url: '/surveys/update/'+ surveyId,
+        data: self.companyInfo,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response){
+        console.log("Response from new area post: ", response.data);
+      },
+      function(err) {
+        console.log("error updating clientdetails: ", err);
+        if (err.status === 403) {
+          notAuthorizedAlert();
+          console.log("In error 403");
+        }
+      });
+    });
   }
   //function to handle clicking of an already existing area
 
