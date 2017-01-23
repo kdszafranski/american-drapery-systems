@@ -51,8 +51,8 @@
                 <md-checkbox ng-model="newUser.authorized"></md-checkbox>
               </md-input-container></td>
               <td><md-input-container>
-                <md-button ng-click="admin.addUser(newUser)" class="md-icon-button" >
-                  <md-icon md-svg-icon="./img/add.svg"></md-icon>
+                <md-button ng-click="admin.addUser(newUser); newUser = {}" class="md-icon-button" >
+                  <md-icon md-svg-icon="../../img/add.svg"></md-icon>
                 </md-button>
               </md-input-container></td>
             </tr>

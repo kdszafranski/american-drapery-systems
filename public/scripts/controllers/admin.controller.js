@@ -2,7 +2,6 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
   const self = this;
   var currentUser = {};
   self.users = [];
-  self.newUser = {};
   self.unauthorized = false;
   self.redId = false;
   self.greenId = false;
