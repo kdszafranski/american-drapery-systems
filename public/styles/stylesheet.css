@@ -41,8 +41,8 @@ md-toast .md-toast-content span {
   width: 100%;
   height: 62px;
 }
-#nav div md-button {
-  width:83px;
+#nav div div .md-button {
+  min-width: 94px;
 }
 #companyName {
   padding-left: 15px;
@@ -375,10 +375,9 @@ footer {
 .thumbnail img {
   max-width:100%;
   max-height:100%;
-}
-.img-prev {
-  padding: 0 5px;
-}
-.img-prev b {
   padding: 5px 0;
+}
+
+md-switch {
+  margin: 0;
 }

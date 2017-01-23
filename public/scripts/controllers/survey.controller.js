@@ -6,6 +6,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
   self.surveyId = surveyId;
   var currentUser;
   self.loading = false;
+  self.imgLoad = false;
   const MIN_AREA_GOTO_TOP = 4;
   var currentFilesObject = {};
 
@@ -68,6 +69,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
               console.log("This .then() is happening");
               self.currentFilesObject = FileFactory.currentFilesObject;
               console.log("currentFilesObject: ", self.currentFilesObject);
+              self.imgLoad = true;
               $scope.$apply();
             })
         })

@@ -52,7 +52,7 @@
     border-bottom: 2px solid black;
   }
 
-  tr,img, .survey-area {
+  tr,img, .survey-area, .filePrint {
       page-break-inside: avoid;
   }
 
@@ -73,7 +73,9 @@
   #header, #footer, #nav, #surveyButtons, .fileInfo {
     display: none !important;
   }
+
   .filePrint {
     display: inline-flex;
   }
+
 }
