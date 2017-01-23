@@ -45,9 +45,9 @@
               <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_phone_number}}</li>
               <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_email}}</li>
             </ul>
-              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_name" placeholder="Company Contact Name"></md-input-container>
-              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_phone_number" placeholder="Phone Number"></md-input-container>
-              <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_email" placeholder="Email"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_name" placeholder="Company Contact Name"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_phone_number" placeholder="Phone Number"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_email" placeholder="Email"></md-input-container>
           </div>
           <div layout="column" layout-align="start center">
             <ul >
@@ -69,24 +69,21 @@
           <input ng-model="ma.companyInfo.job_number" placeholder="Job Number"></md-input-container>
         <ul>
           <li><b>Survey Date:</b></li>
-          <!-- <li ng-show="ma.showInput">{{ma.companyInfo.survey_date}}</li> -->
-          <md-input-container  md-no-float>
+          <md-input-container  md-no-float layout="row">
             <md-datepicker ng-model="ma.surveyDate" ng-disabled="ma.showInput" ng-change="ma.companyInfo.survey_date = ma.surveyDate.toISOString()" placeholder="Survey Date"></md-datepicker>
           </md-input-container>
           <li><b>Completion Date:</b></li>
-          <!-- <li ng-show="ma.showInput">{{ma.companyInfo.completion_date}}</li> -->
-          <md-input-container  md-no-float>
+          <md-input-container  md-no-float layout="row">
             <md-datepicker ng-model="ma.completionDate" ng-disabled="ma.showInput" ng-change="ma.companyInfo.completion_date = ma.completionDate.toISOString()" placeholder="Survey Date"></md-datepicker>
           </md-input-container>
         </ul>
       </div>
     </div>
+
+
     <div layout="row" layout-align="start">
-      <md-button ng-show="ma.showInput" ng-click="ma.showInput = !ma.showInput;" class="md-raised md-primary" aria-label="edit client profile">
-        Edit Client Profile
-      </md-button>
-      <md-button ng-show="ma.showInput" ng-click="ma.survey()" class="md-raised md-primary" aria-label="edit client profile">
-        View Survey
+      <md-button ng-show="ma.showInput" ng-click="ma.showInput = !ma.showInput" class="md-raised md-primary" aria-label="edit client profile">
+        Edit Survey Information
       </md-button>
       <md-button ng-hide="ma.showInput" ng-click="ma.updateClient()" class="md-raised md-primary" aria-label="edit client profile">
         Save

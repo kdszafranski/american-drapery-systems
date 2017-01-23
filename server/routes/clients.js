@@ -10,9 +10,9 @@ router.get('/', function(req, res) {
   console.log('reached get clients route')
   pool.connect()
     .then(function(client) {
-      client.query('SELECT client_name, id FROM client')
+      client.query('SELECT client_name, id FROM client ORDER BY client_name')
         .then(function(result) {
-          console.log(result.rows);
+          console.log('number of clients sent:', result.rows.length);
           res.send(result.rows);
         })
         .catch(function(err) {
@@ -29,9 +29,8 @@ router.get('/:clientId', function(req, res) {
   .then(function(client) {
     client.query('SELECT * FROM client WHERE id = ' + req.params.clientId)
      .then(function(result) {
-       console.log(result.rows);
+       console.log('number of clients sent:', result.rows.length);
        res.send(result.rows);
-
     })
     .catch(function(err) {
       console.log('select query error: ', err);
