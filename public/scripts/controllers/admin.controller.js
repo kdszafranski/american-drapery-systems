@@ -123,6 +123,7 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
       $mdDialog
         .show( alert )
         .finally(function() {
+          self.redId = false
           alert = undefined;
         });
     }

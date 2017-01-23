@@ -112,10 +112,15 @@ function($http, $location, UserFactory, InfoFactory, $route, $mdDialog) {
         }).then(function(response){
           console.log("Response from new area post: ", response.data[0].id);
           areaId = response.data[0].id;
+          console.log("In response");
           $location.path('/measurement/' + surveyId + '/' + areaId + '/' + self.newAreaName);
         },
         function(err) {
           console.log("error getting survey details: ", err);
+          if (err.status === 403) {
+            notAuthorizedAlert();
+            console.log("In error 403");
+          }
         });
     })
   }
@@ -143,6 +148,10 @@ function($http, $location, UserFactory, InfoFactory, $route, $mdDialog) {
       },
       function(err) {
         console.log("error updating clientdetails: ", err);
+        if (err.status === 403) {
+          notAuthorizedAlert();
+          console.log("In error 403");
+        }
       });
     });
   }
@@ -235,6 +244,20 @@ function($http, $location, UserFactory, InfoFactory, $route, $mdDialog) {
     self.loading = true;
     $location.path('/survey/' + surveyId);
   }
+
+  function notAuthorizedAlert() {
+      alert = $mdDialog.alert({
+        title: 'Attention',
+        textContent: 'You are not authorized to perform this action',
+        ok: 'Close'
+      });
+
+      $mdDialog
+        .show( alert )
+        .finally(function() {
+          alert = undefined;
+        });
+    }
 
 }]);
 

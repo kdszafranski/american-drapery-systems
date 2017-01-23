@@ -1,4 +1,4 @@
-app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$location", function($http, UserFactory, IdFactory, $location) {
+app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$location", "$mdDialog",  function($http, UserFactory, IdFactory, $location, $mdDialog) {
   var self = this;
   self.currentProfile = {};
   self.checkbox = true;
@@ -98,6 +98,13 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
           last_modified: new Date()
         }
         addNewSurvey(self.survey);
+      },
+      function(err) {
+        console.log("error updating clientdetails: ", err);
+        if (err.status === 403) {
+          notAuthorizedAlert();
+          console.log("In error 403");
+        }
       });
     });
   }
@@ -123,6 +130,13 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
           last_modified: new Date()
         }
         addNewSurvey(self.survey);
+      },
+      function(err) {
+        console.log("error updating clientdetails: ", err);
+        if (err.status === 403) {
+          notAuthorizedAlert();
+          console.log("In error 403");
+        }
       });
     });
   }
@@ -162,6 +176,13 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
         IdFactory.setSurvey(newSurveyId);
         $location.path('/area/' + newSurveyId);
         console.log('success in adding new survey');
+      },
+      function(err) {
+        console.log("error updating clientdetails: ", err);
+        if (err.status === 403) {
+          notAuthorizedAlert();
+          console.log("In error 403");
+        }
       });
     });
   }
@@ -170,4 +191,18 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
     currentUser = firebaseUser;
     getClients();
   })
+
+  function notAuthorizedAlert() {
+      alert = $mdDialog.alert({
+        title: 'Attention',
+        textContent: 'You are not authorized to perform this action',
+        ok: 'Close'
+      });
+
+      $mdDialog
+        .show( alert )
+        .finally(function() {
+          alert = undefined;
+        });
+    }
 }]);
