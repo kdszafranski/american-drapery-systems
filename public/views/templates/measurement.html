@@ -83,6 +83,8 @@
           </ul>
         </div>
       </div>
+
+
       <div layout="row" layout-align="start">
         <md-button ng-show="measure.showInput" ng-click="measure.showInput = !measure.showInput" class="md-raised md-primary" aria-label="edit client profile">
           Edit Client Profile
@@ -91,7 +93,6 @@
           Save
         </md-button>
       </div>
-
     </md-card>
     <!-- FILES -->
     <div ng-show="measure.loading" layout="row" layout-align="center center" layout-wrap ng-controller="FileController as files">
@@ -117,6 +118,7 @@
       </md-card flex>
     </div>
   </div>
+  <!-- END FILES -->
   <div ng-show="measure.loading" layout="row" layout-align="center center" layout-wrap>
     <md-card>
       <md-card-title id="measurementTitle">
@@ -198,7 +200,8 @@
               </td>
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.showConfirm($event, $index, measure.measurements[$index].id)" class="md-icon-button" aria-label="delete">
-                  <md-icon md-svg-icon="./img/delete.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/delete.svg" ng-hide=" measure.deleteId === $index"></md-icon>
+                  <md-progress-circular md-mode="indeterminate" md-diameter="20" ng-show="measure.deleteId === $index"></md-progress-circular>
                 </md-button>
               </td>
               <td ng-hide="measure.measurements[$index].edit" id="removeIconPadding" class="inputTd">

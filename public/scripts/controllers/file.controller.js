@@ -12,6 +12,7 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     currentUser = firebaseUser;
+    FileFactory.currentFilesObject = {}; //clear filesObject in factory
     FileFactory.getFiles(currentUser, areaId)
       .then(function() {
         self.currentFilesObject = FileFactory.currentFilesObject;

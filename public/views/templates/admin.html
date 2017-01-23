@@ -5,9 +5,9 @@
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
-    <md-card-content ng-show="admin.loading">
-      <h1>User Admin Page</h1>
-
+    <md-card-content ng-show="admin.loading" id="adminHeader">
+      <h1>User Admin Dashboard</h1>
+      <p ng-show="admin.unauthorized">You are not authorized to edit/add users.</p>
       <div layout="row" layout-sm="column" layout-align="center center" layout-wrap>
         <table id="adminTable" cellspacing="0">
           <thead>
@@ -16,6 +16,7 @@
               <th>Last Name</th>
               <th>Email</th>
               <th>Admin Privlages</th>
+              <th>Survey Privaleges</th>
               <th></th>
             </tr>
           </thead>
@@ -28,6 +29,7 @@
               <td>{{user.last_name}}</td>
               <td>{{user.email}}</td>
               <td>{{user.can_edit_users | true_false}}</td>
+              <td>{{user.authorized}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="delete">
                 <md-icon ng-click="admin.showConfirm($event, user.id, user.first_name, user.last_name)" md-svg-icon="./img/delete.svg"></md-icon>
               </div></td>
@@ -46,8 +48,11 @@
                 <md-checkbox ng-model="newUser.can_edit_users"></md-checkbox>
               </md-input-container></td>
               <td><md-input-container>
-                <md-button ng-click="admin.addUser(newUser)" class="md-icon-button" >
-                  <md-icon md-svg-icon="./img/add.svg"></md-icon>
+                <md-checkbox ng-model="newUser.authorized"></md-checkbox>
+              </md-input-container></td>
+              <td><md-input-container>
+                <md-button ng-click="admin.addUser(newUser); newUser = {}" class="md-icon-button" >
+                  <md-icon md-svg-icon="../../img/add.svg"></md-icon>
                 </md-button>
               </md-input-container></td>
             </tr>

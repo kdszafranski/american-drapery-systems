@@ -72,6 +72,7 @@ function($http, MultipartForm) {
             fileFactory.currentFilesObject["file_" + (i + 1)].id = currentFile.id;
             fileFactory.currentFilesObject["file_" + (i + 1)].key = currentFile.key;
             fileFactory.currentFilesObject["file_" + (i + 1)].originalName = currentFile.original_name;
+            fileFactory.currentFilesObject["file_" + (i + 1)].print = true;
           }
           console.log("CURRENT FILES OBJECT: ", fileFactory.currentFilesObject);
           return fileFactory.currentFilesObject;
