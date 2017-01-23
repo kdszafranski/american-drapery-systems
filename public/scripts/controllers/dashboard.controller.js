@@ -129,16 +129,14 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.sortType = 'id'; // set the default sort type
   self.sortReverse = true;  // set the default sort order
   self.show = {
-    completed: true,
-    declined: true,
-    dispatched: true,
-    pending: true,
+    options: ['Pending', 'Dispatched', 'Completed', 'Declined'],
+    statuses: [true, true, true, true],
     text: function () {
       var ret = [];
-      var compBool = (!this.completed && "Completed");
-      var dispBool = (!this.dispatched && "Dispatched");
-      var pendBool = (!this.pending && "Pending");
-      var decBool = (!this.declined && "Declined");
+      var pendBool = (!this.statuses[0] && this.options[0]);
+      var dispBool = (!this.statuses[1] && this.options[1]);
+      var compBool = (!this.statuses[2] && this.options[2]);
+      var decBool = (!this.statuses[3] && this.options[3]);
       if (compBool) { ret.push(compBool) }
       if (decBool) { ret.push(decBool) }
       if (dispBool) { ret.push(dispBool) }
