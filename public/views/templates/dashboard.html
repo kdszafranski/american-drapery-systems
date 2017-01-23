@@ -1,13 +1,13 @@
 <div layout="row" layout-align="center center" >
   <md-card id="dashCard" flex="70">
     <md-card-content ng-hide="dash.loading">
-      <div layout="row" layout-sm="column" layout-align="space-around">
+      <div layout="row" layout-align="space-around">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
     <md-card class="loggedOut" flex="70">
       <md-card-content ng-show="dash.loggedOut">
-        <div layout="row" layout-sm="column" layout-align="space-around">
+        <div layout="row" layout-align="space-around">
           <h3>You are logged out and will be redirected to the login screen.</h3>
         </div>
       </md-card-content>
@@ -28,16 +28,16 @@
       </div>
       <div layout="row" layout-align="center center" id="filterBoxes">
         <h3 id="dashFilterBy">Filter By</h3>
-        <md-checkbox ng-model="dash.show.pending" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)" class="sortBox">
+        <md-checkbox ng-model="dash.show.pending" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
           Pending
         </md-checkbox>
-        <md-checkbox ng-model="dash.show.dispatched" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)" class="sortBox">
+        <md-checkbox ng-model="dash.show.dispatched" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
           Dispatched
         </md-checkbox>
-        <md-checkbox ng-model="dash.show.completed" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)" class="sortBox">
+        <md-checkbox ng-model="dash.show.completed" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
           Completed
         </md-checkbox>
-        <md-checkbox ng-model="dash.show.declined" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)" class="sortBox">
+        <md-checkbox ng-model="dash.show.declined" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
           Declined
         </md-checkbox>
       </div>

@@ -213,6 +213,7 @@ table {
 
 #companyName {
   text-align: right;
+  cursor: pointer;
 }
 
 .areas {
@@ -329,11 +330,6 @@ footer {
 #surveySearch {
   font-size: 1.17em;
 }
-
-#newJobButton {
-  margin-bottom: 0px;
-}
-
 #surveySearchResults {
   margin: 0;
   white-space: nowrap;
@@ -357,6 +353,7 @@ footer {
   align-items: flex-end;
   justify-content: space-between;
 }
+
 
 .sortBox {
   display: flex;
