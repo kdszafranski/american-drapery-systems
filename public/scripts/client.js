@@ -50,7 +50,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
 
 
-//dashboard search filter
+/***************************ANGULAR SEARCH FILTERS***************************/
 app.filter('startFrom', function() {
   return function(input, start) {
     start = +start; //parse to int
@@ -70,7 +70,21 @@ app.filter('excludeByStatus', function () {
   };
 })
 
-//Utilities
+app.filter('true_false', function() {
+    return function(text, length, end) {
+        if (text) {
+            return 'Yes';
+        }
+        return 'No';
+    }
+});
+
+/***************************UTILITY FUNCTIONS***************************/
+function removeObjById(arr, id) {
+  var idx = arr.findIndex(item => item.id === id);
+  ~idx && arr.splice(idx, 1);
+  return idx;
+}
 function formatDates(aryOfObjs){
   //convert the ISO Dates to readable format
   //expects array of objects

@@ -1,49 +1,46 @@
-<div layout="row" layout-align="center center" >
-  <md-card id="dashCard" flex="70">
+<div layout="row" layout-align="center center">
+  <md-card id="dashCard">
     <md-card-content ng-hide="dash.loading">
-      <div layout="row" layout-sm="column" layout-align="space-around">
+      <div layout="row" layout-align="space-around">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
+    <md-card class="loggedOut">
+      <md-card-content ng-show="dash.loggedOut">
+        <div layout="row" layout-align="space-around">
+          <h3>You are logged out and will be redirected to the login screen.</h3>
+        </div>
+      </md-card-content>
+    </md-card>
 
     <md-card-content ng-show="dash.loading">
-      <div layout="row">
-        <div layout="column" flex="33" layout-align="space-around end">
-          <md-button id="newJob" class="md-raised md-primary md-ink-ripple" ng-click="dash.newJob()">
-            New Job
+      <h1 id="dashboardHeader">Survey Dashboard</h1>
+      <div layout="column" flex="70" flex-offset="15">
+
+        <div layout="row" layout-align="space-between center">
+          <md-button flex="20" class="md-raised md-primary md-ink-ripple" ng-click="dash.newJob()">
+            New Survey
           </md-button>
-        </div>
-        <div layout="column" flex="33" layout-align="space-around center">
-          <h3>Show Jobs</h3>
-          <div layout="row">
-            <md-checkbox ng-model="dash.show.pending" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
-              Pending
-            </md-checkbox>
-            <md-checkbox ng-model="dash.show.dispatched" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
-              Dispatched
-            </md-checkbox>
-          </div>
-          <div layout="row">
-            <md-checkbox ng-model="dash.show.completed" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
-              Completed
-            </md-checkbox>
-            <md-checkbox ng-model="dash.show.declined" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
-              Declined
-            </md-checkbox>
-          </div>
-        </div>
-        <div layout="column" flex="33" layout-align="space-around start">
-          <span>Results: {{(dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length}} </span>
-          <md-input-container>
-            <label>Search</label>
+          <md-input-container flex="50" id="surveySearch">
+            <label>Search Surveys</label>
             <input ng-model="query" aria-invalid="false" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)"/>
             <div class="md-errors-spacer"></div>
           </md-input-container>
+          <h3 flex="25" id="surveySearchResults">Results: {{(dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length}} </h3>
+        </div>
+
+        <div id="filterBoxes" layout="row" layout-align="space-between center">
+          <h3 id="dashFilterBy">Filter By</h3>
+          <div layout="column" class="filterBox" ng-repeat="status in dash.show.options">
+            <md-checkbox ng-model="dash.show.statuses[$index]" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
+              {{status}}
+            </md-checkbox>
+          </div>
         </div>
       </div>
 
-      <div layout="row" layout-align="center center" layout-wrap>
-        <table id="dashTable">
+      <div layout="row" layout-align="space-between center">
+        <table cellspacing="0">
           <thead>
             <tr id="headerRow">
               <th class="columnSort" ng-click="dash.sortType = 'id'; dash.sortReverse = !dash.sortReverse">Survey #
@@ -69,13 +66,13 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | excludeByStatus: dash.show.text() | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" >
+          <tbody class="tableBody">
+            <tr class="tableBodyRow" data-ng-repeat="result in dash.filtered | excludeByStatus: dash.show.text() | orderBy:dash.sortType:dash.sortReverse | filter: query | startFrom:dash.currentPage*dash.pageSize | limitTo:dash.pageSize" data-ng-class="{toastColorRed: dash.redId == result.id, noToastColor: dash.redId != result.id}">
               <td>{{result.id}}</td>
               <td>{{result.job_number}}</td>
-              <td>{{result.client_name}}</td>
-              <td><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id)" class="status-update">
-                <md-option ng-repeat="status in dash.statusOptions">{{status}}</md-option>
+              <td id="row{{result.id}}">{{result.client_name}}</td>
+              <td data-ng-class="{toastColorGreen: dash.greenId == result.id, noToastColor: dash.greenId != result.id}"><md-select ng-model="result.status" placeholder="{{result.status}}" ng-change="dash.changeStatus(result.id, result.status)" class="status-update">
+                <md-option ng-repeat="status in dash.show.options">{{status}}</md-option>
               </md-select></td>
               <td id="row{{result.id}}" >{{result.last_modified}}</td>
               <td>{{result.survey_date}}</td>

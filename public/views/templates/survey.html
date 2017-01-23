@@ -1,7 +1,7 @@
 <div id="survey" layout="row" layout-align="center center" class="container">
-  <md-card flex="100">
+  <md-card flex>
     <md-card-content ng-hide="survey.loading">
-      <div layout="row" layout-sm="column" layout-align="space-around">
+      <div layout="row" layout-align="center center">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
@@ -12,7 +12,7 @@
             <h1><i>{{survey.surveyDetails[0].client_name}}</i></h1>
           </div>
           <div layout="row" layout-align="center left">
-            <ul class="client-address">
+            <ul class="client-address">a
               <li>{{survey.surveyDetails[0].billing_address_street}}</li>
               <li>&nbsp• {{survey.surveyDetails[0].billing_address_city}},  {{survey.surveyDetails[0].billing_address_state}} •&nbsp</li>
               <li>{{survey.surveyDetails[0].billing_address_zip}}</li>
@@ -51,9 +51,14 @@
   </md-card>
 </div>
 <div class="survey-area" layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
-  <md-card flex="100">
+  <md-card flex>
     <md-card-content>
+      <div layout="row" layout-align="start center" >
+
       <h3 class="areaName" ng-if="area[0].area_name">Area: {{area[0].area_name}}</h4>
+      </div>
+      <div layout="row" layout-align="start center" >
+
       <table cellspacing="0">
         <thead>
           <tr id="headerRow">
@@ -84,15 +89,53 @@
           </tr>
         </tbody>
       </table>
+    </div>
+      <div layout="row" layout-align="start center" >
       <p class="notes">
         <b>Notes:</b>
         {{area[$index].notes}}
       </p>
+    </div>
+    <div class="fileInfo" layout="row">
+      <p><b>Files:</b></h4>
+    </div>
+    <div layout="row"  class="fileInfo" layout-align="space-around stretch" layout-wrap ng-init="areaId = area[0].area_id">
+      <div layout="row" ng-hide="survey.imgLoad" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+      <div layout="column" ng-show="survey.imgLoad" layout-align="start start" ng-repeat="file in survey.currentFilesObject track by $index" ng-if="file.areaId == areaId" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName; file.areaName = area[0].area_name">
+        <div ng-switch="file.extension">
+          <div ng-switch-when="pdf">
+            <b>{{file.fileInfo || file.originalName}}</b>
+            <img src="./img/pdf.svg" alt="Cannot Be Displayed" ng-click="survey.showPreview($event, $index)"/>
+          </div>
+          <div ng-switch-default>
+            <b>{{file.fileInfo || file.originalName}}</b>
+            <div class="thumbnail">
+              <img src="{{fileUrl}}" alt="Cannot Be Displayed" ng-click="survey.showPreview($event, $index)"/>
+            </div>
+            <md-switch class="md-primary fileOpt" md-no-ink aria-label="Switch No Ink" ng-model="survey.currentFilesObject['file_' + ($index +1)].print">
+              Include in preview
+            </md-switch>
+            <md-switch class="md-primary fileopt" ng-disabled="!survey.currentFilesObject['file_' + ($index +1)].print" md-no-ink aria-label="Switch No Ink" ng-true-value="50" ng-false-value="100" ng-model="file.flexWidth" >
+              Max-width: 50%
+            </md-switch>
+          </div>
+        </div>
+      </div>
+    </div>
     </md-card-content>
   </md-card>
 </div>
+<div layout="row" class="filePrint" layout-align="start center" layout-wrap>
+  <div layout="column" class="printItem" layout-align="start center" ng-repeat="file in survey.currentFilesObject" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName" ng-if="file.print == true" flex="{{file.flexWidth || 100}}" >
+    <b>Area: {{file.areaName}}</b>
+    <b>{{file.fileInfo || file.originalName}}</b>
+    <img ng-src="{{fileUrl}}" alt="file"/>
+  </div>
+</div>
+
 <div id="surveyButtons" layout="row" layout-align="center start">
   <md-button class="md-raised md-button md-ink-ripple" ng-click="survey.printPage()">PDF/PRINT</md-button>
-
   <md-button class="md-raised md-button md-ink-ripple" ng-show="survey.areaArray.length > 4" ng-click="survey.goToTop()">Go To Top</md-button>
 </div>

@@ -1,5 +1,5 @@
-app.controller('MeasurementAreaController', ["$http", 'IdFactory', '$location', 'UserFactory', 'InfoFactory', '$route', '$mdDialog',
-function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialog) {
+app.controller('MeasurementAreaController', ["$http", '$location', 'UserFactory', '$route', '$mdDialog',
+function($http, $location, UserFactory, $route, $mdDialog) {
   var self = this;
   // var survey_id = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
@@ -15,7 +15,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   console.log(surveyId);
   self.inputAreaName = false;
   self.toRemove = [];
-  // getSurveyDetails();
+  self.loggedOut = false;
 
   //function to send area to measurent controller
   self.setArea = function(index) {
@@ -23,7 +23,6 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
     areaId = self.areaArrayId[index];
     console.log("self.areaArrayId: ", self.areaArrayId);
     console.log("setArea() areaId: ", areaId);
-    IdFactory.setArea(areaId);
     selectedAreaName = self.areaArray[index];
 
     $location.path('/measurement/' + surveyId + '/' + areaId + '/' + selectedAreaName);
@@ -90,6 +89,7 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   }
 
   self.addNewArea = function() {
+    self.loading = false;
     console.log("Clicked Add New Area:");
     self.inputAreaName = false;
     self.newArea = {
@@ -111,14 +111,16 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
           }
         }).then(function(response){
           console.log("Response from new area post: ", response.data[0].id);
-          //We shouldn't really need to do this anymore, as we're storing this info in the url now
           areaId = response.data[0].id;
-          IdFactory.setArea(areaId);
-          //We do need to do this now.
+          console.log("In response");
           $location.path('/measurement/' + surveyId + '/' + areaId + '/' + self.newAreaName);
         },
         function(err) {
           console.log("error getting survey details: ", err);
+          if (err.status === 403) {
+            notAuthorizedAlert();
+            console.log("In error 403");
+          }
         });
     })
   }
@@ -131,7 +133,6 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   self.updateClient = function(){
     var clientId = self.companyInfo.client_id;
     console.log("Update client clicked, clientId: ", clientId, self.companyInfo);
-    // var currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
       $http({
@@ -146,7 +147,11 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
         self.showInput = !self.showInput;
       },
       function(err) {
-        console.log("error getting survey details: ", err);
+        console.log("error updating clientdetails: ", err);
+        if (err.status === 403) {
+          notAuthorizedAlert();
+          console.log("In error 403");
+        }
       });
     });
   }
@@ -154,7 +159,6 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
 
   //function to get all areas associated with survey or just company and survey information if the survey is new
   function getSurveyDetails(firebaseUser) {
-    // var currentUser = UserFactory.getUser();
     if(firebaseUser) {
       user = firebaseUser;
     } else {
@@ -224,15 +228,36 @@ function($http, IdFactory, $location, UserFactory, InfoFactory, $route, $mdDialo
   // getSurveyDetails(firebaseUser);
   //This happens when when we switch to this view/controller AND when page is refreshed
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    if (!firebaseUser) {
+      console.log("No User");
+      self.loggedOut = true;
+      $timeout(function() {
+        $location.path('/login');
+      }, 3000);
+    }
     currentUser = firebaseUser;
     getSurveyDetails(firebaseUser);
   });
 
   self.survey = function() {
-    IdFactory.setSurvey(surveyId);
-    console.log("\n\nsurveyId in ma.survey: ", surveyId);
+    console.log("surveyId in ma.survey: ", surveyId);
+    self.loading = true;
     $location.path('/survey/' + surveyId);
   }
+
+  function notAuthorizedAlert() {
+      alert = $mdDialog.alert({
+        title: 'Attention',
+        textContent: 'You are not authorized to perform this action',
+        ok: 'Close'
+      });
+
+      $mdDialog
+        .show( alert )
+        .finally(function() {
+          alert = undefined;
+        });
+    }
 
 }]);
 

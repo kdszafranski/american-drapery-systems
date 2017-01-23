@@ -38,7 +38,6 @@
     <script src="/scripts/factories/user-factory.js" type="text/javascript"></script>
     <script src="/scripts/factories/file-factory.js" type="text/javascript"></script>
     <script src="/scripts/factories/id-factory.js" type="text/javascript"></script>
-    <script src="/scripts/factories/info-factory.js" type="text/javascript"></script>
 
     <!--DIRECTIVES -->
     <script src="scripts/directives/file-directive.js" type="text/javascript"></script>
@@ -46,7 +45,6 @@
 
     <!-- SERVICES -->
     <script src="scripts/services/multipartForm.js" type="text/javascript"></script>
-    <!-- <script src="/scripts/services/user-factory.js" type="text/javascript"></script> -->
 
 
   </head>
@@ -55,11 +53,10 @@
       <header>
         <div ng-controller="NavController as nav" ng-include="'/views/templates/nav.html'"></div>
       </header>
-
       <main class="container" ng-view></main>
     </div>
 
-    <footer ng-controller="FooterController as footer">
+    <footer  id="footer" ng-controller="FooterController as footer">
         <p class="footer-info">American Drapery Systems &copy; {{footer.date}}</p>
     </footer>
   </body>
