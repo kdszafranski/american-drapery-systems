@@ -313,6 +313,10 @@ footer {
   cursor: pointer;
 }
 
+#dashFilterBy {
+  white-space: nowrap;
+}
+
 #dashboardHeader {
   margin-top: -20px;
   text-align: center;

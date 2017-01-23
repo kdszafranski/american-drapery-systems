@@ -17,7 +17,7 @@
       <h1 id="dashboardHeader">Survey Dashboard</h1>
       <div layout="row" id="topDashRow">
         <md-button id="newJobButton" class="md-raised md-primary md-ink-ripple" ng-click="dash.newJob()">
-          New Job
+          New Survey
         </md-button>
         <md-input-container id="surveySearch">
           <label>Search Surveys</label>
@@ -27,7 +27,7 @@
         <h3 id="surveySearchResults">Results: {{(dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length}} </h3>
       </div>
       <div layout="row" layout-align="center center" id="filterBoxes">
-        <h3>Filter By</h3>
+        <h3 id="dashFilterBy">Filter By</h3>
         <md-checkbox ng-model="dash.show.pending" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)" class="sortBox">
           Pending
         </md-checkbox>
