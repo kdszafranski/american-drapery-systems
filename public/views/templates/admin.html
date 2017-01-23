@@ -15,8 +15,8 @@
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th>Admin Privlages</th>
-              <th>Survey Privaleges</th>
+              <th>Admin Privileges</th>
+              <th>Survey Privileges</th>
               <th></th>
             </tr>
           </thead>
@@ -29,7 +29,7 @@
               <td>{{user.last_name}}</td>
               <td>{{user.email}}</td>
               <td>{{user.can_edit_users | true_false}}</td>
-              <td>{{user.authorized}}</td>
+              <td>{{user.authorized | true_false}}</td>
               <td><div class="md-icon-button md-ink-ripple itemBtn removeIconPadding" aria-label="delete">
                 <md-icon ng-click="admin.showConfirm($event, user.id, user.first_name, user.last_name)" md-svg-icon="./img/delete.svg"></md-icon>
               </div></td>

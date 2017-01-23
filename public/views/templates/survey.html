@@ -96,7 +96,6 @@
         {{area[$index].notes}}
       </p>
     </div>
-
     <div class="fileInfo" layout="row">
       <p><b>Files:</b></h4>
     </div>
@@ -104,24 +103,32 @@
       <div layout="row" ng-hide="survey.imgLoad" layout-align="center center">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
-      <div layout="column" ng-show="survey.imgLoad"layout-align="start start" ng-repeat="file in survey.currentFilesObject track by $index" ng-if="file.areaId == areaId" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName; file.areaName = area[0].area_name">
-        <b>{{file.fileInfo || file.originalName}}</b>
-        <div class="thumbnail">
-          <img src="{{fileUrl}}" alt="Cannot Be Displayed" ng-click="survey.showPreview($event, $index)"/>
+      <div layout="column" ng-show="survey.imgLoad" layout-align="start start" ng-repeat="file in survey.currentFilesObject track by $index" ng-if="file.areaId == areaId" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName; file.areaName = area[0].area_name">
+        <div ng-switch="file.extension">
+          <div ng-switch-when="pdf">
+            <b>{{file.fileInfo || file.originalName}}</b>
+            <img src="./img/pdf.svg" alt="Cannot Be Displayed" ng-click="survey.showPreview($event, $index)"/>
+          </div>
+          <div ng-switch-default>
+            <b>{{file.fileInfo || file.originalName}}</b>
+            <div class="thumbnail">
+              <img src="{{fileUrl}}" alt="Cannot Be Displayed" ng-click="survey.showPreview($event, $index)"/>
+            </div>
+            <md-switch class="md-primary fileOpt" md-no-ink aria-label="Switch No Ink" ng-model="survey.currentFilesObject['file_' + ($index +1)].print">
+              Include in preview
+            </md-switch>
+            <md-switch class="md-primary fileopt" ng-disabled="!survey.currentFilesObject['file_' + ($index +1)].print" md-no-ink aria-label="Switch No Ink" ng-true-value="50" ng-false-value="100" ng-model="file.flexWidth" >
+              Max-width: 50%
+            </md-switch>
+          </div>
         </div>
-        <md-switch class="md-primary fileOpt" md-no-ink aria-label="Switch No Ink" ng-model="survey.currentFilesObject['file_' + ($index +1)].print">
-          Include in preview
-        </md-switch>
-        <md-switch class="md-primary fileopt" ng-disabled="!survey.currentFilesObject['file_' + ($index +1)].print" md-no-ink aria-label="Switch No Ink" ng-true-value="50" ng-false-value="100" ng-model="file.flexWidth" >
-          Max-width: 50%
-        </md-switch>
       </div>
     </div>
     </md-card-content>
   </md-card>
 </div>
 <div layout="row" class="filePrint" layout-align="start center" layout-wrap>
-  <div layout="column" layout-align="start center" ng-repeat="file in survey.currentFilesObject" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName" ng-if="file.print == true" flex="{{file.flexWidth || 100}}" >
+  <div layout="column" class="printItem" layout-align="start center" ng-repeat="file in survey.currentFilesObject" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName" ng-if="file.print == true" flex="{{file.flexWidth || 100}}" >
     <b>Area: {{file.areaName}}</b>
     <b>{{file.fileInfo || file.originalName}}</b>
     <img ng-src="{{fileUrl}}" alt="file"/>

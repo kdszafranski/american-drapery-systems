@@ -70,6 +70,10 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
           removeObjById(self.filtered, id);
         }).catch(function(err) {
           console.log("Error in survey delete");
+          if (err.status === 403) {
+            notAuthorizedAlert();
+            console.log("In error 403");
+          }
         });
     });
   }
@@ -109,6 +113,10 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       },
       function(err) {
         console.log("error updating status: ", err);
+        if (err.status === 403) {
+          notAuthorizedAlert();
+          console.log("In error 403");
+        }
       });
     });
   }
@@ -120,6 +128,21 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       self.greenId = 0;
     }, 1000);
   }
+
+  function notAuthorizedAlert() {
+      alert = $mdDialog.alert({
+        title: 'Attention',
+        textContent: 'You are not authorized to perform this action',
+        ok: 'Close'
+      });
+
+      $mdDialog
+        .show( alert )
+        .finally(function() {
+          self.redId = false;
+          alert = undefined;
+        });
+    }
 
   /***************************ANGULAR SEARCH FILTER ***************************/
   self.currentPage = 0;
