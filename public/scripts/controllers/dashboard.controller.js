@@ -49,6 +49,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     $mdDialog.show(confirm).then(function() {
       deleteSurvey(id);
     }, function() {
+      self.redId=0;
     });
   };
 
