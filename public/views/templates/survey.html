@@ -105,8 +105,8 @@
       </div>
       <div layout="column" ng-show="survey.imgLoad" layout-align="start start" ng-repeat="file in survey.currentFilesObject track by $index" ng-if="file.areaId == areaId" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName; file.areaName = area[0].area_name">
         <div ng-switch="file.extension">
-          <div ng-switch-when="pdf">
-            <b>{{file.fileInfo || file.originalName}}</b>
+          <div ng-switch-when="pdf" layout-align="center center" >
+            <b>{{file.fileInfo || file.originalName}}</b></br>
             <img src="./img/pdf.svg" alt="Cannot Be Displayed" ng-click="survey.showPreview($event, $index)"/>
           </div>
           <div ng-switch-default>
