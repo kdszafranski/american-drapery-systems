@@ -4,6 +4,12 @@ html, body {
   min-width: 640px;
 }
 
+html.md-default-theme, html, body.md-default-theme, body {
+  background-color: none;
+  background-image: url(/img/triangular.png);
+  background-repeat: repeat;
+}
+
 table {
   font-family: 'Roboto', sans-serif;
 }
@@ -95,6 +101,7 @@ md-toast .md-toast-content span {
   padding: 1px;
 }
 
+
 #headerRow th {
   padding: 5px;
 }
@@ -152,16 +159,20 @@ tr.headerRow{
 .tableBody .toastColorRed {
     background-color: rgb(216,67,21);
   }
+  .tableBody .toastColorGreen {
+      background-color: rgb(122, 221, 101);
+    }
 
 .tableBody .noToastColor {
-  transition: background-color 0.2s ease-in;
-
+  transition: background-color 0.3s ease-in;
 }
 
 tr:nth-child(odd) {
+
     background-color: rgb(234, 231, 235);
 }
 tr:nth-child(even) {
+
     background-color: rgb(211, 210, 212);
 }
 .survey-header {
@@ -253,10 +264,6 @@ table {
   align-items: center;
 }
 
-/*#newJob {
-  margin: 10px;
-}*/
-
 .itemBtn:hover {
   cursor: pointer;
 }
@@ -305,8 +312,50 @@ footer {
 .columnSort:hover {
   cursor: pointer;
 }
+
+#dashboardHeader {
+  margin-top: -20px;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+#surveySearch {
+  font-size: 1.17em;
+}
+
+#newJobButton {
+  margin-bottom: 0px;
+}
+
+#surveySearchResults {
+  margin: 0;
+  white-space: nowrap;
+}
+
 #dashCard {
   min-width: 750px;
+}
+
+#filterBoxes {
+  max-width: 60%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#topDashRow {
+  max-width: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.sortBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0px;
 }
 
 .loggedOut {
@@ -342,4 +391,16 @@ footer {
 #backToAreaButtonContainer {
   display: flex;
   justify-content: center;
+}
+
+.tableBodyRow .dashToast {
+  background-color: rgb(113, 238, 106);
+}
+.tableBodyRow .dashNoToast {
+  transition: background-color 1s ease-in;
+  background-color: inherit;
+}
+
+#adminHeader {
+  text-align: center;
 }

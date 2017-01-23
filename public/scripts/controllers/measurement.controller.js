@@ -1,6 +1,6 @@
-app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",
+app.controller('MeasurementController', ["$http", "UserFactory",
 "$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll', '$mdToast',
-function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast) {
+function($http, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast) {
   var self = this;
   var surveyId = $route.current.params.surveyId;
   self.measurement = {};
@@ -219,6 +219,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   };
   //Deleting measurement after confirmation
   self.deleteRowButton = function(index){
+    self.deleteId = index;
     console.log('#row'+ self.measurements[index].id);
     console.log("remove row number: ", self.measurements[index].id);
     var idToDelete = self.measurements[index].id;
@@ -235,6 +236,7 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           console.log("Response from measurement route: ", response);
           getMeasurements(currentUser);
           self.deleteColor = false;
+          self.deleteId = null;
         }).catch(function(err) {
           console.log("Error in measurement post");
         });

@@ -1,17 +1,21 @@
 <md-content>
   <div layout="row" layout-align="center center" layout-wrap>
-    <md-card>
+    <md-card ng-hide="measure.loading">
+      <md-card-content>
+        <div layout="row" layout-sm="column" layout-align="space-around">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+      </md-card-content>
+    </md-card>
+
+    <md-card ng-show="measure.loading">
       <md-card-title id="measurementTitle">
           <md-card-title-text >
             <span id="cardTitle" class="md-subhead"> <u>Info</u></span>
           </md-card-title-text>
       </md-card-title>
 
-        <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
-          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-        </div>
-
-      <md-card-content ng-show="measure.loading">
+      <md-card-content>
       <div layout="row">
         <div layout="column">
           <!--company name  -->
@@ -88,9 +92,9 @@
         </md-button>
       </div>
 
-    </md-card flex>
+    </md-card>
     <!-- FILES -->
-    <div layout="row" layout-align="center center" layout-wrap ng-controller="FileController as files">
+    <div ng-show="measure.loading" layout="row" layout-align="center center" layout-wrap ng-controller="FileController as files">
       <md-card>
         <md-card-title id="addFiles">
             <md-card-title-text>
@@ -113,22 +117,19 @@
       </md-card flex>
     </div>
   </div>
-  <div  layout="row" layout-align="center center" layout-wrap>
+  <div ng-show="measure.loading" layout="row" layout-align="center center" layout-wrap>
     <md-card>
       <md-card-title id="measurementTitle">
         <div layout="column">
           <md-card-title-text >
             <span id="cardTitle" class="md-subhead"><u>Area:</u>  {{measure.area_name}}</span>
-            <div ng-hide="measure.loading" layout="row" layout-sm="column" layout-align="space-around">
-              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-            </div>
           </md-card-title-text>
         </div>
       </md-card-title>
       <md-card-content>
         <table id="measurementsTable"  cellspacing="0">
           <thead>
-            <tr ng-show="measure.loading" id="headerRow">
+            <tr id="headerRow">
               <th>Floor</th>
               <th>Room</th>
               <th>Quantity</th>
@@ -144,11 +145,7 @@
             </tr>
           </thead>
           <tbody class="tableBody">
-
             <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" ng-class="{'toastColorRed': dimension.id == measure.deleteColor, 'noToastColor': dimension.id != measure.deleteColor}" >
-              <!-- <div  id="row{{measure.measurements[$index].id}}"></div> -->
-              <!-- <div id="test"> -->
-              <!-- ng-class="{deleteColor: measure.measurements[$index].toastId == dimension.id, noDeleteColor: measure.measurements[$index].toastId != dimension.id}" -->
               <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
               <td ng-show="measure.measurements[$index].edit">{{dimension.room}}</td>
@@ -201,7 +198,8 @@
               </td>
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.showConfirm($event, $index, measure.measurements[$index].id)" class="md-icon-button" aria-label="delete">
-                  <md-icon md-svg-icon="./img/delete.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/delete.svg" ng-hide=" measure.deleteId === $index"></md-icon>
+                  <md-progress-circular md-mode="indeterminate" md-diameter="20" ng-show="measure.deleteId === $index"></md-progress-circular>
                 </md-button>
               </td>
               <td ng-hide="measure.measurements[$index].edit" id="removeIconPadding" class="inputTd">
@@ -209,11 +207,9 @@
                   <md-icon md-svg-icon="./img/delete.svg"></md-icon>
                 </md-button>
               </td>
-              </div>
             </tr>
-            <tr ng-show="measure.loading" layout-wrap id="inputRow">
+            <tr layout-wrap id="inputRow">
               <form>
-
               <td><md-input-container>
                 <input ng-enter="measure.addButton()" ng-model="measure.measurement.floor" size="6"  aria-label="floor">
               </md-input-container></td>
@@ -249,33 +245,25 @@
               <td>
                 <md-button ng-click="measure.measurement = {}" class="md-icon-button md-primary" aria-label="clear">
                   <md-icon md-svg-icon="./img/clear.svg"></md-icon>
-
                 </md-button>
               </td>
             </form>
-
             </tr>
         </tbody>
       </table>
-
       <form>
         <div id="notesDiv" layout="row">
-          <!-- <h3 id="notesHeader" style="margin: 0">Area Notes:</h3> -->
-
           <md-input-container layout-align="start end" flex class="md-block" id="areaNotes">
             <label>Area Notes:</label>
             <textarea value="measure.areaNotes" ng-model="measure.areaNotes" ></textarea>
           </md-input-container>
         </div>
-
       </form>
-
       <div id="backToAreaButtonContainer">
         <md-button ng-click="measure.backToArea()" class="md-raised md-primary md-button md-ink-ripple back-to-area">
           <span>Save and Go Back to Areas</span>
         </md-button>
       </div>
-
       <span id="cardTitle"><a href="" ng-click="measure.goToTopOfPage()">Go To Top</a></span>
       </md-card-content>
     </md-card>
