@@ -73,6 +73,7 @@ function($http, MultipartForm) {
             fileFactory.currentFilesObject["file_" + (i + 1)].key = currentFile.key;
             fileFactory.currentFilesObject["file_" + (i + 1)].originalName = currentFile.original_name;
             fileFactory.currentFilesObject["file_" + (i + 1)].print = true;
+            fileFactory.currentFilesObject["file_" + (i + 1)].print = true;
           }
           console.log("CURRENT FILES OBJECT: ", fileFactory.currentFilesObject);
           return fileFactory.currentFilesObject;
@@ -107,11 +108,14 @@ function($http, MultipartForm) {
   return fileFactory;
 }]);
 
-  // IF WE NEED TO GET FILE EXTENSIONS, INSTEAD OF JUST NAMES:
+  // // IF WE NEED TO GET FILE EXTENSIONS, INSTEAD OF JUST NAMES:
   // function fileExtensions(files) {
   //   for(let i = 0; i < files.length; i++) {
   //     let name = files[i].name;
   //     let extension =  name.slice((Math.max(0, name.lastIndexOf(".")) || Infinity) + 1);
-  //     console.log(extension);
+  //     console.log("TEST FILE EXTENSION: \n\n\n\n", extension);
   //   }
   // }
+  //
+  // var testFileName = ['lkasjdfr.sdfljhasfid.asjf.doc.pdf', 'psakjdfdsf.sadfokjdsf.pdf.doc'];
+  // fileExtensions(testFileName);
