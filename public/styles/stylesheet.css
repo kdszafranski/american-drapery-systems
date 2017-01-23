@@ -317,12 +317,17 @@ footer {
   text-align: center;
 }
 
+#surveySearch {
+  font-size: 1.17em;
+}
+
 #newJobButton {
   margin-bottom: 0px;
 }
 
 #surveySearchResults {
   margin: 0;
+  white-space: nowrap;
 }
 
 #dashCard {
@@ -330,7 +335,7 @@ footer {
 }
 
 #filterBoxes {
-  max-width: 80%;
+  max-width: 60%;
   margin: 0 auto;
   align-items: center;
   justify-content: space-between;
