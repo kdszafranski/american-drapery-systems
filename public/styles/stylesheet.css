@@ -314,7 +314,9 @@ footer {
 }
 
 #dashboardHeader {
+  margin-top: -20px;
   text-align: center;
+  letter-spacing: 3px;
 }
 
 #surveySearch {
