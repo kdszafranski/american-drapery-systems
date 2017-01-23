@@ -19,6 +19,8 @@ router.get('/all', function(req, res) {
           res.send(result.rows);
         })
         .catch(function(err) {
+          client.release();
+          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -44,6 +46,8 @@ router.get('/one/:survey_id', function(req, res) {
           res.send(result.rows);
         })
         .catch(function(err) {
+          client.release();
+          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -67,6 +71,8 @@ router.get('/preview/one/:survey_id', function(req, res) {
           res.send(result.rows);
         })
         .catch(function(err) {
+          client.release();
+          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -89,6 +95,8 @@ router.get('/new/:survey_id', function(req, res) {
           res.send(result.rows);
         })
         .catch(function(err) {
+          client.release();
+          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -112,6 +120,8 @@ router.delete('/:survey_id', function(req, res) {
             res.sendStatus(204);
           })
           .catch(function(err) {
+            client.release();
+            
             console.log('select query error: ', err);
             res.sendStatus(500);
           });
@@ -137,6 +147,8 @@ router.put('/update/:survey_id', function(req, res) {
         res.sendStatus(201);
       })
       .catch(function(err) {
+        client.release();
+        
         console.log("Post unsuccesful: ", err);
         res.sendStatus(500);
       });
@@ -160,6 +172,8 @@ router.put('/status/:survey_id', function(req, res) {
         res.sendStatus(200);
       })
       .catch(function(err) {
+        client.release();
+        
         console.log("Post unsuccesful: ", err);
         res.sendStatus(500);
       });
@@ -183,6 +197,8 @@ router.post('/', function(req, res) {
         res.send(result.rows);
       })
       .catch(function(err) {
+        client.release();
+        
         console.log("Post unsuccesful: ", err);
         res.sendStatus(500);
       });
