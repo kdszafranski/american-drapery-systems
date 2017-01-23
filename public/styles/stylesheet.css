@@ -186,6 +186,7 @@ tr:nth-child(even) {
 
 table {
   border: 1px;
+  width: 100%;
 }
 
 .itemBtn:hover {
@@ -283,8 +284,10 @@ table {
   margin-top: 4px;
   margin-bottom: 8px;
 }
-.notes {
-  padding: 0 20px;
+.notes, .fileInfo p {
+  padding: 0 15px;
+  display: inline-block;
+  margin: 15px 0 0 0;
 }
 
 .content {
@@ -329,6 +332,8 @@ footer {
   position: fixed;
   bottom: 6px;
   left: 25px;
+  z-index: 5;
+
 }
 
 /*md-card:last-child {
@@ -362,4 +367,18 @@ footer {
 .tableBodyRow .dashNoToast {
   transition: background-color 1s ease-in;
   background-color: inherit;
+}
+.thumbnail {
+  max-width: 200px;
+  max-height: 200px;
+}
+.thumbnail img {
+  max-width:100%;
+  max-height:100%;
+}
+.img-prev {
+  padding: 0 5px;
+}
+.img-prev b {
+  padding: 5px 0;
 }

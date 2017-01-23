@@ -36,10 +36,6 @@
       page-break-inside: avoid;
   }
 
-  /*
-   * Printing Tables:
-   * http://css-discuss.incutio.com/wiki/Printing_Tables
-   */
 
   table {
     border: 2px solid black;
@@ -74,15 +70,10 @@
       page-break-after: avoid;
   }
 
-  #header, #footer, #nav, #surveyButtons {
+  #header, #footer, #nav, #surveyButtons, .fileInfo {
     display: none !important;
   }
-
   .filePrint {
     display: inline-flex;
-  }
-
-  .fileInfo {
-    display: none;
   }
 }

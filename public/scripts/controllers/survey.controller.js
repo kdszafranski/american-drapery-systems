@@ -15,12 +15,12 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
   };
 
   self.show = true;
+  self.baseUrl = 'https://s3.amazonaws.com/american-drapery-systems/survey_' + surveyId + '/area_';
 
   self.showPreview = function(ev, index) {
     // Appending dialog to document.body to cover sidenav in docs app
     var currentFile = self.currentFilesObject["file_" + (index + 1)];
-    var baseUrl = 'https://s3.amazonaws.com/american-drapery-systems/survey_';
-    var currentFileUrl = baseUrl + surveyId + '/' + 'area_' + currentFile.areaId + '/' + currentFile.key + currentFile.originalName;
+    var currentFileUrl = self.baseUrl + currentFile.areaId + '/' + currentFile.key + currentFile.originalName;
 
     $mdDialog.show({
       template:

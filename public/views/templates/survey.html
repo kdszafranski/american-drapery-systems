@@ -53,7 +53,12 @@
 <div class="survey-area" layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
   <md-card flex>
     <md-card-content>
+      <div layout="row" layout-align="start center" >
+
       <h3 class="areaName" ng-if="area[0].area_name">Area: {{area[0].area_name}}</h4>
+      </div>
+      <div layout="row" layout-align="start center" >
+
       <table cellspacing="0">
         <thead>
           <tr id="headerRow">
@@ -84,35 +89,39 @@
           </tr>
         </tbody>
       </table>
+    </div>
+      <div layout="row" layout-align="start center" >
       <p class="notes">
         <b>Notes:</b>
         {{area[$index].notes}}
       </p>
-      <div class="fileInfo">
-        <ul class="notes" ng-init="areaId = area[0].area_id">
-          <li class="unbulleted"><b>Files:</b></li>
-          <li ng-repeat="file in survey.currentFilesObject track by $index" ng-if="file.areaId == areaId" class="unbulleted"><b>{{file.originalName}}</b>
-            <ul>
-              <li class="unbulleted">
-                <i>"{{file.fileInfo}}"</i>
-              </li>
-            </ul>
-            <md-button ng-click="survey.showPreview($event, $index)">
-              <span>Preview</span>
-              <div class="md-ripple-container"></div>
-            </md-button>
-            <md-switch class="md-primary" md-no-ink aria-label="Switch No Ink" ng-model="survey.currentFilesObject['file_' + ($index +1)].print">
-              Include {{survey.currentFilesObject['file_' + ($index +1)].print}}
-            </md-switch>
-          </li>
-        </ul>
+    </div>
+
+    <div class="fileInfo" layout="row">
+      <p><b>Files:</b></h4>
+    </div>
+    <div layout="row" class="fileInfo" layout-align="start center" ng-init="areaId = area[0].area_id">
+      <div layout="column" layout-align="start center" class="img-prev" ng-repeat="file in survey.currentFilesObject track by $index" ng-if="file.areaId == areaId" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName">
+        <b>{{file.fileInfo || file.originalName}}</b>
+        <div class="thumbnail">
+          <img src="{{fileUrl}}" alt="file" ng-click="survey.showPreview($event, $index)"/>
+        </div>
+        <md-switch class="md-primary" md-no-ink aria-label="Switch No Ink" ng-model="survey.currentFilesObject['file_' + ($index +1)].print">
+          Include full-size
       </div>
+    </div>
     </md-card-content>
   </md-card>
 </div>
-<div class="filePrint" ng-repeat="file in survey.currentFilesObject" ng-init="fileUrl = 'https://s3.amazonaws.com/american-drapery-systems/survey_' + survey.surveyId + '/area_' + file.areaId + '/' + file.key + file.originalName" ng-if="file.print == true">
-  <img ng-src="{{fileUrl}}" alt="file"/>
+<div layout="row" layout-align="start center" layout-wrap>
+  <div layout="column" layout-align="start center" flex="50" class="filePrint" ng-repeat="file in survey.currentFilesObject" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName" ng-if="file.print == true">
+
+    <b>Area: {{file.fileInfo || file.originalName}}</b>
+
+    <img ng-src="{{fileUrl}}" alt="file"/>
+  </div>
 </div>
+
 <div id="surveyButtons" layout="row" layout-align="center start">
   <md-button class="md-raised md-button md-ink-ripple" ng-click="survey.printPage()">PDF/PRINT</md-button>
 
