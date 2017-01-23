@@ -32,9 +32,9 @@ app.listen(portDecision, function() {
 app.use(decoder.token);
 app.use(userChecker.user);
 
+app.use('/clients', clients);
 app.use('/users', users);
 app.use('/surveys', surveys);
 app.use('/files', files);
 app.use('/measurements', measurements);
-app.use('/clients', clients);
 app.use('/areas', areas);
