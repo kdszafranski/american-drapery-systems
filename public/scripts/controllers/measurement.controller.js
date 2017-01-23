@@ -219,6 +219,7 @@ function($http, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorS
   };
   //Deleting measurement after confirmation
   self.deleteRowButton = function(index){
+    self.deleteId = index;
     console.log('#row'+ self.measurements[index].id);
     console.log("remove row number: ", self.measurements[index].id);
     var idToDelete = self.measurements[index].id;
@@ -235,6 +236,7 @@ function($http, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorS
           console.log("Response from measurement route: ", response);
           getMeasurements(currentUser);
           self.deleteColor = false;
+          self.deleteId = null;
         }).catch(function(err) {
           console.log("Error in measurement post");
         });
