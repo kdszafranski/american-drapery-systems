@@ -83,6 +83,8 @@
           </ul>
         </div>
       </div>
+
+
       <div layout="row" layout-align="start">
         <md-button ng-show="measure.showInput" ng-click="measure.showInput = !measure.showInput" class="md-raised md-primary" aria-label="edit client profile">
           Edit Client Profile
@@ -91,7 +93,6 @@
           Save
         </md-button>
       </div>
-
     </md-card>
     <!-- FILES -->
     <div ng-show="measure.loading" layout="row" layout-align="center center" layout-wrap ng-controller="FileController as files">
@@ -117,6 +118,7 @@
       </md-card flex>
     </div>
   </div>
+  <!-- END FILES -->
   <div ng-show="measure.loading" layout="row" layout-align="center center" layout-wrap>
     <md-card>
       <md-card-title id="measurementTitle">

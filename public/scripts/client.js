@@ -50,7 +50,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
 
 
-//dashboard search filter
+/***************************ANGULAR SEARCH FILTERS***************************/
 app.filter('startFrom', function() {
   return function(input, start) {
     start = +start; //parse to int
@@ -79,8 +79,7 @@ app.filter('true_false', function() {
     }
 });
 
-//Utilities
-
+/***************************UTILITY FUNCTIONS***************************/
 function removeObjById(arr, id) {
   var idx = arr.findIndex(item => item.id === id);
   ~idx && arr.splice(idx, 1);

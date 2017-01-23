@@ -1,5 +1,5 @@
-app.controller('MeasurementAreaController', ["$http", '$location', 'UserFactory', 'InfoFactory', '$route', '$mdDialog',
-function($http, $location, UserFactory, InfoFactory, $route, $mdDialog) {
+app.controller('MeasurementAreaController', ["$http", '$location', 'UserFactory', '$route', '$mdDialog',
+function($http, $location, UserFactory, $route, $mdDialog) {
   var self = this;
   // var survey_id = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
