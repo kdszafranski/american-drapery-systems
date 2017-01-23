@@ -4,6 +4,12 @@ html, body {
   min-width: 640px;
 }
 
+html.md-default-theme, html, body.md-default-theme, body {
+  background-color: none;
+  background-image: url(/img/triangular.png);
+  background-repeat: repeat;
+}
+
 table {
   font-family: 'Roboto', sans-serif;
 }
@@ -258,10 +264,6 @@ table {
   align-items: center;
 }
 
-/*#newJob {
-  margin: 10px;
-}*/
-
 .itemBtn:hover {
   cursor: pointer;
 }
@@ -310,8 +312,50 @@ footer {
 .columnSort:hover {
   cursor: pointer;
 }
+
+#dashboardHeader {
+  margin-top: -20px;
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+#surveySearch {
+  font-size: 1.17em;
+}
+
+#newJobButton {
+  margin-bottom: 0px;
+}
+
+#surveySearchResults {
+  margin: 0;
+  white-space: nowrap;
+}
+
 #dashCard {
   min-width: 750px;
+}
+
+#filterBoxes {
+  max-width: 60%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#topDashRow {
+  max-width: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.sortBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0px;
 }
 
 .loggedOut {
@@ -355,4 +399,8 @@ footer {
 .tableBodyRow .dashNoToast {
   transition: background-color 1s ease-in;
   background-color: inherit;
+}
+
+#adminHeader {
+  text-align: center;
 }

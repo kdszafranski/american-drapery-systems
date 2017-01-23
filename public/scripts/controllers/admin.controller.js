@@ -3,6 +3,7 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
   var currentUser = {};
   self.users = [];
   self.newUser = {};
+  self.unauthorized = false;
   self.redId = false;
   self.greenId = false;
 
@@ -32,7 +33,12 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
   }
 
   self.addUser = function(newUser) {
-    newUser.authorized = true;
+    if (newUser.authorized == null) {
+      newUser.authorized = false;
+    }
+    if (newUser.can_edit_users == null) {
+      newUser.can_edit_users = false;
+    }
     currentUser = UserFactory.getUser();
     console.log('adding user - newuser:', newUser);
     currentUser.getToken().then(function(idToken) {
@@ -49,6 +55,10 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
         greenRow(newUser.id);
       }).catch(function(err) {
         console.log("Error in user post");
+        if (err.status === 403) {
+          self.unauthorized = true;
+          console.log("In error 403: ", self.unauthorized);
+        }
       });
     });
   }
@@ -69,7 +79,12 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
       self.redId = false;
       console.log('self.users', self.users);
       }).catch(function(err) {
-        console.log("Error in user post");
+
+        console.log("Error in user post: ", err);
+        if (err.status === 403) {
+          self.unauthorized = true;
+          console.log("In error 403: ", self.unauthorized);
+        }
       });
     });
   }
