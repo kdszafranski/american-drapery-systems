@@ -23,16 +23,29 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
     var currentFile = self.currentFilesObject["file_" + (index + 1)];
     var currentFileUrl = self.baseUrl + currentFile.areaId + '/' + currentFile.key + currentFile.originalName;
 
-    $mdDialog.show({
-      template:
-        '<md-card>' +
-          '<md-card-content layout="row" layout-wrap>' +
-            '<img ng-src="' + currentFileUrl + '"/>' +
-          '</md-card-content>' +
-        '</md-card flex>',
-      targetEvent: ev,
-      clickOutsideToClose: true
-    })
+    if(currentFile.extension == "pdf") {
+      $mdDialog.show({
+        template:
+          '<md-card>' +
+            '<md-card-content layout="row" layout-wrap>' +
+              '<iframe ng-src="' + currentFileUrl + '" width="750" height="750"></iframe>' +
+            '</md-card-content>' +
+          '</md-card flex>',
+        targetEvent: ev,
+        clickOutsideToClose: true
+      })
+    } else {
+      $mdDialog.show({
+        template:
+          '<md-card>' +
+            '<md-card-content layout="row" layout-wrap>' +
+              '<img ng-src="' + currentFileUrl + '"/>' +
+            '</md-card-content>' +
+          '</md-card flex>',
+        targetEvent: ev,
+        clickOutsideToClose: true
+      })
+    }
   };
 
 
@@ -68,6 +81,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
             .then(function() {
               console.log("This .then() is happening");
               self.currentFilesObject = FileFactory.currentFilesObject;
+              FileFactory.currentFilesObject = {};
               console.log("currentFilesObject: ", self.currentFilesObject);
               self.imgLoad = true;
               $scope.$apply();

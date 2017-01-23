@@ -14,37 +14,33 @@
     </md-card>
 
     <md-card-content ng-show="dash.loading">
-          <h1 id="dashboardHeader">Survey Dashboard</h1>
-          <div layout="column" flex="70" flex-offset="15">
+      <h1 id="dashboardHeader">Survey Dashboard</h1>
+      <div layout="column" flex="70" flex-offset="15">
 
         <div layout="row" layout-align="space-between center">
-            <md-button id="newJobButton" flex="20" class="md-raised md-primary md-ink-ripple" ng-click="dash.newJob()">
-              New Survey
-            </md-button>
-
-            <md-input-container flex="50" id="surveySearch">
-              <label>Search Surveys</label>
-              <input ng-model="query" aria-invalid="false" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)"/>
-              <div class="md-errors-spacer"></div>
-            </md-input-container>
-
-            <h3 flex="25" id="surveySearchResults">Results: {{(dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length}} </h3>
+          <md-button flex="20" class="md-raised md-primary md-ink-ripple" ng-click="dash.newJob()">
+            New Survey
+          </md-button>
+          <md-input-container flex="50" id="surveySearch">
+            <label>Search Surveys</label>
+            <input ng-model="query" aria-invalid="false" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)"/>
+            <div class="md-errors-spacer"></div>
+          </md-input-container>
+          <h3 flex="25" id="surveySearchResults">Results: {{(dash.filtered  | filter: query | excludeByStatus: dash.show.text()).length}} </h3>
         </div>
 
         <div id="filterBoxes" layout="row" layout-align="space-between center">
-          <div layout="column" layout-align="center center">
-            <h3 id="dashFilterBy">Filter By</h3>
-          </div>
+          <h3 id="dashFilterBy">Filter By</h3>
           <div layout="column" class="filterBox" ng-repeat="status in dash.show.options">
             <md-checkbox ng-model="dash.show.statuses[$index]" ng-change="dash.pageCheck((dash.filtered  | filter: query |  excludeByStatus: dash.show.text()).length)">
               {{status}}
             </md-checkbox>
           </div>
         </div>
-    </div>
+      </div>
 
-      <div layout="row" layout-align="center center">
-        <table id="dashTable" cellspacing="0">
+      <div layout="row" layout-align="space-between center">
+        <table cellspacing="0">
           <thead>
             <tr id="headerRow">
               <th class="columnSort" ng-click="dash.sortType = 'id'; dash.sortReverse = !dash.sortReverse">Survey #
