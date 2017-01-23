@@ -17,6 +17,8 @@ router.get('/', function(req, res) {
         })
         .catch(function(err) {
           console.log('select query error: ', err);
+          client.release();
+
           res.sendStatus(500);
         });
     });
@@ -34,6 +36,8 @@ router.get('/:clientId', function(req, res) {
     })
     .catch(function(err) {
       console.log('select query error: ', err);
+      client.release();
+
       res.sendStatus(500);
     });
   });
@@ -61,6 +65,8 @@ router.post('/', function(req,res) {
         })
         .catch(function(err) {
           console.log('select query error: ', err);
+          client.release();
+
           res.sendStatus(500);
         });
       });
@@ -89,6 +95,8 @@ router.post('/:client_id', function(req,res) {
         })
         .catch(function(err) {
           console.log('select query error: ', err);
+          client.release();
+
           res.sendStatus(500);
         });
       });
