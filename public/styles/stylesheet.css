@@ -194,25 +194,24 @@ table {
   border: 1px;
   width: 100%;
 }
-
+th {
+  white-space: nowrap;
+}
 .itemBtn:hover {
   cursor: pointer;
 
 }
-
 .company-info-header {
   display: flex;
   justify-content: space-around;
 }
-
-
-
 .client-contact {
   display: flex;
 }
 
 #companyName {
   text-align: right;
+  cursor: pointer;
 }
 
 .areas {
@@ -317,11 +316,11 @@ footer {
 }
 
 #dashFilterBy {
-  white-space: nowrap;
+  margin: 0;
 }
 
 #dashboardHeader {
-  margin-top: -20px;
+  margin-top: -15px;
   text-align: center;
   letter-spacing: 3px;
 }
@@ -329,33 +328,18 @@ footer {
 #surveySearch {
   font-size: 1.17em;
 }
-
-#newJobButton {
-  margin-bottom: 0px;
-}
-
 #surveySearchResults {
   margin: 0;
   white-space: nowrap;
 }
-
+#filterBoxes {
+  height: 50px;
+}
+.filterBox {
+  padding-top: 14px;
+}
 #dashCard {
   min-width: 750px;
-}
-
-#filterBoxes {
-  max-width: 60%;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#topDashRow {
-  max-width: 50%;
-  margin: 0 auto;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
 }
 
 .sortBox {
@@ -383,10 +367,6 @@ footer {
   z-index: 5;
 
 }
-
-/*md-card:last-child {
-  margin-bottom: 30px;
-}*/
 
 #notesHeader {
   align-self: flex-start;
@@ -429,6 +409,7 @@ footer {
 md-switch {
   margin: 0;
 }
+
 
 #adminHeader {
   text-align: center;
