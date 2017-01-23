@@ -1,4 +1,4 @@
-app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeout", function(UserFactory, $http, $mdDialog, $timeout ) {
+app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeout", "$mdDialog",  function(UserFactory, $http, $mdDialog, $timeout, $mdDialog) {
   const self = this;
   var currentUser = {};
   self.users = [];
@@ -82,6 +82,7 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
         console.log("Error in user post: ", err);
         if (err.status === 403) {
           self.unauthorized = true;
+          notAuthorizedAlert();
           console.log("In error 403: ", self.unauthorized);
         }
       });
@@ -111,5 +112,20 @@ app.controller('AdminController', ['UserFactory', '$http', "$mdDialog", "$timeou
       self.greenId = 0;
     }, 1000);
   }
+
+  function notAuthorizedAlert() {
+      alert = $mdDialog.alert({
+        title: 'Attention',
+        textContent: 'You are not authorized to perform this action',
+        ok: 'Close'
+      });
+
+      $mdDialog
+        .show( alert )
+        .finally(function() {
+          self.redId = false
+          alert = undefined;
+        });
+    }
 
 }]);

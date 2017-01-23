@@ -103,6 +103,10 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
 
         }).catch(function(err) {
           console.log("Error in measurement post");
+          if (err.status === 403) {
+            notAuthorizedAlert();
+            console.log("In error 403");
+          }
         });
       })
     self.measurements.push(angular.copy(self.measurement));
@@ -131,6 +135,10 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
       },
       function(err) {
         console.log("error posting client: ", err);
+        if (err.status === 403) {
+          notAuthorizedAlert();
+          console.log("In error 403");
+        }
       });
     });
   }
@@ -152,6 +160,10 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
         },
         function(err) {
           console.log("error updating survey details: ", err);
+          if (err.status === 403) {
+            notAuthorizedAlert();
+            console.log("In error 403");
+          }
         });
       });
     }
@@ -173,6 +185,10 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
           },
           function(err) {
             console.log("error updating survey details: ", err);
+            if (err.status === 403) {
+              notAuthorizedAlert();
+              console.log("In error 403");
+            }
           });
         });
       }
@@ -196,6 +212,10 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
             console.log("Response from measurement route: ", response);
           }).catch(function(err) {
             console.log("Error in measurement post");
+            if (err.status === 403) {
+              notAuthorizedAlert();
+              console.log("In error 403");
+            }
           });
         });
   }
@@ -239,6 +259,10 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
           self.deleteId = null;
         }).catch(function(err) {
           console.log("Error in measurement post");
+          if (err.status === 403) {
+            notAuthorizedAlert();
+            console.log("In error 403");
+          }
         });
       });
   }
@@ -253,5 +277,24 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
     console.log("clicked");
     window.scrollTo(0,0)
   }
+
+  function notAuthorizedAlert() {
+      alert = $mdDialog.alert({
+        title: 'Attention',
+        textContent: 'You are not authorized to perform this action',
+        ok: 'Close'
+      });
+
+      $mdDialog
+        .show( alert )
+        .finally(function() {
+          self.deleteColor = false;
+          self.deleteId = null;
+          alert = undefined;
+          console.log("Ran .finally");
+          getMeasurements(currentUser);
+          self.measurement = {};
+        });
+    }
 
 }]);
