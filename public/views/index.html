@@ -55,11 +55,10 @@
       <header>
         <div ng-controller="NavController as nav" ng-include="'/views/templates/nav.html'"></div>
       </header>
-
       <main class="container" ng-view></main>
     </div>
 
-    <footer ng-controller="FooterController as footer">
+    <footer  id="footer" ng-controller="FooterController as footer">
         <p class="footer-info">American Drapery Systems &copy; {{footer.date}}</p>
     </footer>
   </body>

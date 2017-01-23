@@ -32,7 +32,9 @@ var userChecker = function(req, res, next) {
                 break;
               } else if (result.rows[0].authorized == false) {
                 console.log("But they are not authorized");
-                res.sendStatus(403);
+                req.authorized = false;
+                req.canEdit = false;
+                next();
                 break;
               }
           }

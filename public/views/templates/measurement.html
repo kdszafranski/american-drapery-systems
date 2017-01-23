@@ -198,7 +198,8 @@
               </td>
               <td ng-show="measure.measurements[$index].edit" id="removeIconPadding">
                 <md-button ng-click="measure.showConfirm($event, $index, measure.measurements[$index].id)" class="md-icon-button" aria-label="delete">
-                  <md-icon md-svg-icon="./img/delete.svg"></md-icon>
+                  <md-icon md-svg-icon="./img/delete.svg" ng-hide=" measure.deleteId === $index"></md-icon>
+                  <md-progress-circular md-mode="indeterminate" md-diameter="20" ng-show="measure.deleteId === $index"></md-progress-circular>
                 </md-button>
               </td>
               <td ng-hide="measure.measurements[$index].edit" id="removeIconPadding" class="inputTd">
