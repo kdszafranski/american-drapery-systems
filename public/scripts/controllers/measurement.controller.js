@@ -75,13 +75,6 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   //add measurement Button
   self.addButton = function(id){
     self.deleteColor = false;
-    // $mdToast.show(
-    //   $mdToast.simple()
-    //   .textContent('Saved')
-    //   .position('top right')
-    //   .hideDelay(600)
-    //   .parent('#notesDiv')
-    // );
     var currentUser = UserFactory.getUser();
     // var currentUser = UserFactory.getUser();
     console.log("Current User at addButton: ", currentUser);
@@ -96,10 +89,15 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
-
+          self.addColor = response.data[0].id;
 
 
           getMeasurements(currentUser);
+
+
+          $timeout(function(){
+            self.addColor = [];
+          }, 800);
 
         }).catch(function(err) {
           console.log("Error in measurement post");

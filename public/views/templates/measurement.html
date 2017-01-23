@@ -147,7 +147,7 @@
 
             <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" ng-class="{'toastColorRed': dimension.id == measure.deleteColor,
                                                                                                               'noToastColor': dimension.id != measure.deleteColor,
-                                                                                                              'toastColorGreen': false}">
+                                                                                                              'toastColorGreen': dimension.id == measure.addColor}">
 
               <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd"><md-input-container><input ng-model="measure.measurements[$index].floor" size="6"  aria-label="floor"></md-input-container></td>
@@ -242,7 +242,7 @@
               <td><md-input-container><input ng-enter="measure.addButton()" ng-model="measure.measurement.fabric" size="10"  aria-label="fabric"></md-input-container></td>
               <td><md-input-container><input ng-enter="measure.addButton()" ng-model="measure.measurement.mount" size="6"  aria-label="mount"></md-input-container></td>
               <td>
-                <md-button class="md-icon-button" aria-label="add" ng-click="measure.addButton(measure.measurements)">
+                <md-button class="md-icon-button" aria-label="add" ng-click="measure.addButton()">
                   <md-icon md-svg-icon="./img/add.svg"></md-icon>
                 </md-button>
               </td>

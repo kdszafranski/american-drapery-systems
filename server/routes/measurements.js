@@ -15,12 +15,12 @@ router.post('/:area_id', function(req,res) {
   pool.connect()
     .then(function(client) {
       client.query("INSERT INTO measurements (floor, room, quantity, width, length, ib_ob, fascia_size, controls, mount, fabric, area_id) " +
-      "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
+      "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id",
       [newMeasurement.floor, newMeasurement.room, newMeasurement.quantity, newMeasurement.width, newMeasurement.length, newMeasurement.ib_ob, newMeasurement.fascia_size, newMeasurement.controls, newMeasurement.mount, newMeasurement.fabric, area_id])
       .then(function(result) {
         client.release();
         console.log("put complete");
-        res.sendStatus(201);
+        res.send(result.rows);
       })
       .catch(function(err) {
         console.log('select query error: ', err);
