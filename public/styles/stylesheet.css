@@ -47,8 +47,8 @@ md-toast .md-toast-content span {
   width: 100%;
   height: 62px;
 }
-#nav div md-button {
-  width:83px;
+#nav div div .md-button {
+  min-width: 94px;
 }
 #companyName {
   padding-left: 15px;
@@ -192,26 +192,26 @@ tr:nth-child(even) {
 
 table {
   border: 1px;
+  width: 100%;
 }
-
+th {
+  white-space: nowrap;
+}
 .itemBtn:hover {
   cursor: pointer;
 
 }
-
 .company-info-header {
   display: flex;
   justify-content: space-around;
 }
-
-
-
 .client-contact {
   display: flex;
 }
 
 #companyName {
   text-align: right;
+  cursor: pointer;
 }
 
 .areas {
@@ -285,8 +285,10 @@ table {
   margin-top: 4px;
   margin-bottom: 8px;
 }
-.notes {
-  padding: 0 20px;
+.notes, .fileInfo p {
+  padding: 0 15px;
+  display: inline-block;
+  margin: 15px 0 0 0;
 }
 
 .content {
@@ -314,11 +316,11 @@ footer {
 }
 
 #dashFilterBy {
-  white-space: nowrap;
+  margin: 0;
 }
 
 #dashboardHeader {
-  margin-top: -20px;
+  margin-top: -15px;
   text-align: center;
   letter-spacing: 3px;
 }
@@ -326,33 +328,18 @@ footer {
 #surveySearch {
   font-size: 1.17em;
 }
-
-#newJobButton {
-  margin-bottom: 0px;
-}
-
 #surveySearchResults {
   margin: 0;
   white-space: nowrap;
 }
-
+#filterBoxes {
+  height: 50px;
+}
+.filterBox {
+  padding-top: 14px;
+}
 #dashCard {
   min-width: 750px;
-}
-
-#filterBoxes {
-  max-width: 60%;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#topDashRow {
-  max-width: 50%;
-  margin: 0 auto;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
 }
 
 .sortBox {
@@ -377,11 +364,9 @@ footer {
   position: fixed;
   bottom: 6px;
   left: 25px;
-}
+  z-index: 5;
 
-/*md-card:last-child {
-  margin-bottom: 30px;
-}*/
+}
 
 #notesHeader {
   align-self: flex-start;
@@ -396,6 +381,13 @@ footer {
   display: flex;
   justify-content: center;
 }
+.filePrint {
+  display: none;
+}
+
+.unbulleted {
+  list-style-type: none;
+}
 
 .tableBodyRow .dashToast {
   background-color: rgb(113, 238, 106);
@@ -404,6 +396,20 @@ footer {
   transition: background-color 1s ease-in;
   background-color: inherit;
 }
+.thumbnail {
+  max-width: 200px;
+  max-height: 200px;
+}
+.thumbnail img {
+  max-width:100%;
+  max-height:100%;
+  padding: 5px 0;
+}
+
+md-switch {
+  margin: 0;
+}
+
 
 #adminHeader {
   text-align: center;
