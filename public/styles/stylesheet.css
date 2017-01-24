@@ -91,9 +91,7 @@ md-toast .md-toast-content span {
 #cardTitle a{
   color: rgba(0,0,0,0.87);
 }
-#measurementsTable td{
-  padding: 1px;
-}
+
 #inputRow td{
   background-color: white;
   border-color: white;
@@ -160,14 +158,13 @@ tr.headerRow{
 .tableBody .toastColorRed {
     background-color: rgb(216,67,21);
   }
-  .tableBody .toastColorGreen {
-      background-color: rgb(122, 221, 101);
-    }
+.tableBody .toastColorGreen {
+    background-color: rgb(122, 221, 101);
+  }
 
 .tableBody .noToastColor {
   transition: background-color 0.3s ease-in;
 }
-
 tr:nth-child(odd) {
 
     background-color: rgb(234, 231, 235);
