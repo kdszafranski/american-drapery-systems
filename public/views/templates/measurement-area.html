@@ -71,7 +71,7 @@
   <md-card flex>
     <md-card-content ng-show="ma.loading">
       <!--company name  -->
-      <div class="row" layout-align="space-between center">
+      <div layout="row" layout-align="space-between center">
         <div ng-show="ma.showInput" class="client-name" layout="row" layout-align="space-between center">
           <h1> <i>{{ma.companyInfo.client_name}}</i> </h1>
         </div>
@@ -89,9 +89,15 @@
             <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_phone_number}}</li>
             <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_email}}</li>
           </ul>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_name" placeholder="Company Contact Name"></md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_phone_number" placeholder="Phone Number"></md-input-container>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_email" placeholder="Email"></md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="ma.companyInfo.primary_contact_name" placeholder="Company Contact Name">
+          </md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="ma.companyInfo.primary_contact_phone_number" placeholder="Phone Number">
+          </md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+            <input ng-model="ma.companyInfo.primary_contact_email" placeholder="Email">
+          </md-input-container>
         </div>
         <div layout="column" layout-align="space-between center">
           <ul >
