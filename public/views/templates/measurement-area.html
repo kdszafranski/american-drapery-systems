@@ -71,23 +71,20 @@
   <md-card flex>
     <md-card-content ng-show="ma.loading">
       <!--company name  -->
-      <div layout="row" layout-align="space-between center">
+
+      <div layout="row" layout-align="space-around center">
         <div ng-show="ma.showInput" class="client-name" layout="row" layout-align="space-between center">
           <h1> <i>{{ma.companyInfo.client_name}}</i> </h1>
         </div>
-        <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" flex-gt-xs>
-          <label>Company Name</label>
-          <input ng-model="ma.companyInfo.client_name" placeholder="Company Name">
-        </md-input-container>
       </div>
       <!-- Data Row  -->
-      <div class="area-survey-header" layout="row" layout-align="space-between center">
+      <div  layout="row" layout-align="space-around center">
         <div layout="column" layout-align="space-between center">
-          <ul>
+          <ul ng-show="ma.showInput">
             <li><b>Primary Contact</b></li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_name}}</li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_phone_number}}</li>
-            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_email}}</li>
+            <li>{{ma.companyInfo.primary_contact_name}}</li>
+            <li>{{ma.companyInfo.primary_contact_phone_number}}</li>
+            <li>{{ma.companyInfo.primary_contact_email}}</li>
           </ul>
           <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
             <input ng-model="ma.companyInfo.primary_contact_name" placeholder="Company Contact Name">
