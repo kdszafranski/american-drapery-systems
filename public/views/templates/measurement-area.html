@@ -1,5 +1,5 @@
-<div layout="row" layout-align="space-between stretch">
-  <md-card ng-hide="ma.loading">
+<div layout="row" layout-align="stretch space-between" laypout-wrap>
+  <md-card  flex="100" ng-hide="ma.loading">
     <md-card-content >
       <div layout="row" layout-sm="column" layout-align="center center">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
@@ -13,7 +13,7 @@
       </div>
     </md-card-content>
   </md-card>
-  <md-card flex="50">
+  <md-card flex>
 
     <md-card-content ng-show="ma.loading">
       <div layout="row" layout-align="space-around center">
@@ -68,7 +68,7 @@
       </div>
     </md-card-content>
   </md-card>
-  <md-card flex="50">
+  <md-card flex>
     <md-card-content ng-show="ma.loading">
       <!--company name  -->
       <div class="row" layout-align="space-between center">

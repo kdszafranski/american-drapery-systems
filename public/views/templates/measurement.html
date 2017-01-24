@@ -1,7 +1,7 @@
 <div layout="column" layout-align="space-between stretch">
-  <md-card ng-hide="measure.loading">
+  <md-card ng-hide="measure.loading" flex="100">
     <md-card-content >
-      <div layout="row" layout-sm="column" layout-align="center center">
+      <div layout="row" layout-align="center center">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
@@ -63,8 +63,8 @@
     </md-card>
   </div>
   <!-- END FILES -->
-  <div ng-show="measure.loading" layout="row" layout-align="center center" layout-wrap>
-    <md-card>
+  <div ng-show="measure.loading" layout="row" layout-align="center center" flex="100" layout-fill layout-wrap>
+    <md-card flex="100">
       <md-card-title id="measurementTitle">
         <div layout="column">
           <md-card-title-text >
