@@ -133,8 +133,8 @@ router.put('/update/:survey_id', function(req, res) {
   pool.connect()
     .then(function(client) {
       client.query('UPDATE survey ' +
-      'SET job_number = $1, survey_date=$2, completion_date=$3 ' +
-      'WHERE survey.id = $4, address_street=$5, address_city=$6, address_state=$7, address_zip=$8, last_modified=$9',
+      'SET job_number = $1, survey_date=$2, completion_date=$3, address_street=$5, address_city=$6, address_state=$7,  address_zip=$8, last_modified=$9 ' +
+      'WHERE survey.id = $4',
       [survey.job_number, survey.survey_date, survey.completion_date, id, survey.address_street, survey.address_city, survey.address_state, survey.address_zip, new Date()])
       .then(function(result) {
         client.release();
