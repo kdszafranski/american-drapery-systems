@@ -77,6 +77,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   function updateClient(clientId) {
     // currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
+    console.log('clkient id', clientId);
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
@@ -102,6 +103,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   //course of action from drop down selection
   self.dropdownOption = function(id){
     self.survey.client_id = id;
+    self.survey.status = 'Pending';
     console.log("selected", self.selected);
     if (self.selected === "None") {
       self.clients = {}
