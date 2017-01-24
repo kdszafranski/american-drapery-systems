@@ -110,13 +110,13 @@
                   <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].quantity" size="6"  aria-label="room">
                 </md-input-container>
               </td>
-              <td ng-show="measure.measurements[$index].edit">{{dimension.width | number:2}}</td>
+              <td ng-show="measure.measurements[$index].edit">{{dimension.width}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd">
                 <md-input-container>
                   <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].width" size="6"  aria-label="width">
                 </md-input-container>
               </td>
-              <td ng-show="measure.measurements[$index].edit">{{dimension.length | number:2}}</td>
+              <td ng-show="measure.measurements[$index].edit">{{dimension.length}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd">
                 <md-input-container>
                   <input ng-enter="measure.updateRowButton($index)" ng-model="measure.measurements[$index].length" size="6"  aria-label="length">
