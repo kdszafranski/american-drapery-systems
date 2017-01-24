@@ -3,7 +3,6 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   self.checkbox = true;
   self.clients = [];
   self.survey = {};
-  self.selected = {};
   self.showCompany = false;
   self.showUpdateButton = true;
   self.showSubmitButton = false;
@@ -22,7 +21,8 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   //Update existing client information Button
   self.updateButton = function(id){
     copyAddress(id);
-    console.log("self.selected", self.selected);
+    console.log("update button clicked. Object:", self.clients[id]);
+
     updateClient(id);
   }
 
@@ -77,7 +77,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   function updateClient(clientId) {
     // currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
-    console.log('clkient id', clientId);
+    console.log('client id', clientId);
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
@@ -102,19 +102,18 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
 
   //course of action from drop down selection
   self.dropdownOption = function(id){
-    self.survey.client_id = id;
     self.survey.status = 'Pending';
-    console.log("selected", self.selected);
-    if (self.selected === "None") {
-      self.clients = {}
+    console.log("selected", id);
+    if (id === "None") {
+      self.clients = {};
       self.showCompany = false;
       self.showUpdateButton = true;
       self.showSubmitButton = false;
       console.log("This if statement works");
     } else {
+      self.survey.client_id = id;
       self.showUpdateButton = false;
       self.showSubmitButton = true;
-      console.log("SELECTED ID: ", self.selected.id);
       self.showCompany = true;
     }
   }
