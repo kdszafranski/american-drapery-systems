@@ -180,12 +180,7 @@ function($http, $location, UserFactory, $route, $mdDialog) {
 
   //function to get all areas associated with survey or just company and survey information if the survey is new
   function getSurveyDetails(firebaseUser) {
-    if(firebaseUser) {
-      user = firebaseUser;
-    } else {
-      user = currentUser;
-    }
-    user.getToken()
+    currentUser.getToken()
       .then(function(idToken) {
         $http({
           method: 'GET',
@@ -199,7 +194,8 @@ function($http, $location, UserFactory, $route, $mdDialog) {
           //Check to see if it is a new survey. Length will be zero if it is a new survey
           if (self.surveyDetails.length === 0) {
             surveyHasAreas = false;
-            user.getToken()
+            console.log('no areas');
+            currentUser.getToken()
               .then(function(idToken) {
                 $http({
                   method: 'GET',
@@ -228,14 +224,18 @@ function($http, $location, UserFactory, $route, $mdDialog) {
 
   function surveyOps() {
     console.log("surveyOps Running");
+    console.log('surveydetails', self.surveyDetails);
+
     self.companyInfo = self.surveyDetails[0];
     if(surveyHasAreas) {
       self.areaArray = [...new Set(self.surveyDetails.map(survey => survey.area_name))];
       self.areaArrayId = [...new Set(self.surveyDetails.map(survey => survey.id))];
-
       for (var i = 0; i < self.areaArray.length; i++) {
         self.toRemove[i] = false;
       }
+    } else {
+      self.areaArray = [];
+      self.areaArrayId = [];
     }
     self.completionDate = new Date(self.companyInfo.completion_date);
     self.surveyDate = new Date(self.companyInfo.survey_date);

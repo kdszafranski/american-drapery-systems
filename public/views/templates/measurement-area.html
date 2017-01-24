@@ -1,100 +1,113 @@
-<md-card>
-  <md-card-content ng-hide="ma.loading">
-    <div layout="row" layout-sm="column" layout-align="space-around">
-      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-    </div>
-  </md-card-content>
-  <md-card class="loggedOut" flex="70">
-    <md-card-content ng-show="ma.loggedOut">
-      <div layout="row" layout-sm="column" layout-align="space-around">
+<div layout="row" layout-align="space-between stretch">
+  <md-card class="loggedOut" ng-show="ma.loggedOut" flex="70">
+    <md-card-content>
+      <div layout="row" layout-align="space-between center">
         <h3>You are logged out and will be redirected to the login screen.</h3>
       </div>
     </md-card-content>
   </md-card>
-  <md-card-content ng-show="ma.loading">
-    <div layout="row">
-      <div layout="column">
-        <!--company name  -->
-        <div class="row" layout-align="left">
-          <div ng-show="ma.showInput" class="client-name" layout="row" layout-align="left">
-            <h1> <i>{{ma.companyInfo.client_name}}</i> </h1>
+  <md-card flex="50">
+
+    <md-card-content ng-show="ma.loading">
+      <div layout="row" layout-align="space-around center">
+        <div layout="column" layout-align="space-between start">
+          <div layout="row" class="client-name" layout-align="space-between center">
+            <h1 ng-show="ma.showInput"><i>Job# {{ma.companyInfo.job_number}}</i></h1>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
+              <label>Job Number</label>
+              <input ng-model="ma.companyInfo.job_number" placeholder="Job Number">
+            </md-input-container>
           </div>
-          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" flex-gt-xs>
-            <label>Company Name</label>
-            <input ng-model="ma.companyInfo.client_name" placeholder="Company Name">
-          </md-input-container>
-        </div>
-        <!-- Data Row  -->
-        <div class="area-survey-header" layout="row">
-          <div layout="column" layout-align="start start">
-            <ul layout="column" class="client-address">
+          <div layout="column" layout-align="space-between start">
+            <ul class="client-address" ng-show="ma.showInput">
               <li><b>Survey Address</b></li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.survey_address_street}}</li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.survey_address_city}}, {{ma.companyInfo.survey_address_state}}</li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.survey_address_zip}}</li>
+              <li >{{ma.companyInfo.address_street}}</li>
+              <li>{{ma.companyInfo.address_city}}, {{ma.companyInfo.address_state}}</li>
+              <li>{{ma.companyInfo.address_zip}}</li>
             </ul>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.companyInfo.survey_address_street" placeholder="Street Address"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.companyInfo.survey_address_city" placeholder="City"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.companyInfo.survey_address_state" placeholder="State"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block"><input ng-model="ma.companyInfo.survey_address_zip" placeholder="Zip"></md-input-container>
-          </div>
-          <div layout="column" layout-align="start center">
-            <ul>
-              <li><b>Primary Contact</b></li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_name}}</li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_phone_number}}</li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_email}}</li>
-            </ul>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_name" placeholder="Company Contact Name"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_phone_number" placeholder="Phone Number"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_email" placeholder="Email"></md-input-container>
-          </div>
-          <div layout="column" layout-align="start center">
-            <ul >
-              <li><b>Alternate Contact</b></li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_name}}</li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.alt_phone_number}}</li>
-              <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_email}}</li>
-            </ul>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_contact_name" placeholder="Alt Company Contact Name"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_phone_number" placeholder="Alt Phone Number"></md-input-container>
-            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_contact_email" placeholder="Alt Email"></md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block">
+              <input ng-model="ma.companyInfo.address_street" placeholder="Street Address">
+            </md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block">
+              <input ng-model="ma.companyInfo.address_city" placeholder="City">
+            </md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block">
+              <input ng-model="ma.companyInfo.address_state" placeholder="State">
+            </md-input-container>
+            <md-input-container ng-hide="ma.showInput" md-no-float class="md-block">
+              <input ng-model="ma.companyInfo.address_zip" placeholder="Zip">
+            </md-input-container>
           </div>
         </div>
+        <div layout="column" class="area-survey-header" layout-align="space-between center">
+          <label>Survey Date:</label>
+          <md-datepicker ng-model="ma.surveyDate" ng-disabled="ma.showInput" ng-change="ma.companyInfo.survey_date = ma.surveyDate.toISOString()" placeholder="Survey Date">
+          </md-datepicker>
+          <label>Completion Date:</label>
+          <md-datepicker ng-model="ma.completionDate" ng-disabled="ma.showInput" ng-change="ma.companyInfo.completion_date = ma.completionDate.toISOString()" placeholder="Completion Date">
+          </md-datepicker>
+        </div>
       </div>
-      <div layout="column" layout-align="start" class="area-survey-header">
-        <h1 ng-show="ma.showInput"><i>Job# {{ma.companyInfo.job_number}}</i></h1>
-        <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" >
-          <label>Job Number</label>
-          <input ng-model="ma.companyInfo.job_number" placeholder="Job Number"></md-input-container>
-        <ul>
-          <li><b>Survey Date:</b></li>
-          <md-input-container  md-no-float layout="row">
-            <md-datepicker ng-model="ma.surveyDate" ng-disabled="ma.showInput" ng-change="ma.companyInfo.survey_date = ma.surveyDate.toISOString()" placeholder="Survey Date"></md-datepicker>
-          </md-input-container>
-          <li><b>Completion Date:</b></li>
-          <md-input-container  md-no-float layout="row">
-            <md-datepicker ng-model="ma.completionDate" ng-disabled="ma.showInput" ng-change="ma.companyInfo.completion_date = ma.completionDate.toISOString()" placeholder="Survey Date"></md-datepicker>
-          </md-input-container>
-        </ul>
+      <div layout="row" layout-align="start center">
+        <md-button ng-show="ma.showInput" ng-click="ma.showInput = !ma.showInput" class="md-raised md-primary" aria-label="edit client profile">
+          Edit Survey Information
+        </md-button>
+        <md-button ng-hide="ma.showInput" ng-click="ma.updateClient()" class="md-raised md-primary" aria-label="edit client profile">
+          Save
+        </md-button>
+        <md-button ng-show="ma.showInput" ng-click="ma.survey()" class="md-raised md-primary" aria-label="edit client profile">
+          View Survey
+        </md-button>
       </div>
-    </div>
-
-
-    <div layout="row" layout-align="start">
-      <md-button ng-show="ma.showInput" ng-click="ma.showInput = !ma.showInput" class="md-raised md-primary" aria-label="edit client profile">
-        Edit Survey Information
-      </md-button>
-      <md-button ng-show="ma.showInput" ng-click="ma.survey()" class="md-raised md-primary" aria-label="edit client profile">
-        View Survey
-      </md-button>
-      <md-button ng-hide="ma.showInput" ng-click="ma.updateClient()" class="md-raised md-primary" aria-label="edit client profile">
-        Save
-      </md-button>
+    </md-card-content>
+  </md-card>
+  <md-card flex="50">
+    <md-card-content ng-show="ma.loading">
+      <!--company name  -->
+      <div class="row" layout-align="space-between center">
+        <div ng-show="ma.showInput" class="client-name" layout="row" layout-align="space-between center">
+          <h1> <i>{{ma.companyInfo.client_name}}</i> </h1>
+        </div>
+        <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" flex-gt-xs>
+          <label>Company Name</label>
+          <input ng-model="ma.companyInfo.client_name" placeholder="Company Name">
+        </md-input-container>
+      </div>
+      <!-- Data Row  -->
+      <div class="area-survey-header" layout="row" layout-align="space-between center">
+        <div layout="column" layout-align="space-between center">
+          <ul>
+            <li><b>Primary Contact</b></li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_name}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_phone_number}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.primary_contact_email}}</li>
+          </ul>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_name" placeholder="Company Contact Name"></md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_phone_number" placeholder="Phone Number"></md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.primary_contact_email" placeholder="Email"></md-input-container>
+        </div>
+        <div layout="column" layout-align="space-between center">
+          <ul >
+            <li><b>Alternate Contact</b></li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_name}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.alt_phone_number}}</li>
+            <li ng-show="ma.showInput">{{ma.companyInfo.alt_contact_email}}</li>
+          </ul>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_contact_name" placeholder="Alt Company Contact Name"></md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_phone_number" placeholder="Alt Phone Number"></md-input-container>
+          <md-input-container ng-hide="ma.showInput" md-no-float class="md-block" ><input ng-model="ma.companyInfo.alt_contact_email" placeholder="Alt Email"></md-input-container>
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
+</div>
+<md-card ng-hide="ma.loading">
+  <md-card-content >
+    <div layout="row" layout-sm="column" layout-align="space-between center">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
   </md-card-content>
 </md-card>
-
 <md-card ng-show="ma.loading">
   <md-card-content>
     <div layout="row">
@@ -110,24 +123,24 @@
     </div>
   </md-card-content>
 </md-card>
-  <section class="areas" layout-margin ng-show="ma.loading">
+<section class="areas" layout-margin ng-show="ma.loading">
   <!-- ng-repeat divs for every area we have added plus one div for add new area-->
-    <md-whiteframe class="md-whiteframe-14dp" >
-      <div class="add-new-area" ng-hide="ma.editAreas">
-        <md-button ng-hide="ma.inputAreaName" ng-click="ma.inputAreaName = true" class="md-icon-button" aria-label="add-new-area">
-          <md-icon md-svg-icon="../../img/add.svg"></md-icon>
-        </md-button>
-        <div class="area-input" ng-show="ma.inputAreaName">
-          <md-input-container><label>Area Name</label>
-            <input ng-enter="ma.addNewArea()" type="text" ng-model="ma.newAreaName" required>
-          </md-input-container>
-          <md-button class="md-raised md-primary md-ink-ripple" type="button"  ng-click="ma.addNewArea()" id="addAreaButton">Add Area</md-button>
-        </div>
-      </div>
-    </md-whiteframe>
-    <md-whiteframe class="md-whiteframe-14dp"  ng-repeat="area in ma.areaArray track by $index" >
-      <md-button  ng-class="{'for-delete': ma.toRemove[$index] === true}" class="measurement-areas" ng-click="ma.areaClick($index)">
-        <p>{{area}}</p><br>
+  <md-whiteframe class="md-whiteframe-14dp" >
+    <div class="add-new-area" ng-hide="ma.editAreas">
+      <md-button ng-hide="ma.inputAreaName" ng-click="ma.inputAreaName = true" class="md-icon-button" aria-label="add-new-area">
+        <md-icon md-svg-icon="../../img/add.svg"></md-icon>
       </md-button>
-    </md-whiteframe>
-  </section>
+      <div class="area-input" ng-show="ma.inputAreaName">
+        <md-input-container><label>Area Name</label>
+          <input ng-enter="ma.addNewArea()" type="text" ng-model="ma.newAreaName" required>
+        </md-input-container>
+        <md-button class="md-raised md-primary md-ink-ripple" type="button"  ng-click="ma.addNewArea()" id="addAreaButton">Add Area</md-button>
+      </div>
+    </div>
+  </md-whiteframe>
+  <md-whiteframe class="md-whiteframe-14dp"  ng-repeat="area in ma.areaArray track by $index" >
+    <md-button  ng-class="{'for-delete': ma.toRemove[$index] === true}" class="measurement-areas" ng-click="ma.areaClick($index)">
+      <p>{{area}}</p><br>
+    </md-button>
+  </md-whiteframe>
+</section>

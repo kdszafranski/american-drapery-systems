@@ -12,6 +12,7 @@ html.md-default-theme, html, body.md-default-theme, body {
 
 table {
   font-family: 'Roboto', sans-serif;
+  width: 100%;
 }
 
 li {
@@ -192,10 +193,8 @@ tr:nth-child(even) {
 
 table {
   border: 1px;
-  width: 100%;
 }
 th {
-  white-space: nowrap;
 }
 .itemBtn:hover {
   cursor: pointer;
@@ -270,20 +269,21 @@ th {
 .areaName {
   margin: 8px;
 }
+.md-calendar-day-header {
+ width: auto;
+}
 .client-name h1 {
   margin-top: 8px;
-  margin-bottom: 0;
+  margin-bottom: 8px;
 
 }
  .job-number h1 {
   margin: 8px;
 }
 .client-address li {
-  float: left;
 }
 .client-address {
-  margin-top: 4px;
-  margin-bottom: 8px;
+  padding: 0;
 }
 .notes, .fileInfo p {
   padding: 0 15px;
