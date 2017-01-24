@@ -34,16 +34,29 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
     var baseUrl = 'https://s3.amazonaws.com/american-drapery-systems/survey_';
     var currentFileUrl = baseUrl + surveyId + '/' + 'area_' + currentFile.areaId + '/' + currentFile.key + currentFile.originalName;
 
-    $mdDialog.show({
-      template:
-        '<md-card>' +
-          '<md-card-content layout="row" layout-wrap>' +
-            '<img ng-src="' + currentFileUrl + '"/>' +
-          '</md-card-content>' +
-        '</md-card flex>',
-      targetEvent: ev,
-      clickOutsideToClose: true
-    })
+    if(currentFile.extension == "pdf") {
+      $mdDialog.show({
+        template:
+          '<md-card>' +
+            '<md-card-content layout="row" layout-wrap>' +
+              '<iframe ng-src="' + currentFileUrl + '" width="750" height="750"></iframe>' +
+            '</md-card-content>' +
+          '</md-card flex>',
+        targetEvent: ev,
+        clickOutsideToClose: true
+      })
+    } else {
+      $mdDialog.show({
+        template:
+          '<md-card>' +
+            '<md-card-content layout="row" layout-wrap>' +
+              '<img ng-src="' + currentFileUrl + '"/>' +
+            '</md-card-content>' +
+          '</md-card flex>',
+        targetEvent: ev,
+        clickOutsideToClose: true
+      })
+    }
   };
 
   self.submitFiles = function() {
