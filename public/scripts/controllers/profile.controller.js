@@ -102,7 +102,6 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   //course of action from drop down selection
   self.dropdownOption = function(id){
     self.survey.client_id = id;
-
     console.log("selected", self.selected);
     if (self.selected === "None") {
       self.clients = {}
@@ -115,7 +114,6 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
       self.showSubmitButton = true;
       console.log("SELECTED ID: ", self.selected.id);
       self.showCompany = true;
-
     }
   }
 
