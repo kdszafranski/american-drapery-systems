@@ -7,7 +7,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
   var currentUser;
   self.loading = false;
   self.imgLoad = false;
-  const MIN_AREA_GOTO_TOP = 4;
+  const MIN_AREA_GOTO_TOP = 3;
   var currentFilesObject = {};
 
   self.goToTop = function() {

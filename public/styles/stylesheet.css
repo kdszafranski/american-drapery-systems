@@ -190,6 +190,10 @@ tr:nth-child(even) {
   margin: 0;
 }
 
+.md-calendar-day-header {
+  width: auto;
+}
+
 table {
   border: 1px;
   width: 100%;
