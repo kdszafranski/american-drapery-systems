@@ -1,4 +1,11 @@
 <div layout="row" layout-align="space-between stretch">
+  <md-card ng-hide="ma.loading">
+    <md-card-content >
+      <div layout="row" layout-sm="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+    </md-card-content>
+  </md-card>
   <md-card class="loggedOut" ng-show="ma.loggedOut" flex="70">
     <md-card-content>
       <div layout="row" layout-align="space-between center">
@@ -101,13 +108,6 @@
     </md-card-content>
   </md-card>
 </div>
-<md-card ng-hide="ma.loading">
-  <md-card-content >
-    <div layout="row" layout-sm="column" layout-align="space-between center">
-      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-    </div>
-  </md-card-content>
-</md-card>
 <md-card ng-show="ma.loading">
   <md-card-content>
     <div layout="row">

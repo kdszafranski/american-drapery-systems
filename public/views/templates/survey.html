@@ -1,10 +1,12 @@
 <div id="survey" layout="row" layout-align="center center" class="container">
-  <md-card flex>
-    <md-card-content ng-hide="survey.loading">
-      <div layout="row" layout-align="center center">
+  <md-card ng-hide="survey.loading">
+    <md-card-content >
+      <div layout="row" layout-sm="column" layout-align="center center">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
     </md-card-content>
+  </md-card>
+  <md-card flex>
     <md-card-content ng-show="survey.loading">
       <div class="client-name" layout="row" layout-align="space-around center">
         <h1><i>Job# {{survey.surveyDetails[0].job_number}}</i></h1>
