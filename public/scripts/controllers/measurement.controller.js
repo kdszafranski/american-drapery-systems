@@ -79,6 +79,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
     })
   }
 
+
   self.addButton = function(){
     console.log("mesurement: ", self.measurement);
     console.log("survey ID: ", self.areaId);
@@ -101,6 +102,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
           self.addColor = newId;
           console.log(self.addColor, self.deleteColor);
           self.measurements.push(angular.copy(self.measurement));
+
           $timeout(function(){
             self.addColor = 0;
           }, 700);
@@ -113,6 +115,8 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
         });
       })
     console.log("mesurement array", self.measurements);
+    console.log("mesurement object", self.measurement);
+
   }
 
   function updateNotes(){
@@ -172,6 +176,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
   self.showConfirm = function(ev, index, id) {
     // Appending dialog to document.body to cover sidenav in docs app
     console.log("delete id:", id);
+
     self.deleteColor = id;
     var confirm = $mdDialog.confirm()
       .title('Are you sure you wish to delete this measurement?')
