@@ -26,13 +26,13 @@
         <div layout="column" layout-align="space-around center">
 
           <label>Survey Date:</label>
-          <md-datepicker ng-model="measure.surveyDate"  ng-change="measure.companyInfo.survey_date = measure.surveyDate.toISOString()" placeholder="Survey Date">
+          <md-datepicker ng-model="measure.surveyDate" ng-disabled="true" ng-change="measure.companyInfo.survey_date = measure.surveyDate.toISOString()" placeholder="Survey Date">
           </md-datepicker>
         </div>
         <div layout="column" layout-align="space-around center">
 
           <label>Completion Date:</label>
-          <md-datepicker ng-model="measure.completionDate" ng-change="measure.companyInfo.completion_date = measure.completionDate.toISOString()" placeholder="Completion Date">
+          <md-datepicker ng-model="measure.completionDate" ng-change="measure.companyInfo.completion_date = measure.completionDate.toISOString()" ng-disabled="true" placeholder="Completion Date">
           </md-datepicker>
         </div>
       </div>

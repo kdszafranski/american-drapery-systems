@@ -93,8 +93,6 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
-          self.measurement.id = response.data[0].id;
-          console.log(self.measurement);
           self.measurements.push(angular.copy(self.measurement));
           $mdToast.show(
             $mdToast.simple()
@@ -116,32 +114,6 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
     console.log("mesurement object", self.measurement);
     console.log("AAADDDDDDD", self.addColor, id);
 
-  }
-
-  function updateSurvey(){
-    var currentUser = UserFactory.getUser();
-    console.log("survey id", surveyId);
-    currentUser.getToken()
-      .then(function(idToken) {
-        $http({
-          method: 'PUT',
-          url: '/surveys/update/' + surveyId,
-          data: self.companyInfo,
-          headers: {
-            id_token: idToken
-          }
-        }).then(function(response){
-          console.log("Updated: ", response.data);
-          self.showInput = !self.showInput;
-        },
-        function(err) {
-          console.log("error updating survey details: ", err);
-          if (err.status === 403) {
-            notAuthorizedAlert();
-            console.log("In error 403");
-          }
-        });
-    });
   }
 
   function updateNotes(){
