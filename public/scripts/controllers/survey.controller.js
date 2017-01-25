@@ -7,7 +7,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
   var currentUser;
   self.loading = false;
   self.imgLoad = false;
-  const MIN_AREA_GOTO_TOP = 4;
+  const MIN_AREA_GOTO_TOP = 3;
   var currentFilesObject = {};
 
   self.goToTop = function() {
@@ -81,7 +81,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
             .then(function() {
               console.log("This .then() is happening");
               self.currentFilesObject = FileFactory.currentFilesObject;
-              FileFactory.currentFilesObject = {};
+              FileFactory.currentFilesObject = {}; //Clearfile Factory
               console.log("currentFilesObject: ", self.currentFilesObject);
               self.imgLoad = true;
               $scope.$apply();

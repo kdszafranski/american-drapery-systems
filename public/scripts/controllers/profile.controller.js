@@ -1,36 +1,34 @@
 app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$location", "$mdDialog",  function($http, UserFactory, IdFactory, $location, $mdDialog) {
   var self = this;
-  self.currentProfile = {};
   self.checkbox = true;
   self.clients = [];
-  self.selected = {};
+  self.survey = {};
   self.showCompany = false;
   self.showUpdateButton = true;
   self.showSubmitButton = false;
 
-  //Submit button function
-  self.submitButton = function(){
-    if (self.checkbox == true) {
-      self.currentProfile.billing_address_street = self.currentProfile.survey_address_street
-      self.currentProfile.billing_address_city = self.currentProfile.survey_address_city
-      self.currentProfile.billing_address_state = self.currentProfile.survey_address_state
-      self.currentProfile.billing_address_zip = self.currentProfile.survey_address_zip
+  UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
+    if(firebaseUser) {
+      currentUser = firebaseUser;
+      getClients();
+    } else {
+      console.log("There is no firebase user");
     }
-    console.log("submit button clicked. Object:", self.currentProfile);
-    postClients();
+  })
+  //Submit button function
+  self.submitButton = function(client){
+    copyAddress(client);
+    console.log("submit button clicked. Object:", client);
+    postClients(client);
   }
 
   //Update existing client information Button
-  self.updateButton = function(){
-    if (self.checkbox == true) {
-      self.currentProfile.billing_address_street = self.currentProfile.survey_address_street
-      self.currentProfile.billing_address_city = self.currentProfile.survey_address_city
-      self.currentProfile.billing_address_state = self.currentProfile.survey_address_state
-      self.currentProfile.billing_address_zip = self.currentProfile.survey_address_zip
-    }
-    console.log("self.selected", self.selected);
-    updateClient();
+  self.updateButton = function(client){
+    copyAddress(client);
+    console.log("update button clicked. Object:", client);
+    updateClient(client);
   }
+
 
   //GET client_name and id for Dropdown
   function getClients() {
@@ -50,40 +48,16 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
     });
   }
 
-  // getClients();
-
-  //GET client information from client selected from dropdown
-  function getClient() {
-    // currentUser = UserFactory.getUser();
-    console.log("current user: ", currentUser);
-    currentUser.getToken().then(function(idToken) {
-      $http({
-        method: 'GET',
-        url: '/clients/' + self.selected.id,
-        headers: {
-          id_token: idToken
-        }
-      }).then(function(response){
-        console.log('success. Response', response.data);
-        self.currentProfile = response.data[0]
-        if (self.currentProfile.client_name == self.selected.client_name) {
-          self.showCompany = true;
-        } else {
-          self.showCompany = false;
-        }
-      });
-    });
-  }
-
   //POST client information to database
-  function postClients() {
+  function postClients(client) {
     // currentUser = UserFactory.getUser();
+    console.log(client);
     console.log("current user: ", currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients',
-        data: self.currentProfile,
+        data: client,
         headers: {
           id_token: idToken
         }
@@ -91,16 +65,11 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
         console.log('success in adding new client');
         var clientId = response.data[0].id;
         console.log(response.data[0].id);
-        self.survey = {
-          client_id: clientId,
-          survey_date: self.currentProfile.surveyDate,
-          status: "Pending",
-          last_modified: new Date()
-        }
+        self.survey.client_id = clientId;
         addNewSurvey(self.survey);
       },
       function(err) {
-        console.log("error updating clientdetails: ", err);
+        console.log("error creating client: ", err);
         if (err.status === 403) {
           notAuthorizedAlert();
           console.log("In error 403");
@@ -110,25 +79,20 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   }
 
   //Update client information in database
-  function updateClient() {
+  function updateClient(client) {
     // currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
+    console.log('client', client);
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
-        url: '/clients/' + self.selected.id,
-        data: self.currentProfile,
+        url: '/clients/' + client.id,
+        data: client,
         headers: {
           id_token: idToken
         }
       }).then(function(response){
         console.log('success');
-        self.survey = {
-          client_id: self.selected.id,
-          survey_date: self.currentProfile.surveyDate,
-          status: "Pending",
-          last_modified: new Date()
-        }
         addNewSurvey(self.survey);
       },
       function(err) {
@@ -142,26 +106,26 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   }
 
   //course of action from drop down selection
-  self.dropdownOption = function(){
-    console.log("selected", self.selected);
-    if (self.selected === "None") {
-      self.currentProfile = {}
+  self.dropdownOption = function(client){
+    self.survey.status = 'Pending';
+    console.log("selected", client);
+    if (client === "None") {
+      self.clients = {};
       self.showCompany = false;
       self.showUpdateButton = true;
       self.showSubmitButton = false;
       console.log("This if statement works");
     } else {
+      self.survey.client_id = client.id;
       self.showUpdateButton = false;
       self.showSubmitButton = true;
-      console.log("SELECTED ID: ", self.selected.id);
-      getClient();
+      self.showCompany = true;
     }
   }
 
 
   function addNewSurvey(survey) {
     console.log("Running addNewSurvey");
-    // currentUser = UserFactory.getUser();
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
@@ -171,14 +135,11 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
           id_token: idToken
         }
       }).then(function(response){
-        //setting the survey # in factory to the new survey id
-        var newSurveyId = response.data[0].id;
-        IdFactory.setSurvey(newSurveyId);
-        $location.path('/area/' + newSurveyId);
+        $location.path('/area/' + response.data[0].id);
         console.log('success in adding new survey');
       },
       function(err) {
-        console.log("error updating clientdetails: ", err);
+        console.log("error creading survey: ", err);
         if (err.status === 403) {
           notAuthorizedAlert();
           console.log("In error 403");
@@ -187,10 +148,14 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
     });
   }
 
-  UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
-    currentUser = firebaseUser;
-    getClients();
-  })
+  function copyAddress(client) {
+    if (self.checkbox) {
+      self.survey.address_street = client.billing_address_street;
+      self.survey.address_city = client.billing_address_city;
+      self.survey.address_state = client.billing_address_state;
+      self.survey.address_zip = client.billing_address_zip;
+    }
+  }
 
   function notAuthorizedAlert() {
       alert = $mdDialog.alert({
@@ -198,7 +163,6 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
         textContent: 'You are not authorized to perform this action',
         ok: 'Close'
       });
-
       $mdDialog
         .show( alert )
         .finally(function() {

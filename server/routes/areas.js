@@ -21,6 +21,7 @@ router.get('/:area_id', function(req, res) {
           res.send(result.rows);
         })
         .catch(function(err) {
+          client.release();
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -46,6 +47,7 @@ router.post('/', function(req,res) {
           res.send(result.rows);
         })
         .catch(function(err) {
+          client.release();
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -76,6 +78,7 @@ router.delete('/', function(req, res) {
           res.sendStatus(204);
         })
         .catch(function(err) {
+          client.release();
           console.log('delete error: ', err);
           res.sendStatus(500);
         } );
@@ -103,6 +106,7 @@ router.put('/notes/:area_id', function(req, res) {
           res.sendStatus(201);
         })
         .catch(function(err) {
+          client.release();
           console.log("PUT unsuccesful: Notes not updated ", err);
           res.sendStatus(500);
         });

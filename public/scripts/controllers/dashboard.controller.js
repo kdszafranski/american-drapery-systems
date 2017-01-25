@@ -9,16 +9,16 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
   self.loggedOut = false;
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
-    if (!firebaseUser) {
+    if (firebaseUser) {
+      currentUser = firebaseUser;
+      getSurveys();
+    } else {
       console.log("No User");
       self.loggedOut = true;
       $timeout(function() {
         $location.path('/login');
       }, 3000);
     }
-    currentUser = firebaseUser;
-    getSurveys();
-    console.log("onAuthStateChanged", currentUser);
   });
 
   function getSurveys() {

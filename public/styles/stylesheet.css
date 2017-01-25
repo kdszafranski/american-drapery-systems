@@ -12,6 +12,7 @@ html.md-default-theme, html, body.md-default-theme, body {
 
 table {
   font-family: 'Roboto', sans-serif;
+  width: 100%;
 }
 
 li {
@@ -90,9 +91,7 @@ md-toast .md-toast-content span {
 #cardTitle a{
   color: rgba(0,0,0,0.87);
 }
-#measurementsTable td{
-  padding: 1px;
-}
+
 #inputRow td{
   background-color: white;
   border-color: white;
@@ -159,14 +158,13 @@ tr.headerRow{
 .tableBody .toastColorRed {
     background-color: rgb(216,67,21);
   }
-  .tableBody .toastColorGreen {
-      background-color: rgb(122, 221, 101);
-    }
+.tableBody .toastColorGreen {
+    background-color: rgb(122, 221, 101);
+  }
 
 .tableBody .noToastColor {
   transition: background-color 0.3s ease-in;
 }
-
 tr:nth-child(odd) {
 
     background-color: rgb(234, 231, 235);
@@ -190,12 +188,14 @@ tr:nth-child(even) {
   margin: 0;
 }
 
+.md-calendar-day-header {
+  width: auto;
+}
+
 table {
   border: 1px;
-  width: 100%;
 }
 th {
-  white-space: nowrap;
 }
 .itemBtn:hover {
   cursor: pointer;
@@ -270,20 +270,21 @@ th {
 .areaName {
   margin: 8px;
 }
+.md-calendar-day-header {
+ width: auto;
+}
 .client-name h1 {
   margin-top: 8px;
-  margin-bottom: 0;
+  margin-bottom: 8px;
 
 }
  .job-number h1 {
   margin: 8px;
 }
 .client-address li {
-  float: left;
 }
 .client-address {
-  margin-top: 4px;
-  margin-bottom: 8px;
+  padding: 0;
 }
 .notes, .fileInfo p {
   padding: 0 15px;
