@@ -19,7 +19,7 @@
             </md-input-container>
           </div>
           <md-input-container md-no-float>
-            <md-select name="type" ng-model="index" ng-change="profile.dropdownOption(id)" placeholder="Repeat Client?">
+            <md-select name="type" ng-model="index" ng-change="profile.dropdownOption(profile.clients[index])" placeholder="Repeat Client?">
               <md-option><em>None</em></md-option>
               <md-option ng-value="$index" ng-repeat="client in profile.clients track by $index">{{client.client_name}}</md-option>
             </md-select>
@@ -81,8 +81,8 @@
             </md-input-container>
           </div>
 
-          <md-button ng-hide="profile.showSubmitButton" ng-click="profile.submitButton(index)" class="md-raised md-primary" aria-label="submit">Create Survey</md-button>
-          <md-button ng-hide="profile.showUpdateButton" ng-click="profile.updateButton(index)" class="md-raised md-primary" aria-label="submit">Update and Create Survey</md-button>
+          <md-button ng-hide="profile.showSubmitButton" ng-click="profile.submitButton(profile.clients[index])" class="md-raised md-primary" aria-label="submit">Create Survey</md-button>
+          <md-button ng-hide="profile.showUpdateButton" ng-click="profile.updateButton(profile.clients[index])" class="md-raised md-primary" aria-label="submit">Update and Create Survey</md-button>
         </form>
       </md-card-content>
     </md-card>
