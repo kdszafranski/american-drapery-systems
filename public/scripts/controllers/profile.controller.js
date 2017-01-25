@@ -8,8 +8,12 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   self.showSubmitButton = false;
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
-    currentUser = firebaseUser;
-    getClients();
+    if(firebaseUser) {
+      currentUser = firebaseUser;
+      getClients();
+    } else {
+      console.log("There is no firebase user");
+    }
   })
   //Submit button function
   self.submitButton = function(id){
@@ -20,10 +24,11 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
 
   //Update existing client information Button
   self.updateButton = function(id){
+    var client = self.clients.findIndex(index => index.id === id);
     copyAddress(id);
-    console.log("update button clicked. Object:", self.clients[id]);
+    console.log("update button clicked. Object:", self.clients[client]);
 
-    updateClient(id);
+    updateClient(client);
   }
 
 
@@ -48,6 +53,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   //POST client information to database
   function postClients(clientId) {
     // currentUser = UserFactory.getUser();
+    console.log(self.clients[clientId]);
     console.log("current user: ", currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
@@ -61,6 +67,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
         console.log('success in adding new client');
         var clientId = response.data[0].id;
         console.log(response.data[0].id);
+        self.survey.client_id = clientId;
         addNewSurvey(self.survey);
       },
       function(err) {
@@ -111,7 +118,9 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
       self.showSubmitButton = false;
       console.log("This if statement works");
     } else {
+      var client = self.clients.findIndex(index => index.id === id);
       self.survey.client_id = id;
+      console.log(`ID selected in dropdown ${id}`);
       self.showUpdateButton = false;
       self.showSubmitButton = true;
       self.showCompany = true;

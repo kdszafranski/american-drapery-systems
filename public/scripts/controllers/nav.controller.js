@@ -8,14 +8,11 @@ function(UserFactory, $location, $scope) {
 
     UserFactory.auth.$onAuthStateChanged(function(firebaseUser){
       // firebaseUser will be null if not logged in
-      self.currentUser = firebaseUser;
-      console.log("\n\n\n onAuth ran in nav controller \n\n\n");
-
-      if (self.currentUser) {
+      if (firebaseUser) {
         //check if user is authorized in DB
+        self.currentUser = firebaseUser;
         UserFactory.userChecker()
           .then(function(response) {
-            console.log("\n\nNavController response: ", response + '\n\n');
             //if authorized, self.isUser is true
             self.isUser = true;
           })

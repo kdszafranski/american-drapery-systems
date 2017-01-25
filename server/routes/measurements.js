@@ -27,7 +27,6 @@ router.post('/:area_id', function(req,res) {
         })
         .catch(function(err) {
           client.release();
-          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -56,7 +55,6 @@ router.put('/', function(req,res) {
         })
         .catch(function(err) {
           client.release();
-          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -81,7 +79,6 @@ router.get('/:area_id', function(req, res) {
       })
       .catch(function(err) {
         client.release();
-        
         console.log("select query error: ", err);
         res.sendStatus(500);
       })
@@ -105,8 +102,7 @@ router.delete('/:idToDelete', function(req, res) {
           res.sendStatus(204);
         })
         .catch(function(err) {
-          client.release();
-          
+          client.release();          
           console.log("Error with delete: ", err);
           res.sendStatus(501);
         });

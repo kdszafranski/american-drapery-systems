@@ -11,7 +11,6 @@ function($firebaseAuth, $http) {
   var isUser = false;
   //logIn fxn, called when logIn button clicked
   function logIn() {
-    console.log("Running logIn fxn in user-factory");
     //Sign in with popup message using google credentials
       return auth.$signInWithPopup("google").then(function(firebaseUser) {
       //Assign result of signin to current user object
@@ -49,7 +48,6 @@ function($firebaseAuth, $http) {
   auth.$onAuthStateChanged(function(firebaseUser){
     // firebaseUser will be null if not logged in
     currentUser = firebaseUser;
-    console.log("onAuthStateChanged in userfactory", currentUser);
     if(firebaseUser) {
       isUser = true;
     }
@@ -71,7 +69,6 @@ function($firebaseAuth, $http) {
   that need access to currentUser
   *************************************/
   function userChecker() {
-    console.log("Current user in USERFACTORY at get user: ", currentUser);
     return currentUser.getToken()
       .then(function(idToken) {
         return $http({
@@ -82,7 +79,6 @@ function($firebaseAuth, $http) {
           }
         })
         .then(function(response) {
-          console.log("getUser ran in UserFactory, response: ", response);
           return response;
         })
         .catch(function(err) {

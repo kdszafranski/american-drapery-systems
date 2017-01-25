@@ -69,14 +69,14 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
     })
     .then(function(result) {
       console.log("Files info INSERT query success: ");
-      res.sendStatus(201);
       client.release();
+      res.sendStatus(201);
     })
     .catch(function(err) {
       console.log("Client: ", client);
       console.log("Query error inserting files info: ", err);
-      res.sendStatus(500);
       client.release();
+      res.sendStatus(500);
     })
 });//end route
 
@@ -89,13 +89,13 @@ router.get('/:areaId', function(req, res) {
       client.query('SELECT * FROM files WHERE area_id = $1', [areaId])
         .then(function(result) {
           console.log("Success! Retrieved these results from the DB: ", result.rows);
-          res.send(result.rows);
           client.release();
+          res.send(result.rows);
         })
         .catch(function(err) {
           console.log("Error querying DB: ", err);
-          res.sendStatus(500);
           client.release();
+          res.sendStatus(500);
         });
     });
 });//end route
@@ -111,13 +111,13 @@ router.get('/survey/:surveyId', function(req, res) {
       'WHERE survey.id = $1', [surveyId])
         .then(function(result) {
           console.log("Success! Retrieved these results from the DB: ", result.rows);
-          res.send(result.rows);
           client.release();
+          res.send(result.rows);
         })
         .catch(function(err) {
           console.log("Error querying DB: ", err);
-          res.sendStatus(500);
           client.release();
+          res.sendStatus(500);
         });
     });
 });//end route
@@ -134,13 +134,13 @@ router.delete('/:surveyId/:areaId/:key/:name', function(req, res) {
       client.query('DELETE FROM files WHERE key = $1', [currentKey])
         .then(function(result) {
           console.log("Delete from DB success: ", result);
-          res.sendStatus(200);
           client.release();
+          res.sendStatus(200);
         })
         .catch(function(err) {
           console.log("Error deleting from DB: ", err);
-          res.sendStatus(500);
           client.release();
+          res.sendStatus(500);
         });
     });
 });//end route
