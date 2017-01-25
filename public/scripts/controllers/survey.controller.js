@@ -81,7 +81,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
             .then(function() {
               console.log("This .then() is happening");
               self.currentFilesObject = FileFactory.currentFilesObject;
-              FileFactory.currentFilesObject = {};
+              FileFactory.currentFilesObject = {}; //Clearfile Factory
               console.log("currentFilesObject: ", self.currentFilesObject);
               self.imgLoad = true;
               $scope.$apply();
