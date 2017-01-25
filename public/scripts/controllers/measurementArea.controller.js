@@ -1,5 +1,5 @@
-app.controller('MeasurementAreaController', ["$http", '$location', 'UserFactory', '$route', '$mdDialog',
-function($http, $location, UserFactory, $route, $mdDialog) {
+app.controller('MeasurementAreaController', ["$http", '$location', 'UserFactory', '$route', '$mdDialog', '$timeout',
+function($http, $location, UserFactory, $route, $mdDialog, $timeout) {
   var self = this;
   // var survey_id = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
@@ -249,15 +249,16 @@ function($http, $location, UserFactory, $route, $mdDialog) {
   // getSurveyDetails(firebaseUser);
   //This happens when when we switch to this view/controller AND when page is refreshed
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
-    if (!firebaseUser) {
+    if (firebaseUser) {
+      currentUser = firebaseUser;
+      getSurveyDetails(firebaseUser);
+    } else {
       console.log("No User");
       self.loggedOut = true;
       $timeout(function() {
         $location.path('/login');
       }, 3000);
     }
-    currentUser = firebaseUser;
-    getSurveyDetails(firebaseUser);
   });
 
   self.survey = function() {
