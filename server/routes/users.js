@@ -22,6 +22,7 @@ router.post('/', function(req,res) {
           res.sendStatus(201);
         })
         .catch(function(err) {
+          client.release();
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -88,7 +89,7 @@ router.delete('/:delete_id', function(req, res) {
           })
           .catch(function(err) {
             client.release();
-            
+
             console.log('select query error: ', err);
             res.sendStatus(500);
           });
