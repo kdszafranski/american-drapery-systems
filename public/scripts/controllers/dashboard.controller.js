@@ -12,7 +12,6 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
     if (firebaseUser) {
       currentUser = firebaseUser;
       getSurveys();
-      console.log("onAuthStateChanged", currentUser);
     } else {
       console.log("No User");
       self.loggedOut = true;
