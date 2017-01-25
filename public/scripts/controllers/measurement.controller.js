@@ -96,6 +96,8 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
+          self.measurement.id = response.data[0].id;
+          console.log(self.measurement);
           self.measurements.push(angular.copy(self.measurement));
           $mdToast.show(
             $mdToast.simple()
