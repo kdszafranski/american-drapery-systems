@@ -237,8 +237,12 @@ function($http, $location, UserFactory, $route, $mdDialog, $timeout) {
       self.areaArray = [];
       self.areaArrayId = [];
     }
-    self.completionDate = new Date(self.companyInfo.completion_date);
-    self.surveyDate = new Date(self.companyInfo.survey_date);
+    if (self.companyInfo.completion_date) {
+      self.completionDate = new Date(self.companyInfo.completion_date);
+    }
+    if (self.companyInfo.survey_date) {
+      self.surveyDate = new Date(self.companyInfo.survey_date);
+    }
     self.editAreas = false;
     self.loading = true;
     console.log("Response From Server: ", self.surveyDetails);
