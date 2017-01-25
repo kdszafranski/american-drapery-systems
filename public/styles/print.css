@@ -1,0 +1,68 @@
+@media print {
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  *:first-line {
+      background: transparent !important;
+      color: #000 !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+  }
+  a,a:visited {
+      text-decoration: underline;
+  }
+  a[href]:after {
+      content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+      content: " (" attr(title) ")";
+  }
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  a[href^="#"]:after,a[href^="javascript:"]:after {
+      content: "";
+  }
+  pre,blockquote {
+      border: 1px solid #999;
+      page-break-inside: avoid;
+  }
+  table {
+    border: 2px solid black;
+    width: 100%;
+  }
+  td {
+    border: 1px solid rgb(194, 194, 194) !important;
+    border-collapse: collapse;
+  }
+  th {
+    border-bottom: 2px solid black;
+  }
+  img {
+      max-width: 100% !important;
+  }
+  p,h2,h3 {
+      orphans: 3;
+      widows: 3;
+  }
+  tr, .survey-area, .printItem {
+      page-break-inside: avoid;
+  }
+  h2,h3,tr {
+      page-break-after: avoid;
+  }
+  #header, #footer, #nav, #surveyButtons, .fileInfo {
+    display: none !important;
+  }
+  .filePrint {
+    display: block;
+  }
+  .fileInfo {
+    display: none;
+  }
+  iframe {
+    display: inline-flex;
+  }
+}

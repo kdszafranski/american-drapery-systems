@@ -1,4 +1,23 @@
-<ul>
-  <li><a href="#dashboard">Dashboard</a></li>
-  <li><a href=""></a>Log Out</li>
-</ul>
+<md-toolbar id="nav" layout="row">
+  <div layout="row" layout-align="space-between center">
+    <div layout="row" layout-align="start center">
+      <ul id="companyName" ng-click="nav.goToDashboard()">
+        <li>AMERICAN</li>
+        <li>DRAPERY</li>
+        <li>SYSTEMS</li>
+      </ul>
+    </div>
+    <div layout="row" layout-align="end center">
+      <span ng-show="nav.isUser">{{nav.currentUser.displayName}} </span>
+      <md-button class="md-raised" ng-click="nav.goToDashboard()" ng-show="nav.isUser">
+        Dashboard
+      </md-button>
+      <md-button class="md-raised" ng-click="nav.goToAdmin()" ng-show="nav.isUser">
+        Admin
+      </md-button>
+      <md-button class="md-raised" ng-click="nav.logOut()" ng-show="nav.isUser">
+        Log Out
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>

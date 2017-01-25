@@ -1,1 +1,146 @@
-<h3>job view</h3>
+<div id="survey" layout="row" layout-align="center center" class="container">
+  <md-card flex="100" ng-hide="survey.loading">
+    <md-card-content >
+      <div layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+    </md-card-content>
+  </md-card>
+  <md-card flex>
+    <md-card-content ng-show="survey.loading">
+      <div class="client-name" layout="row" layout-align="space-around center">
+        <h1><i>Job# {{survey.surveyDetails[0].job_number}}</i></h1>
+        <h1><i>{{survey.surveyDetails[0].client_name}}</i></h1>
+      </div>
+      <div layout="row" layout-align="space-around center">
+        <div layout="column" layout-align="start start">
+          <ul class="client-address">
+            <li><b>Survey Date:</b></li>
+            <li>{{survey.surveyDetails[0].survey_date}}</li>
+          </ul>
+          <ul class="client-address">
+            <li><b>Completion Date:</b></li>
+            <li>{{survey.surveyDetails[0].completion_date}}</li>
+          </ul>
+        </div>
+        <div layout="column" layout-align="start start">
+          <ul class="client-address" ng-if="survey.surveyDetails[0].address_street">
+            <li><b>Survey Address</b></li>
+            <li>{{survey.surveyDetails[0].address_street}}</li>
+            <li>{{survey.surveyDetails[0].address_city}},  {{survey.surveyDetails[0].address_state}}</li>
+            <li>{{survey.surveyDetails[0].address_zip}}</li>
+          </ul>
+          <ul class="client-address">
+            <li><b>Billing Address</b></li>
+            <li>{{survey.surveyDetails[0].billing_address_street}}</li>
+            <li>{{survey.surveyDetails[0].billing_address_city}},  {{survey.surveyDetails[0].billing_address_state}}</li>
+            <li>{{survey.surveyDetails[0].billing_address_zip}}</li>
+          </ul>
+        </div>
+        <div layout="column" layout-align="start start">
+          <ul class="client-address">
+            <li><b>Primary Contact</b></li>
+            <li>{{survey.surveyDetails[0].primary_contact_name}}</li>
+            <li>{{survey.surveyDetails[0].primary_contact_phone_number}}</li>
+            <li>{{survey.surveyDetails[0].primary_contact_email}}</li>
+          </ul>
+          <ul class="client-address" ng-if="survey.surveyDetails[0].alt_contact_name.length">
+            <li><b>Alternate Contact</b></li>
+            <li>{{survey.surveyDetails[0].alt_contact_name}}</li>
+            <li>{{survey.surveyDetails[0].alt_phone_number}}</li>
+            <li>{{survey.surveyDetails[0].alt_contact_email}}</li>
+          </ul>
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
+</div>
+<div class="survey-area" layout="row" layout-align="center center" ng-repeat="area in survey.areaArray track by $index">
+  <md-card flex>
+    <md-card-content>
+      <div layout="row" layout-align="start center" >
+
+        <h3 class="areaName" ng-if="area[0].area_name">Area: {{area[0].area_name}}</h4>
+        </div>
+        <div layout="row" layout-align="start center" >
+
+          <table cellspacing="0">
+            <thead>
+              <tr id="headerRow">
+                <th>Floor</th>
+                <th>Room</th>
+                <th>Quantity</th>
+                <th>Width</th>
+                <th>Length</th>
+                <th>IB/OB</th>
+                <th>Controls</th>
+                <th>Fascia Size</th>
+                <th>Fabric</th>
+                <th>Mount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tableBodyRow" ng-repeat="measurements in area">
+                <td>{{measurements.floor}}</td>
+                <td>{{measurements.room}}</td>
+                <td>{{measurements.quantity}}</td>
+                <td>{{measurements.width}}</td>
+                <td>{{measurements.length}}</td>
+                <td>{{measurements.ib_ob}}</td>
+                <td>{{measurements.controls}}</td>
+                <td>{{measurements.fascia_size}}</td>
+                <td>{{measurements.fabric}}</td>
+                <td>{{measurements.mount}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div layout="row" layout-align="start center" >
+          <p class="notes">
+            <b>Notes:</b>
+            {{area[$index].notes}}
+          </p>
+        </div>
+        <div class="fileInfo" layout="row">
+          <p><b>Files:</b></h4>
+          </div>
+          <div layout="row"  class="fileInfo" layout-align="space-around stretch" layout-wrap ng-init="areaId = area[0].area_id">
+            <div layout="row" ng-hide="survey.imgLoad" layout-align="center center">
+              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+            <div layout="column" ng-show="survey.imgLoad" layout-align="start start" ng-repeat="file in survey.currentFilesObject track by $index" ng-if="file.areaId == areaId" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName; file.areaName = area[0].area_name">
+              <div ng-switch="file.extension">
+                <div ng-switch-when="pdf">
+                  <b>{{file.fileInfo || file.originalName}}</b>
+                  <img src="./img/pdf.svg" alt="Cannot Be Displayed" ng-click="survey.showPreview($event, $index)"/>
+                </div>
+                <div ng-switch-default>
+                  <b>{{file.fileInfo || file.originalName}}</b>
+                  <div class="thumbnail">
+                    <img src="{{fileUrl}}" alt="Cannot Be Displayed" ng-click="survey.showPreview($event, $index)"/>
+                  </div>
+                  <md-switch class="md-primary fileOpt" md-no-ink aria-label="Switch No Ink" ng-model="survey.currentFilesObject['file_' + ($index +1)].print">
+                    Include in preview
+                  </md-switch>
+                  <md-switch class="md-primary fileopt" ng-disabled="!survey.currentFilesObject['file_' + ($index +1)].print" md-no-ink aria-label="Switch No Ink" ng-true-value="50" ng-false-value="100" ng-model="file.flexWidth" >
+                    Max-width: 50%
+                  </md-switch>
+                </div>
+              </div>
+            </div>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div layout="row" class="filePrint" layout-align="start center" layout-wrap>
+      <div layout="column" class="printItem" layout-align="start center" ng-repeat="file in survey.currentFilesObject" ng-init="fileUrl = survey.baseUrl + file.areaId + '/' + file.key + file.originalName" ng-if="file.print == true" flex="{{file.flexWidth || 100}}" >
+        <b>Area: {{file.areaName}}</b>
+        <b>{{file.fileInfo || file.originalName}}</b>
+        <img ng-src="{{fileUrl}}" alt="file"/>
+      </div>
+    </div>
+
+    <div id="surveyButtons" layout="row" layout-align="center start">
+      <md-button class="md-raised md-button md-ink-ripple" ng-click="survey.printPage()">PDF/PRINT</md-button>
+      <md-button class="md-raised md-button md-ink-ripple" ng-show="survey.areaArray.length > 4" ng-click="survey.goToTop()">Go To Top</md-button>
+    </div>
