@@ -89,6 +89,7 @@ router.get('/new/:survey_id', function(req, res) {
         .then(function(result) {
           client.release();
           console.log('survey get success');
+          console.log(result.rows);
           res.send(result.rows);
         })
         .catch(function(err) {
