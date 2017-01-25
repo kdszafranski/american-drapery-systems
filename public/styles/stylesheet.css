@@ -385,14 +385,6 @@ footer {
 .unbulleted {
   list-style-type: none;
 }
-
-.tableBodyRow .dashToast {
-  background-color: rgb(113, 238, 106);
-}
-.tableBodyRow .dashNoToast {
-  transition: background-color 1s ease-in;
-  background-color: inherit;
-}
 .thumbnail {
   max-width: 200px;
   max-height: 200px;

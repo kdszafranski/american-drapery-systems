@@ -91,7 +91,7 @@
             </tr>
           </thead>
           <tbody class="tableBody">
-            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" ng-class="{'toastColorRed': dimension.id == measure.deleteColor, 'noToastColor': dimension.id != measure.deleteColor}" >
+            <tr ng-repeat="dimension in measure.measurements track by $index" class="tableBodyRow" ng-class="{toastColorRed: dimension.id == measure.deleteColor, toastColorGreen: dimension.id == measure.addColor, noToastColor: dimension.addColor != dimension.id}" >
               <td ng-show="measure.measurements[$index].edit">{{dimension.floor}}</td>
               <td ng-hide="measure.measurements[$index].edit" class="inputTd">
                 <md-input-container>
