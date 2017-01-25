@@ -205,10 +205,8 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
   //Confirming user wants to delete measurement. Index is the measurement to delete
   self.showConfirm = function(ev, index, id) {
     // Appending dialog to document.body to cover sidenav in docs app
-<<<<<<< HEAD
-=======
     console.log("delete id:", id);
->>>>>>> dev
+
     self.deleteColor = id;
     var confirm = $mdDialog.confirm()
       .title('Are you sure you wish to delete this measurement?')
