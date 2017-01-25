@@ -8,8 +8,33 @@ var express = require('express');
 var router = express.Router();
 var pg = require('pg');
 var faker = require('faker');
+var config = require('../config/config.js');
+
+var pool = new pg.Pool(config);
+
 var connectionString = 'postgres://localhost:5432/americandraperysystems';
 var count;
+
+function updateSurvey(i) {
+  pool.connect()
+    .then(function(client) {
+      client.query("UPDATE survey SET address_street=$1, address_city=$2, address_state=$3, address_zip=$4 " +
+    "WHERE client_id=$5",
+    [randInt(1001, 90000) + ' ' + faker.address.streetName() + ' ' + faker.address.streetSuffix(), faker.address.city(), faker.address.state(), faker.address.zipCode(), i])
+    .then(function(result) {
+      client.release();
+      console.log('survey updatesuccess');
+
+    })
+    .catch(function(err) {
+      client.release();
+
+      console.log('select query error: ', err);
+      res.sendStatus(500);
+    });
+  });
+}
+
 function testUser() {
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
@@ -178,3 +203,4 @@ module.exports.survey = testSurvey;
 module.exports.measurement = testMeasurement;
 module.exports.client = testClient;
 module.exports.randInt = randInt;
+module.exports.updateSurvey = updateSurvey;

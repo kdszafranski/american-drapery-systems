@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
   console.log('reached get clients route')
   pool.connect()
     .then(function(client) {
-      client.query('SELECT client_name, id FROM client ORDER BY client_name')
+      client.query('SELECT * FROM client ORDER BY client_name')
         .then(function(result) {
           console.log('number of clients sent:', result.rows.length);
           res.send(result.rows);

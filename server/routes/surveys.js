@@ -20,7 +20,6 @@ router.get('/all', function(req, res) {
         })
         .catch(function(err) {
           client.release();
-          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -47,7 +46,6 @@ router.get('/one/:survey_id', function(req, res) {
         })
         .catch(function(err) {
           client.release();
-          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -72,7 +70,6 @@ router.get('/preview/one/:survey_id', function(req, res) {
         })
         .catch(function(err) {
           client.release();
-          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -96,7 +93,6 @@ router.get('/new/:survey_id', function(req, res) {
         })
         .catch(function(err) {
           client.release();
-          
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -121,7 +117,6 @@ router.delete('/:survey_id', function(req, res) {
           })
           .catch(function(err) {
             client.release();
-            
             console.log('select query error: ', err);
             res.sendStatus(500);
           });
@@ -138,9 +133,9 @@ router.put('/update/:survey_id', function(req, res) {
   pool.connect()
     .then(function(client) {
       client.query('UPDATE survey ' +
-      'SET job_number = $1, survey_date=$2, completion_date=$3 ' +
+      'SET job_number = $1, survey_date=$2, completion_date=$3, address_street=$5, address_city=$6, address_state=$7,  address_zip=$8, last_modified=$9 ' +
       'WHERE survey.id = $4',
-      [survey.job_number, survey.survey_date, survey.completion_date, id])
+      [survey.job_number, survey.survey_date, survey.completion_date, id, survey.address_street, survey.address_city, survey.address_state, survey.address_zip, new Date()])
       .then(function(result) {
         client.release();
         console.log("PUT complete");
@@ -148,7 +143,6 @@ router.put('/update/:survey_id', function(req, res) {
       })
       .catch(function(err) {
         client.release();
-        
         console.log("Post unsuccesful: ", err);
         res.sendStatus(500);
       });
@@ -165,7 +159,7 @@ router.put('/status/:survey_id', function(req, res) {
       client.query('UPDATE survey ' +
       'SET status = $1, last_modified=$2' +
       'WHERE survey.id = $3',
-      [status.status, status.last_modified, id])
+      [status.status, new Date(), id])
       .then(function(result) {
         client.release();
         console.log("PUT complete");
@@ -173,24 +167,23 @@ router.put('/status/:survey_id', function(req, res) {
       })
       .catch(function(err) {
         client.release();
-        
-        console.log("Post unsuccesful: ", err);
+        console.log("Put unsuccesful: ", err);
         res.sendStatus(500);
       });
     });
 });
 
-//add new survey
+
 
 router.post('/', function(req, res) {
   var newSurvey = req.body;
   console.log("Reached add new survey route: ", newSurvey);
   pool.connect()
     .then(function(client) {
-      client.query('INSERT INTO survey (survey_date, status, client_id, last_modified) ' +
-      'VALUES ($1, $2, $3, $4) ' +
+      client.query('INSERT INTO survey (survey_date, status, client_id, last_modified, address_street, address_city, address_state, address_zip) ' +
+      'VALUES ($1, $2, $3, $4, $5, $6, $7, $8) ' +
       'RETURNING id',
-      [newSurvey.survey_date, newSurvey.status, newSurvey.client_id, newSurvey.last_modified])
+      [newSurvey.survey_date, newSurvey.status, newSurvey.client_id, new Date(), newSurvey.address_street, newSurvey.address_city, newSurvey.address_state, newSurvey.address_zip])
       .then(function(result) {
         client.release();
         console.log("post complete");
@@ -198,7 +191,6 @@ router.post('/', function(req, res) {
       })
       .catch(function(err) {
         client.release();
-        
         console.log("Post unsuccesful: ", err);
         res.sendStatus(500);
       });

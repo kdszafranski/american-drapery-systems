@@ -11,35 +11,35 @@
         <form flex>
           <div layout="row" layout-align="start center">
             <md-input-container md-no-float flex-gt-xs>
-              <input ng-model="profile.currentProfile.jobNumber" placeholder="Job Number">
+              <input ng-model="profile.survey.jobNumber" placeholder="Job Number">
             </md-input-container>
             <md-input-container md-no-float>
               <label>Survey Date</label>
-              <md-datepicker ng-model="profile.currentProfile.surveyDate" placeholder="Survey Date"></md-datepicker>
+              <md-datepicker ng-model="profile.survey.survey_date" placeholder="Survey Date"></md-datepicker>
             </md-input-container>
           </div>
           <md-input-container md-no-float>
-            <md-select name="type" ng-model="profile.selected" ng-change="profile.dropdownOption()" placeholder="Repeat Client?">
+            <md-select name="type" ng-model="id" ng-change="profile.dropdownOption(id)" placeholder="Repeat Client?">
               <md-option><em>None</em></md-option>
-              <md-option ng-value="client" ng-repeat="client in profile.clients">{{client.client_name}}</md-option>
+              <md-option ng-value="client.id" ng-repeat="client in profile.clients track by $index">{{client.client_name}}</md-option>
             </md-select>
           </md-input-container>
 
           <div layout="column" layout-align="center">
             <md-input-container ng-hide="profile.showCompany" md-no-float class="md-block" flex-gt-xs>
-              <input ng-model="profile.currentProfile.client_name" placeholder="Company Name">
+              <input ng-model="profile.clients[id].client_name" placeholder="Company Name">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.survey_address_street" placeholder="Street Address">
+              <input ng-model="profile.clients[id].billing_address_street" placeholder="Street Address">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.survey_address_city" placeholder="City">
+              <input ng-model="profile.clients[id].billing_address_city" placeholder="City">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.survey_address_state" placeholder="State">
+              <input ng-model="profile.clients[id].billing_address_state" placeholder="State">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.survey_address_zip" placeholder="Zip">
+              <input ng-model="profile.clients[id].billing_address_zip" placeholder="Zip">
             </md-input-container>
             <h4 id="surveyAddress">Survey Address:</h4>
             <md-checkbox id="profileCheckbox"
@@ -50,39 +50,39 @@
             Check If Billing Address Is The Same
             </md-checkbox>
             <md-input-container ng-if="!profile.checkbox" md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.billing_address_street" placeholder="Billing Street Address">
+              <input ng-model="profile.survey.address_street" placeholder="Survey Street Address">
             </md-input-container>
             <md-input-container ng-if="!profile.checkbox" md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.billing_address_city" placeholder="Billing City">
+              <input ng-model="profile.survey.address_city" placeholder="Survey City">
             </md-input-container>
             <md-input-container ng-if="!profile.checkbox" md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.billing_address_state" placeholder="Billing State">
+              <input ng-model="profile.survey.address_state" placeholder="Survey State">
             </md-input-container>
             <md-input-container ng-if="!profile.checkbox" md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.billing_address_zip" placeholder="Billing Zip">
+              <input ng-model="profile.survey.address_zip" placeholder="Survey Zip">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.primary_contact_name" placeholder="Company Contact Name">
+              <input ng-model="profile.clients[id].primary_contact_name" placeholder="Company Contact Name">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.primary_contact_phone_number" placeholder="Phone Number">
+              <input ng-model="profile.clients[id].primary_contact_phone_number" placeholder="Phone Number">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.primary_contact_email" placeholder="Email">
+              <input ng-model="profile.clients[id].primary_contact_email" placeholder="Email">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.alt_contact_name" placeholder="Alt Company Contact Name">
+              <input ng-model="profile.clients[id].alt_contact_name" placeholder="Alt Company Contact Name">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.alt_phone_number" placeholder="Alt Phone Number">
+              <input ng-model="profile.clients[id].alt_phone_number" placeholder="Alt Phone Number">
             </md-input-container>
             <md-input-container md-no-float class="md-block" >
-              <input ng-model="profile.currentProfile.alt_contact_email" placeholder="Alt Email">
+              <input ng-model="profile.clients[id].alt_contact_email" placeholder="Alt Email">
             </md-input-container>
           </div>
 
-          <md-button ng-hide="profile.showSubmitButton" ng-click="profile.submitButton()" class="md-raised md-primary" aria-label="submit">Submit</md-button>
-          <md-button ng-hide="profile.showUpdateButton" ng-click="profile.updateButton()" class="md-raised md-primary" aria-label="submit">Update</md-button>
+          <md-button ng-hide="profile.showSubmitButton" ng-click="profile.submitButton(id)" class="md-raised md-primary" aria-label="submit">Create Survey</md-button>
+          <md-button ng-hide="profile.showUpdateButton" ng-click="profile.updateButton(id)" class="md-raised md-primary" aria-label="submit">Update and Create Survey</md-button>
         </form>
       </md-card-content>
     </md-card>
