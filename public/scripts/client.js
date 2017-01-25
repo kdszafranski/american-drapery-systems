@@ -12,17 +12,17 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'DashboardController',
     controllerAs: 'dash'
   })
-  .when('/measurement', {
+  .when('/measurement/:surveyId/:areaId/:areaName', {
     templateUrl: '/views/templates/measurement.html',
     controller: 'MeasurementController',
     controllerAs: 'measure'
   })
-  .when('/survey', {
+  .when('/survey/:surveyId', {
     templateUrl: '/views/templates/survey.html',
     controller: 'SurveyController',
     controllerAs: 'survey'
   })
-  .when('/profile' ,{
+  .when('/profile/', {
     templateUrl: '/views/templates/profile.html',
     controller: 'ProfileController',
     controllerAs: 'profile'
@@ -32,7 +32,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'FileController',
     controllerAs: 'files'
   })
-  .when('/area' ,{
+  .when('/area/:surveyId' ,{
     templateUrl: '/views/templates/measurement-area.html',
     controller: 'MeasurementAreaController',
     controllerAs: 'ma'
@@ -50,7 +50,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
 
 
-//dashboard search filter
+/***************************ANGULAR SEARCH FILTERS***************************/
 app.filter('startFrom', function() {
   return function(input, start) {
     start = +start; //parse to int
@@ -58,11 +58,38 @@ app.filter('startFrom', function() {
   }
 });
 
-//Utilities
+app.filter('excludeByStatus', function () {
+  return function (items, excludedList) {
+    var ret = [];
+    angular.forEach(items, function (item) {
+      if (excludedList.indexOf(item.status) === -1) {
+          ret.push(item);
+      }
+    });
+    return ret;
+  };
+})
+
+app.filter('true_false', function() {
+    return function(text, length, end) {
+        if (text) {
+            return 'Yes';
+        }
+        return 'No';
+    }
+});
+
+/***************************UTILITY FUNCTIONS***************************/
+function removeObjById(arr, id) {
+  var idx = arr.findIndex(item => item.id === id);
+  ~idx && arr.splice(idx, 1);
+  return idx;
+}
 function formatDates(aryOfObjs){
   //convert the ISO Dates to readable format
   //expects array of objects
   for (var i = 0; i < aryOfObjs.length; i++) {
+
     if(moment(aryOfObjs[i].last_modified).isValid()) {
       aryOfObjs[i].last_modified = moment(aryOfObjs[i].last_modified).format("YYYY/MM/DD");
     }

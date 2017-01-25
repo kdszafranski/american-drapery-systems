@@ -1,0 +1,26 @@
+<!-- File input and view -->
+<div>
+  <div>
+    <form id="testForm">
+      <input type="file" name="files" file-model="files.newFilesObject.files" multiple/>
+    <form>
+    <ul>
+      <li ng-repeat="file in files.newFilesObject.files" id="yourFile"><p>{{file.name}}</p>
+        <md-input-container class="md-block">
+        <label for="input_23">File Info</label>
+        <input  class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false"  ng-model="files.newFilesObject.filesInfo['file_' + ($index + 1)]">
+      </md-input-container></li>
+    </ul>
+  </div>
+  <div id="fileSubmitDiv" layout="row" layout-sm="column" layout-align="center center" layout-wrap="" class="layout-wrap layout-sm-column layout-align-center-center layout-row">
+    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="files.submitFiles()">
+      <span class="ng-scope">Submit</span>
+      <div class="md-ripple-container"></div>
+    </button>
+  </div>
+</div>
+<!--TODO: Grab file extension off file   [x]
+          Get current files from DB/AWS  []
+          Add delete button to files     []
+          Add image preview to files     []
+          -->

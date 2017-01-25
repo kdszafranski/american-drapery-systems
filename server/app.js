@@ -9,9 +9,10 @@ var measurements = require('./routes/measurements');
 var clients = require('./routes/clients');
 var users = require('./routes/users');
 var areas = require('./routes/areas');
-var testdata = require('./routes/testdata');
+// var testdata = require('./routes/testdata');
 var files = require('./routes/files');
 var userChecker = require('./modules/user-checker');
+
 
 // serve static files
 app.use(express.static('public'));
@@ -32,9 +33,9 @@ app.listen(portDecision, function() {
 app.use(decoder.token);
 app.use(userChecker.user);
 
+app.use('/clients', clients);
 app.use('/users', users);
 app.use('/surveys', surveys);
 app.use('/files', files);
 app.use('/measurements', measurements);
-app.use('/clients', clients);
 app.use('/areas', areas);

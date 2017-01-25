@@ -8,21 +8,25 @@ var pool = new pg.Pool(config);
 router.post('/', function(req,res) {
   console.log("new user: ", req.body);
   var newUser = req.body;
-  pool.connect()
-    .then(function(client) {
-      client.query("INSERT INTO users (first_name, last_name, email, can_edit_users, authorized) " +
-      "VALUES ($1,$2,$3,$4,$5)",
-      [newUser.first_name, newUser.last_name, newUser.email, newUser.can_edit_users, newUser.authorized])
-      .then(function(result) {
-        console.log("put complete");
-        client.release();
-        res.sendStatus(201);
-      })
-      .catch(function(err) {
-        console.log('select query error: ', err);
-        res.sendStatus(500);
+  if (req.canEdit === false) {
+    res.sendStatus(403);
+  } else {
+    pool.connect()
+      .then(function(client) {
+        client.query("INSERT INTO users (first_name, last_name, email, can_edit_users, authorized) " +
+        "VALUES ($1,$2,$3,$4,$5)",
+        [newUser.first_name, newUser.last_name, newUser.email, newUser.can_edit_users, newUser.authorized])
+        .then(function(result) {
+          console.log("put complete");
+          client.release();
+          res.sendStatus(201);
+        })
+        .catch(function(err) {
+          console.log('select query error: ', err);
+          res.sendStatus(500);
+        });
       });
-    });
+  }
 });
 
 router.get('/all', function(req, res) {
@@ -38,6 +42,8 @@ router.get('/all', function(req, res) {
         })
         .catch(function(err) {
           console.log('select query error: ', err);
+          client.release();
+
           res.sendStatus(500);
         });
     });
@@ -56,6 +62,8 @@ router.get('/', function(req, res) {
           res.send(result.rows);
         })
         .catch(function(err) {
+          client.release();
+
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -64,21 +72,29 @@ router.get('/', function(req, res) {
 
 router.delete('/:delete_id', function(req, res) {
   //var user_email = req.decodedToken.email;
-  var delete_id = req.params.delete_id;
-  console.log("deleting user with id: ", delete_id);
-  pool.connect()
-    .then(function(client) {
-      client.query('DELETE FROM users WHERE id = $1', [delete_id])
-        .then(function(result) {
-          client.release();
-          console.log('user delete success');
-          res.sendStatus(204);
-        })
-        .catch(function(err) {
-          console.log('select query error: ', err);
-          res.sendStatus(500);
-        });
-    });
+  console.log(`REQ.AUTH ${req.authorized} and REQ.CANEDIT ${req.canEdit}`);
+  if (req.canEdit === false) {
+    res.sendStatus(403);
+  } else {
+    var delete_id = req.params.delete_id;
+    console.log("deleting user with id: ", delete_id);
+    pool.connect()
+      .then(function(client) {
+        client.query('DELETE FROM users WHERE id = $1', [delete_id])
+          .then(function(result) {
+            client.release();
+            console.log('user delete success');
+            res.sendStatus(204);
+          })
+          .catch(function(err) {
+            client.release();
+            
+            console.log('select query error: ', err);
+            res.sendStatus(500);
+          });
+      });
+  }
+
 });
 
 
