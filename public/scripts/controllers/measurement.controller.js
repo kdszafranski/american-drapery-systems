@@ -1,6 +1,6 @@
-app.controller('MeasurementController', ["$http", "UserFactory",
-"$mdDialog", '$route', '$location', '$anchorScroll', '$mdToast',
-function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToast) {
+app.controller('MeasurementController', ["$http", "IdFactory", "UserFactory",
+"$mdDialog", 'InfoFactory',  '$route', '$location', '$anchorScroll', '$mdToast', '$timeout',
+function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $location, $anchorScroll, $mdToast, $timeout) {
   var self = this;
   var surveyId = $route.current.params.surveyId;
   self.measurement = {};
@@ -76,12 +76,9 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
         });
     })
   }
-
-  self.addButton = function(){
-    console.log("mesurement: ", self.measurement);
-    console.log("survey ID: ", self.areaId);
+  //add measurement Button
+  self.addButton = function(id){
     self.deleteColor = false;
-
     var currentUser = UserFactory.getUser();
     // var currentUser = UserFactory.getUser();
     console.log("Current User at addButton: ", currentUser);
@@ -104,6 +101,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
             .hideDelay(600)
             .parent('#notesDiv')
           );
+
         }).catch(function(err) {
           console.log("Error in measurement post");
           if (err.status === 403) {
@@ -113,6 +111,9 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
         });
       })
     console.log("mesurement array", self.measurements);
+    console.log("mesurement object", self.measurement);
+    console.log("AAADDDDDDD", self.addColor, id);
+
   }
 
   function updateNotes(){
@@ -173,6 +174,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
   self.showConfirm = function(ev, index, id) {
     // Appending dialog to document.body to cover sidenav in docs app
     console.log("delete id:", id);
+
     self.deleteColor = id;
     var confirm = $mdDialog.confirm()
       .title('Are you sure you wish to delete this measurement?')
