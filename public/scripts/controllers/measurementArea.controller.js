@@ -89,41 +89,55 @@ function($http, $location, UserFactory, $route, $mdDialog, $timeout) {
   }
 
   self.addNewArea = function() {
-    self.loading = false;
-    console.log("Clicked Add New Area:");
-    self.inputAreaName = false;
-    self.newArea = {
-      area_name: self.newAreaName,
-      survey_id: surveyId,
-      notes: ""
-    }
-    console.log("New Area Object: ", self.newArea);
-    // currentUser = UserFactory.getUser();
+    if(self.newAreaName == '') {
+      $mdDialog.show({
+        template:
+          '<md-card>' +
+            '<md-card-content layout="row" layout-wrap>' +
+              '<b>You must add an Area Name</b>' +
+            '</md-card-content>' +
+          '</md-card flex>',
+        // targetEvent: ev,
+        clickOutsideToClose: true
+      })
+    } else {
+      self.loading = false;
+      console.log("Clicked Add New Area:");
+      self.inputAreaName = false;
+      self.newArea = {
+        area_name: self.newAreaName,
+        survey_id: surveyId,
+        notes: ""
+      }
+      console.log("New Area Object: ", self.newArea);
+      // currentUser = UserFactory.getUser();
 
-    currentUser.getToken()
-      .then(function(idToken) {
-        $http({
-          method: 'POST',
-          url: '/areas/',
-          data: self.newArea,
-          headers: {
-            id_token: idToken
-          }
-        }).then(function(response){
-          console.log("Response from new area post: ", response.data[0].id);
-          areaId = response.data[0].id;
-          console.log("In response");
-          $location.path('/measurement/' + surveyId + '/' + areaId + '/' + self.newAreaName);
-        },
-        function(err) {
-          console.log("error getting survey details: ", err);
-          if (err.status === 403) {
-            notAuthorizedAlert();
-            console.log("In error 403");
-          }
-        });
-    })
+      currentUser.getToken()
+        .then(function(idToken) {
+          $http({
+            method: 'POST',
+            url: '/areas/',
+            data: self.newArea,
+            headers: {
+              id_token: idToken
+            }
+          }).then(function(response){
+            console.log("Response from new area post: ", response.data[0].id);
+            areaId = response.data[0].id;
+            console.log("In response");
+            $location.path('/measurement/' + surveyId + '/' + areaId + '/' + self.newAreaName);
+          },
+          function(err) {
+            console.log("error getting survey details: ", err);
+            if (err.status === 403) {
+              notAuthorizedAlert();
+              console.log("In error 403");
+            }
+          });
+      })
+    }
   }
+
   //Edit client profile button
   self.editClient = function(){
     console.log("clicked");
