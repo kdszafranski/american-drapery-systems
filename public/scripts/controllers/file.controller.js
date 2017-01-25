@@ -11,14 +11,17 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
   var areaId = $route.current.params.areaId;
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
-    currentUser = firebaseUser;
-    FileFactory.currentFilesObject = {}; //clear filesObject in factory
-    FileFactory.getFiles(currentUser, areaId)
-      .then(function() {
-        self.currentFilesObject = FileFactory.currentFilesObject;
-        console.log(self.currentFilesObject);
-    });
-
+    if(firebaseUser) {
+      currentUser = firebaseUser;
+      FileFactory.currentFilesObject = {}; //clear filesObject in factory
+      FileFactory.getFiles(currentUser, areaId)
+        .then(function() {
+          self.currentFilesObject = FileFactory.currentFilesObject;
+          console.log(self.currentFilesObject);
+      });
+    } else {
+      console.log("There is no firebase user in file controller");
+    }
   });
 
   self.newFilesObject = { //store files and info here

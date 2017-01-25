@@ -43,10 +43,14 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
 
   //Runs when page refreshed AND when switching to this controller
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
-    currentUser = firebaseUser;
-    getMeasurements(firebaseUser);
-    getAreaInfo(firebaseUser);
-  })
+    if(firebaseUser) {
+      currentUser = firebaseUser;
+      getMeasurements(firebaseUser);
+      getAreaInfo(firebaseUser);
+    } else {
+      console.log("There is no firebase user in measurement controller");
+    }
+  });
 
   function getAreaInfo(firebaseUser) {
     currentUser = firebaseUser;
