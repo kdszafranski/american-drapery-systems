@@ -6,7 +6,6 @@ var pool = new pg.Pool(config);
 var userChecker = function(req, res, next) {
   console.log("User checker running");
   var email = req.decodedToken.email;
-  var x = 42;
   pool.connect()
     .then(function(client) {
       client.query('SELECT * FROM users WHERE email = $1', [email])
@@ -32,7 +31,9 @@ var userChecker = function(req, res, next) {
                 break;
               } else if (result.rows[0].authorized == false) {
                 console.log("But they are not authorized");
-                res.sendStatus(403);
+                req.authorized = false;
+                req.canEdit = false;
+                next();
                 break;
               }
           }

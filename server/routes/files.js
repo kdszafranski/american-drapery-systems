@@ -13,6 +13,8 @@ aws.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY
 });
 
+console.log("KEYS: ", process.env.AWS_SECRET_ACCESS_KEY);
+
 /**********************************************
                 GLOBAL STORAGE
 ***********************************************/
@@ -57,7 +59,6 @@ var upload = multer({
 });
 
 router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//max of 10 files
-
   fileInfo = req.body;
   pool.connect()
     .then(function(client) {
@@ -68,14 +69,14 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
     })
     .then(function(result) {
       console.log("Files info INSERT query success: ");
-      res.sendStatus(201);
       client.release();
+      res.sendStatus(201);
     })
     .catch(function(err) {
       console.log("Client: ", client);
       console.log("Query error inserting files info: ", err);
-      res.sendStatus(500);
       client.release();
+      res.sendStatus(500);
     })
 });//end route
 
@@ -84,16 +85,39 @@ router.get('/:areaId', function(req, res) {
   console.log("files get route hit, search db for areaId: ", areaId);
   pool.connect()
     .then(function(client) {
+      console.log("\n\nareaId bieng pulled: ", areaId);
       client.query('SELECT * FROM files WHERE area_id = $1', [areaId])
         .then(function(result) {
           console.log("Success! Retrieved these results from the DB: ", result.rows);
-          res.send(result.rows);
           client.release();
+          res.send(result.rows);
         })
         .catch(function(err) {
           console.log("Error querying DB: ", err);
-          res.sendStatus(500);
           client.release();
+          res.sendStatus(500);
+        });
+    });
+});//end route
+
+router.get('/survey/:surveyId', function(req, res) {
+  surveyId = req.params.surveyId;
+  console.log("files get route hit, search db for areaId: ", surveyId);
+  pool.connect()
+    .then(function(client) {
+      client.query('SELECT * FROM survey ' +
+      'JOIN areas on areas.survey_id = survey.id ' +
+      'JOIN files on files.area_id = areas.id ' +
+      'WHERE survey.id = $1', [surveyId])
+        .then(function(result) {
+          console.log("Success! Retrieved these results from the DB: ", result.rows);
+          client.release();
+          res.send(result.rows);
+        })
+        .catch(function(err) {
+          console.log("Error querying DB: ", err);
+          client.release();
+          res.sendStatus(500);
         });
     });
 });//end route
@@ -110,13 +134,13 @@ router.delete('/:surveyId/:areaId/:key/:name', function(req, res) {
       client.query('DELETE FROM files WHERE key = $1', [currentKey])
         .then(function(result) {
           console.log("Delete from DB success: ", result);
-          res.sendStatus(200);
           client.release();
+          res.sendStatus(200);
         })
         .catch(function(err) {
           console.log("Error deleting from DB: ", err);
-          res.sendStatus(500);
           client.release();
+          res.sendStatus(500);
         });
     });
 });//end route
