@@ -24,7 +24,7 @@ router.post('/:area_id', function(req,res) {
         .then(function(result) {
           client.release();
           console.log("put complete");
-          res.sendStatus(201);
+          res.send(result.rows);
         })
         .catch(function(err) {
           client.release();

@@ -93,12 +93,8 @@ function($http, IdFactory, UserFactory, $mdDialog, InfoFactory, $route, $locatio
           }
         }).then(function(response) {
           console.log("Response from measurement route: ", response);
-          self.addColor = response.data[0].id;
-          getMeasurements(currentUser);
-          $timeout(function(){
-            self.addColor = [];
-          }, 800);
-
+          self.measurement.id = response.data[0].id;
+          console.log(self.measurement);
           self.measurements.push(angular.copy(self.measurement));
           $mdToast.show(
             $mdToast.simple()
