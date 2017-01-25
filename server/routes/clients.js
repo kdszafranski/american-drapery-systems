@@ -12,13 +12,13 @@ router.get('/', function(req, res) {
     .then(function(client) {
       client.query('SELECT * FROM client ORDER BY client_name')
         .then(function(result) {
+          client.release();
           console.log('number of clients sent:', result.rows.length);
           res.send(result.rows);
         })
         .catch(function(err) {
           console.log('select query error: ', err);
           client.release();
-
           res.sendStatus(500);
         });
     });
@@ -31,13 +31,13 @@ router.get('/:clientId', function(req, res) {
   .then(function(client) {
     client.query('SELECT * FROM client WHERE id = ' + req.params.clientId)
      .then(function(result) {
+       client.release();
        console.log('number of clients sent:', result.rows.length);
        res.send(result.rows);
     })
     .catch(function(err) {
       console.log('select query error: ', err);
       client.release();
-
       res.sendStatus(500);
     });
   });
@@ -66,7 +66,6 @@ router.post('/', function(req,res) {
         .catch(function(err) {
           console.log('select query error: ', err);
           client.release();
-
           res.sendStatus(500);
         });
       });
@@ -96,7 +95,6 @@ router.post('/:client_id', function(req,res) {
         .catch(function(err) {
           console.log('select query error: ', err);
           client.release();
-
           res.sendStatus(500);
         });
       });

@@ -43,7 +43,6 @@ router.get('/all', function(req, res) {
         .catch(function(err) {
           console.log('select query error: ', err);
           client.release();
-
           res.sendStatus(500);
         });
     });
@@ -63,7 +62,6 @@ router.get('/', function(req, res) {
         })
         .catch(function(err) {
           client.release();
-
           console.log('select query error: ', err);
           res.sendStatus(500);
         });
@@ -87,8 +85,7 @@ router.delete('/:delete_id', function(req, res) {
             res.sendStatus(204);
           })
           .catch(function(err) {
-            client.release();
-            
+            client.release();            
             console.log('select query error: ', err);
             res.sendStatus(500);
           });
