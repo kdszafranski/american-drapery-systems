@@ -8,8 +8,12 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   self.showSubmitButton = false;
 
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
-    currentUser = firebaseUser;
-    getClients();
+    if(firebaseUser) {
+      currentUser = firebaseUser;
+      getClients();
+    } else {
+      console.log("There is no firebase user");
+    }
   })
   //Submit button function
   self.submitButton = function(id){
