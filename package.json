@@ -1,6 +1,6 @@
 {
   "name": "american-drapery-systems",
-  "version": "7.0.0",
+  "version": "1.0.0",
   "description": "American Drapery Systems Job/Measurement App",
   "main": "index.js",
   "scripts": {
