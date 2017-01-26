@@ -161,7 +161,6 @@ tr.headerRow{
 .tableBody .toastColorGreen {
     background-color: rgb(122, 221, 101);
   }
-
 .tableBody .noToastColor {
   transition: background-color 0.3s ease-in;
 }
@@ -384,14 +383,6 @@ footer {
 
 .unbulleted {
   list-style-type: none;
-}
-
-.tableBodyRow .dashToast {
-  background-color: rgb(113, 238, 106);
-}
-.tableBodyRow .dashNoToast {
-  transition: background-color 1s ease-in;
-  background-color: inherit;
 }
 .thumbnail {
   max-width: 200px;
