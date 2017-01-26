@@ -42,7 +42,6 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
       })
   }
 
-
   //Runs when page refreshed AND when switching to this controller
   UserFactory.auth.$onAuthStateChanged(function(firebaseUser) {
     if(firebaseUser) {
@@ -67,11 +66,12 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
         })
         .then(function(response){
           self.companyInfo = response.data[0];
-          self.completionDate = new Date(self.companyInfo.completion_date);
-          self.surveyDate = new Date(self.companyInfo.survey_date);
-          self.areaNotes = self.companyInfo.notes;
-          self.loading = true;
-
+          if (self.companyInfo.completion_date) {
+            self.completionDate = new Date(self.companyInfo.completion_date);
+          }
+          if (self.companyInfo.survey_date) {
+            self.surveyDate = new Date(self.companyInfo.survey_date);
+          }
         },
         function(err) {
           console.log("error getting survey details: ", err);
@@ -85,7 +85,6 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
     console.log("survey ID: ", self.areaId);
     self.deleteColor = 0;
     var currentUser = UserFactory.getUser();
-    // var currentUser = UserFactory.getUser();
     console.log("Current User at addButton: ", currentUser);
     currentUser.getToken()
     .then(function(idToken) {
@@ -121,7 +120,6 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
   }
 
   function updateNotes(){
-    // var currentUser = UserFactory.getUser();
     console.log("Notes");
     currentUser.getToken()
       .then(function(idToken) {
