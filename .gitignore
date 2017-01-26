@@ -1,6 +1,7 @@
 node_modules
 *.log
 server/fb-service-account.json
+server/service-account.json
 .env
 *.sql
 .DS_Store
