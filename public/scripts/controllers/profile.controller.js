@@ -16,18 +16,16 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
     }
   })
   //Submit button function
-  self.submitButton = function(id){
-    copyAddress(id);
-    console.log("submit button clicked. Object:", self.clients[id]);
-    postClients(id);
+  self.submitButton = function(client){
+    copyAddress(client);
+    console.log("submit button clicked. Object:", client);
+    postClients(client);
   }
 
   //Update existing client information Button
-  self.updateButton = function(id){
-    var client = self.clients.findIndex(index => index.id === id);
-    copyAddress(id);
-    console.log("update button clicked. Object:", self.clients[client]);
-
+  self.updateButton = function(client){
+    copyAddress(client);
+    console.log("update button clicked. Object:", client);
     updateClient(client);
   }
 
@@ -51,15 +49,15 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   }
 
   //POST client information to database
-  function postClients(clientId) {
+  function postClients(client) {
     // currentUser = UserFactory.getUser();
-    console.log(self.clients[clientId]);
+    console.log(client);
     console.log("current user: ", currentUser);
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
         url: '/clients',
-        data: self.clients[clientId],
+        data: client,
         headers: {
           id_token: idToken
         }
@@ -71,7 +69,7 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
         addNewSurvey(self.survey);
       },
       function(err) {
-        console.log("error updating clientdetails: ", err);
+        console.log("error creating client: ", err);
         if (err.status === 403) {
           notAuthorizedAlert();
           console.log("In error 403");
@@ -81,15 +79,15 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   }
 
   //Update client information in database
-  function updateClient(clientId) {
+  function updateClient(client) {
     // currentUser = UserFactory.getUser();
     console.log("current user: ", currentUser);
-    console.log('client id', clientId);
+    console.log('client', client);
     currentUser.getToken().then(function(idToken) {
       $http({
         method: 'POST',
-        url: '/clients/' + clientId,
-        data: self.clients[clientId],
+        url: '/clients/' + client.id,
+        data: client,
         headers: {
           id_token: idToken
         }
@@ -108,19 +106,17 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
   }
 
   //course of action from drop down selection
-  self.dropdownOption = function(id){
+  self.dropdownOption = function(client){
     self.survey.status = 'Pending';
-    console.log("selected", id);
-    if (id === "None") {
+    console.log("selected", client);
+    if (client === "None") {
       self.clients = {};
       self.showCompany = false;
       self.showUpdateButton = true;
       self.showSubmitButton = false;
       console.log("This if statement works");
     } else {
-      var client = self.clients.findIndex(index => index.id === id);
-      self.survey.client_id = id;
-      console.log(`ID selected in dropdown ${id}`);
+      self.survey.client_id = client.id;
       self.showUpdateButton = false;
       self.showSubmitButton = true;
       self.showCompany = true;
@@ -152,13 +148,12 @@ app.controller('ProfileController', ["$http", "UserFactory", "IdFactory", "$loca
     });
   }
 
-  function copyAddress(id) {
-    console.log('id', id);
+  function copyAddress(client) {
     if (self.checkbox) {
-      self.survey.address_street = self.clients[id].billing_address_street;
-      self.survey.address_city = self.clients[id].billing_address_city;
-      self.survey.address_state = self.clients[id].billing_address_state;
-      self.survey.address_zip = self.clients[id].billing_address_zip;
+      self.survey.address_street = client.billing_address_street;
+      self.survey.address_city = client.billing_address_city;
+      self.survey.address_state = client.billing_address_state;
+      self.survey.address_zip = client.billing_address_zip;
     }
   }
 
