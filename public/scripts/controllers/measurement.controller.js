@@ -1,6 +1,6 @@
 app.controller('MeasurementController', ["$http", "UserFactory",
-"$mdDialog", '$route', '$location', '$anchorScroll', '$mdToast',
-function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToast) {
+"$mdDialog", '$route', '$location', '$anchorScroll', '$timeout',
+function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeout) {
   var self = this;
   var surveyId = $route.current.params.surveyId;
   self.measurement = {};
@@ -10,6 +10,8 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
   self.area_name = $route.current.params.areaName;
   self.loading = false;
   self.showInput = true;
+  self.addColor = 0;
+  self.deleteColor = 0;
   self.currentProfile = {};
   var currentUser;
 
@@ -171,7 +173,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
     $mdDialog.show(confirm).then(function() {
       deleteRow(index);
     }, function() {
-      self.deleteColor = false;
+      self.deleteColor = 0;
     });
   };
   //Deleting measurement after confirmation
@@ -187,7 +189,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
           }
         }).then(function(response) {
           self.measurements.splice(index, 1);
-          self.deleteColor = false;
+          self.deleteColor = 0;
           self.deleteId = null;
         }).catch(function(err) {
           console.log("Error in measurement post");
@@ -217,7 +219,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $mdToa
       $mdDialog
         .show( alert )
         .finally(function() {
-          self.deleteColor = false;
+          self.deleteColor = 0;
           self.deleteId = null;
           alert = undefined;
           getMeasurements(currentUser);
