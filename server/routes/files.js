@@ -69,14 +69,14 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
     })
     .then(function(result) {
       console.log("Files info INSERT query success: ");
-      client.release();
       res.sendStatus(201);
+      client.release();
     })
     .catch(function(err) {
       console.log("Client: ", client);
       console.log("Query error inserting files info: ", err);
-      client.release();
       res.sendStatus(500);
+      client.release();
     })
 });//end route
 
@@ -129,20 +129,30 @@ router.delete('/:surveyId/:areaId/:key/:name', function(req, res) {
   currentKey = req.params.key;
   originalName = req.params.name;
   console.log("Delete route hit");
-  pool.connect()
-    .then(function(client) {
-      client.query('DELETE FROM files WHERE key = $1', [currentKey])
-        .then(function(result) {
-          console.log("Delete from DB success: ", result);
-          client.release();
-          res.sendStatus(200);
-        })
-        .catch(function(err) {
-          console.log("Error deleting from DB: ", err);
-          client.release();
-          res.sendStatus(500);
-        });
-    });
+
+  var params = {
+    Bucket: 'american-drapery-systems',
+    Key: 'survey_' + surveyId + '/area_' + areaId + '/' + currentKey + originalName,
+  };
+
+  s3.deleteObject(params, function(err, data) {
+    if(err) console.log("Error deleting from AWS: ", err);
+    else console.log("AWS delete data: ", data);
+    pool.connect()
+      .then(function(client) {
+        client.query('DELETE FROM files WHERE key = $1', [currentKey])
+          .then(function(result) {
+            console.log("Delete from DB success: ", result);
+            client.release();
+            res.sendStatus(200);
+          })
+          .catch(function(err) {
+            console.log("Error deleting from DB: ", err);
+            client.release();
+            res.sendStatus(500);
+          });
+      });
+  });
 });//end route
 
 
