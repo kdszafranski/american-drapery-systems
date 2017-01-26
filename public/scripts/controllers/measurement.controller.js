@@ -181,23 +181,23 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
     currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
-        $http({
-          method: 'DELETE',
-          url: '/measurements/' + self.measurements[index].id,
-          headers: {
-            id_token: idToken
-          }
-        }).then(function(response) {
-          self.measurements.splice(index, 1);
-          self.deleteColor = 0;
-          self.deleteId = null;
-        }).catch(function(err) {
-          console.log("Error in measurement post");
-          if (err.status === 403) {
-            notAuthorizedAlert();
-          }
-        });
+      $http({
+        method: 'DELETE',
+        url: '/measurements/' + self.measurements[index].id,
+        headers: {
+          id_token: idToken
+        }
+      }).then(function(response) {
+        self.measurements.splice(index, 1);
+        self.deleteColor = 0;
+        self.deleteId = null;
+      }).catch(function(err) {
+        console.log("Error in measurement post");
+        if (err.status === 403) {
+          notAuthorizedAlert();
+        }
       });
+    });
   }
 
   self.backToArea = function() {
@@ -206,25 +206,25 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
   }
 
   self.goToTopOfPage = function(){
-    window.scrollTo(0,0)
+    window.scrollTo(0,0);
   }
 
   function notAuthorizedAlert() {
-      alert = $mdDialog.alert({
-        title: 'Attention',
-        textContent: 'You are not authorized to perform this action',
-        ok: 'Close'
-      });
+    alert = $mdDialog.alert({
+      title: 'Attention',
+      textContent: 'You are not authorized to perform this action',
+      ok: 'Close'
+    });
 
-      $mdDialog
-        .show( alert )
-        .finally(function() {
-          self.deleteColor = 0;
-          self.deleteId = null;
-          alert = undefined;
-          getMeasurements(currentUser);
-          self.measurement = {};
-        });
-    }
+    $mdDialog
+      .show( alert )
+      .finally(function() {
+        self.deleteColor = 0;
+        self.deleteId = null;
+        alert = undefined;
+        getMeasurements(currentUser);
+        self.measurement = {};
+      });
+  }
 
 }]);
