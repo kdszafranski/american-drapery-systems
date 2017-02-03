@@ -22,19 +22,19 @@ var userChecker = function(req, res, next) {
               break;
             case 1:
               console.log("Case 1 hit");
-              if (result.rows[0].authorized == true && result.rows[0].can_add_users == true) {
+              if (result.rows[0].authorized == "true" && result.rows[0].can_add_users == "true") {
                 console.log("They are authorized, and can edit users");
                 req.authorized = true;
                 req.canEdit = true;
                 next();
                 break;
-              } else if (result.rows[0].authorized == true && result.rows[0].can_add_users == false) {
+              } else if (result.rows[0].authorized == "true" && result.rows[0].can_add_users == "false") {
                 console.log("They are authorized, but cannot edit users");
                 req.authorized = true;
                 req.canEdit = false;
                 next();
                 break;
-              } else if (result.rows[0].authorized == false) {
+              } else if (result.rows[0].authorized == "false") {
                 console.log("But they are not authorized");
                 req.authorized = false;
                 req.canEdit = false;
