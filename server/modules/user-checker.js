@@ -6,6 +6,7 @@ var pool = new pg.Pool(config);
 var userChecker = function(req, res, next) {
   console.log("User checker running");
   var email = req.decodedToken.email;
+  console.log("EMAIL:", email);
   pool.connect()
     .then(function(client) {
       client.query('SELECT * FROM users WHERE email = $1', [email])
@@ -17,13 +18,13 @@ var userChecker = function(req, res, next) {
               res.sendStatus(403);
               break;
             case 1:
-              if (result.rows[0].authorized == true && result.rows[0].can_edit_users == true) {
+              if (result.rows[0].authorized == true && result.rows[0].can_add_users == true) {
                 console.log("They are authorized, and can edit users");
                 req.authorized = true;
                 req.canEdit = true;
                 next();
                 break;
-              } else if (result.rows[0].authorized == true && result.rows[0].can_edit_users == false) {
+              } else if (result.rows[0].authorized == true && result.rows[0].can_add_users == false) {
                 console.log("They are authorized, but cannot edit users");
                 req.authorized = true;
                 req.canEdit = false;
