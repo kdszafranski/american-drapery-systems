@@ -12,6 +12,7 @@ var userChecker = function(req, res, next) {
       client.query('SELECT * FROM users WHERE email = $1', [email])
         .then(function(result) {
           client.release();
+          console.log(result);
           switch (result.rowCount) {
             case 0:
               console.log("That user email is not in the DB");
