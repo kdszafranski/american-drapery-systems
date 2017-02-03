@@ -1,13 +1,11 @@
 node_modules
 *.log
-<<<<<<< HEAD
-=======
 server/fb-service-account.json
 server/service-account.json
+config.json
 .env
 *.sql
 .DS_Store
 node_modules/
 firebase-service-accounts.json
 uploads/
->>>>>>> 716f22e1a510f10c9e2209a7f3e4cd6b5c3fa4aa
