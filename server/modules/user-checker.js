@@ -21,6 +21,7 @@ var userChecker = function(req, res, next) {
               res.sendStatus(403);
               break;
             case 1:
+              console.log("Case 1 hit");
               if (result.rows[0].authorized == true && result.rows[0].can_add_users == true) {
                 console.log("They are authorized, and can edit users");
                 req.authorized = true;
