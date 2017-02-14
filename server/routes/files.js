@@ -29,7 +29,7 @@ var bucket = 'american-drapery-systems-personal';
 var keys = {}; //storing AWS.S3 file keys here
 var fileNames = {};
 var fileInfo = {};
-var s3 = new aws.S3();
+var s3 = new aws.S3({signatureVersion: 'v4'});
 var pool = new pg.Pool(config);
 /**********************************************
                  AMAZON UPLOAD
