@@ -25,7 +25,7 @@ var currentFileNumber,
     surveyId,
     originalName,
     awsLocation;
-var bucket = 'american-drapery-systems';
+var bucket = 'american-drapery-systems-personal';
 var keys = {}; //storing AWS.S3 file keys here
 var fileNames = {};
 var fileInfo = {};
