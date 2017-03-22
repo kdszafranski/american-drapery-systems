@@ -9,7 +9,7 @@ var userChecker = function(req, res, next) {
   var email = req.decodedToken.email;
   pool.connect()
     .then(function(client) {
-      client.query('SELECT * FROM users WHERE email = $1', [email])
+      client.query('SELECT * FROM users WHERE email = *', [email])
         .then(function(result) {
           client.release();
           switch (result.rowCount) {
