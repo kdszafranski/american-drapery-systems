@@ -11,6 +11,10 @@ CREATE TABLE client (
   billing_address_city VARCHAR(50),
   billing_address_state VARCHAR(30),
   billing_address_zip VARCHAR(10),
+  survey_address_street VARCHAR(50),
+  survey_address_city VARCHAR(50),
+  survey_address_state VARCHAR(30),
+  survey_address_zip VARCHAR(10)
 );
 
 CREATE TABLE survey (
@@ -21,11 +25,7 @@ CREATE TABLE survey (
   installed_by VARCHAR(100),
   status VARCHAR(80),
   last_modified DATE,
-  client_id INTEGER references client,
-  address_street VARCHAR(80),
-  address_city VARCHAR(80),
-  address_state VARCHAR(80),
-  address_zip VARCHAR(80)
+  client_id INTEGER references client
 );
 
 CREATE TABLE areas (
@@ -35,25 +35,24 @@ CREATE TABLE areas (
   survey_id INTEGER references survey
 );
 
-CREATE TABLE files (
+CREATE TABLE images (
  id SERIAL PRIMARY KEY,
- file_info VARCHAR(100),
+ file_name VARCHAR(100),
  bucket VARCHAR(100),
- key VARCHAR(100),
- area_id INTEGER references survey,
- original_name TEXT
+ image_key VARCHAR(100),
+ survey_id INTEGER references survey
 );
 
 CREATE TABLE measurements (
   id SERIAL PRIMARY KEY,
-  floor VARCHAR(40),
+  floor INTEGER,
   room VARCHAR(50),
-  quantity VARCHAR(12),
+  quantity INTEGER,
   width VARCHAR(25),
   length VARCHAR(25),
   ib_ob VARCHAR(20),
-  fascia_size VARCHAR(50),
-  controls VARCHAR(20),
+  fascia_size INTEGER,
+  controls VARCHAR(10),
   mount VARCHAR(40),
   fabric VARCHAR(100),
   area_id INTEGER references areas

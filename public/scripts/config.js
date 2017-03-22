@@ -2,10 +2,10 @@
 FIREBASE CONFIGUARTION
 ***********************/
   var config = {
-    apiKey: "AIzaSyA6sbQgOnQ7PvNmvZpKthMddwHTkBV6TM8",
-    authDomain: "ads-portfolio.firebaseapp.com",
-    databaseURL: "https://ads-portfolio.firebaseio.com",
-    storageBucket: "ads-portfolio.appspot.com",
-    messagingSenderId: "867965409698"
+    apiKey: "AIzaSyBe__MNUrW2emO0-VDViZuTlTtRVUNX1ug",
+    authDomain: "american-drapery-systems-3a36f.firebaseapp.com",
+    databaseURL: "https://american-drapery-systems-3a36f.firebaseio.co",
+    storageBucket: "american-drapery-systems-3a36f.appspot.com",
+    messagingSenderId: "50273795397"
   };
   firebase.initializeApp(config);

@@ -12,7 +12,5 @@ const config = {
   ssl: true
 };
 
-console.log("\n\nCONFIG: ", config);
-
 
 module.exports = config;

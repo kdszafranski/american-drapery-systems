@@ -31,7 +31,7 @@ app.listen(portDecision, function() {
 //everything below decoder requires authentication
 
 app.use(decoder.token);
-// app.use(userChecker.user);
+app.use(userChecker.user);
 
 app.use('/clients', clients);
 app.use('/users', users);
