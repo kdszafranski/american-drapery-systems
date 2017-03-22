@@ -41,8 +41,8 @@ var userChecker = function(req, res, next) {
         .catch(function(err) {
           console.log("Query error searching users DB: ", err);
           res.sendStatus(500);
-        })
-    })
+        });
+    });
 
 
 };//end userChecker

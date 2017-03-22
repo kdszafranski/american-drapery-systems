@@ -35,7 +35,7 @@ function($firebaseAuth, $http) {
             console.log("Server error: ", err);
             throw err;
           }
-        })
+        });
       });
     });
 
