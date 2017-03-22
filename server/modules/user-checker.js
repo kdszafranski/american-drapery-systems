@@ -2,6 +2,7 @@ var config = require('../config/config.js');
 var pg = require('pg');
 
 var pool = new pg.Pool(config);
+console.log('userchecker config', config);
 
 var userChecker = function(req, res, next) {
   console.log("User checker running");

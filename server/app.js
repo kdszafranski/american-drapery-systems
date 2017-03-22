@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -32,9 +32,9 @@ app.listen(portDecision, function() {
 
 app.use(decoder.token);
 app.use(userChecker.user);
+app.use('/users', users);
 
 app.use('/clients', clients);
-app.use('/users', users);
 app.use('/surveys', surveys);
 app.use('/files', files);
 app.use('/measurements', measurements);
