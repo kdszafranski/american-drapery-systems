@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -22,7 +22,7 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../public/views/index.html'));
 });
 
-var portDecision = process.env.PORT || 3000;
+var portDecision = process.env.PORT || 5432;
 
 app.listen(portDecision, function() {
   console.log("listening on port", portDecision);
@@ -30,8 +30,8 @@ app.listen(portDecision, function() {
 
 //everything below decoder requires authentication
 
-// app.use(decoder.token);
-// app.use(userChecker.user);
+app.use(decoder.token);
+app.use(userChecker.user);
 
 app.use('/clients', clients);
 app.use('/users', users);
