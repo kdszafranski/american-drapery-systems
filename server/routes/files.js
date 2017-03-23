@@ -13,6 +13,8 @@ aws.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY
 });
 
+console.log("KEYS: ", process.env.AWS_SECRET_ACCESS_KEY);
+
 /**********************************************
                 GLOBAL STORAGE
 ***********************************************/
@@ -23,7 +25,7 @@ var currentFileNumber,
     surveyId,
     originalName,
     awsLocation;
-var bucket = 'american-drapery-systems';
+var bucket = 'american-drapery-systems-personal';
 var keys = {}; //storing AWS.S3 file keys here
 var fileNames = {};
 var fileInfo = {};

@@ -1,11 +1,11 @@
 /**********************
 FIREBASE CONFIGUARTION
 ***********************/
-var config = {
-  apiKey: "AIzaSyB2yNYZp9m3LRB1YheXq64np4bITRA-SUs",
-  authDomain: "ads-prime-58cf5.firebaseapp.com",
-  databaseURL: "https://ads-prime-58cf5.firebaseio.com",
-  storageBucket: "ads-prime-58cf5.appspot.com",
-  messagingSenderId: "447384462470"
-};
-firebase.initializeApp(config);
+  var config = {
+    apiKey: "AIzaSyA6sbQgOnQ7PvNmvZpKthMddwHTkBV6TM8",
+    authDomain: "ads-portfolio.firebaseapp.com",
+    databaseURL: "https://ads-portfolio.firebaseio.com",
+    storageBucket: "ads-portfolio.appspot.com",
+    messagingSenderId: "867965409698"
+  };
+  firebase.initializeApp(config);

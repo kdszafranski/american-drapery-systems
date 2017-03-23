@@ -12,20 +12,19 @@ admin.initializeApp({
     "auth_provider_x509_cert_url": process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
     "client_x509_cert_url": process.env.FIREBASE_CLIENT_X509_CERT_URL
   }),
-  databaseURL: "https://ads-prime-58cf5.firebaseio.com"
+  databaseURL: "https://ads-portfolio.firebaseio.com"
 });
 
 var tokenDecoder = function(req, res, next){
-  console.log("token decoder runnning. Headers: ", req.headers);
+  // console.log("token decoder runnning. Headers: ", req.headers);
   if (req.headers.id_token) {
-    console.log("There's and id token on the request: ", req.headers.id_token);
+    // console.log("There's and id token on the request: ", req.headers.id_token);
     admin.auth().verifyIdToken(req.headers.id_token).then(function(decodedToken) {
       req.decodedToken = decodedToken;
       next();
     })
     .catch(function(error) {
       console.log('User token could not be verified');
-      console.log("error: ", error);
       res.sendStatus(403);
     });
   } else {

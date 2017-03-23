@@ -22,7 +22,7 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../public/views/index.html'));
 });
 
-var portDecision = process.env.PORT || 5432;
+var portDecision = process.env.PORT || 3000;
 
 app.listen(portDecision, function() {
   console.log("listening on port", portDecision);
@@ -31,10 +31,10 @@ app.listen(portDecision, function() {
 //everything below decoder requires authentication
 
 app.use(decoder.token);
-app.use(userChecker.user);
-app.use('/users', users);
+// app.use(userChecker.user);
 
 app.use('/clients', clients);
+app.use('/users', users);
 app.use('/surveys', surveys);
 app.use('/files', files);
 app.use('/measurements', measurements);
