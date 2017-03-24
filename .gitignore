@@ -8,4 +8,7 @@ config.json
 .DS_Store
 node_modules/
 firebase-service-accounts.json
+firebase-service.json
+server/firebase-service.json
+
 uploads/
