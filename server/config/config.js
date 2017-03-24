@@ -1,6 +1,6 @@
 const url = require('url');
 
-const params = url.parse("postgres://uaizfakfjcymdm:a81eaeaa893f4ccc73462c4427e09cdee81a1b914bf714fa31f5a9560140d7db@ec2-54-243-185-123.compute-1.amazonaws.com:5432/de7fbptf1m733l");
+const params = url.parse(process.env.DATABASE_URL);
 const auth = params.auth.split(':');
 
 const config = {
@@ -13,6 +13,5 @@ const config = {
 };
 
 console.log("\n\nCONFIG: ", config);
-
 
 module.exports = config;
