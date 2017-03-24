@@ -58,6 +58,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
           }
         })
         .then(function(response){
+          console.log('area info get', response);
           self.companyInfo = response.data[0];
           initArea();
         },

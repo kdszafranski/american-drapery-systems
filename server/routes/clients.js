@@ -7,7 +7,7 @@ var pool = new pg.Pool(config);
 
 //Get request to populate Company Dropdown
 router.get('/', function(req, res) {
-  console.log('reached get clients route')
+  console.log('reached get clients route');
   pool.connect()
     .then(function(client) {
       client.query('SELECT * FROM client ORDER BY client_name')
