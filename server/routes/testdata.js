@@ -15,25 +15,25 @@ var pool = new pg.Pool(config);
 var connectionString = 'postgres://localhost:5432/americandraperysystems';
 var count;
 
-function updateSurvey(i) {
-  pool.connect()
-    .then(function(client) {
-      client.query("UPDATE survey SET address_street=$1, address_city=$2, address_state=$3, address_zip=$4 " +
-    "WHERE client_id=$5",
-    [randInt(1001, 90000) + ' ' + faker.address.streetName() + ' ' + faker.address.streetSuffix(), faker.address.city(), faker.address.state(), faker.address.zipCode(), i])
-    .then(function(result) {
-      client.release();
-      console.log('survey updatesuccess');
-
-    })
-    .catch(function(err) {
-      client.release();
-
-      console.log('select query error: ', err);
-      res.sendStatus(500);
-    });
-  });
-}
+// function updateSurvey(i) {
+//   pool.connect()
+//     .then(function(client) {
+//       client.query("UPDATE survey SET address_street=$1, address_city=$2, address_state=$3, address_zip=$4 " +
+//     "WHERE client_id=$5",
+//     [randInt(1001, 90000) + ' ' + faker.address.streetName() + ' ' + faker.address.streetSuffix(), faker.address.city(), faker.address.state(), faker.address.zipCode(), i])
+//     .then(function(result) {
+//       client.release();
+//       console.log('survey updatesuccess');
+//
+//     })
+//     .catch(function(err) {
+//       client.release();
+//
+//       console.log('select query error: ', err);
+//       res.sendStatus(500);
+//     });
+//   });
+// }
 
 function testUser() {
   pg.connect(connectionString, function(err, client, done) {
@@ -57,10 +57,10 @@ function testClient() {
     if(err) {
       console.log('connection error: ', err);
     }
-    client.query("INSERT INTO client (client_name, primary_contact_name, primary_contact_phone_number, primary_contact_email, alt_contact_name, alt_phone_number, alt_contact_email, billing_address_street, billing_address_city, billing_address_state, billing_address_zip, survey_address_street, survey_address_city, survey_address_state, survey_address_zip) " +
-    "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) " +
+    client.query("INSERT INTO client (client_name, primary_contact_name, primary_contact_phone_number, primary_contact_email, alt_contact_name, alt_phone_number, alt_contact_email, billing_address_street, billing_address_city, billing_address_state, billing_address_zip) " +
+    "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) " +
     "RETURNING id",
-    [faker.company.companyName(), faker.name.findName(), faker.phone.phoneNumber(), faker.internet.email(), faker.name.findName(), faker.phone.phoneNumber(), faker.internet.email(), faker.address.streetName(), faker.address.city(), faker.address.state(), faker.address.zipCode(), faker.address.streetName(), faker.address.city(), faker.address.state(), faker.address.zipCode()],
+    [faker.company.companyName(), faker.name.findName(), faker.phone.phoneNumber(), faker.internet.email(), faker.name.findName(), faker.phone.phoneNumber(), faker.internet.email(), faker.address.streetName(), faker.address.city(), faker.address.state(), faker.address.zipCode()],
     function(err, result) {
       done(); //close the connection
       console.log('client result', result.rows[0].id);
@@ -82,10 +82,10 @@ function testSurvey(client_id, installed_by) {
     if(err) {
       console.log('connection error: ', err);
     }
-    survey.query("INSERT INTO survey (job_number, completion_date, survey_date, installed_by, status, last_modified, client_id) " +
-    "VALUES ($1,$2,$3,$4,$5,$6,$7) " +
+    survey.query("INSERT INTO survey (job_number, completion_date, survey_date, installed_by, status, last_modified, client_id, address_street, address_city, address_state, address_zip ) " +
+    "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) " +
     "RETURNING id",
-    [randInt(10001, 40000), faker.date.future(), faker.date.past(), installed_by, status(), faker.date.recent(), client_id],
+    [randInt(10001, 40000), faker.date.future(), faker.date.past(), installed_by, status(), faker.date.recent(), client_id, faker.address.streetName(), faker.address.city(), faker.address.state(), faker.address.zipCode()],
     function(err, result) {
       done();
       var num = randInt(1,20);
@@ -133,7 +133,7 @@ function testMeasurement(area_id, floor) {
     }
     client.query("INSERT INTO measurements (floor, room, quantity, width, length, ib_ob, fascia_size, controls, mount, fabric, area_id) " +
     "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)",
-    [floor, randInt(1,9000), randInt(1,8), rand(1,200), rand(1,200), inOut(), randInt(1,200), rightLeft(), faker.lorem.word() + ' Fascia', faker.lorem.word() + faker.lorem.word(), area_id],
+    [floor, randInt(1,9000), randInt(1,8), randInt(1,200), randInt(1,200), inOut(), randInt(1,200), rightLeft(), faker.lorem.word() + ' Fascia', faker.lorem.word() + faker.lorem.word(), area_id],
     function(err, result) {
       done(); // close the connection.
       if(err) {
@@ -203,4 +203,4 @@ module.exports.survey = testSurvey;
 module.exports.measurement = testMeasurement;
 module.exports.client = testClient;
 module.exports.randInt = randInt;
-module.exports.updateSurvey = updateSurvey;
+// module.exports.updateSurvey = updateSurvey;

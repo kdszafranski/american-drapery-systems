@@ -10,7 +10,7 @@ CREATE TABLE client (
   billing_address_street VARCHAR(50),
   billing_address_city VARCHAR(50),
   billing_address_state VARCHAR(30),
-  billing_address_zip VARCHAR(10),
+  billing_address_zip VARCHAR(10)
 );
 
 CREATE TABLE survey (

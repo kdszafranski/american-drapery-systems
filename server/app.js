@@ -9,9 +9,10 @@ var measurements = require('./routes/measurements');
 var clients = require('./routes/clients');
 var users = require('./routes/users');
 var areas = require('./routes/areas');
-// var testdata = require('./routes/testdata');
+var testdata = require('./routes/testdata');
 var files = require('./routes/files');
 var userChecker = require('./modules/user-checker');
+
 
 
 // serve static files

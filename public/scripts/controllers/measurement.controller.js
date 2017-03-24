@@ -65,7 +65,7 @@ function($http, UserFactory, $mdDialog, $route, $location, $anchorScroll, $timeo
         function(err) {
           console.log("error getting survey details: ", err);
         });
-    })
+    });
   }
 
   function initMeas() {
