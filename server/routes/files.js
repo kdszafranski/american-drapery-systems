@@ -63,6 +63,7 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
   pool.connect()
     .then(function(client) {
       for (var key in keys) {
+        console.log('file post info', [fileInfo[key], bucket, keys[key], areaId, fileNames[key]]);
         client.query("INSERT INTO files (file_info, bucket, key, area_id, original_name) " +
         "VALUES ($1, $2, $3, $4, $5)", [fileInfo[key], bucket, keys[key], areaId, fileNames[key]]);
       }
