@@ -25,7 +25,7 @@ var currentFileNumber,
     surveyId,
     originalName,
     awsLocation;
-var bucket = 'american-drapery-systems-personal';
+var bucket = 'ads-prime';
 var keys = {}; //storing AWS.S3 file keys here
 var fileNames = {};
 var fileInfo = {};
@@ -64,7 +64,7 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
     .then(function(client) {
       for (var key in keys) {
         client.query("INSERT INTO files (file_info, bucket, key, area_id, original_name) " +
-        "VALUES ($1, $2, $3, $4, $5)", [fileInfo[key], bucket, keys[key], areaId, fileNames[key]])
+        "VALUES ($1, $2, $3, $4, $5)", [fileInfo[key], bucket, keys[key], areaId, fileNames[key]]);
       }
     })
     .then(function(result) {
@@ -77,7 +77,7 @@ router.post('/:areaId', upload.array('file', 10), function(req, res, next) {//ma
       console.log("Query error inserting files info: ", err);
       res.sendStatus(500);
       client.release();
-    })
+    });
 });//end route
 
 router.get('/:areaId', function(req, res) {
