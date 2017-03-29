@@ -13,7 +13,7 @@ function($http, UserFactory, IdFactory, $route, FileFactory, $scope, $mdDialog) 
   };
 
   self.show = true;
-  self.baseUrl = 'https://s3.us-east-2.amazonaws.com/american-drapery-systems-personal/survey_' + surveyId + '/area_';
+  self.baseUrl = 'https://s3.us-east-2.amazonaws.com/ads-prime/survey_' + surveyId + '/area_';
 
   self.showPreview = function(ev, index) {
     // Appending dialog to document.body to cover sidenav in docs app

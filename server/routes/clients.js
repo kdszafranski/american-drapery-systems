@@ -26,7 +26,7 @@ router.get('/', function(req, res) {
 
 //Get request to populate client profile fields
 router.get('/:clientId', function(req, res) {
-  console.log('reached get clients route', req.params.clientId)
+  console.log('reached get clients route', req.params.clientId);
   pool.connect()
   .then(function(client) {
     client.query('SELECT * FROM client WHERE id = ' + req.params.clientId)

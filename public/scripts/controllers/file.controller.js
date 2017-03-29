@@ -34,7 +34,7 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
   self.showPreview = function(ev, index) {
     // Appending dialog to document.body to cover sidenav in docs app
     var currentFile = self.currentFilesObject["file_" + (index + 1)];
-    var baseUrl = 'https://s3.us-east-2.amazonaws.com/american-drapery-systems-personal/survey_';
+    var baseUrl = 'https://s3.us-east-2.amazonaws.com/ads-prime/survey_';
     var currentFileUrl = baseUrl + surveyId + '/' + 'area_' + currentFile.areaId + '/' + currentFile.key + currentFile.originalName;
 
     if(currentFile.extension == "pdf") {
@@ -47,7 +47,7 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
           '</md-card flex>',
         targetEvent: ev,
         clickOutsideToClose: true
-      })
+      });
     } else {
       $mdDialog.show({
         template:
@@ -58,7 +58,7 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
           '</md-card flex>',
         targetEvent: ev,
         clickOutsideToClose: true
-      })
+      });
     }
   };
 
@@ -75,7 +75,7 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
           };
           console.log(self.newFilesObject);
           $scope.$apply();
-        })
+        });
     }); //send files and info to server
   };
 
@@ -100,11 +100,11 @@ function(FileFactory, UserFactory, IdFactory, $route, $mdDialog, $scope, $mdToas
           FileFactory.getFiles(currentUser, areaId)
             .then(function() {
               self.currentFilesObject = FileFactory.currentFilesObject;
-            })
-          })
-        })
+            });
+          });
+        });
 
-      })
+      });
   };
 
 }]);//End controller
