@@ -76,21 +76,21 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
 
   self.newJob = function() {
     $location.path('/profile');
-  }
+  };
   self.survey = function(surveyId) {
     IdFactory.setSurvey(surveyId);
     $location.path('/survey/' + surveyId);
-  }
+  };
   self.area = function(surveyId) {
-    IdFactory.setSurvey(surveyId)
+    IdFactory.setSurvey(surveyId);
     $location.path('/area/' + surveyId);
-  }
+  };
 
   self.changeStatus = function(survey_id, status) {
     self.statusUpdate = {
       status: status,
       last_modified: new Date()
-    }
+    };
     currentUser = UserFactory.getUser();
     currentUser.getToken()
     .then(function(idToken) {
@@ -112,7 +112,7 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
         }
       });
     });
-  }
+  };
 
   function greenTimout(id) {
     self.greenId = id;
@@ -152,25 +152,25 @@ app.controller('DashboardController', ['UserFactory', 'IdFactory', '$http', '$lo
       var dispBool = (!this.statuses[1] && this.options[1]);
       var compBool = (!this.statuses[2] && this.options[2]);
       var decBool = (!this.statuses[3] && this.options[3]);
-      if (compBool) { ret.push(compBool) }
-      if (decBool) { ret.push(decBool) }
-      if (dispBool) { ret.push(dispBool) }
-      if (pendBool) { ret.push(pendBool) }
+      if (compBool) { ret.push(compBool); }
+      if (decBool) { ret.push(decBool); }
+      if (dispBool) { ret.push(dispBool); }
+      if (pendBool) { ret.push(pendBool); }
       return ret;
     }
-  }
+  };
   self.pageCheck = function(numResults) {
     var total = self.totalPages(numResults);
     if (self.currentPage >= total || ((self.currentPage == -1) && total)) {
       self.currentPage = total -1 ;
     }
-  }
+  };
   self.totalPages = function (num) {
     var total = 0;
     if (num) {
       total = parseInt(((num - 1) / self.pageSize) + 1);
     }
     return total;
-  }
+  };
 
 }]);

@@ -4,7 +4,7 @@ function($http, $location, UserFactory, $route, $mdDialog, $timeout) {
   // var survey_id = IdFactory.getSurveyId();
   var surveyId = $route.current.params.surveyId;
   self.loading = false;
-  self.showInput = false
+  self.showInput = false;
   self.companyInfo = {};
   var currentUser;
   var areaId;
@@ -23,13 +23,13 @@ function($http, $location, UserFactory, $route, $mdDialog, $timeout) {
     selectedAreaName = self.areaArray[index];
 
     $location.path('/measurement/' + surveyId + '/' + areaId + '/' + selectedAreaName);
-  }
+  };
 
 
   //function to add a new area
   self.showInput = function() {
     self.inputAreaName = true;
-  }
+  };
   self.showConfirm = function(ev) {
     // Appending dialog to document.body to cover sidenav in docs app
     if(self.toRemove.indexOf(true) != -1) {
