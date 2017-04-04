@@ -23,7 +23,7 @@ Features:
 * Storage of ADS customer information for auto-populating forms of future surveys.
 * File and image uploading and hosting.
 * PDF export of pertinent measurements and information on a given survey.
-* Multi level read-write admin/user privileges.  
+* Multi-level admin/user privileges.  
 
 
 ## Technologies Used
