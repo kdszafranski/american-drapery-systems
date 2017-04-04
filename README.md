@@ -6,7 +6,7 @@ It connects ADS customer profiles to respective data on building surveys done by
 
 [Try it here](https://ads-prime.herokuapp.com/)
 
-Authentication has been disabled for demo purposes, allowing anyone to login, create, delete and modify data. Gmail account required for login.
+Fake data has been generated and authentication disabled for demo purposes, allowing anyone to login, create, delete and modify data. Gmail account required for login.
 
 ## The Problem
 As a commercial window treatment (blinds, shades etc.) company, ADS first surveys the buildings for which treatments have been requested.
