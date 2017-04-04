@@ -1,7 +1,7 @@
 # American Drapery Systems Measurement Tool
 
 This application was built for American Drapery Systems (ADS) to help with their window and drapery measurement process.
-It connects ADS clients to respective data on building surveys done by ADS, the rooms/areas within the building and specific window measurements for each room.
+It connects ADS customer profiles to respective data on building surveys done by ADS, the rooms/areas within the building and specific window measurements for each room.
 
 
 [Try it here](https://ads-prime.herokuapp.com/)
@@ -23,6 +23,7 @@ Features:
 * Storage of ADS customer information for auto-populating forms of future surveys.
 * File and image uploading and hosting.
 * PDF export of pertinent measurements and information on a given survey.
+* Multi level read-write admin/user privlages.  
 
 
 ## Technologies Used
