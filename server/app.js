@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -12,8 +12,6 @@ var areas = require('./routes/areas');
 var testdata = require('./routes/testdata');
 var files = require('./routes/files');
 var userChecker = require('./modules/user-checker');
-
-
 
 // serve static files
 app.use(express.static('public'));

@@ -2,10 +2,11 @@
 FIREBASE CONFIGUARTION
 ***********************/
 var config = {
-  apiKey: "AIzaSyB2yNYZp9m3LRB1YheXq64np4bITRA-SUs",
-  authDomain: "ads-prime-58cf5.firebaseapp.com",
-  databaseURL: "https://ads-prime-58cf5.firebaseio.com",
-  storageBucket: "ads-prime-58cf5.appspot.com",
-  messagingSenderId: "447384462470"
+  apiKey: "AIzaSyBSNQQ4Iipl8cOekmW91DGomgKKfOYM78I",
+  authDomain: "prime-american-drapery.firebaseapp.com",
+  databaseURL: "https://prime-american-drapery.firebaseio.com",
+  projectId: "prime-american-drapery",
+  storageBucket: "prime-american-drapery.appspot.com",
+  messagingSenderId: "74570605731"
 };
 firebase.initializeApp(config);

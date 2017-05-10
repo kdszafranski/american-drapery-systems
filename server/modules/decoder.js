@@ -1,12 +1,11 @@
-
 var admin = require("firebase-admin");
 var fs = require("fs");
 
-fs.stat('./server/firebase-service.json', function(err, stat) {
+fs.stat('./server/firebase-service-account.json', function(err, stat) {
   if(err == null) {
     admin.initializeApp({
-      credential: admin.credential.cert("./server/firebase-service.json"),
-      databaseURL: "https://ads-prime-58cf5firebaseio.com"
+      credential: admin.credential.cert("./server/firebase-service-account.json"),
+      databaseURL: "https://prime-american-drapery.firebaseio.com"
     });
   } else if(err.code == 'ENOENT') {
     admin.initializeApp({
@@ -22,7 +21,7 @@ fs.stat('./server/firebase-service.json', function(err, stat) {
         "auth_provider_x509_cert_url": process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
         "client_x509_cert_url": process.env.FIREBASE_CLIENT_X509_CERT_URL
       }),
-      databaseURL: "https://ads-prime-58cf5.firebaseio.com"
+      databaseURL: "https://prime-american-drapery.firebaseio.com"
     });
   }
 });
@@ -39,7 +38,7 @@ var tokenDecoder = function(req, res, next){
       res.sendStatus(403);
     });
   } else {
-    // Seems to be hit when chrome makes request for map files      
+    // Seems to be hit when chrome makes request for map files
     // Will also be hit when user does not send back an idToken in the header
     res.sendStatus(403);
   }
