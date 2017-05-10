@@ -1,4 +1,4 @@
-const url = require('url');
+var url = require('url');
 // awend-amerdraperysys-sigma
 var config = {};
 
@@ -27,7 +27,7 @@ if (process.env.DATABASE_URL) {
     port: process.env.DATABASE_PORT, //env var: PGPORT
     database: process.env.DATABASE_NAME, //env var: PGDATABASE
     max: 10, // max number of clients in the pool
-    idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+    idleTimeoutMillis: 1000, // how long a client is allowed to remain idle before being closed
   };
 }
 
