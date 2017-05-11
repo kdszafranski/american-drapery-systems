@@ -65,5 +65,6 @@ CREATE TABLE users (
   last_name VARCHAR(100),
   email VARCHAR(100),
   can_add_user BOOLEAN,
+  can_edit_users BOOLEAN,
   authorized BOOLEAN
 );
